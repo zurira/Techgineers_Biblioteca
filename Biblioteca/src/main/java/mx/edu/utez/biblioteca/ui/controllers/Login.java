@@ -28,7 +28,7 @@ public class Login {
         });
 
         registerLink.setOnAction(event -> {
-            // Lógica para el registro
+            // Lógica para el registro de usuarios
             System.out.println("Navegar a la vista de registro");
         });
     }
