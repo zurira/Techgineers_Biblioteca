@@ -46,7 +46,7 @@
             <PasswordField fx:id="passField" promptText="Ingresa contraseña" styleClass="login-input"/>
 
             <!-- Botón de login -->
-            <Button fx:id="loginButton" text="Iniciar sesión" styleClass="login-button"/>
+            <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button"/>
 
             <!-- Registro -->
             <Hyperlink fx:id="registerLink" text="Registrarme" styleClass="login-register"/>

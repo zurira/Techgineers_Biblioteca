@@ -1,10 +1,8 @@
 package mx.edu.utez.biblioteca.ui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import mx.edu.utez.biblioteca.dao.UserDAO;
 
 public class Login {
 
@@ -12,24 +10,26 @@ public class Login {
     private TextField userField;
     @FXML
     private PasswordField passField;
+    
     @FXML
-    private Button loginButton;
-    @FXML
-    private Hyperlink registerLink;
+    private void onLogin() {
+        String user = userField.getText();
+        String password = passField.getText();
 
-    @FXML
-    private void initialize() {
-        loginButton.setOnAction(event -> {
-            // Lógica para el inicio de sesión
-            String usuario = userField.getText();
-            String password = passField.getText();
-            System.out.println("Intento de login con usuario: " + usuario);
-            // Falta agregar validación con la base de datos.
-        });
+        UserDAO dao = new UserDAO();
+        if (dao.validateUser (user, password)) {
+            mostrarAlerta("Éxito", "Inicio de sesión correcto");
+            // Pendiente cambiar a una vista de confirmación
+        } else {
+            mostrarAlerta("Error", "Usuario o contraseña incorrectos");
+        }
+    }
 
-        registerLink.setOnAction(event -> {
-            // Lógica para el registro de usuarios
-            System.out.println("Navegar a la vista de registro");
-        });
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
