@@ -1,29 +1,44 @@
 package mx.edu.utez.biblioteca.dao;
 
-import mx.edu.utez.biblioteca.db.DBConnection;
+import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAO {
-    public boolean validateUser (String user, String password){
-        String query = "SELECT COUNT(*) FROM users where username = ? and password = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+    public User validateUser(String username, String password) {
+        Connection conn = DBConnection.getConnection();
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos");
+            return null;
+        }
 
-            stmt.setString(1, user);
-            stmt.setString(2, password);
+        try {
+            String sql = "SELECT ID, USERNAME, USERPASSWORD FROM USUARIOS WHERE USERNAME=? AND USERPASSWORD=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username.trim().toLowerCase());
+            stmt.setString(2, password.trim());
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;
+                return new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("userpassword")
+                );
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
+
+
+
 }
+

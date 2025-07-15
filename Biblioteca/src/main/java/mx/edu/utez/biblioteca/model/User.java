@@ -1,20 +1,30 @@
 package mx.edu.utez.biblioteca.model;
 
 public class User {
-    private String user;
+    private int id;
+    private String username;
     private String password;
 
-    public User(String user, String password) {
-        this.user = user;
+    public User(int id, String password, String user) {
+        this.id = id;
         this.password = password;
+        this.username = user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUser() {
-        return user;
+        return username;
     }
 
     public void setUser(String user) {
-        this.user = user;
+        this.username = user;
     }
 
     public String getPassword() {

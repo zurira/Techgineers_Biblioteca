@@ -8,5 +8,5 @@ module mx.edu.utez.biblioteca {
 
     opens mx.edu.utez.biblioteca to javafx.fxml;
     exports mx.edu.utez.biblioteca;
-    opens mx.edu.utez.biblioteca.ui.controllers to javafx.fxml;
+    opens mx.edu.utez.biblioteca.controller to javafx.fxml;
 }
