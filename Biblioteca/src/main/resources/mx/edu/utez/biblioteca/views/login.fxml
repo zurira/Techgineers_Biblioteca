@@ -37,7 +37,7 @@
             <Label text="INICIO DE SESIÓN" styleClass="login-title"/>
 
             <Label text="USUARIO"/>
-            <TextField fx:id="txtUsername" promptText="Ingresa tu usuario" styleClass="login-input"/>
+            <TextField fx:id="txtcorreo" promptText="Ingresa tu correo" styleClass="login-input"/>
             <Label text="CONTRASEÑA"/>
             <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input"/>
             <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button"/>

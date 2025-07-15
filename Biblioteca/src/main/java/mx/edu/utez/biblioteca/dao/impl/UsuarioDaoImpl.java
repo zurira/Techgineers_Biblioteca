@@ -20,7 +20,7 @@ public class UsuarioDaoImpl implements IUsuario {
             ps.setString(1,correo);
             ps.setString(2, pass);
             ResultSet resultSet=ps.executeQuery(); //se ejecuta la consulta
-            if(resultSet.next()){ 
+            if(resultSet.next()){
                 return true;
             }
             return false;
