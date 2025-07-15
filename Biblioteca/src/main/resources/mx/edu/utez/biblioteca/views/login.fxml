@@ -9,8 +9,10 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="mx.edu.utez.biblioteca.controller.UsuarioController"
+           stylesheets="@../css/styles.css"
            prefHeight="400.0" prefWidth="600.0"
-           style="-fx-background-image: url('../img/fondo.jpg'); -fx-background-size: cover; -fx-background-position: center center;">
+           style="-fx-background-image: url('/img/fondo.jpg'); -fx-background-size: cover; -fx-background-position: center center;">
+
 
     <children>
         <VBox alignment="CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
@@ -40,7 +42,7 @@
             <TextField fx:id="txtcorreo" promptText="Ingresa tu correo" styleClass="login-input"/>
             <Label text="CONTRASEÑA"/>
             <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input"/>
-            <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button"/>
+            <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button "/>
 
         </VBox>
     </children>
