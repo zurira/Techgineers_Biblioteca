@@ -34,18 +34,12 @@
                 </children>
             </StackPane>
 
-            <!-- Título -->
             <Label text="INICIO DE SESIÓN" styleClass="login-title"/>
 
-            <!-- Usuario -->
             <Label text="USUARIO"/>
             <TextField fx:id="txtUsername" promptText="Ingresa tu usuario" styleClass="login-input"/>
-
-            <!-- Contraseña -->
             <Label text="CONTRASEÑA"/>
             <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input"/>
-
-            <!-- Botón de login -->
             <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button"/>
 
         </VBox>

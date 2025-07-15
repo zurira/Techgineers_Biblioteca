@@ -1,15 +1,15 @@
 package mx.edu.utez.biblioteca.dao;
 
 import mx.edu.utez.biblioteca.config.DBConnection;
-import mx.edu.utez.biblioteca.model.User;
+import mx.edu.utez.biblioteca.model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
-    public User validateUser(String username, String password) {
+public class UsuarioDAO {
+    public Usuario validateUser(String username, String password) {
         Connection conn = DBConnection.getConnection();
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos");
@@ -24,7 +24,7 @@ public class UserDAO {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new User(
+                return new Usuario(
                         rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("userpassword")

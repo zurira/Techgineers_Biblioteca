@@ -6,34 +6,25 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String WALLET_PATH = "F:/Downloads/Wallet_YC7SXAZ34RKDSWBH";
+    private static final String URL      = "jdbc:oracle:thin:@l9i11j33yfkvi0t1_low";
+    private static final String USER     = "ADMIN";
+    private static final String PASSWORD = "Techgineers123";
 
-    private static final String URL = "jdbc:oracle:thin:@yc7sxaz34rkdswbh_high?TNS_ADMIN=F:/Downloads/Wallet_YC7SXAZ34RKDSWBH";
-    private static final String USER = "ADMIN";
-    private static final String PASSWORD = "zurisRA$2006";
-
-    public static Connection getConnection() {
-        try {
-            // Configura propiedades del wallet
-            System.setProperty("oracle.net.tns_admin", WALLET_PATH);
-            System.setProperty("oracle.net.ssl_server_dn_match", "true");
-
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            System.err.println("Error al conectar con la base de datos:");
-            e.printStackTrace();
-            return null;
-        }
+    // Obtiene una conexión nueva
+    public static Connection getConnection() throws SQLException {
+        // 1. Apunta al directorio donde descomprimiste el wallet
+        System.setProperty("oracle.net.tns_admin", "F:\\Downloads\\Wallet_L9I11J33YFKVI0T1");
+        // 2. (Opcional) fuerza la validación de nombre de servidor en el certificado
+        System.setProperty("oracle.net.ssl_server_dn_match", "true");
+        // 3. Obtiene la conexión usando alias, user y pass
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    // Para probar la conexión
-    public static void main(String[] args) {
-        Connection conn = getConnection();
-        if (conn != null) {
+    public static void main(String[] args) throws SQLException {
+        try (Connection conn = getConnection()) {
             System.out.println("¡Conexión exitosa!");
-        } else {
-            System.out.println("No se pudo establecer la conexión.");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
-

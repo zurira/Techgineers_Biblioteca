@@ -5,9 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import mx.edu.utez.biblioteca.dao.UserDAO;
+import mx.edu.utez.biblioteca.dao.UsuarioDAO;
 import mx.edu.utez.biblioteca.config.DBConnection;
-import mx.edu.utez.biblioteca.model.User;
+import mx.edu.utez.biblioteca.model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +32,7 @@ public class Login {
             return;
         }
 
-        User user = new UserDAO().validateUser(username, password);
+        Usuario user = new UsuarioDAO().validateUser(username, password);
         if (user != null) {
             showAlert(Alert.AlertType.INFORMATION, "Bienvenido", "Inicio de sesión exitoso para " + user.getUser());
             // TODO: Redirigir al dashboard u otra vista aquí
