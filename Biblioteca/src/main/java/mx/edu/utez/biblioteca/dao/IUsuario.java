@@ -1,5 +1,7 @@
 package mx.edu.utez.biblioteca.dao;
 
+import mx.edu.utez.biblioteca.model.Usuario;
+
 public interface IUsuario {
-    public boolean login(String correo, String pass) throws Exception;
+    public Usuario login(String correo, String pass) throws Exception;
 }

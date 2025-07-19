@@ -6,12 +6,21 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String telefono;
-    private String clave;
+    private String password;
     private String rol;
+    private String nombreRol;
     private String estado;
     private byte[] foto;
 
     public Usuario() {
+    }
+
+    public String getNombreRol(){
+        return nombreRol;
+    }
+
+    public void setNombreRol(String nombreRol){
+        this.nombreRol=nombreRol;
     }
 
     public int getId() {
@@ -46,12 +55,12 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getClave() {
-        return clave;
+    public String getPassword() {
+        return password;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setPassword(String clave) {
+        this.password = password;
     }
 
     public String getTelefono() {

@@ -12,8 +12,12 @@ import java.sql.SQLException;
 public class UsuarioDaoImpl implements IUsuario {
 
     @Override
-    public boolean login(String correo, String pass) throws Exception {
-        String sql="SELECT ID,CORREO,PASSWORD FROM USUARIO WHERE CORREO=? and PASSWORD=?";
+    public Usuario login(String correo, String pass) throws Exception {
+        Usuario usuario = null;
+        String sql = "SELECT u.ID, u.CORREO, u.PASSWORD, r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
+                "FROM USUARIO u " +
+                "JOIN ROL r ON u.ID_ROL = r.ID " +
+                "WHERE u.CORREO = ? AND u.PASSWORD = ?";
         try {
             Connection con = DBConnection.getConnection(); // se estable la conexion
             PreparedStatement ps =  con.prepareStatement(sql); //se prepara la consulta para evitar la inyecion de SQL
@@ -21,12 +25,17 @@ public class UsuarioDaoImpl implements IUsuario {
             ps.setString(2, pass);
             ResultSet resultSet=ps.executeQuery(); //se ejecuta la consulta
             if(resultSet.next()){
-                return true;
+                    usuario = new Usuario();
+                    usuario.setId(resultSet.getInt("ID"));
+                    usuario.setCorreo(resultSet.getString("CORREO"));
+                    usuario.setPassword(resultSet.getString("PASSWORD"));
+                    usuario.setRol(resultSet.getString("ID_ROL"));
+                    usuario.setNombreRol(resultSet.getString("NOMBRE_ROL"));
             }
-            return false;
         }catch (Exception e){
             throw new Exception(e);
         }
+        return usuario;
 
     }
 
