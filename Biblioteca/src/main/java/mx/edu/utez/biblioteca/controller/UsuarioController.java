@@ -35,7 +35,7 @@ public class UsuarioController {
         UsuarioDaoImpl dao=new UsuarioDaoImpl();
         try {
             Usuario usuario = dao.login(correo,pass);
-            if(dao.login(correo,pass)){
+            if(usuario != null){
                 System.out.println("Se pudo logear con Exito como:" + usuario.getRol());
                 switch (usuario.getRol()){
                     case "SUPERADMINISTRADOR":
