@@ -27,7 +27,7 @@ public class UsuarioController {
     private PasswordField txtPassword;
     @FXML
     private StackPane loginPane;
-
+    //Metodo funcionando, ya realiza la validación de cada rol
     @FXML
     private void onLogin(ActionEvent e){
         String correo=txtcorreo.getText().trim();
@@ -59,6 +59,7 @@ public class UsuarioController {
                         return;
                 }
 
+                //carga la vista y cierra la anterior
                 Parent root = loader.load();
 
                 Stage stage = new Stage();
@@ -86,7 +87,7 @@ public class UsuarioController {
         alert.showAndWait();
     }
 
-
+    //inicializa la vista del login con imagen de fondo
     @FXML
     public void initialize() {
         BackgroundImage bgImage = new BackgroundImage(
