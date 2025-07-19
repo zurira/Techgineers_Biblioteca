@@ -1,4 +1,4 @@
-package mx.edu.utez.biblioteca.controlle
+package mx.edu.utez.biblioteca.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
