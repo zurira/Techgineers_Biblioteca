@@ -13,6 +13,7 @@ public class UsuarioDaoImpl implements IUsuario {
 
     @Override
     public boolean login(String correo, String pass) throws Exception {
+        Usuario usuario = null;
         String sql="SELECT ID,CORREO,PASSWORD FROM USUARIO WHERE CORREO=? and PASSWORD=?";
         try {
             Connection con = DBConnection.getConnection(); // se estable la conexion
@@ -21,6 +22,11 @@ public class UsuarioDaoImpl implements IUsuario {
             ps.setString(2, pass);
             ResultSet resultSet=ps.executeQuery(); //se ejecuta la consulta
             if(resultSet.next()){
+                    usuario = new Usuario();
+                    usuario.setId(resultSet.getInt("ID"));
+                    usuario.setCorreo(resultSet.getString("CORREO"));
+                    usuario.setClave(resultSet.getString("PASSWORD"));
+                    usuario.setRol(resultSet.getString("ROL"));
                 return true;
             }
             return false;
