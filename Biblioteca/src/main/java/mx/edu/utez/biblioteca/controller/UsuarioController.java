@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,6 +59,15 @@ public class UsuarioController {
         }
 
     }
+
+    private void cargarVista(String fxmlPath, ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     @FXML
     private void onTest(ActionEvent e){
