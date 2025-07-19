@@ -14,7 +14,10 @@ public class UsuarioDaoImpl implements IUsuario {
     @Override
     public Usuario login(String correo, String pass) throws Exception {
         Usuario usuario = null;
-        String sql="SELECT ID,CORREO,PASSWORD FROM USUARIO WHERE CORREO=? and PASSWORD=?";
+        String sql = "SELECT u.ID, u.CORREO, u.PASSWORD, r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
+                "FROM USUARIO u " +
+                "JOIN ROL r ON u.ID_ROL = r.ID " +
+                "WHERE u.CORREO = ? AND u.PASSWORD = ?";
         try {
             Connection con = DBConnection.getConnection(); // se estable la conexion
             PreparedStatement ps =  con.prepareStatement(sql); //se prepara la consulta para evitar la inyecion de SQL
@@ -25,8 +28,9 @@ public class UsuarioDaoImpl implements IUsuario {
                     usuario = new Usuario();
                     usuario.setId(resultSet.getInt("ID"));
                     usuario.setCorreo(resultSet.getString("CORREO"));
-                    usuario.setClave(resultSet.getString("PASSWORD"));
-                    usuario.setRol(resultSet.getString("ROL"));
+                    usuario.setPassword(resultSet.getString("PASSWORD"));
+                    usuario.setRol(resultSet.getString("ID_ROL"));
+                    usuario.setNombreRol(resultSet.getString("NOMBRE_ROL"));
             }
         }catch (Exception e){
             throw new Exception(e);

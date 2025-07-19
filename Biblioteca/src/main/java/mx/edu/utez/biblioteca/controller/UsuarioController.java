@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -36,46 +37,46 @@ public class UsuarioController {
         try {
             Usuario usuario = dao.login(correo,pass);
             if(usuario != null){
-                System.out.println("Se pudo logear con Exito como:" + usuario.getRol());
-                switch (usuario.getRol()){
+                System.out.println("Se pudo logear con Exito como:" + usuario.getNombreRol());
+
+                FXMLLoader loader;
+                switch (usuario.getNombreRol().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
-                        cargarVista("/mx/edu/utez/demo/view/superadmin.fxml", e);
+                        System.out.println("Cargando vista de superadministrador");
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin.fxml"));
+
                         break;
                     case "ADMINISTRADOR":
-                        cargarVista("/mx/edu/utez/demo/view/admin.fxml", e);
+                        System.out.println("Cargando vista de administrador");
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/admin.fxml"));
                         break;
                     case "BIBLIOTECARIO":
-                        cargarVista("/mx/edu/utez/demo/view/bibliotecario.fxml", e);
+                        System.out.println("Cargando vista de bibliotecario");
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bibliotecario.fxml"));
                         break;
                     default:
-                        showAlert("Error", "Rol desconocido");
-                        break;
+                        showAlert("Error", "Rol no reconocido.");
+                        return;
                 }
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+                ((Stage) txtcorreo.getScene().getWindow()).close();
             }else{
                 showAlert("Error","Credenciales incorrectas");
                 System.out.println("Credenciales incorrectas!");
             }
 
         }catch (Exception err){
+            err.printStackTrace();
             showAlert("Error", "Hubo un error en la aplicación");
-            System.out.println(err.getMessage());
         }
 
     }
 
-    private void cargarVista(String fxmlPath, ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    @FXML
-    private void onTest(ActionEvent e){
-
-    }
 
     public void showAlert(String title, String msg){
         Alert alert=new Alert(Alert.AlertType.ERROR);
