@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import mx.edu.utez.biblioteca.model.Usuario;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,12 +33,11 @@ public class UsuarioController {
 
         UsuarioDaoImpl dao=new UsuarioDaoImpl();
         try {
+            Usuario usuario = dao.login(correo,pass);
             if(dao.login(correo,pass)){
-                System.out.println("Se pudo logear con Exito!");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/demo/view/dashboard.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                stage.setScene(scene);
+                System.out.println("Se pudo logear con Exito como:" + usuario.getRol());
+
+
 
 
             }else{
