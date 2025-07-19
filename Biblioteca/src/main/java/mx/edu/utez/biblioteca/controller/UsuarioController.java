@@ -36,10 +36,17 @@ public class UsuarioController {
             Usuario usuario = dao.login(correo,pass);
             if(dao.login(correo,pass)){
                 System.out.println("Se pudo logear con Exito como:" + usuario.getRol());
-
-
-
-
+                switch (usuario.getRol()){
+                    case "SUPERADMINISTRADOR":
+                        break;
+                    case "ADMINISTRADOR":
+                        break;
+                    case "BIBLIOTECARIO":
+                        break;
+                    default:
+                        showAlert("Error", "Rol desconocido");
+                        break;
+                }
             }else{
                 showAlert("Error","Credenciales incorrectas");
                 System.out.println("Credenciales incorrectas!");
