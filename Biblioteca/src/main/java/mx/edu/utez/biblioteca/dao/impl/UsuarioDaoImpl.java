@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class UsuarioDaoImpl implements IUsuario {
 
     @Override
-    public boolean login(String correo, String pass) throws Exception {
+    public Usuario login(String correo, String pass) throws Exception {
         Usuario usuario = null;
         String sql="SELECT ID,CORREO,PASSWORD FROM USUARIO WHERE CORREO=? and PASSWORD=?";
         try {
@@ -27,12 +27,11 @@ public class UsuarioDaoImpl implements IUsuario {
                     usuario.setCorreo(resultSet.getString("CORREO"));
                     usuario.setClave(resultSet.getString("PASSWORD"));
                     usuario.setRol(resultSet.getString("ROL"));
-                return true;
             }
-            return false;
         }catch (Exception e){
             throw new Exception(e);
         }
+        return usuario;
 
     }
 

@@ -39,10 +39,13 @@ public class UsuarioController {
                 System.out.println("Se pudo logear con Exito como:" + usuario.getRol());
                 switch (usuario.getRol()){
                     case "SUPERADMINISTRADOR":
+                        cargarVista("/mx/edu/utez/demo/view/superadmin.fxml", e);
                         break;
                     case "ADMINISTRADOR":
+                        cargarVista("/mx/edu/utez/demo/view/admin.fxml", e);
                         break;
                     case "BIBLIOTECARIO":
+                        cargarVista("/mx/edu/utez/demo/view/bibliotecario.fxml", e);
                         break;
                     default:
                         showAlert("Error", "Rol desconocido");
