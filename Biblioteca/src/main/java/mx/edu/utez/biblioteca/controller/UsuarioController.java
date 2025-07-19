@@ -1,21 +1,29 @@
-package mx.edu.utez.biblioteca.controller;
+package mx.edu.utez.biblioteca.controlle
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class UsuarioController {
     @FXML
     private TextField txtcorreo;
     @FXML
     private PasswordField txtPassword;
+    @FXML
+    private StackPane loginPane;
 
     @FXML
     private void onLogin(ActionEvent e){
@@ -55,6 +63,19 @@ public class UsuarioController {
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
+    }
+
+
+    @FXML
+    public void initialize() {
+        BackgroundImage bgImage = new BackgroundImage(
+                new Image(getClass().getResource("/img/fondo.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+        );
+        loginPane.setBackground(new Background(bgImage));
     }
 
 }
