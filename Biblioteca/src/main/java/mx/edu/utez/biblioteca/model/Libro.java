@@ -67,4 +67,17 @@ public class Libro {
     public void setIdEditorial(int idEditorial) {
         this.idEditorial = idEditorial;
     }
+
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", resumen='" + resumen + '\'' +
+                ", anioPublicacion=" + anioPublicacion +
+                ", portada='" + portada + '\'' +
+                ", idEditorial=" + idEditorial +
+                '}';
+    }
 }
