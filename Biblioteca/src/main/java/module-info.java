@@ -5,6 +5,6 @@ module mx.edu.utez.biblioteca {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
 
-    opens mx.edu.utez.biblioteca to javafx.fxml;
+    opens mx.edu.utez.biblioteca.controller to javafx.fxml;
     exports mx.edu.utez.biblioteca;
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController">
+
+    <left>
+        <VBox spacing="10" alignment="TOP_CENTER"  BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="20" />
+            </padding>
+            <Label text="Biblioteca"  />
+            <Button text="Inicio"  />
+            <Button text="Búsqueda"  />
+        </VBox>
+    </left>
+
+    <top>
+        <HBox spacing="10" alignment="CENTER_RIGHT" >
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="Bienvenido"  />
+            <Button text="Iniciar sesión" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15" alignment="TOP_CENTER" >
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Agregados recientemente" />
+
+            <FlowPane fx:id="contenedorLibros" hgap="15" vgap="15">
+                <!-- Los libros se cargarán desde el controlador -->
+            </FlowPane>
+        </VBox>
+    </center>
+
+</BorderPane>
