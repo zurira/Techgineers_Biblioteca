@@ -2,7 +2,11 @@ package mx.edu.utez.biblioteca.dao.impl;
 
 import mx.edu.utez.biblioteca.dao.ILibro;
 import mx.edu.utez.biblioteca.model.Libro;
+import mx.edu.utez.biblioteca.config.DBConnection;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,9 @@ public class LibroDaoImpl implements ILibro {
                 LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID
                 """;
         try{
+            Connection con= DBConnection.getConnection();
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
 
         }catch(Exception e) {
             e.printStackTrace();
