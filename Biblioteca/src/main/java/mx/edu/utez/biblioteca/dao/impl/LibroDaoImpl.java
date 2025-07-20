@@ -27,6 +27,11 @@ public class LibroDaoImpl implements ILibro {
                 FROM LIBRO l
                 LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID
                 """;
+        try{
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
         return List.of();
     }
 }
