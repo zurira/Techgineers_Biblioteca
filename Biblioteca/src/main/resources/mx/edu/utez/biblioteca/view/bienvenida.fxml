@@ -17,5 +17,11 @@
             <Button text="Búsqueda" />
         </VBox>
     </left>
+    <top>
+        <HBox>
+            <Label text="Bienvenido" />
+            <Button text="Iniciar sesión" />
+        </HBox>
+    </top>
 
 </BorderPane>
