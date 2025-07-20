@@ -7,26 +7,26 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController">
+            fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController"
+            stylesheets="@../css/bienvenida.css">
 
     <left>
-        <VBox spacing="10" alignment="TOP_CENTER"  BorderPane.alignment="CENTER">
+        <VBox spacing="10" alignment="TOP_CENTER" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
                 <Insets top="20" left="10" right="10" bottom="20" />
             </padding>
-            <Label text="Biblioteca"  />
-            <Button text="Inicio"  />
-            <Button text="Búsqueda"  />
+            <Button text="Inicio" styleClass="nav-button"  />
+            <Button text="Buscar libros" styleClass="nav-button"  />
         </VBox>
     </left>
 
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" >
+        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="header">
             <padding>
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
-            <Label text="Bienvenido"  />
-            <Button text="Iniciar sesión" />
+            <Label text="Bienvenido" styleClass="titulo" />
+            <Button text="Iniciar sesión" styleClass="botonLogin"  />
         </HBox>
     </top>
 
@@ -35,8 +35,6 @@
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
-            <Label text="Agregados recientemente" />
-
             <FlowPane fx:id="contenedorLibros" hgap="15" vgap="15">
                 <!-- Los libros se cargarán desde el controlador -->
             </FlowPane>
