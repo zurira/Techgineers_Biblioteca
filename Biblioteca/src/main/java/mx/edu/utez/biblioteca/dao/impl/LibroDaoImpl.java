@@ -35,10 +35,20 @@ public class LibroDaoImpl implements ILibro {
             Connection con= DBConnection.getConnection();
             PreparedStatement ps=con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Libro libro = new Libro();
+                libro.setId(rs.getInt("ID"));
+                libro.setTitulo(rs.getString("TITULO"));
+                libro.setIdEditorial(rs.getInt("EDITORIAL"));
+                libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
+                libro.setPortada(rs.getString("PORTADA"));
+                libros.add(libro);
+
+            }
 
         }catch(Exception e) {
             e.printStackTrace();
         }
-        return List.of();
+        return libros;
     }
 }
