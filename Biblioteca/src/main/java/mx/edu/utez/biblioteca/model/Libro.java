@@ -8,4 +8,7 @@ public class Libro {
     private int anioPublicacion;
     private String portada;
     private int idEditorial;
+
+    public Libro() {
+    }
 }
