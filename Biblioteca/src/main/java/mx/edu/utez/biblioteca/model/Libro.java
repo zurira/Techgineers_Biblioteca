@@ -80,4 +80,5 @@ public class Libro {
                 ", idEditorial=" + idEditorial +
                 '}';
     }
+    //modelado terminado
 }
