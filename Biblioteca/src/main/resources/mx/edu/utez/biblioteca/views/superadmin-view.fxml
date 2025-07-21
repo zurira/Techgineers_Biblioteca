@@ -7,16 +7,13 @@
 
 <BorderPane fx:controller="mx.edu.utez.biblioteca.controller.SuperAdminController"
             xmlns:fx="http://javafx.com/fxml" prefWidth="900" prefHeight="600"
-            styleClass="main-background">
+            styleClass="main-background"
+            stylesheets="@../css/superadmin-style.css">
 
     <!-- ENCABEZADO -->
     <top>
         <HBox spacing="15" alignment="CENTER_LEFT" styleClass="header-bar">
-            <ImageView fitHeight="50" fitWidth="50">
-                <image>
-                    <Image url="@../images/admin_icon.png"/>
-                </image>
-            </ImageView>
+
             <Label text="SuperAdministrador" styleClass="header-label"/>
         </HBox>
     </top>
@@ -35,4 +32,3 @@
 
 </BorderPane>
 
-//falta la imagen
