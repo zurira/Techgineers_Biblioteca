@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.dao.impl;
 
 import mx.edu.utez.biblioteca.dao.ILibro;
 import mx.edu.utez.biblioteca.model.Libro;
+import mx.edu.utez.biblioteca.config.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
