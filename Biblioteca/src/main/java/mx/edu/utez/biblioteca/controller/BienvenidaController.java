@@ -2,12 +2,23 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
+import mx.edu.utez.biblioteca.model.Libro;
+
+import java.util.List;
 
 public class BienvenidaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
 
     @FXML private FlowPane contenedorLibros;
+
+    private void cargarLibros() {
+        contenedorLibros.getChildren().clear();
+        List<Libro> libros = libroDao.obtenerLibros();
+
+
+    }
 
 
 }
