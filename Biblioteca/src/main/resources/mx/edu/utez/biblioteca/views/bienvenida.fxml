@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.Rectangle?>
 
+<!--Interfaz terminada!-->
 
-<?import javafx.scene.image.Image?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController"
-            stylesheets="@../css/bienvenida.css">
+<BorderPane stylesheets="@../css/bienvenida.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController">
 
     <left>
-        <VBox spacing="10" alignment="TOP_CENTER" styleClass="sidebar" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_CENTER" spacing="10" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="20" left="10" right="10" bottom="20" />
+                <Insets bottom="20" left="10" right="10" top="20" />
             </padding>
-            <Button text="Inicio" styleClass="nav-button" >
+            <Button styleClass="nav-button" text="Inicio">
                 <graphic>
-                    <ImageView fitWidth="24" fitHeight="24">
+                    <ImageView fitHeight="24" fitWidth="24">
                         <image>
                             <Image url="@../img/bienvenida.png" />
                         </image>
                     </ImageView>
                 </graphic>
         </Button>
-            <Button text="Búsqueda" styleClass="nav-button" >
+            <Button styleClass="nav-button" text="Búsqueda">
                 <graphic>
-                    <ImageView fitWidth="24" fitHeight="24">
+                    <ImageView fitHeight="24" fitWidth="24">
                         <image>
                             <Image url="@../img/buscar.png" />
                         </image>
@@ -39,14 +36,14 @@
     </left>
 
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="header">
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="628.0" spacing="10" styleClass="header">
             <padding>
-                <Insets top="10" right="20" bottom="10" left="20"/>
+                <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
-            <Label text="Bienvenido" styleClass="titulo" />
-            <Button text="Iniciar sesión" styleClass="botonLogin" >
+            <Label styleClass="titulo" text="Bienvenido" />
+            <Button styleClass="botonLogin" text="Iniciar sesión">
                 <graphic>
-                    <ImageView fitWidth="24" fitHeight="24">
+                    <ImageView fitHeight="24" fitWidth="24">
                         <image>
                             <Image url="@../img/login.png" />
                         </image>
@@ -57,19 +54,16 @@
     </top>
 
     <center>
-        <VBox spacing="15" alignment="TOP_CENTER" >
+        <VBox alignment="TOP_CENTER" spacing="15">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
-            <ScrollPane fx:id="scrollLibros" fitToWidth="true" fitToHeight="true">
+            <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
                 <content>
-                    <FlowPane fx:id="contenedorLibros" hgap="20" vgap="20" prefWrapLength="600"/>
+                    <FlowPane fx:id="contenedorLibros" hgap="20" prefWrapLength="600" vgap="20" />
                 </content>
             </ScrollPane>
 
         </VBox>
     </center>
 </BorderPane>
-
-<!--Interfaz terminada!-->
-
