@@ -8,6 +8,9 @@ public class Libro {
     private int anioPublicacion;
     private String portada;
     private String Editorial;
+    private Autor autor;
+    private Editorial editorial;
+    private Categoria categoria;
 
 
     public Libro() {
@@ -69,6 +72,34 @@ public class Libro {
         this.Editorial = Editorial;
     }
 
+    public String getEditorial() {
+        return Editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public void setEditorial(String editorial) {
+        Editorial = editorial;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     @Override
     public String toString() {
         return "Libro{" +
@@ -79,6 +110,7 @@ public class Libro {
                 ", anioPublicacion=" + anioPublicacion +
                 ", portada='" + portada + '\'' +
                 ", Editorial=" + Editorial +
+                
                 '}';
     }
     //modelado terminado
