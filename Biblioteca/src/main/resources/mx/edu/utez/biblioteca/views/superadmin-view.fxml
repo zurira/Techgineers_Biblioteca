@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane fx:controller="mx.edu.utez.biblioteca.controller.SuperAdminController"
+            xmlns:fx="http://javafx.com/fxml" prefWidth="900" prefHeight="600"
+            styleClass="main-background">
+
+    <!-- ENCABEZADO -->
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT" styleClass="header-bar">
+            <ImageView fitHeight="50" fitWidth="50">
+                <image>
+                    <Image url="@../images/admin_icon.png"/>
+                </image>
+            </ImageView>
+            <Label text="SuperAdministrador" styleClass="header-label"/>
+        </HBox>
+    </top>
+
+    <!-- CENTRO -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" styleClass="center-container">
+
+            <Button text="Registrar Administrador" onAction="#registrarAdministrador" styleClass="main-button"/>
+            <Button text="Editar Administrador" onAction="#editarAdministrador" styleClass="main-button"/>
+            <Button text="Eliminar Administrador" onAction="#eliminarAdministrador" styleClass="main-button"/>
+            <Button text="Cerrar Sesión" onAction="#cerrarSesion" styleClass="logout-button"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
+
+//falta la imagen
