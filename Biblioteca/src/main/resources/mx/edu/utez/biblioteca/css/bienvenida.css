@@ -22,10 +22,16 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: white;
     -fx-cursor: hand;
+    -fx-min-width: 100;
+    -fx-max-width: 100;
+    -fx-pref-width: 100;
 }
 
 .nav-button:hover {
     -fx-background-color: #CDC6C3;
+    -fx-min-width: 100;
+    -fx-max-width: 100;
+    -fx-pref-width: 100;
 }
 
 .header {
@@ -52,5 +58,23 @@
 .botonLogin:hover {
     -fx-background-color: #5c4d4d;
 }
+
+.card-libro {
+    -fx-background-color: #E7D7C9;
+    -fx-padding: 10;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 3);
+    -fx-pref-width: 150;
+}
+
+.titulo-libro {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
 
 
