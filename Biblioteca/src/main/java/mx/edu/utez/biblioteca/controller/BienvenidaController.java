@@ -76,5 +76,15 @@ public class BienvenidaController {
         System.out.println("Año: " + libro.getAnioPublicacion());
     }
 
+    @FXML
+    private void irBusqueda() {
+        // Falta implementar el cambio a la vista de búsqueda
+    }
+
+    @FXML
+    private void irLogin() {
+        // Falta redirigir a la vista de login
+    }
+
 }
 
