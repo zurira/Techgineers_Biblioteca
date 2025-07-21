@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.DetallesModalController"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/detalles.css">
+    <VBox spacing="10" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" styleClass="detalle-root">
+
+        <Label fx:id="titulo" styleClass="titulo"/>
+        <ImageView fx:id="portada" fitHeight="200" fitWidth="130"/>
+        <Label fx:id="autor"/>
+        <Label fx:id="isbn"/>
+        <Label fx:id="editorial"/>
+        <Label fx:id="anio"/>
+        <Label fx:id="resumen" wrapText="true"/>
+
+        <Button text="Cerrar" />
+    </VBox>
+
+</BorderPane>
