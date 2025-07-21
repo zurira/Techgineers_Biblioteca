@@ -7,7 +7,7 @@ public class Libro {
     private String resumen;
     private int anioPublicacion;
     private String portada;
-    private int idEditorial;
+    private String Editorial;
 
     public Libro() {
     }
@@ -60,12 +60,12 @@ public class Libro {
         this.anioPublicacion = anioPublicacion;
     }
 
-    public int getIdEditorial() {
-        return idEditorial;
+    public String getIdEditorial() {
+        return Editorial;
     }
 
-    public void setIdEditorial(int idEditorial) {
-        this.idEditorial = idEditorial;
+    public void setIdEditorial(String Editorial) {
+        this.Editorial = Editorial;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Libro {
                 ", resumen='" + resumen + '\'' +
                 ", anioPublicacion=" + anioPublicacion +
                 ", portada='" + portada + '\'' +
-                ", idEditorial=" + idEditorial +
+                ", Editorial=" + Editorial +
                 '}';
     }
     //modelado terminado

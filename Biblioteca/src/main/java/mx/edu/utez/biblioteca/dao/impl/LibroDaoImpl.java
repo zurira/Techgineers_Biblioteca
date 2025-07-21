@@ -39,7 +39,7 @@ public class LibroDaoImpl implements ILibro {
                 Libro libro = new Libro();
                 libro.setId(rs.getInt("ID"));
                 libro.setTitulo(rs.getString("TITULO"));
-                libro.setIdEditorial(rs.getInt("EDITORIAL"));
+                libro.setIdEditorial(rs.getString("EDITORIAL"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
                 libros.add(libro);
