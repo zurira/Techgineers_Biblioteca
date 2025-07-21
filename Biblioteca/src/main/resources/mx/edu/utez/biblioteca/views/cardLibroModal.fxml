@@ -15,31 +15,6 @@
             fx:controller="mx.edu.utez.biblioteca.controller.CardLibroModalController"
             prefHeight="400.0" prefWidth="600.0"
             stylesheets="@../css/cardLibro.css">
-    <left>
-        <VBox alignment="TOP_CENTER" spacing="10" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="20" left="10" right="10" top="20" />
-            </padding>
-            <Button styleClass="nav-button" text="Inicio">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../img/bienvenida.png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button styleClass="nav-button" text="Búsqueda">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../img/buscar.png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </VBox>
-    </left>
 
 
 </BorderPane>
