@@ -9,6 +9,7 @@ public class Libro {
     private String portada;
     private String Editorial;
 
+
     public Libro() {
     }
 
