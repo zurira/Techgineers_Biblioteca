@@ -26,6 +26,9 @@ public class BienvenidaController {
     }
 
     private VBox crearCardLibro (Libro Libro){
+        VBox card = new VBox(10);
+        card.getStyleClass().add("card-libro");
+        card.setPrefWidth(150);
 
     }
 
