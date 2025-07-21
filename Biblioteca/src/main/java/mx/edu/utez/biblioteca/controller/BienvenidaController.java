@@ -34,7 +34,16 @@ public class BienvenidaController {
         ImageView portada = new ImageView();
         try {
             Image img = null;
+            try {
+                System.out.println("Cargando desde: " + libro.getPortada());
+                img = new Image(libro.getPortada(), false);  //Se carga la url remota de la base de datos
+                portada.setImage(img);
+            } catch (Exception e) {
+                //En caso de error con la carga de la imagen, el programa sigue y se carga una imagen por defecto
+                System.out.println("Error al cargar imagen: " + e.getMessage());
+                portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
 
+            }
 
         } catch (Exception e) {
             // En caso de error, se puede cargar una imagen por defecto
