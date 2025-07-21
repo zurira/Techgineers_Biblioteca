@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController"
@@ -15,8 +16,24 @@
             <padding>
                 <Insets top="20" left="10" right="10" bottom="20" />
             </padding>
-            <Button text="Inicio" styleClass="nav-button"  />
-            <Button text="Buscar libros" styleClass="nav-button"  />
+            <Button text="Inicio" styleClass="nav-button" >
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24">
+                        <image>
+                            <Image url="@../img/bienvenida.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+        </Button>
+            <Button text="Búsqueda" styleClass="nav-button" >
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24">
+                        <image>
+                            <Image url="@../img/buscar.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
         </VBox>
     </left>
 
@@ -26,7 +43,15 @@
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
             <Label text="Bienvenido" styleClass="titulo" />
-            <Button text="Iniciar sesión" styleClass="botonLogin"  />
+            <Button text="Iniciar sesión" styleClass="botonLogin" >
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24">
+                        <image>
+                            <Image url="@../img/login.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
         </HBox>
     </top>
 

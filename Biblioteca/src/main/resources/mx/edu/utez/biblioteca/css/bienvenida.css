@@ -22,16 +22,18 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: white;
     -fx-cursor: hand;
-    -fx-min-width: 100;
-    -fx-max-width: 100;
-    -fx-pref-width: 100;
+    -fx-min-width: 150;
+    -fx-max-width: 150;
+    -fx-pref-width: 150;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .nav-button:hover {
     -fx-background-color: #CDC6C3;
-    -fx-min-width: 100;
-    -fx-max-width: 100;
-    -fx-pref-width: 100;
+    -fx-min-width: 150;
+    -fx-max-width: 150;
+    -fx-pref-width: 150;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .header {
@@ -66,7 +68,7 @@
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 3);
-    -fx-pref-width: 150;
+    -fx-pref-width: 170;
 }
 
 .titulo-libro {
@@ -75,6 +77,10 @@
     -fx-text-fill: #333;
     -fx-alignment: center;
 }
+
+
+
+
 
 
 

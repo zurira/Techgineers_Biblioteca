@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -41,6 +42,7 @@ public class BienvenidaController {
         VBox card = new VBox(10);
         card.getStyleClass().add("card-libro");
         card.setPrefWidth(150);
+        card.setAlignment(Pos.CENTER);
         ImageView portada = new ImageView();
         try {
             Image img = null;
