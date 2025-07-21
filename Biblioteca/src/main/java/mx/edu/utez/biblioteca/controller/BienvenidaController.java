@@ -49,6 +49,13 @@ public class BienvenidaController {
             // En caso de error, se puede cargar una imagen por defecto
             portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
         }
+
+        portada.setFitWidth(130);
+        portada.setFitHeight(190);
+        portada.setPreserveRatio(false);
+        portada.setSmooth(true);
+        portada.setCache(true);
+        
         return card;
     }
 
