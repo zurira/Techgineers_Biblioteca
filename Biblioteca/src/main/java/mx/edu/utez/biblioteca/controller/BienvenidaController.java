@@ -62,6 +62,8 @@ public class BienvenidaController {
         titulo.setWrapText(true);
         titulo.setMaxWidth(130);
 
+        card.getChildren().addAll(portada, titulo);
+
         return card;
     }
 
