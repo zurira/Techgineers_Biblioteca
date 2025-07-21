@@ -22,11 +22,21 @@
             </padding>
             <Button styleClass="nav-button" text="Inicio">
                 <graphic>
-
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../img/bienvenida.png" />
+                        </image>
+                    </ImageView>
                 </graphic>
             </Button>
             <Button styleClass="nav-button" text="Búsqueda">
-
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../img/buscar.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
             </Button>
         </VBox>
     </left>
