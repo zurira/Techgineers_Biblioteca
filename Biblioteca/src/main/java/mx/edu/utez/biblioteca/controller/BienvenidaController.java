@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -55,7 +56,12 @@ public class BienvenidaController {
         portada.setPreserveRatio(false);
         portada.setSmooth(true);
         portada.setCache(true);
-        
+
+        Label titulo = new Label(libro.getTitulo());
+        titulo.getStyleClass().add("titulo-libro");
+        titulo.setWrapText(true);
+        titulo.setMaxWidth(130);
+
         return card;
     }
 
