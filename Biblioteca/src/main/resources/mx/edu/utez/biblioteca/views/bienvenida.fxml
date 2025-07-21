@@ -35,12 +35,14 @@
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
-            <FlowPane fx:id="contenedorLibros" hgap="15" vgap="15">
-                <!-- Los libros se cargarán desde el controlador -->
-            </FlowPane>
+            <ScrollPane fx:id="scrollLibros" fitToWidth="true" fitToHeight="true">
+                <content>
+                    <FlowPane fx:id="contenedorLibros" hgap="20" vgap="20" prefWrapLength="600"/>
+                </content>
+            </ScrollPane>
+
         </VBox>
     </center>
-
 </BorderPane>
 
 

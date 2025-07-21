@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -10,11 +11,19 @@ import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 
 import java.util.List;
+import java.io.IOException;
 
 public class BienvenidaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
 
     @FXML private FlowPane contenedorLibros;
+    @FXML
+    private ScrollPane scrollLibros;
+
+    @FXML
+    public void initialize() {
+        cargarLibros();
+    }
 
     private void cargarLibros() {
         contenedorLibros.getChildren().clear();
