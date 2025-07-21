@@ -17,6 +17,15 @@ public class BienvenidaController {
         contenedorLibros.getChildren().clear();
         List<Libro> libros = libroDao.obtenerLibros();
 
+        for (Libro libro : libros) {
+            VBox card = crearCardLibro(libro);
+            contenedorLibros.getChildren().add(card);
+        }
+
+
+    }
+
+    private VBox crearCardLibro (Libro Libro){
 
     }
 
