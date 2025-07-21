@@ -20,7 +20,7 @@
         <Label fx:id="anio"/>
         <Label fx:id="resumen" wrapText="true"/>
 
-        <Button text="Cerrar" />
+        <Button fx:id="btnCerrar" text="Cerrar" />
     </VBox>
 
 </BorderPane>
