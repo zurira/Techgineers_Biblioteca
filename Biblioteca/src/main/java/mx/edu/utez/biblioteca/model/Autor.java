@@ -4,6 +4,9 @@ public class Autor {
     private int id;
     private String nombreCompleto;
 
+    public Autor() {
+    }
+
     public int getId() {
         return id;
     }
