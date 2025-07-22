@@ -79,13 +79,7 @@ public class BienvenidaController {
 
         return card;
     }
-    private void mostrarDetalles(Libro libro) {
-        // Falta crear el modal
-        System.out.println("Título: " + libro.getTitulo());
-        System.out.println("ISBN: " + libro.getIsbn());
-        System.out.println("Resumen: " + libro.getResumen());
-        System.out.println("Año: " + libro.getAnioPublicacion());
-    }
+
 
     @FXML
     private void irBusqueda() {
