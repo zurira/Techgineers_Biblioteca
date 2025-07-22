@@ -71,13 +71,16 @@
     -fx-pref-width: 170;
 }
 
+.card-libro:hover {
+    -fx-background-color: #dcc0a3;
+}
+
 .titulo-libro {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
     -fx-alignment: center;
 }
-
 
 
 

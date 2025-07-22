@@ -91,5 +91,15 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.css</include>
+                    <include>**/*.fxml</include>
+                    <include>**/*.png</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

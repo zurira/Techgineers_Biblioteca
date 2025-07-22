@@ -11,7 +11,6 @@ public class DBConnection {
     private static final String USER     = "";
     private static final String PASSWORD = "";
 
-
     // Obtiene una conexión nueva
     public static Connection getConnection() throws SQLException {
         // 1. Apunta al directorio donde descomprimiste el wallet
