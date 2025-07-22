@@ -42,8 +42,15 @@
             <padding>
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
-            <Label styleClass="titulo" text="Buscar libro" />
+            <Label styleClass="titulo" text="Búsqueda de libros" />
             <Button styleClass="botonLogin" text="Iniciar sesión">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../img/login.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
             </Button>
         </HBox>
     </top>
