@@ -62,7 +62,16 @@
             </padding>
             <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
                 <content>
-                    <FlowPane fx:id="contenedorLibros" hgap="20" prefWrapLength="600" vgap="20" />
+                    <VBox spacing="15">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <HBox spacing="10">
+                            <TextField fx:id="txtBuscar" promptText="Buscar libro..." HBox.hgrow="ALWAYS"/>
+                            <ComboBox fx:id="cmbCategoria" promptText="Categoría" />
+                        </HBox>
+                        <FlowPane fx:id="contenedorResultados" hgap="20" vgap="20" />
+                    </VBox>
                 </content>
             </ScrollPane>
 
