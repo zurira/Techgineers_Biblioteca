@@ -18,7 +18,7 @@ public class SuperAdminController {
     public void initialize() {
         // TODO: Configurar columnas, carga de datos reales
 
-        // 👉 Aquí colocarás la lógica de cerrar sesión con ventana emergente
+        // 👉 Aquí se colocaras la lógica de cerrar sesión con ventana emergente
         logoutButton.setOnAction(event -> {
             // TODO: Mostrar ventana de confirmación de cerrar sesión
         });
@@ -27,7 +27,7 @@ public class SuperAdminController {
             // TODO: Abrir ventana para agregar nuevo administrador
         });
 
-        // Para cada fila podrás usar una celda personalizada para "Acciones"
+        // Para cada fila se podrá usar una celda personalizada para "Acciones"
         // con botones de editar y eliminar
     }
 }
