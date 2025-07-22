@@ -6,16 +6,21 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.">
-    //completar ruta
+            fx:controller="mx.edu.utez.biblioteca.controller.AdminDashboardController">
 
     <!-- PANEL IZQUIERDO: Menú lateral -->
     <left>
         <VBox spacing="15" style="-fx-background-color: #f5f0ea;" alignment="TOP_CENTER" prefWidth="200">
-            <VBox spacing="5" alignment="CENTER" padding="15">
+            <VBox spacing="5" alignment="CENTER">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
                 <Label text="Logo" style="-fx-font-size: 18px; -fx-text-fill: #887766;" />
             </VBox>
-            <VBox spacing="10" alignment="TOP_LEFT" padding="10">
+            <VBox spacing="10" alignment="TOP_LEFT">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
                 <Button text="📚 Libros" prefWidth="180" />
                 <Button text="👥 Bibliotecarios" prefWidth="180" />
             </VBox>
@@ -24,8 +29,10 @@
 
     <!-- PANEL SUPERIOR: Encabezado -->
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" padding="15"
-              style="-fx-background-color: #a88e7d;">
+        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: #a88e7d;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
             <Label text="Administrador" style="-fx-text-fill: white; -fx-font-weight: bold;" />
             <Label text="Nombre usuario" style="-fx-text-fill: white;" />
             <Button text="→" />
@@ -34,7 +41,10 @@
 
     <!-- CONTENIDO CENTRAL -->
     <center>
-        <VBox spacing="15" padding="20" style="-fx-background-color: #f5f0ea;">
+        <VBox spacing="15" style="-fx-background-color: #f5f0ea;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
             <HBox spacing="10">
                 <TextField fx:id="campoBusqueda" promptText="Buscar usuario" prefWidth="400"/>
                 <Button text="+ Agregar libro" fx:id="btnAgregarLibro"/>
