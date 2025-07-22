@@ -33,3 +33,18 @@
                 <TextField fx:id="searchField" promptText="Buscar administrador" prefWidth="250" />
                 <Button fx:id="addButton" text="+ Agregar administrador" />
             </HBox>
+
+            <!-- Tabla -->
+            <TableView fx:id="adminTable" prefHeight="300" prefWidth="960">
+                <columns>
+                    <TableColumn text="No." prefWidth="40" />
+                    <TableColumn text="Nombre completo" prefWidth="180" />
+                    <TableColumn text="Usuario" prefWidth="150" />
+                    <TableColumn text="Correo" prefWidth="200" />
+                    <TableColumn text="Estado" prefWidth="80" />
+                    <TableColumn text="Acciones" prefWidth="150" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
