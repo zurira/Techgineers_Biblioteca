@@ -24,4 +24,7 @@
         </HBox>
     </top>
 
-    
+    <!-- Contenido central -->
+    <center>
+        <VBox spacing="20" alignment="TOP_LEFT" style="-fx-padding: 20;">
+            <Label text="Administradores registrados" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
