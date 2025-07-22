@@ -37,6 +37,17 @@
         </VBox>
     </left>
 
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="628.0" spacing="10" styleClass="header">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
+            <Label styleClass="titulo" text="Buscar libro" />
+            <Button styleClass="botonLogin" text="Iniciar sesión">
+            </Button>
+        </HBox>
+    </top>
+
 
 </BorderPane>
 
