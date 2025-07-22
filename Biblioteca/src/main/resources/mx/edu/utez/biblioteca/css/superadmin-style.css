@@ -1,44 +1,15 @@
-.main-background {
-    -fx-background-color: #F4F4F4;
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.header-bar {
-    -fx-background-color: #2C3E50;
-    -fx-padding: 15;
-}
-
-.header-label {
-    -fx-font-size: 22px;
+.button {
+    -fx-background-color: #A38F85;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
 }
 
-.center-container {
-    -fx-padding: 40;
-}
-
-.main-button {
-    -fx-pref-width: 300px;
-    -fx-padding: 10px;
-    -fx-font-size: 16px;
-    -fx-background-color: #3498DB;
-    -fx-text-fill: white;
-    -fx-background-radius: 8px;
-}
-
-.main-button:hover {
-    -fx-background-color: #2980B9;
-}
-
-.logout-button {
-    -fx-pref-width: 300px;
-    -fx-padding: 10px;
-    -fx-font-size: 16px;
-    -fx-background-color: #E74C3C;
-    -fx-text-fill: white;
-    -fx-background-radius: 8px;
-}
-
-.logout-button:hover {
-    -fx-background-color: #C0392B;
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #A38F85;
 }
