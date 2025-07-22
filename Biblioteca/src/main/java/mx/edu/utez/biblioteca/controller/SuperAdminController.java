@@ -1,36 +1,33 @@
 package mx.edu.utez.biblioteca.controller;
 
+
+
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class SuperAdminController {
 
-    @FXML
-    private void registrarAdministrador() {
-        mostrarAlerta("Abrir ventana para registrar un nuevo administrador.");
-        // Aquí se carga las  ventanas emergentes para registrar administrador
-    }
+    @FXML private TableView<?> adminTable;
+    @FXML private TextField searchField;
+    @FXML private Button addButton;
+    @FXML private Button logoutButton;
 
     @FXML
-    private void editarAdministrador() {
-        mostrarAlerta("Abrir ventana para editar administrador existente.");
-    }
+    public void initialize() {
+        // TODO: Configurar columnas, carga de datos reales
 
-    @FXML
-    private void eliminarAdministrador() {
-        mostrarAlerta("Abrir ventana para eliminar administrador.");
-    }
+        // 👉 Aquí colocarás la lógica de cerrar sesión con ventana emergente
+        logoutButton.setOnAction(event -> {
+            // TODO: Mostrar ventana de confirmación de cerrar sesión
+        });
 
-    @FXML
-    private void cerrarSesion() {
-        mostrarAlerta("Cerrar sesión y volver al login.");
-    }
+        addButton.setOnAction(event -> {
+            // TODO: Abrir ventana para agregar nuevo administrador
+        });
 
-    private void mostrarAlerta(String mensaje) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Acción del SuperAdmin");
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
+        // Para cada fila podrás usar una celda personalizada para "Acciones"
+        // con botones de editar y eliminar
     }
 }
