@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.">
+    //completar ruta
+
+    <!-- PANEL IZQUIERDO: Menú lateral -->
+    <left>
+        <VBox spacing="15" style="-fx-background-color: #f5f0ea;" alignment="TOP_CENTER" prefWidth="200">
+            <VBox spacing="5" alignment="CENTER" padding="15">
+                <Label text="Logo" style="-fx-font-size: 18px; -fx-text-fill: #887766;" />
+            </VBox>
+            <VBox spacing="10" alignment="TOP_LEFT" padding="10">
+                <Button text="📚 Libros" prefWidth="180" />
+                <Button text="👥 Bibliotecarios" prefWidth="180" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- PANEL SUPERIOR: Encabezado -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_RIGHT" padding="15"
+              style="-fx-background-color: #a88e7d;">
+            <Label text="Administrador" style="-fx-text-fill: white; -fx-font-weight: bold;" />
+            <Label text="Nombre usuario" style="-fx-text-fill: white;" />
+            <Button text="→" />
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO CENTRAL -->
+    <center>
+        <VBox spacing="15" padding="20" style="-fx-background-color: #f5f0ea;">
+            <HBox spacing="10">
+                <TextField fx:id="campoBusqueda" promptText="Buscar usuario" prefWidth="400"/>
+                <Button text="+ Agregar libro" fx:id="btnAgregarLibro"/>
+            </HBox>
+
+            <Label text="Información de libros" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tablaLibros" prefHeight="300">
+                <columns>
+                    <TableColumn text="NO." prefWidth="50"/>
+                    <TableColumn text="ISBN" prefWidth="100"/>
+                    <TableColumn text="Título del Libro" prefWidth="150"/>
+                    <TableColumn text="Autor" prefWidth="120"/>
+                    <TableColumn text="Editorial" prefWidth="120"/>
+                    <TableColumn text="Descripción" prefWidth="200"/>
+                    <TableColumn text="Categoría" prefWidth="100"/>
+                    <TableColumn text="Acciones" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
