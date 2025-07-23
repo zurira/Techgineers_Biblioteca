@@ -23,7 +23,7 @@
                     </ImageView>
                 </graphic>
         </Button>
-            <Button styleClass="nav-button" text="Búsqueda">
+            <Button styleClass="nav-button" text="Búsqueda" onAction="#irBusqueda">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <image>

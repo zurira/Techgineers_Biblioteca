@@ -1,8 +1,10 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -52,7 +54,7 @@ public class BienvenidaController {
         try {
             Image img = null;
             try {
-                System.out.println("Cargando desde: " + libro.getPortada());
+                //System.out.println("Cargando desde: " + libro.getPortada());
                 img = new Image(libro.getPortada(), false);  //Se carga la url remota de la base de datos
                 portada.setImage(img);
             } catch (Exception e) {
@@ -104,8 +106,19 @@ public class BienvenidaController {
 
 
     @FXML
-    private void irBusqueda() {
-        // Falta implementar el cambio a la vista de búsqueda
+    private void irBusqueda(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/busqueda.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

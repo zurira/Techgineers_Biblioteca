@@ -93,7 +93,7 @@ public class BusquedaController {
         try {
             Image img = null;
             try {
-                System.out.println("Cargando desde: " + libro.getPortada());
+                //System.out.println("Cargando desde: " + libro.getPortada());
                 img = new Image(libro.getPortada(), false);  //Se carga la url remota de la base de datos
                 portada.setImage(img);
             } catch (Exception e) {
