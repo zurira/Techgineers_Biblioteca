@@ -121,15 +121,12 @@ public class LibroDaoImpl implements ILibro {
                 autor.setNombreCompleto(rs.getString("AUTORES"));
                 libro.setAutor(autor);
 
-
-
+                libros.add(libro);
             }
 
         }catch(Exception e) {
             e.printStackTrace();
         }
-
-
         return libros;
     }
 }
