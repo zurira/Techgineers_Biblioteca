@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/Biblioteca/Biblioteca.iml" filepath="$PROJECT_DIR$/Biblioteca/Biblioteca.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Techgineers_Biblioteca.iml" filepath="$PROJECT_DIR$/.idea/Techgineers_Biblioteca.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/Biblioteca/mx.edu.utez.biblioteca.iml" filepath="$PROJECT_DIR$/Biblioteca/mx.edu.utez.biblioteca.iml" />
+>>>>>>> TTS04
     </modules>
   </component>
 </project>
