@@ -19,6 +19,7 @@ import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 
 import java.io.IOException;
+import java.util.List;
 
 public class BusquedaController {
     @FXML private TextField txtBuscar;
@@ -27,6 +28,20 @@ public class BusquedaController {
 
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+
+    private void cargarLibros(String filtro, String categoria) {
+        contenedorResultados.getChildren().clear();
+
+        List<Libro> libros = libroDao.obtenerLibrosPorFiltro(
+                filtro == null ? "" : filtro,
+                categoria
+        );
+
+        for (Libro libro : libros) {
+            VBox card = crearCardLibro(libro);
+            contenedorResultados.getChildren().add(card);
+        }
+    }
 
 
     private VBox crearCardLibro (Libro libro){
