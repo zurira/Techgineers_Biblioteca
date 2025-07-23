@@ -110,6 +110,13 @@ public class LibroDaoImpl implements ILibro {
                 libro.setPortada(rs.getString("PORTADA"));
                 libro.setResumen(rs.getString("RESUMEN"));
 
+                //Se cargan los datos de la editorial
+                Editorial editorial = new Editorial();
+                editorial.setId(rs.getInt("ID_EDITORIAL"));
+                editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
+                libro.setEditorial(editorial);
+
+
             }
 
         }catch(Exception e) {
