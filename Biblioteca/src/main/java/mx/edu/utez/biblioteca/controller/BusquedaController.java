@@ -1,11 +1,24 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.CategoriaDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
+import mx.edu.utez.biblioteca.model.Libro;
+
+import java.io.IOException;
 
 public class BusquedaController {
     @FXML private TextField txtBuscar;
@@ -15,4 +28,62 @@ public class BusquedaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
+
+    private VBox crearCardLibro (Libro libro){
+        VBox card = new VBox(10);
+        card.getStyleClass().add("card-libro");
+        card.setPrefWidth(150);
+        card.setAlignment(Pos.CENTER);
+        ImageView portada = new ImageView();
+        try {
+            Image img = null;
+            try {
+                System.out.println("Cargando desde: " + libro.getPortada());
+                img = new Image(libro.getPortada(), false);  //Se carga la url remota de la base de datos
+                portada.setImage(img);
+            } catch (Exception e) {
+                //En caso de error con la carga de la imagen, el programa sigue y se carga una imagen por defecto
+                System.out.println("Error al cargar imagen: " + e.getMessage());
+                portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
+
+            }
+
+        } catch (Exception e) {
+            // En caso de error, se puede cargar una imagen por defecto
+            portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
+        }
+
+        portada.setFitWidth(130);
+        portada.setFitHeight(190);
+        portada.setPreserveRatio(false);
+        portada.setSmooth(true);
+        portada.setCache(true);
+
+        Label titulo = new Label(libro.getTitulo());
+        titulo.getStyleClass().add("titulo-libro");
+        titulo.setWrapText(true);
+        titulo.setMaxWidth(130);
+
+        card.getChildren().addAll(portada, titulo);
+
+        card.setOnMouseClicked(event -> {
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/detallesModal.fxml"));
+                Parent root = loader.load();
+
+                DetallesModalController controller = loader.getController();
+                controller.cargarDatos(libro); // El libro seleccionado
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Detalle del libro");
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        return card;
+    }
 }
