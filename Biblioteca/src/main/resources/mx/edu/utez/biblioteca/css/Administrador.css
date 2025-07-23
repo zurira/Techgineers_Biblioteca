@@ -1,0 +1,11 @@
+.logout-button {
+    -fx-background-color: #d9d9d9;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 30px;
+    -fx-cursor: hand;
+}
+.logout-button:hover {
+    -fx-background-color: #bfbfbf;
+}
