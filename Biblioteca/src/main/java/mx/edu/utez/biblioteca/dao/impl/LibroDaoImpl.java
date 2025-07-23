@@ -84,6 +84,14 @@ public class LibroDaoImpl implements ILibro {
             sql += " AND LOWER(c.NOMBRE) = ?";
         }
 
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
 
         return libros;
     }
