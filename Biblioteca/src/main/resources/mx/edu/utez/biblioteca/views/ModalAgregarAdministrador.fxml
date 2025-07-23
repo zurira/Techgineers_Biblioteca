@@ -16,4 +16,19 @@
             <Text text="Ingresa la información correctamente" style="-fx-font-size: 16px;" />
         </VBox>
 
-        
+        <GridPane hgap="20" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="33"/>
+            </columnConstraints>
+
+            <!-- Primera fila -->
+            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+            <Label text="Apellido paterno:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Apellido materno:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <TextField GridPane.columnIndex="2" GridPane.rowIndex="1"/>
