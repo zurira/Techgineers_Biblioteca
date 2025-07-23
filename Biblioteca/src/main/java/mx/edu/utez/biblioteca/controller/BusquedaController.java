@@ -29,6 +29,17 @@ public class BusquedaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
+    private void filtrarLibros() {
+        String texto = txtBuscar.getText().trim();
+        String categoria = cmbCategoria.getValue();
+
+        if (categoria != null && categoria.isEmpty()) {
+            categoria = null;
+        }
+
+        cargarLibros(texto, categoria);
+    }
+
     private void cargarLibros(String filtro, String categoria) {
         contenedorResultados.getChildren().clear();
 
