@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -42,6 +41,7 @@
 
             <Label text="Correo electrónico:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
             <TextField GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
 
             <!-- Tercera fila -->
             <Label text="Rol:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
