@@ -19,4 +19,5 @@
         <TextArea fx:id="txtResumen" wrapText="true" editable="false" prefHeight="100"/>
     </VBox>
 </AnchorPane>
-<!--Vista modal terminada y funcional>
+
+
