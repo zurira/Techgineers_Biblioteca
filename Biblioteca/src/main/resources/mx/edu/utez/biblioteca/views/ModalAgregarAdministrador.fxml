@@ -43,4 +43,18 @@
             <Label text="Correo electrónico:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
             <TextField GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
-            
+            <!-- Tercera fila -->
+            <Label text="Rol:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        </GridPane>
+
+        <Label text="Dirección:"/>
+        <TextArea prefHeight="60"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Cancelar" style="-fx-background-color: transparent; -fx-border-color: #A38F85 ; -fx-text-fill: #A38F85; -fx-font-weight: bold;" />
+            <Button text="Guardar" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" />
+        </HBox>
+    </VBox>
+</AnchorPane>
+
