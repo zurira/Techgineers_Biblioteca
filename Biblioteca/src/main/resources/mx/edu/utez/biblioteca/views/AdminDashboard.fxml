@@ -2,55 +2,50 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.AdminDashboardController">
+            fx:controller="mx.edu.utez.biblioteca.controller.AdminDashboardController"
+            stylesheets="@../css/Administrador.css">
 
-    <!-- PANEL IZQUIERDO: Menú lateral -->
+    <!-- Menú lateral -->
     <left>
-        <VBox spacing="15" style="-fx-background-color: #f5f0ea;" alignment="TOP_CENTER" prefWidth="200">
-            <VBox spacing="5" alignment="CENTER">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-                <Label text="Logo" style="-fx-font-size: 18px; -fx-text-fill: #887766;" />
-            </VBox>
-            <VBox spacing="10" alignment="TOP_LEFT">
-                <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </padding>
-                <Button text="📚 Libros" prefWidth="180" />
-                <Button text="👥 Bibliotecarios" prefWidth="180" />
-            </VBox>
+        <VBox fx:id="menuLateral" spacing="10.0" alignment="TOP_CENTER" prefWidth="200" styleClass="menu-lateral">
+            <Label text="Logo" styleClass="titulo-logo"/>
+            <Button text="📚 Libros" styleClass="boton-menu"/>
+            <Button text="👥 Bibliotecarios" styleClass="boton-menu"/>
         </VBox>
     </left>
 
-    <!-- PANEL SUPERIOR: Encabezado -->
+    <!-- Encabezado -->
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: #a88e7d;">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
-            <Label text="Administrador" style="-fx-text-fill: white; -fx-font-weight: bold;" />
-            <Label text="Nombre usuario" style="-fx-text-fill: white;" />
-            <Button text="→" />
+        <HBox spacing="10.0" alignment="CENTER_RIGHT" padding="10.0" styleClass="encabezado">
+            <Label text="Administrador" styleClass="nombre-rol"/>
+            <Label fx:id="nombreUsuario" text="Nombre Usuario" />
+            <Button fx:id="btnCerrarSesion" styleClass="logout-button">
+                <graphic>
+                    <ImageView fitWidth="20.0" fitHeight="20.0">
+                        <image>
+                            <Image url="@../Imagenes/logoutProyect.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
         </HBox>
     </top>
 
-    <!-- CONTENIDO CENTRAL -->
+    <!-- Centro -->
     <center>
-        <VBox spacing="15" style="-fx-background-color: #f5f0ea;">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <HBox spacing="10">
+        <VBox spacing="15.0" alignment="TOP_LEFT" styleClass="contenido">
+            <HBox spacing="10.0">
                 <TextField fx:id="campoBusqueda" promptText="Buscar usuario" prefWidth="400"/>
                 <Button text="+ Agregar libro" fx:id="btnAgregarLibro"/>
             </HBox>
 
-            <Label text="Información de libros" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label text="Información de libros" styleClass="titulo-tabla" />
 
             <TableView fx:id="tablaLibros" prefHeight="300">
                 <columns>
@@ -66,4 +61,5 @@
             </TableView>
         </VBox>
     </center>
+
 </BorderPane>
