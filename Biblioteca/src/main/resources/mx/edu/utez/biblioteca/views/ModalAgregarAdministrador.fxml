@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" prefWidth="800" prefHeight="500" style="-fx-background-color: #F1EFEF;">
+    <VBox spacing="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <VBox spacing="5">
+            <Text text="Agregar administrador" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <Text text="Ingresa la información correctamente" style="-fx-font-size: 16px;" />
+        </VBox>
+
+        
