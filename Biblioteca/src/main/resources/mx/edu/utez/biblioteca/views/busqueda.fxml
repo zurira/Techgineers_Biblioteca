@@ -43,7 +43,7 @@
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
             <Label styleClass="titulo" text="Búsqueda de libros" />
-            <Button styleClass="botonLogin" text="Iniciar sesión">
+            <Button styleClass="botonLogin" text="Iniciar sesión" onAction="#irLogin">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <image>

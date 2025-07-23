@@ -2,9 +2,11 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -140,5 +142,21 @@ public class BusquedaController {
             }
         });
         return card;
+    }
+
+    @FXML
+    private void irLogin(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
