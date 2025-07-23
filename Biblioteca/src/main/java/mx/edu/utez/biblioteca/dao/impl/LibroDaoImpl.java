@@ -88,6 +88,20 @@ public class LibroDaoImpl implements ILibro {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
 
+            String filtroLike = "%" + filtro.toLowerCase() + "%";
+
+            int index = 1;
+            ps.setString(index++, filtroLike);
+            ps.setString(index++, filtroLike);
+            ps.setString(index++, filtroLike);
+
+            if (categoria != null && !categoria.isBlank()) {
+                ps.setString(index++, categoria.toLowerCase());
+            }
+
+
+
+
         }catch(Exception e) {
             e.printStackTrace();
         }
