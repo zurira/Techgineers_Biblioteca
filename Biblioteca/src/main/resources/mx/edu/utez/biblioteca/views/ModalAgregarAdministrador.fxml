@@ -32,3 +32,15 @@
 
             <Label text="Apellido materno:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
             <TextField GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+            <!-- Segunda fila -->
+            <Label text="Fecha de nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+            <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Correo electrónico:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <TextField GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+            
