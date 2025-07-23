@@ -67,6 +67,19 @@ public class LibroDaoImpl implements ILibro {
     }
 
     public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria){
-        return categorias;
+        List<Libro> libros = new ArrayList<>();
+        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.RESUMEN, " +
+                "e.ID AS ID_EDITORIAL, e.NOMBRE AS NOMBRE_EDITORIAL, " +
+                "(SELECT LISTAGG(a.NOMBRE_COMPLETO, ', ') WITHIN GROUP (ORDER BY a.NOMBRE_COMPLETO) " +
+                " FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID WHERE la.ID_LIBRO = l.ID) AS AUTORES " +
+                "FROM LIBRO l " +
+                "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID " +
+                "LEFT JOIN LIBRO_CATEGORIA lc ON lc.ID_LIBRO = l.ID " +
+                "LEFT JOIN CATEGORIA c ON lc.ID_CATEGORIA = c.ID " +
+                "WHERE (LOWER(l.TITULO) LIKE ? OR LOWER(l.ISBN) LIKE ? OR EXISTS " +
+                " (SELECT 1 FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID " +
+                "  WHERE la.ID_LIBRO = l.ID AND LOWER(a.NOMBRE_COMPLETO) LIKE ?))";
+
+        return libros;
     }
 }
