@@ -116,6 +116,12 @@ public class LibroDaoImpl implements ILibro {
                 editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
                 libro.setEditorial(editorial);
 
+                //Se cargan datos del autor
+                Autor autor = new Autor();
+                autor.setNombreCompleto(rs.getString("AUTORES"));
+                libro.setAutor(autor);
+
+
 
             }
 
