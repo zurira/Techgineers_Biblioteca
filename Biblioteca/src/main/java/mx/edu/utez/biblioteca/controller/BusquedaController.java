@@ -1,5 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -28,6 +30,15 @@ public class BusquedaController {
 
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+
+    private void cargarCategorias() {
+        List<String> categorias = categoriaDao.obtenerNombresCategorias();
+        ObservableList<String> lista = FXCollections.observableArrayList();
+        lista.add(""); // opción vacía (sin filtro)
+        lista.addAll(categorias);
+        cmbCategoria.setItems(lista);
+    }
+
 
     private void filtrarLibros() {
         String texto = txtBuscar.getText().trim();
