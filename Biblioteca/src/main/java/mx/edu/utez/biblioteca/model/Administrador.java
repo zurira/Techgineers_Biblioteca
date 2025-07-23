@@ -8,7 +8,7 @@ public class Administrador {
     private String correo;
     private boolean estado;
 
-    
+
         public Administrador(int id, String nombreCompleto, String usuario, String correo, boolean estado) {
             this.id = id;
             this.nombreCompleto = nombreCompleto;
