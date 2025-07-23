@@ -11,4 +11,8 @@ module mx.edu.utez.biblioteca {
 
     exports mx.edu.utez.biblioteca;
     exports mx.edu.utez.biblioteca.controller;
+
+    exports mx.edu.utez.biblioteca.model;
+    opens mx.edu.utez.biblioteca.model to javafx.fxml;
+
 }

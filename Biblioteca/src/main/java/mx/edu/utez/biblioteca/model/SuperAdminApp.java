@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class SuperAdminApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/superadmin-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/superadmin-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("/style/superadmin-style.css").toExternalForm());
         stage.setTitle("Panel de SuperAdministrador");
