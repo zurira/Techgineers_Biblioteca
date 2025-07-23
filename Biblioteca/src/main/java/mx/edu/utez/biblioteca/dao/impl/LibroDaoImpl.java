@@ -80,6 +80,11 @@ public class LibroDaoImpl implements ILibro {
                 " (SELECT 1 FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID " +
                 "  WHERE la.ID_LIBRO = l.ID AND LOWER(a.NOMBRE_COMPLETO) LIKE ?))";
 
+        if (categoria != null && !categoria.isBlank()) {
+            sql += " AND LOWER(c.NOMBRE) = ?";
+        }
+
+
         return libros;
     }
 }
