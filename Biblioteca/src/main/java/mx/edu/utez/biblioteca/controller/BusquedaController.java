@@ -31,6 +31,24 @@ public class BusquedaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
+    @FXML
+    public void initialize() {
+        // Carga las categorías y los libros
+        cargarCategorias();
+        cargarLibros(null, null);
+
+        // cuando se escribe texto, se filtra
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrarLibros();
+        });
+
+        //cuando se selecciona una categoría, se filtra
+        cmbCategoria.setOnAction(event -> {
+            filtrarLibros();
+        });
+    }
+
+
     private void cargarCategorias() {
         List<String> categorias = categoriaDao.obtenerNombresCategorias();
         ObservableList<String> lista = FXCollections.observableArrayList();
