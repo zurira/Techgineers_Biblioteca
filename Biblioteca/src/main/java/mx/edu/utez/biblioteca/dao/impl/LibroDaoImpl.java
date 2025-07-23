@@ -65,4 +65,8 @@ public class LibroDaoImpl implements ILibro {
         }
         return libros;
     }
+
+    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria){
+        return categorias;
+    }
 }
