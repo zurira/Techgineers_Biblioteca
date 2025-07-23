@@ -29,4 +29,5 @@ public class CategoriaDaoImpl implements ICategoria {
         return categorias;
 
     }
+    //terminado
 }
