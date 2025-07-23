@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import mx.edu.utez.biblioteca.dao.impl.CategoriaDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 
 public class BusquedaController {
@@ -12,4 +13,6 @@ public class BusquedaController {
     @FXML private FlowPane contenedorResultados;
 
     LibroDaoImpl libroDao = new LibroDaoImpl();
+    CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+
 }
