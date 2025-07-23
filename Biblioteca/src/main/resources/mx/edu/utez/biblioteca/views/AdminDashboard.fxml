@@ -22,7 +22,10 @@
 
     <!-- Encabezado -->
     <top>
-        <HBox spacing="10.0" alignment="CENTER_RIGHT" padding="10.0" styleClass="encabezado">
+        <HBox spacing="10.0" alignment="CENTER_RIGHT" styleClass="encabezado">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
             <Label text="Administrador" styleClass="nombre-rol"/>
             <Label fx:id="nombreUsuario" text="Nombre Usuario" />
             <Button fx:id="btnCerrarSesion" styleClass="logout-button">
