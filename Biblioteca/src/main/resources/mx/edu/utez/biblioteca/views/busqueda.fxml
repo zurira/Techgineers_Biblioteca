@@ -16,7 +16,7 @@
             <padding>
                 <Insets bottom="20" left="10" right="10" top="20" />
             </padding>
-            <Button styleClass="nav-button" text="Inicio">
+            <Button styleClass="nav-button" text="Inicio" onAction="#irInicio">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <image>
