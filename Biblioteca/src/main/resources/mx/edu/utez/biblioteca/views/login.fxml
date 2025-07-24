@@ -6,12 +6,23 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.paint.Color?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="mx.edu.utez.biblioteca.controller.UsuarioController"
            stylesheets="@../css/login.css"
            prefHeight="400.0" prefWidth="600.0"
            fx:id="loginPane">
+    <Button>
+        <graphic>
+            <ImageView fitHeight="24" fitWidth="24">
+                <image>
+                    <Image url="@../img/regresar.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
 
     <children>
         <VBox alignment="CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
