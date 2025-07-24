@@ -35,4 +35,15 @@
 
     <Label text="Fecha límite *:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
 
+        <DatePicker fx:id="dateLimite" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+
+        <Label text="Fecha de entrega *:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateEntrega" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    </GridPane>
+
+    <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="30">
+        <Button text="Cancelar" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #A38F85; -fx-font-weight: bold;" />
+        <Button text="Guardar" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" />
+    </HBox>
 </AnchorPane>
+
