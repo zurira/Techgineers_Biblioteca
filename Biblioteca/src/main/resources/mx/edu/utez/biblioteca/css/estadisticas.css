@@ -20,10 +20,18 @@
     -fx-alignment: CENTER_LEFT;
 }
 
+.nav-button:hover {
+    -fx-background-color: #CDC6C3;
+    -fx-min-width: 150;
+    -fx-max-width: 150;
+    -fx-pref-width: 150;
+    -fx-alignment: CENTER_LEFT;
+}
+
 /* Fondo y barra superior */
 .top-bar {
     -fx-background-color: #A38F85;
-    -fx-pref-height: 60;
+    -fx-pref-height: 80;
     -fx-spacing: 20;
     -fx-alignment: CENTER_LEFT;
 }
@@ -46,21 +54,26 @@
     -fx-text-fill: white;
 }
 
-.usuario-nombre {
+.usuario-rol {
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.usuario-rol {
+.usuario-nombre {
     -fx-text-fill: white;
     -fx-font-size: 10px;
 }
 
 .logout-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-background-color: #726262;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
-
+.logout-button:hover {
+    -fx-background-color: #5c4d4d;
+}
 .top-estadisticas {
 
     position: absolute;
