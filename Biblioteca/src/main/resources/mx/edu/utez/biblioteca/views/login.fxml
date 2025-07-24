@@ -14,17 +14,17 @@
            stylesheets="@../css/login.css"
            prefHeight="400.0" prefWidth="600.0"
            fx:id="loginPane">
-    <Button>
-        <graphic>
-            <ImageView fitHeight="24" fitWidth="24">
-                <image>
-                    <Image url="@../img/regresar.png" />
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
 
     <children>
+        <Button fx:id="regresar" onAction="#irInicio" styleClass="login-button">
+            <graphic>
+                <ImageView fitHeight="24" fitWidth="24">
+                    <image>
+                        <Image url="@../img/regresar.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
         <VBox alignment="CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
             <padding>
                 <Insets top="30" right="30" bottom="30" left="30"/>
