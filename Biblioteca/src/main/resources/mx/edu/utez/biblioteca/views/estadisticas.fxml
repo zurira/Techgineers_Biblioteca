@@ -48,4 +48,19 @@
         </VBox>
     </left>
 
+    <top>
+        <HBox fx:id="topBar" styleClass="top-bar">
+            <Label text=" Estadísticas" styleClass="panel-label"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox styleClass="usuario-box">
+                <Label text="👤" styleClass="usuario-label"/>
+                <Label text="Nombre usuario" styleClass="usuario-nombre"/>
+                <Label text="Bibliotecario" styleClass="usuario-rol"/>
+                <Button fx:id="logoutButton" text="⎋" styleClass="logout-button"/>
+            </HBox>
+        </HBox>
+    </top>
+
+
 </BorderPane>
