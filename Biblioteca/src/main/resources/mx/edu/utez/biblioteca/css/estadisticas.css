@@ -6,3 +6,44 @@
     -fx-border-color: #000000;
     -fx-border-width: 0 0 1 0;
 }
+
+/* Fondo y barra superior */
+.top-bar {
+    -fx-background-color: #A38F85;
+    -fx-pref-height: 60;
+    -fx-spacing: 20;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Título del panel */
+.panel-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Sección de usuario */
+.usuario-box {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-padding: 0 20 0 0;
+}
+
+.usuario-label {
+    -fx-text-fill: white;
+}
+
+.usuario-nombre {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.usuario-rol {
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
