@@ -15,14 +15,15 @@ public class UsuarioDaoImpl implements IUsuario {
     public Usuario login(String correo, String pass) throws Exception {
         Usuario usuario = null;
         String sql = "SELECT u.ID, u.CORREO, u.PASSWORD, r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
-                "FROM USUARIO u " +
+                "FROM USUARIO_SISTEMA u " +
                 "JOIN ROL r ON u.ID_ROL = r.ID " +
-                "WHERE u.CORREO = ? AND u.PASSWORD = ?";
+                "WHERE (u.CORREO = ? OR u.USUARIO = ?) AND u.PASSWORD = ?";
         try {
             Connection con = DBConnection.getConnection(); // se estable la conexion
             PreparedStatement ps =  con.prepareStatement(sql); //se prepara la consulta para evitar la inyecion de SQL
-            ps.setString(1,correo);
-            ps.setString(2, pass);
+            ps.setString(1, correo); // aquí usas el mismo input para correo o usuario
+            ps.setString(2, correo); // se compara con USUARIO también
+            ps.setString(3, pass);
             ResultSet resultSet=ps.executeQuery(); //se ejecuta la consulta
             if(resultSet.next()){
                     usuario = new Usuario();
