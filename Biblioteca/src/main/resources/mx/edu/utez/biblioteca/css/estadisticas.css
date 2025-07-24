@@ -7,6 +7,19 @@
     -fx-border-width: 0 0 1 0;
 }
 
+.nav-button {
+    -fx-background-color: #EDE9E3;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-cursor: hand;
+    -fx-min-width: 150;
+    -fx-max-width: 150;
+    -fx-pref-width: 150;
+    -fx-alignment: CENTER_LEFT;
+}
+
 /* Fondo y barra superior */
 .top-bar {
     -fx-background-color: #A38F85;
@@ -47,3 +60,23 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
 }
+
+.top-estadisticas {
+
+    position: absolute;
+    width: 415px;
+    height: 591px;
+    left: 369px;
+    top: 187px;
+
+    background: #F1EFEF;
+    border-radius: 10px;
+
+}
+
+.titulo {
+    -fx-font-size: 18px;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+

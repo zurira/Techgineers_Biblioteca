@@ -12,7 +12,8 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.EstadisticasController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/estadisticas.css">
     <left>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
@@ -62,5 +63,19 @@
         </HBox>
     </top>
 
+    <center>
+        <VBox spacing="10" alignment="TOP_LEFT" prefWidth="300" styleClass="top-estadisticas">
+            <Label text="📚 Libros más prestados" styleClass="titulo"/>
+            <Label text="Estos fueron los top 10 libros más prestados en el mes:"/>
+            <ListView fx:id="listaLibrosMasPrestados" prefHeight="250"/>
+        </VBox>
+
+        <VBox spacing="10" alignment="TOP_LEFT" prefWidth="300" styleClass="top-estadisticas">
+            <Label text="🧑‍💼 Cliente con más préstamos" styleClass="titulo"/>
+            <Label text="Este fue el top 10 de clientes que más préstamos hicieron en el mes:"/>
+            <ListView fx:id="listaClientesMasPrestadores" prefHeight="250"/>
+        </VBox>
+
+    </center>
 
 </BorderPane>
