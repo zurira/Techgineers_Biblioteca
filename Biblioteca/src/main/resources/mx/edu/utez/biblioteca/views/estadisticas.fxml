@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.EstadisticasController"
@@ -17,10 +19,31 @@
                 <Insets bottom="20" left="10" right="10" top="20" />
             </padding>
             <Button styleClass="nav-button" text="Usuarios">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@../img/usuarios.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
             </Button>
             <Button styleClass="nav-button" text="Préstamos">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@../img/prestamos.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
             </Button>
             <Button styleClass="nav-button" text="Estadísticas">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@../img/estadisticas.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
             </Button>
         </VBox>
     </left>
