@@ -1,0 +1,12 @@
+.modal-libro {
+    -fx-background-color: #dcc0a3;
+    -fx-border-color: #A38F85;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+}
+
+.titulo-modal {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}

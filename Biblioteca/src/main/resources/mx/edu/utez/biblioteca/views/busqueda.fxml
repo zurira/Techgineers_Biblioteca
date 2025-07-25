@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<!--Interfaz terminada!-->
-
-<BorderPane stylesheets="@../css/bienvenida.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.BienvenidaController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane stylesheets="@../css/busqueda.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.BusquedaController">
 
     <left>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="20" left="10" right="10" top="20" />
             </padding>
-            <Button styleClass="nav-button" text="Inicio">
+            <Button styleClass="nav-button" text="Inicio" onAction="#irInicio">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <image>
@@ -22,8 +24,8 @@
                         </image>
                     </ImageView>
                 </graphic>
-        </Button>
-            <Button styleClass="nav-button" text="Búsqueda" onAction="#irBusqueda">
+            </Button>
+            <Button styleClass="nav-button" text="Búsqueda">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <image>
@@ -40,7 +42,7 @@
             <padding>
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
-            <Label styleClass="titulo" text="Bienvenido" />
+            <Label styleClass="titulo" text="Búsqueda de libros" />
             <Button styleClass="botonLogin" text="Iniciar sesión" onAction="#irLogin">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
@@ -60,12 +62,21 @@
             </padding>
             <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
                 <content>
-                    <FlowPane fx:id="contenedorLibros" hgap="20" prefWrapLength="600" vgap="20" />
+                    <VBox spacing="15">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <HBox spacing="10">
+                            <TextField fx:id="txtBuscar" promptText="Buscar libro..." HBox.hgrow="ALWAYS"/>
+                            <ComboBox fx:id="cmbCategoria" promptText="Categoría" />
+                        </HBox>
+                        <FlowPane fx:id="contenedorResultados" hgap="20" vgap="20" />
+                    </VBox>
                 </content>
             </ScrollPane>
 
         </VBox>
     </center>
-</BorderPane>
 
+</BorderPane>
 
