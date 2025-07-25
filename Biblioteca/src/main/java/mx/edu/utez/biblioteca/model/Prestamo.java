@@ -3,18 +3,41 @@ package mx.edu.utez.biblioteca.model;
 import java.time.LocalDate;
 
 public class Prestamo {
+    private int id;
     private String usuarioNombre;
     private String correo;
     private LocalDate fechaPrestamo;
     private LocalDate fechaLimite;
+    private LocalDate fechaDevolucion;
     private String estado;
 
-    public Prestamo(String usuarioNombre, String correo, LocalDate fechaPrestamo, LocalDate fechaLimite, String estado) {
+    public Prestamo(int id, String usuarioNombre, String correo, LocalDate fechaPrestamo, LocalDate fechaLimite, String estado, LocalDate fechaDevolucion) {
+        this.id = id;
         this.usuarioNombre = usuarioNombre;
         this.correo = correo;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaLimite = fechaLimite;
         this.estado = estado;
+        this.fechaDevolucion = fechaDevolucion;
+    }
+
+    public Prestamo() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    public void setFechaDevolucion(LocalDate fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsuarioNombre() {
