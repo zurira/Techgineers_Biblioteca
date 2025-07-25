@@ -1,60 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.TextArea?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" prefWidth="800" prefHeight="500" style="-fx-background-color: #F1EFEF;">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.ModalAgregarAdminController"
+            prefWidth="900" prefHeight="520"
+            style="-fx-background-color: #F1EFEF;">
+
+
+    <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
+        <Label text="Agregar administrador" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+        <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
+
+    <HBox spacing="20">
+    <!-- Este es para la Imagen y botón -->
     <VBox spacing="10">
-        <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
-        </padding>
+        <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" />
+        <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
+                style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
+                prefWidth="150"/>
+    </VBox>
 
-        <VBox spacing="5">
-            <Text text="Agregar administrador" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-            <Text text="Ingresa la información correctamente" style="-fx-font-size: 16px;" />
-        </VBox>
+    <!-- Estoy comenzando con los campos del formulario-->
+    <GridPane hgap="15" vgap="15">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="33"/>
+        <ColumnConstraints percentWidth="33"/>
+        <ColumnConstraints percentWidth="33"/>
+    </columnConstraints>
 
-        <GridPane hgap="20" vgap="15">
-            <columnConstraints>
-                <ColumnConstraints percentWidth="33"/>
-                <ColumnConstraints percentWidth="33"/>
-                <ColumnConstraints percentWidth="33"/>
-            </columnConstraints>
+    <!-- Esta es la fila 1 -->
+    <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-            <!-- Primera fila -->
-            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TextField GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-            <Label text="Apellido paterno:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-            <Label text="Apellido materno:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-
-            <!-- Segunda fila -->
-            <Label text="Fecha de nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <TextField GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-
-            <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-            <Label text="Correo electrónico:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
 
-            <!-- Tercera fila -->
-            <Label text="Rol:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <TextField GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-        </GridPane>
+    <!-- Fila 2 -->
+    <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
-        <Label text="Dirección:"/>
-        <TextArea prefHeight="60"/>
+    <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="txtContrasena" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Cancelar" style="-fx-background-color: transparent; -fx-border-color: #A38F85 ; -fx-text-fill: #A38F85; -fx-font-weight: bold;" />
-            <Button text="Guardar" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" />
+    <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+
+        <!--  Esta es Fila 3 -->
+        <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    </GridPane>
+    </HBox>
+
+
+
+    <!-- Este es el campo de Direccion -->
+    <Label text="Dirección:"/>
+    <TextArea fx:id="txtDireccion"
+              prefWidth="400"
+              prefHeight="80"
+              wrapText="true"/>
+
+
+        <!-- Botones -->
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <Button text="Cancelar" fx:id="btnCancelar"
+                    style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"/>
+            <Button text="Guardar" fx:id="btnGuardar"
+                    style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </HBox>
     </VBox>
 </AnchorPane>
+
 
