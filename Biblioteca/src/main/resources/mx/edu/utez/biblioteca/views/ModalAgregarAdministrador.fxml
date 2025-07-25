@@ -12,9 +12,20 @@
             prefWidth="900" prefHeight="520"
             style="-fx-background-color: #F1EFEF;">
 
+    //Este es el encabezado del modal
     <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
         <Label text="Agregar administrador" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
+    
+    <HBox spacing="20">
+    <!-- Este es para la Imagen y botón -->
+    <VBox spacing="10">
+        <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" />
+        <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
+                style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
+                prefWidth="150"/>
+    </VBox>
 
-        
+
+
 </AnchorPane>
