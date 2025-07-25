@@ -16,7 +16,7 @@
     <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
         <Label text="Agregar administrador" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
-    
+
     <HBox spacing="20">
     <!-- Este es para la Imagen y botón -->
     <VBox spacing="10">
@@ -25,6 +25,17 @@
                 style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
                 prefWidth="150"/>
     </VBox>
+
+    <!-- Estoy comenzando con los campos del formulario-->
+    <GridPane hgap="15" vgap="15">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="33"/>
+        <ColumnConstraints percentWidth="33"/>
+        <ColumnConstraints percentWidth="33"/>
+    </columnConstraints>
+
+    
+
 
 
 
