@@ -41,6 +41,9 @@
     <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
     <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
+    <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
 
 
 
