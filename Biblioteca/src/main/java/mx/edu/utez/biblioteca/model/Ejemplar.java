@@ -20,4 +20,48 @@ public class Ejemplar {
         this.seleccionado = seleccionado;
         this.idEjemplar = idEjemplar;
     }
+
+    public int getIdEjemplar() {
+        return idEjemplar;
+    }
+
+    public void setIdEjemplar(int idEjemplar) {
+        this.idEjemplar = idEjemplar;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public boolean isSeleccionado() {
+        return seleccionado.get();
+    }
+
+    public BooleanProperty seleccionadoProperty() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(boolean seleccionado) {
+        this.seleccionado.set(seleccionado);
+    }
 }
