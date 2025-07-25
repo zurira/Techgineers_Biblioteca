@@ -10,6 +10,7 @@ public class Prestamo {
     private LocalDate fechaLimite;
     private LocalDate fechaDevolucion;
     private String estado;
+    private int idUsuario;
 
     public Prestamo(int id, String usuarioNombre, String correo, LocalDate fechaPrestamo, LocalDate fechaLimite, String estado, LocalDate fechaDevolucion) {
         this.id = id;
@@ -79,6 +80,8 @@ public class Prestamo {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    public int getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 }
 
 
