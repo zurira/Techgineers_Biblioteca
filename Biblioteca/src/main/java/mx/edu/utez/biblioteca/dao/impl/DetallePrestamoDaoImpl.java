@@ -29,7 +29,21 @@ public class DetallePrestamoDaoImpl implements IDetallePrestamo {
     }
 
     @Override
+    /**
+     * Actualiza el estado de devolución de un ejemplar específico.
+     */
     public void marcarDevuelto(int idDetallePrestamo, boolean devuelto) {
+        String sql = "UPDATE DETALLE_PRESTAMO SET DEVUELTO = ? WHERE ID = ?";
 
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, devuelto ? "S" : "N");
+            pst.setInt(2, idDetallePrestamo);
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
