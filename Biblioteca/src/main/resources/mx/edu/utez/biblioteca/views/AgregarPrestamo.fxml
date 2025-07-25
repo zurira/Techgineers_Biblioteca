@@ -12,33 +12,30 @@
     </VBox>
 
     <GridPane hgap="20" vgap="20" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="30">
-    <columnConstraints>
-        <ColumnConstraints minWidth="200"/>
-        <ColumnConstraints minWidth="200"/>
-        <ColumnConstraints minWidth="200"/>
-    </columnConstraints>
+        <columnConstraints>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="200"/>
+        </columnConstraints>
 
-    <Label text="Nombre completo *:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label text="Nombre completo *:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
-    <Label text="Usuario *:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-    <TextField fx:id="txtUsuario" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Correo *:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <TextField fx:id="txtCorreo" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
 
-    <Label text="Correo *:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-    <TextField fx:id="txtCorreo" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Label text="Estado *:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <TextField fx:id="txtEstado" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <Label text="Estado *:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <TextField fx:id="txtEstado" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label text="Fecha de préstamo *:" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <DatePicker fx:id="datePrestamo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-    <Label text="Fecha de préstamo *:" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-    <DatePicker fx:id="datePrestamo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-    <Label text="Fecha límite *:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+        <Label text="Fecha límite *:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
 
         <DatePicker fx:id="dateLimite" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
 
-        <Label text="Fecha de entrega *:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dateEntrega" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <Label text="Fecha de entrega *:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateEntrega" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
     </GridPane>
 
     <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="30">
