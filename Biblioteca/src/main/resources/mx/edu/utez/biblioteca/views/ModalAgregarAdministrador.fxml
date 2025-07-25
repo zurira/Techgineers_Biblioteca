@@ -72,7 +72,14 @@
               wrapText="true"/>
 
 
-
-
-
+        <!-- Botones -->
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <Button text="Cancelar" fx:id="btnCancelar"
+                    style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"/>
+            <Button text="Guardar" fx:id="btnGuardar"
+                    style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
 </AnchorPane>
+
+
