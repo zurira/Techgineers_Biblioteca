@@ -64,6 +64,15 @@
 
 
 
+    <!-- Este es el campo de Direccion -->
+    <Label text="Dirección:"/>
+    <TextArea fx:id="txtDireccion"
+              prefWidth="400"
+              prefHeight="80"
+              wrapText="true"/>
+
+
+
 
 
 </AnchorPane>
