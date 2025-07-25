@@ -1,4 +1,4 @@
-package mx.edu.utez.biblioteca.dao.impl;
+package mx.edu.utez.biblioteca.dao;
 
 import mx.edu.utez.biblioteca.model.Prestamo;
 

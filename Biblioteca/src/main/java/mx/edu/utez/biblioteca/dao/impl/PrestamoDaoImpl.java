@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.dao.impl;
 
 import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.dao.IPrestamo;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import java.sql.Connection;
 import java.sql.*;
@@ -8,8 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class PrestamoDaoImpl {
-
+public class PrestamoDaoImpl implements IPrestamo {
+    @Override
     public int insertar(Prestamo prestamo) {
         String sql = "INSERT INTO PRESTAMO (ID_USUARIO, CORREO, FECHA_PRESTAMO, FECHA_LIMITE, FECHA_DEVOLUCION, ESTADO) " +
                 "VALUES (?, ?, ?, ?, NULL, ?)";
