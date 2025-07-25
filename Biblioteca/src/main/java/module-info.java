@@ -7,6 +7,8 @@ module mx.edu.utez.biblioteca {
     requires java.sql;
 
     opens mx.edu.utez.biblioteca to javafx.fxml;
+    opens mx.edu.utez.biblioteca.model to javafx.base;
+
     exports mx.edu.utez.biblioteca;
     opens mx.edu.utez.biblioteca.controller to javafx.fxml;
 }
