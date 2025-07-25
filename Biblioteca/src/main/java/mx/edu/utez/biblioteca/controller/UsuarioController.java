@@ -30,12 +30,17 @@ public class UsuarioController {
     //Metodo funcionando, ya realiza la validación de cada rol
     @FXML
     private void onLogin(ActionEvent e){
-        String correo=txtcorreo.getText().trim();
+        String input=txtcorreo.getText().trim();
         String pass=txtPassword.getText().trim();
+
+        if (input.isEmpty() || pass.isEmpty()) {
+            showAlert("Advertencia", "Correo/Usuario y contraseña son requeridos.");
+            return;
+        }
 
         UsuarioDaoImpl dao=new UsuarioDaoImpl();
         try {
-            Usuario usuario = dao.login(correo,pass);
+            Usuario usuario = dao.login(input,pass);
             if(usuario != null){
                 System.out.println("Se pudo logear con Exito como:" + usuario.getNombreRol());
 
@@ -43,7 +48,7 @@ public class UsuarioController {
                 switch (usuario.getNombreRol().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
                         System.out.println("Cargando vista de superadministrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
 
                         break;
                     case "ADMINISTRADOR":
