@@ -45,6 +45,19 @@
     <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
 
+    <!-- Fila 2 -->
+    <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+    <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="txtContrasena" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+
+    
+
 
 
 
