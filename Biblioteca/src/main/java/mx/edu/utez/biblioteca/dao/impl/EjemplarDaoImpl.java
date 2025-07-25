@@ -51,4 +51,23 @@ public class EjemplarDaoImpl {
     }
 
 
+    /**
+     * Actualiza el estado de disponibilidad de un ejemplar físico.
+     * Se usará después de prestarlo o devolverlo.
+     */
+    public void actualizarDisponibilidad(int idEjemplar, boolean disponible) {
+        String sql = "UPDATE EJEMPLAR SET DISPONIBLE = ? WHERE ID = ?";
+
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setString(1, disponible ? "S" : "N");
+            pst.setInt(2, idEjemplar);
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
