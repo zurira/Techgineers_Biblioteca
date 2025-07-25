@@ -10,5 +10,14 @@ public class Ejemplar {
     private String ubicacion;
     private BooleanProperty seleccionado = new SimpleBooleanProperty(false);
 
+    public Ejemplar() {
+    }
 
+    public Ejemplar(String codigo, String titulo, String ubicacion, BooleanProperty seleccionado, int idEjemplar) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.ubicacion = ubicacion;
+        this.seleccionado = seleccionado;
+        this.idEjemplar = idEjemplar;
+    }
 }
