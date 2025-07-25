@@ -38,6 +38,9 @@
     <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
+    <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
 
 
 
