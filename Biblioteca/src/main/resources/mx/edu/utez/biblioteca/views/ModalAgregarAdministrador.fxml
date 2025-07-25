@@ -12,7 +12,7 @@
             prefWidth="900" prefHeight="520"
             style="-fx-background-color: #F1EFEF;">
 
-    //Este es el encabezado del modal
+
     <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
         <Label text="Agregar administrador" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
