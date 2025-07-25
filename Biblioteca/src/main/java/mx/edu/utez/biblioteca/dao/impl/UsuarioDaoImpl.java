@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDaoImpl implements IUsuario {
 
@@ -39,10 +41,6 @@ public class UsuarioDaoImpl implements IUsuario {
         }
         return usuario;
 
-
-
-
-
     }
 
     @Override
@@ -60,7 +58,27 @@ public class UsuarioDaoImpl implements IUsuario {
             e.printStackTrace();
         }
         return -1; // Retorna -1 si no se encuentra el usuario
+
+
     }
+
+    @Override
+    public List<String> obtenerTodosLosNombres() {
+        List<String> nombres = new ArrayList<>();
+        String sql = "SELECT NOMBRE FROM USUARIO";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                nombres.add(rs.getString("NOMBRE"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombres;
+    }
+
 
     public static void main(String[] args) {
         UsuarioDaoImpl dao = new UsuarioDaoImpl();
