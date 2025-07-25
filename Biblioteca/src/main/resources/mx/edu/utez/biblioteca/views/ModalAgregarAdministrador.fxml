@@ -56,7 +56,12 @@
     <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
 
-    
+        <!--  Esta es Fila 3 -->
+        <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    </GridPane>
+    </HBox>
+
 
 
 
