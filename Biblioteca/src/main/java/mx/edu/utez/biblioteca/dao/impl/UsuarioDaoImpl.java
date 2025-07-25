@@ -39,6 +39,27 @@ public class UsuarioDaoImpl implements IUsuario {
         }
         return usuario;
 
+
+
+
+
+    }
+
+    @Override
+    public int obtenerIdPorNombre(String nombre) {
+        String sql = "SELECT ID_USUARIO FROM USUARIO_BIBLIOTECA WHERE NOMBRE = ?";
+        try  {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, nombre);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 si no se encuentra el usuario
     }
 
     public static void main(String[] args) {
