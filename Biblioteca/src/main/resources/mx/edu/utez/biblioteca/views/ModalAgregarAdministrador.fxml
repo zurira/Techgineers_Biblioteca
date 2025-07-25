@@ -34,7 +34,10 @@
         <ColumnConstraints percentWidth="33"/>
     </columnConstraints>
 
-    
+    <!-- Esta es la fila 1 -->
+    <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
 
 
 
