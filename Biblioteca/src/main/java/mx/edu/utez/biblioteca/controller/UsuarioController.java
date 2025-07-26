@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
-import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioSistemaDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class UsuarioController {
             return;
         }
 
-        UsuarioDaoImpl dao=new UsuarioDaoImpl();
+        UsuarioSistemaDaoImpl dao=new UsuarioSistemaDaoImpl();
         try {
             Usuario usuario = dao.login(input,pass);
             if(usuario != null){
