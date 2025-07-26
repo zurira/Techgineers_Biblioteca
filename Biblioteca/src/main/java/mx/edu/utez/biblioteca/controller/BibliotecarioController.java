@@ -18,7 +18,6 @@ import tu.paquete.model.Usuario;
 
         @FXML
         public void initialize() {
-            // Aquí puedes inicializar la tabla y cargar usuarios si deseas
         }
 
         @FXML
@@ -37,7 +36,6 @@ import tu.paquete.model.Usuario;
             alert.setHeaderText(null);
             alert.setContentText("Volviendo a pantalla de login...");
             alert.showAndWait();
-            // Aquí puedes cambiar de escena
         }
     }
 }
