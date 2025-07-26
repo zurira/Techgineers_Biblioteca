@@ -119,6 +119,8 @@ public class ModalPrestamoController implements Initializable {
         prestamo.setFechaLimite(dpFechaLimite.getValue());
         prestamo.setFechaDevolucion(dpFechaDevolucion.getValue());
         prestamo.setEstado(cbEstado.getValue());
+
+        int idPrestamo = prestamoDAO.insertar(prestamo);
     }
 
     private void mostrarAlerta(String msg) {
