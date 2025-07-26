@@ -1,5 +1,4 @@
 package mx.edu.utez.biblioteca.config;
-package mx.edu.utez.demo.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
