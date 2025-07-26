@@ -17,8 +17,6 @@ public class Usuario {
             this.direccion = direccion;
         }
 
-        // Getters y Setters
-
         public String getNombreCompleto() {
             return nombreCompleto;
         }
