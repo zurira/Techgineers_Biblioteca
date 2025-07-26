@@ -7,6 +7,7 @@ public class Usuario {
         private String email;
         private String telefono;
         private String direccion;
+        private String pass;
 
         // Constructor
         public Usuario(String nombreCompleto, String fechaNacimiento, String email, String telefono, String direccion) {
@@ -56,4 +57,9 @@ public class Usuario {
         public void setDireccion(String direccion) {
             this.direccion = direccion;
         }
+
+        public void setPass(String pass) {
+        this.pass = pass;
     }
+
+}
