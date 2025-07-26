@@ -8,10 +8,10 @@ public class Ejemplar {
     private String codigo;
     private String titulo;
     private String ubicacion;
-    private final BooleanProperty seleccionado = new SimpleBooleanProperty(false); // ✅ ¡No lo pases desde afuera!
+    private final BooleanProperty seleccionado = new SimpleBooleanProperty(false);
 
     public Ejemplar() {
-        // El seleccionado ya está inicializado
+
     }
 
     public Ejemplar(String codigo, String titulo, String ubicacion, int idEjemplar) {
