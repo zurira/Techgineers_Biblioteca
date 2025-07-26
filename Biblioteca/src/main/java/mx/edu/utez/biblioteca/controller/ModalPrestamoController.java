@@ -16,6 +16,7 @@ import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
+import mx.edu.utez.biblioteca.model.Prestamo;
 
 
 import java.net.URL;
@@ -112,6 +113,12 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
+        Prestamo prestamo = new Prestamo();
+        prestamo.setIdUsuario(idUsuario); // usuario solicitante
+        prestamo.setFechaPrestamo(dpFechaPrestamo.getValue());
+        prestamo.setFechaLimite(dpFechaLimite.getValue());
+        prestamo.setFechaDevolucion(dpFechaDevolucion.getValue());
+        prestamo.setEstado(cbEstado.getValue());
     }
 
     private void mostrarAlerta(String msg) {
