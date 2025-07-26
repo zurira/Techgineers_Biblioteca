@@ -13,26 +13,39 @@ public class PrestamoDaoImpl implements IPrestamo {
     @Override
     public int insertar(Prestamo prestamo) {
         String sql = "INSERT INTO PRESTAMO (ID_USUARIO, CORREO, FECHA_PRESTAMO, FECHA_LIMITE, FECHA_DEVOLUCION, ESTADO) " +
-                "VALUES (?, ?, ?, ?, NULL, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pst = con.prepareStatement(sql, new String[] {"ID"})) {
+
             pst.setInt(1, prestamo.getIdUsuario());
             pst.setString(2, prestamo.getCorreo());
             pst.setDate(3, Date.valueOf(prestamo.getFechaPrestamo()));
             pst.setDate(4, Date.valueOf(prestamo.getFechaLimite()));
-            pst.setDate(5, Date.valueOf(prestamo.getFechaDevolucion()));
+
+            if (prestamo.getFechaDevolucion() != null) {
+                pst.setDate(5, Date.valueOf(prestamo.getFechaDevolucion()));
+            } else {
+                pst.setNull(5, Types.DATE);
+            }
+
             pst.setString(6, prestamo.getEstado());
 
+            int filas = pst.executeUpdate();
 
-            pst.executeUpdate();
-            ResultSet rs = pst.getGeneratedKeys();
-            if (rs.next()) return rs.getInt(1);
+            if (filas > 0) {
+                ResultSet rs = pst.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1); // ← más seguro que usar "ID"
+                }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return -1;
     }
+
 
 }
 

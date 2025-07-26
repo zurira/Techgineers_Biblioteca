@@ -13,7 +13,7 @@ public class DetallePrestamoDaoImpl implements IDetallePrestamo {
      * El campo DEVUELTO se inicializa como 'N' por defecto.
      */
     @Override
-    public void insertarEjemplar(int id_prestamo, int id_ejemplar) {
+    public boolean insertarEjemplar(int id_prestamo, int id_ejemplar) {
         String sql = "INSERT INTO DETALLE_PRESTAMO (ID_PRESTAMO, ID_EJEMPLAR, DEVUELTO) VALUES (?, ?, 'N')";
 
         try (Connection con = DBConnection.getConnection();
@@ -21,18 +21,20 @@ public class DetallePrestamoDaoImpl implements IDetallePrestamo {
 
             pst.setInt(1, id_prestamo);
             pst.setInt(2, id_ejemplar);
-            pst.executeUpdate();
+            return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
+
 
     @Override
     /**
      * Actualiza el estado de devolución de un ejemplar específico.
      */
-    public void marcarDevuelto(int idDetallePrestamo, boolean devuelto) {
+    public boolean marcarDevuelto(int idDetallePrestamo, boolean devuelto) {
         String sql = "UPDATE DETALLE_PRESTAMO SET DEVUELTO = ? WHERE ID = ?";
 
         try (Connection con = DBConnection.getConnection();
@@ -40,10 +42,12 @@ public class DetallePrestamoDaoImpl implements IDetallePrestamo {
 
             pst.setString(1, devuelto ? "S" : "N");
             pst.setInt(2, idDetallePrestamo);
-            pst.executeUpdate();
+            return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
+
 }

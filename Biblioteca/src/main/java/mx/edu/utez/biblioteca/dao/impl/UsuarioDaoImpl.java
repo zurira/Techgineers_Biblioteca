@@ -45,27 +45,24 @@ public class UsuarioDaoImpl implements IUsuario {
 
     @Override
     public int obtenerIdPorNombre(String nombre) {
-        String sql = "SELECT ID_USUARIO FROM USUARIO_BIBLIOTECA WHERE NOMBRE = ?";
-        try  {
-            Connection con = DBConnection.getConnection();
-            PreparedStatement pst = con.prepareStatement(sql);
+        String sql = "SELECT ID FROM USUARIO_BIBLIOTECA WHERE NOMBRE = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setString(1, nombre);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("ID");
-            }
+            if (rs.next()) return rs.getInt("ID");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1; // Retorna -1 si no se encuentra el usuario
-
-
+        return -1;
     }
+
+
 
     @Override
     public List<String> obtenerTodosLosNombres() {
         List<String> nombres = new ArrayList<>();
-        String sql = "SELECT NOMBRE FROM USUARIO";
+        String sql = "SELECT NOMBRE FROM USUARIO_BIBLIOTECA";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql);
@@ -80,6 +77,9 @@ public class UsuarioDaoImpl implements IUsuario {
     }
 
 
+
+
+
     public static void main(String[] args) {
         UsuarioDaoImpl dao = new UsuarioDaoImpl();
         try {
@@ -89,5 +89,6 @@ public class UsuarioDaoImpl implements IUsuario {
             throw new RuntimeException(e);
         }
     }
+
 }
 

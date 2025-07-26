@@ -15,5 +15,5 @@ public class ModalPrestamoController {
     @FXML private DatePicker dateLimite;
     @FXML private DatePicker dateEntrega;
 
-    // Aquí voy a agregar los  métodos para guardar o cancelar 
+    // Aquí voy a agregar los  métodos para guardar o cancelar
 }

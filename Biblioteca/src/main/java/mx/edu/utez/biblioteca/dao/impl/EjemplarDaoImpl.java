@@ -40,6 +40,7 @@ public class EjemplarDaoImpl {
                 ejemplar.setCodigo(rs.getString("CODIGO_LOCAL"));
                 ejemplar.setTitulo(rs.getString("TITULO"));
                 ejemplar.setUbicacion(rs.getString("UBICACION"));
+                lista.add(ejemplar);
 
             }
 
@@ -50,12 +51,11 @@ public class EjemplarDaoImpl {
         return lista;
     }
 
-
     /**
      * Actualiza el estado de disponibilidad de un ejemplar físico.
      * Se usará después de prestarlo o devolverlo.
      */
-    public void actualizarDisponibilidad(int idEjemplar, boolean disponible) {
+    public boolean actualizarDisponibilidad(int idEjemplar, boolean disponible) {
         String sql = "UPDATE EJEMPLAR SET DISPONIBLE = ? WHERE ID = ?";
 
         try {
@@ -65,9 +65,12 @@ public class EjemplarDaoImpl {
             pst.setString(1, disponible ? "S" : "N");
             pst.setInt(2, idEjemplar);
             pst.executeUpdate();
+            return pst.executeUpdate() > 0;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }

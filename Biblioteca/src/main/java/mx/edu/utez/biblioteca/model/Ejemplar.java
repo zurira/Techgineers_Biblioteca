@@ -8,16 +8,16 @@ public class Ejemplar {
     private String codigo;
     private String titulo;
     private String ubicacion;
-    private BooleanProperty seleccionado = new SimpleBooleanProperty(false);
+    private final BooleanProperty seleccionado = new SimpleBooleanProperty(false); // ✅ ¡No lo pases desde afuera!
 
     public Ejemplar() {
+        // El seleccionado ya está inicializado
     }
 
-    public Ejemplar(String codigo, String titulo, String ubicacion, BooleanProperty seleccionado, int idEjemplar) {
+    public Ejemplar(String codigo, String titulo, String ubicacion, int idEjemplar) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.ubicacion = ubicacion;
-        this.seleccionado = seleccionado;
         this.idEjemplar = idEjemplar;
     }
 

@@ -1,46 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.ModalPrestamoController">
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.ModalPrestamoController"
-            prefWidth="880" prefHeight="520" style="-fx-background-color: #F1EFEF;">
-    <VBox spacing="10" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="30">
-        <Label text="Agregar préstamo" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-        <Label text="Ingresa la información del préstamo correctamente" style="-fx-font-size: 16px;"/>
-    </VBox>
+    <top>
+        <VBox spacing="10" >
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Label text="Registrar Préstamo" style="-fx-font-size: 20px;"  />
+            <GridPane hgap="10" vgap="10">
+                <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ComboBox fx:id="comboBoxUsuarios" editable="true" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          promptText="Escribe y selecciona el usuario..." prefWidth="250.0"/>
 
-    <GridPane hgap="20" vgap="20" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="30">
-        <columnConstraints>
-            <ColumnConstraints minWidth="200"/>
-            <ColumnConstraints minWidth="200"/>
-            <ColumnConstraints minWidth="200"/>
-        </columnConstraints>
+                <Label text="Estado:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <ComboBox fx:id="cbEstado" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <Label text="Nombre completo *:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label text="Fecha Préstamo:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-        <Label text="Correo *:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-        <TextField fx:id="txtCorreo" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <Label text="Fecha Límite:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
-        <Label text="Estado *:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <TextField fx:id="txtEstado" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Fecha Devolución:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-        <Label text="Fecha de préstamo *:" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-        <DatePicker fx:id="datePrestamo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label text="Fecha límite *:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            </GridPane>
+        </VBox>
+    </top>
 
-        <DatePicker fx:id="dateLimite" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+    <center>
+        <VBox spacing="10" >
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Label text="Buscar Ejemplares Disponibles" />
+            <HBox spacing="10">
+                <TextField fx:id="txtBuscarEjemplar" promptText="Código o título..." onAction="#buscarEjemplares" />
+                <Button text="Buscar" onAction="#buscarEjemplares" />
+            </HBox>
+            <TableView fx:id="tablaEjemplares">
+                <columns>
+                    <TableColumn text="Código" fx:id="colCodigo" />
+                    <TableColumn text="Título" fx:id="colTitulo" />
+                    <TableColumn text="Ubicación" fx:id="colUbicacion" />
+                    <TableColumn text="Seleccionar" fx:id="colSeleccionar" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
 
-        <Label text="Fecha de entrega *:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dateEntrega" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    </GridPane>
+    <bottom>
+        <HBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Button text="Registrar Préstamo" onAction="#registrarPrestamo" />
+            <Button text="Cancelar" onAction="#cancelarAccion" />
+        </HBox>
+    </bottom>
+</BorderPane>
 
-    <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="30">
-        <Button text="Cancelar" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #A38F85; -fx-font-weight: bold;" />
-        <Button text="Guardar" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" />
-    </HBox>
-</AnchorPane>
 
