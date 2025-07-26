@@ -5,6 +5,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -55,6 +56,18 @@ public class ModalPrestamoController implements Initializable {
         tablaEjemplares.setItems(ejemplaresFiltrados);
 
     }
+
+    @FXML
+    private void buscarEjemplares(ActionEvent event) {
+        try {
+            String filtro = txtBuscarEjemplar.getText().trim();
+            ObservableList<Ejemplar> resultados = ejemplarDAO.buscarEjemplaresDisponibles(filtro);
+            tablaEjemplares.setItems(resultados);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
 }
