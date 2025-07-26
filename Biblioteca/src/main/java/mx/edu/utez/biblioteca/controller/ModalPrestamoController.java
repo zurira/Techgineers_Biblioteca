@@ -1,7 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
@@ -39,6 +38,8 @@ public class ModalPrestamoController implements Initializable {
     private final PrestamoDaoImpl prestamoDAO = new PrestamoDaoImpl();
     private final DetallePrestamoDaoImpl detalleDAO = new DetallePrestamoDaoImpl();
 
+    private ObservableList<String> nombresUsuarios = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Estados disponibles
@@ -57,6 +58,19 @@ public class ModalPrestamoController implements Initializable {
         ObservableList<Ejemplar> ejemplaresTotales = ejemplarDAO.buscarEjemplaresDisponibles("");
         FilteredList<Ejemplar> ejemplaresFiltrados = new FilteredList<>(ejemplaresTotales, e -> true);
         tablaEjemplares.setItems(ejemplaresFiltrados);
+
+        // Autocompletado dinámico para ComboBox de usuarios
+        nombresUsuarios.setAll(usuarioDAO.obtenerTodosLosNombres());
+        comboBoxUsuarios.setEditable(true);
+        comboBoxUsuarios.setItems(nombresUsuarios);
+
+        comboBoxUsuarios.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            FilteredList<String> filtrados = nombresUsuarios.filtered(nombre ->
+                    nombre.toLowerCase().contains(newVal.toLowerCase())
+            );
+            comboBoxUsuarios.setItems(filtrados);
+            comboBoxUsuarios.show();
+        });
 
     }
 
@@ -147,8 +161,6 @@ public class ModalPrestamoController implements Initializable {
     }
 
 
-}
-
     private void limpiarFormulario() {
         comboBoxUsuarios.getEditor().clear();
         txtBuscarEjemplar.clear();
@@ -166,6 +178,12 @@ public class ModalPrestamoController implements Initializable {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+@FXML
+private void cancelarAccion(ActionEvent event) {
+    Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
+    stage.close();
+}
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
 }
