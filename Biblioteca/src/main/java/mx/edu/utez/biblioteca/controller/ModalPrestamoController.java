@@ -121,6 +121,12 @@ public class ModalPrestamoController implements Initializable {
         prestamo.setEstado(cbEstado.getValue());
 
         int idPrestamo = prestamoDAO.insertar(prestamo);
+
+        //valida si el prestamo tuvo errores
+        if (idPrestamo == -1) {
+            mostrarAlerta("Error al registrar el préstamo.");
+            return;
+        }
     }
 
     private void mostrarAlerta(String msg) {
