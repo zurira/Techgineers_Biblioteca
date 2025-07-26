@@ -93,6 +93,12 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
+        // Valida si el usuario existe, mediante el ID
+        int idUsuario = usuarioDAO.obtenerIdPorNombre(nombreUsuario);
+        if (idUsuario == -1) {
+            mostrarAlerta("El usuario seleccionado no existe.");
+            return;
+        }
     }
 
     private void mostrarAlerta(String msg) {
