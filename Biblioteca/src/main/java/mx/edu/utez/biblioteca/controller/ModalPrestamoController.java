@@ -140,6 +140,16 @@ public class ModalPrestamoController implements Initializable {
 
     }
 
+    private void limpiarFormulario() {
+        comboBoxUsuarios.getEditor().clear();
+        txtBuscarEjemplar.clear();
+        tablaEjemplares.getItems().clear();
+        dpFechaPrestamo.setValue(null);
+        dpFechaLimite.setValue(null);
+        cbEstado.getSelectionModel().selectFirst();
+        comboBoxUsuarios.setItems(nombresUsuarios); // restaurar lista completa
+    }
+
     private void mostrarAlerta(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información");
