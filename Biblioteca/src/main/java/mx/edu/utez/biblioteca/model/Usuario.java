@@ -2,8 +2,6 @@ package mx.edu.utez.biblioteca.model;
 
 public class Usuario {
 
-    public class Usuario {
-
         private String nombreCompleto;
         private String fechaNacimiento;
         private String email;
@@ -61,4 +59,3 @@ public class Usuario {
             this.direccion = direccion;
         }
     }
-}
