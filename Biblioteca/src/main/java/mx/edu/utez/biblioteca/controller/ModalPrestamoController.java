@@ -87,6 +87,12 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
+        if (dpFechaDevolucion.getValue() != null &&
+                dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
+            mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
+            return;
+        }
+
     }
 
     private void mostrarAlerta(String msg) {
