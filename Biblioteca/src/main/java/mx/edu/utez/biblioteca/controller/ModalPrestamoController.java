@@ -19,7 +19,9 @@ import mx.edu.utez.biblioteca.model.Ejemplar;
 
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ModalPrestamoController implements Initializable {
 
@@ -99,6 +101,16 @@ public class ModalPrestamoController implements Initializable {
             mostrarAlerta("El usuario seleccionado no existe.");
             return;
         }
+
+        List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
+                .filter(Ejemplar::isSeleccionado)
+                .collect(Collectors.toList());
+
+        if (seleccionados.isEmpty()) {
+            mostrarAlerta("Debes seleccionar al menos un ejemplar.");
+            return;
+        }
+
     }
 
     private void mostrarAlerta(String msg) {
