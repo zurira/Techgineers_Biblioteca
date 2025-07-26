@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
@@ -35,6 +37,14 @@ public class ModalPrestamoController implements Initializable {
         // Estados disponibles
         cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
         cbEstado.getSelectionModel().selectFirst();
+
+        // Configurar columnas de la tabla de ejemplares
+        colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        colUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
+        colSeleccionar.setCellValueFactory(cellData -> cellData.getValue().seleccionadoProperty());
+        colSeleccionar.setCellFactory(CheckBoxTableCell.forTableColumn(colSeleccionar));
+        tablaEjemplares.setEditable(true);
     }
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
