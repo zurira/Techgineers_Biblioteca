@@ -106,6 +106,7 @@ public class ModalPrestamoController implements Initializable {
                 .filter(Ejemplar::isSeleccionado)
                 .collect(Collectors.toList());
 
+        // Valida que haya un ejemplar seleccionado
         if (seleccionados.isEmpty()) {
             mostrarAlerta("Debes seleccionar al menos un ejemplar.");
             return;
