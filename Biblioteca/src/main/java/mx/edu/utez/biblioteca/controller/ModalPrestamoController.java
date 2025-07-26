@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.controller;
 
 
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -31,7 +32,9 @@ public class ModalPrestamoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Estados disponibles
+        cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
+        cbEstado.getSelectionModel().selectFirst();
     }
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
