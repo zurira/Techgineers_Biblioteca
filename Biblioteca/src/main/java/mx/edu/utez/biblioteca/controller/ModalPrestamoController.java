@@ -4,16 +4,18 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import mx.edu.utez.biblioteca.model.Ejemplar;
 
 public class ModalPrestamoController {
 
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtUsuario;
-    @FXML private TextField txtCorreo;
-    @FXML private TextField txtEstado;
-    @FXML private DatePicker datePrestamo;
-    @FXML private DatePicker dateLimite;
-    @FXML private DatePicker dateEntrega;
+    @FXML private ComboBox<String> comboBoxUsuarios;
+    @FXML private TextField txtBuscarEjemplar;
+    @FXML private DatePicker dpFechaPrestamo, dpFechaLimite, dpFechaDevolucion;
+    @FXML private ComboBox<String> cbEstado;
+    @FXML private TableView<Ejemplar> tablaEjemplares;
+    @FXML private TableColumn<Ejemplar, String> colCodigo, colTitulo, colUbicacion;
+    @FXML private TableColumn<Ejemplar, Boolean> colSeleccionar;
+
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
 }

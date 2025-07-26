@@ -45,7 +45,7 @@ public class UsuarioSistemaDaoImpl implements IUsuarioSistema {
 
 
     public static void main(String[] args) {
-        UsuarioDaoImpl dao = new UsuarioDaoImpl();
+        UsuarioSistemaDaoImpl dao = new UsuarioSistemaDaoImpl();
         try {
             System.out.println(dao.login("",""));
         } catch (Exception e) {
