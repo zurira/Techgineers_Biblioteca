@@ -138,7 +138,16 @@ public class ModalPrestamoController implements Initializable {
             }
         }
 
+        if (exito) {
+            mostrarAlerta("Préstamo registrado correctamente.");
+            limpiarFormulario();
+        } else {
+            mostrarAlerta("Hubo un error al registrar los ejemplares.");
+        }
     }
+
+
+}
 
     private void limpiarFormulario() {
         comboBoxUsuarios.getEditor().clear();
