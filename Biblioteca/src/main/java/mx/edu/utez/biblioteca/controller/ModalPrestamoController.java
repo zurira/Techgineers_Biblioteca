@@ -3,6 +3,8 @@ package mx.edu.utez.biblioteca.controller;
 
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,6 +15,7 @@ import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +48,12 @@ public class ModalPrestamoController implements Initializable {
         colSeleccionar.setCellValueFactory(cellData -> cellData.getValue().seleccionadoProperty());
         colSeleccionar.setCellFactory(CheckBoxTableCell.forTableColumn(colSeleccionar));
         tablaEjemplares.setEditable(true);
+
+        // Carga de todos los ejemplares disponibles
+        ObservableList<Ejemplar> ejemplaresTotales = ejemplarDAO.buscarEjemplaresDisponibles("");
+        FilteredList<Ejemplar> ejemplaresFiltrados = new FilteredList<>(ejemplaresTotales, e -> true);
+        tablaEjemplares.setItems(ejemplaresFiltrados);
+
     }
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
