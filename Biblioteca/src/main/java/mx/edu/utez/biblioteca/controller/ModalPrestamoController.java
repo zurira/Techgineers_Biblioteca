@@ -73,6 +73,14 @@ public class ModalPrestamoController implements Initializable {
     private void registrarPrestamo(ActionEvent event) {
         String nombreUsuario = comboBoxUsuarios.getEditor().getText().trim();
 
+        if (nombreUsuario.isEmpty()
+                || dpFechaPrestamo.getValue() == null
+                || dpFechaLimite.getValue() == null
+                || cbEstado.getValue() == null) {
+            mostrarAlerta("Completa todos los campos obligatorios.");
+            return;
+        }
+
 
     }
 
