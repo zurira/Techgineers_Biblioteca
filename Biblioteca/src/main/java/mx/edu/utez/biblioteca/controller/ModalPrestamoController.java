@@ -68,6 +68,14 @@ public class ModalPrestamoController implements Initializable {
             mostrarAlerta("Error interno al buscar ejemplares: " + e.getMessage());
         }
     }
+
+    @FXML
+    private void registrarPrestamo(ActionEvent event) {
+        String nombreUsuario = comboBoxUsuarios.getEditor().getText().trim();
+
+
+    }
+
     private void mostrarAlerta(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información");
