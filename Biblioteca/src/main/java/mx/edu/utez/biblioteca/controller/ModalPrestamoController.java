@@ -65,9 +65,16 @@ public class ModalPrestamoController implements Initializable {
             tablaEjemplares.setItems(resultados);
         } catch (Exception e) {
             e.printStackTrace();
+            mostrarAlerta("Error interno al buscar ejemplares: " + e.getMessage());
         }
     }
-
+    private void mostrarAlerta(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 
     // Aquí voy a agregar los  métodos para guardar o cancelar
 }
