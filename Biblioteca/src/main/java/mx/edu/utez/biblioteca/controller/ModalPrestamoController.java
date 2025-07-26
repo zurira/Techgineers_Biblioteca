@@ -81,6 +81,11 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
+        // Validar fechas
+        if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
+            mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
+            return;
+        }
 
     }
 
