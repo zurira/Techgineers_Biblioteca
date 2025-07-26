@@ -1,15 +1,12 @@
 package mx.edu.utez.biblioteca.controller;
 
 public class BibliotecarioController {
-    package tu.paquete.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import tu.paquete.model.Usuario;
-
-    public class BibliotecarioController {
 
         @FXML private TextField txtBuscar;
         @FXML private TableView<Usuario> tablaUsuarios;
@@ -38,4 +35,3 @@ import tu.paquete.model.Usuario;
             alert.showAndWait();
         }
     }
-}
