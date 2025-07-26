@@ -127,6 +127,17 @@ public class ModalPrestamoController implements Initializable {
             mostrarAlerta("Error al registrar el préstamo.");
             return;
         }
+
+        boolean exito = true;
+        for (Ejemplar ej : seleccionados) {
+            boolean detalleInsertado = detalleDAO.insertarEjemplar(idPrestamo, ej.getIdEjemplar());
+            boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ej.getIdEjemplar(), false);
+            if (!detalleInsertado || !disponibilidadActualizada) {
+                exito = false;
+                break;
+            }
+        }
+
     }
 
     private void mostrarAlerta(String msg) {
