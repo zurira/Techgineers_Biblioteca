@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="" />
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="archivo css modificado">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/module-info.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,14 +18,27 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lizzetee05&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zurira/Techgineers_Biblioteca.git&quot;,
+    &quot;accountId&quot;: &quot;c39dee36-ef2e-403c-ae9e-e5e61f5a3578&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -29,45 +47,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DBConnection.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/owner/Desktop/Techgineers_Biblioteca&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DBConnection.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "TTS03",
+    "last_opened_file_path": "C:/Users/britt/OneDrive/Escritorio/Proyecto Integrador/Techgineers_Biblioteca",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\owner\Desktop\Techgineers_Biblioteca\Biblioteca\src\main\resources" />
       <recent name="C:\Users\owner\Desktop\Techgineers_Biblioteca\Biblioteca\src\main\resources\mx\edu\utez\biblioteca" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Techgineers_Biblioteca" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Techgineers_Biblioteca" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
       </set>
     </attachedChunks>
   </component>
@@ -80,10 +91,267 @@
       <updated>1752549459605</updated>
       <workItem from="1752549476346" duration="6637000" />
       <workItem from="1752578724475" duration="53000" />
+      <workItem from="1753484364221" duration="1075000" />
+      <workItem from="1753485464931" duration="175000" />
+      <workItem from="1753485744169" duration="8320000" />
+      <workItem from="1753537424938" duration="9315000" />
     </task>
+    <task id="LOCAL-00001" summary="se creo el archivo de usuario">
+      <option name="closed" value="true" />
+      <created>1753487578112</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753487578112</updated>
+    </task>
+    <task id="LOCAL-00002" summary="se creo el archivo controller de bibliotecario">
+      <option name="closed" value="true" />
+      <created>1753487651086</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753487651086</updated>
+    </task>
+    <task id="LOCAL-00003" summary="se creo el controller de agregar usuario">
+      <option name="closed" value="true" />
+      <created>1753488063374</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753488063374</updated>
+    </task>
+    <task id="LOCAL-00004" summary="se implementaron los metodos al controller de bibliotecario">
+      <option name="closed" value="true" />
+      <created>1753488437351</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753488437351</updated>
+    </task>
+    <task id="LOCAL-00005" summary="se implementaron métodos, getters y setters y se corrigió un error en el archivo de usuario">
+      <option name="closed" value="true" />
+      <created>1753488622991</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1753488622991</updated>
+    </task>
+    <task id="LOCAL-00006" summary="se implementaron métodos al archivo de controller bibliotecario y se corrigió un error">
+      <option name="closed" value="true" />
+      <created>1753488781388</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1753488781388</updated>
+    </task>
+    <task id="LOCAL-00007" summary="se corrigió un error en bibliotecario controller">
+      <option name="closed" value="true" />
+      <created>1753488982893</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1753488982893</updated>
+    </task>
+    <task id="LOCAL-00008" summary="se creó archivo controller para modal de editar usuario">
+      <option name="closed" value="true" />
+      <created>1753493095584</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753493095585</updated>
+    </task>
+    <task id="LOCAL-00009" summary="se creó archivo de controller para modal de ver usuario">
+      <option name="closed" value="true" />
+      <created>1753493177206</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1753493177206</updated>
+    </task>
+    <task id="LOCAL-00010" summary="se borró algo del archivo e implementación de getters y setters">
+      <option name="closed" value="true" />
+      <created>1753496904794</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1753496904795</updated>
+    </task>
+    <task id="LOCAL-00011" summary="cambios en el archivo controller de editar usuario">
+      <option name="closed" value="true" />
+      <created>1753502465109</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1753502465109</updated>
+    </task>
+    <task id="LOCAL-00012" summary="creación en implementación de métodos en controller del modal editar usuario">
+      <option name="closed" value="true" />
+      <created>1753502928932</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753502928932</updated>
+    </task>
+    <task id="LOCAL-00013" summary="creación e implementación de métodos del archivo controller del modal de agregar usuario">
+      <option name="closed" value="true" />
+      <created>1753503123245</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753503123245</updated>
+    </task>
+    <task id="LOCAL-00014" summary="creación del archivo de controller para el modal de ver usuario">
+      <option name="closed" value="true" />
+      <created>1753503410682</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753503410682</updated>
+    </task>
+    <task id="LOCAL-00015" summary="implementación de métodos y declaración de variables en controller de ver usuario">
+      <option name="closed" value="true" />
+      <created>1753503530604</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1753503530604</updated>
+    </task>
+    <task id="LOCAL-00016" summary="se creó archivo de usuario controller">
+      <option name="closed" value="true" />
+      <created>1753539654472</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1753539654474</updated>
+    </task>
+    <task id="LOCAL-00017" summary="se modificó archivo de usuario controller y se agregaron los métodos">
+      <option name="closed" value="true" />
+      <created>1753539908754</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1753539908754</updated>
+    </task>
+    <task id="LOCAL-00018" summary="se creó el archivo de usuario dao impl">
+      <option name="closed" value="true" />
+      <created>1753539979839</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1753539979839</updated>
+    </task>
+    <task id="LOCAL-00019" summary="se creó archivo de IUsuarioDao">
+      <option name="closed" value="true" />
+      <created>1753546371443</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1753546371443</updated>
+    </task>
+    <task id="LOCAL-00020" summary="se agregó un nuevo constructor">
+      <option name="closed" value="true" />
+      <created>1753546577963</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1753546577963</updated>
+    </task>
+    <task id="LOCAL-00021" summary="se declaró el método para realizar el inicio de sesión en IUsuarioDao">
+      <option name="closed" value="true" />
+      <created>1753546803313</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1753546803313</updated>
+    </task>
+    <task id="LOCAL-00022" summary="archivo DBConnection para conexión a base de datos creado">
+      <option name="closed" value="true" />
+      <created>1753547501664</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1753547501664</updated>
+    </task>
+    <task id="LOCAL-00023" summary="importación de métodos y paquete en DBConnection">
+      <option name="closed" value="true" />
+      <created>1753547627352</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1753547627352</updated>
+    </task>
+    <task id="LOCAL-00024" summary="importación de paquete en DBConnection e importación para la inyección sql a la base de datos">
+      <option name="closed" value="true" />
+      <created>1753547692017</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1753547692017</updated>
+    </task>
+    <task id="LOCAL-00025" summary="cambios en el archivo DBConnection">
+      <option name="closed" value="true" />
+      <created>1753563901443</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1753563901443</updated>
+    </task>
+    <task id="LOCAL-00026" summary="se creó archivo de css para modal de editar usuario">
+      <option name="closed" value="true" />
+      <created>1753576488053</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1753576488054</updated>
+    </task>
+    <task id="LOCAL-00027" summary="archivo css modificado">
+      <option name="closed" value="true" />
+      <created>1753576568280</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1753576568280</updated>
+    </task>
+    <task id="LOCAL-00028" summary="archivo css modificado">
+      <option name="closed" value="true" />
+      <created>1753576590338</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1753576590338</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="se creo el controller de agregar usuario" />
+    <MESSAGE value="se implementaron los metodos al controller de bibliotecario" />
+    <MESSAGE value="se implementaron métodos, getters y setters y se corrigió un error en el archivo de usuario" />
+    <MESSAGE value="se implementaron métodos al archivo de controller bibliotecario y se corrigió un error" />
+    <MESSAGE value="se corrigió un error en bibliotecario controller" />
+    <MESSAGE value="se creó archivo controller para modal de editar usuario" />
+    <MESSAGE value="se creó archivo de controller para modal de ver usuario" />
+    <MESSAGE value="se borró algo del archivo e implementación de getters y setters" />
+    <MESSAGE value="cambios en el archivo controller de editar usuario" />
+    <MESSAGE value="creación en implementación de métodos en controller del modal editar usuario" />
+    <MESSAGE value="creación e implementación de métodos del archivo controller del modal de agregar usuario" />
+    <MESSAGE value="creación del archivo de controller para el modal de ver usuario" />
+    <MESSAGE value="implementación de métodos y declaración de variables en controller de ver usuario" />
+    <MESSAGE value="se creó archivo de usuario controller" />
+    <MESSAGE value="se modificó archivo de usuario controller y se agregaron los métodos" />
+    <MESSAGE value="se creó el archivo de usuario dao impl" />
+    <MESSAGE value="se creó archivo de IUsuarioDao" />
+    <MESSAGE value="se agregó un nuevo constructor" />
+    <MESSAGE value="se declaró el método para realizar el inicio de sesión en IUsuarioDao" />
+    <MESSAGE value="archivo DBConnection para conexión a base de datos creado" />
+    <MESSAGE value="importación de métodos y paquete en DBConnection" />
+    <MESSAGE value="importación de paquete en DBConnection e importación para la inyección sql a la base de datos" />
+    <MESSAGE value="cambios en el archivo DBConnection" />
+    <MESSAGE value="se creó archivo de css para modal de editar usuario" />
+    <MESSAGE value="archivo css modificado" />
+    <option name="LAST_COMMIT_MESSAGE" value="archivo css modificado" />
   </component>
 </project>
