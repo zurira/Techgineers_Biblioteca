@@ -35,7 +35,23 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public List<Prestamo> findAll() throws Exception {
-        return List.of();
+        List<Prestamo> prestamos = new ArrayList<>();
+        String query = "SELECT p.ID AS ID_PRESTAMO, p.FECHA_PRESTAMO, p.FECHA_LIMITE, p.FECHA_DEVOLUCION, p.ESTADO, " +
+                "l.ID AS ID_LIBRO, l.TITULO AS TITULO_LIBRO, " +
+                "ub.ID AS ID_USUARIO, ub.NOMBRE AS NOMBRE_USUARIO " +
+                "FROM PRESTAMO p " +
+                "JOIN USUARIO_BIBLIOTECA ub ON p.ID_USUARIO = ub.ID " +
+                "JOIN DETALLE_PRESTAMO dp ON p.ID = dp.ID_PRESTAMO " +
+                "JOIN EJEMPLAR e ON dp.ID_EJEMPLAR = e.ID " +
+                "JOIN LIBRO l ON e.ID_LIBRO = l.ID";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                prestamos.add(buildPrestamoFromResultSet(rs));
+            }
+        }
+        return prestamos;
     }
 
     @Override
