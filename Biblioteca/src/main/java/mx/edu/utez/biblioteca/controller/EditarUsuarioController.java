@@ -1,4 +1,4 @@
-package mx.edu.utez.biblioteca.controller;
+/*package mx.edu.utez.biblioteca.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -23,4 +23,4 @@ public class EditarUsuarioController {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();
     }
-}
+}*/

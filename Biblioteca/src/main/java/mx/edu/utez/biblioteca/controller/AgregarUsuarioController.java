@@ -1,8 +1,8 @@
-package mx.edu.utez.biblioteca.controller;
+/*package mx.edu.utez.biblioteca.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import mx.edu.utez.biblioteca.model.Usuario;
+import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 public class AgregarUsuarioController {
 
@@ -12,11 +12,11 @@ public class AgregarUsuarioController {
         @FXML private TextField txtTelefono;
         @FXML private TextArea txtDireccion;
 
-        private Usuario usuario;
+        private UsuarioBiblioteca usuario;
 
         private boolean guardado = false;
 
-        public Usuario getUsuario() {
+        public UsuarioBiblioteca getUsuario() {
             return usuario;
         }
 
@@ -41,7 +41,7 @@ public class AgregarUsuarioController {
                 return;
             }
 
-            usuario = new Usuario(
+            usuario = new UsuarioBiblioteca(
                     txtNombre.getText(),
                     txtFecha.getText(),
                     txtEmail.getText(),
@@ -52,4 +52,4 @@ public class AgregarUsuarioController {
             guardado = true;
             ((Stage) txtNombre.getScene().getWindow()).close();
         }
-    }
+    }*/
