@@ -25,7 +25,6 @@ public class PrestamoDaoImpl implements IPrestamo {
         libro.setId(rs.getInt("ID_LIBRO"));
         libro.setTitulo(rs.getString("TITULO_LIBRO"));
         prestamo.setLibro(libro);
-
         // Usuario
         UsuarioBiblioteca usuario = new UsuarioBiblioteca();
         usuario.setId(rs.getInt("ID_USUARIO"));
