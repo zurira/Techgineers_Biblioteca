@@ -61,9 +61,9 @@
             </VBox>
             <VBox HBox.hgrow="ALWAYS">
                 <children>
-                    <HBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
+                    <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
                         <children>
-                            <Label styleClass="title-text" text="Préstamos de libros" HBox.hgrow="ALWAYS">
+                            <Label styleClass="title-text" text="Préstamos de libros">
                                 <HBox.margin>
                                     <Insets left="20.0" />
                                 </HBox.margin>
@@ -71,6 +71,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
+                            <HBox HBox.hgrow="ALWAYS" />
                             <FontIcon iconLiteral="fa-user" iconSize="32" styleClass="user-icon" />
                             <Label fx:id="lblUserName" styleClass="user-name" text="Bibliotecario" />
                             <FontIcon iconLiteral="fa-arrow-right" iconSize="24" styleClass="arrow-icon" />
@@ -123,6 +124,15 @@
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                         </VBox.margin>
                     </TableView>
+                    <Label fx:id="lblSinResultados"
+                           text="No se encontraron resultados"
+                           visible="false"
+                           style="-fx-text-fill: brown; -fx-font-weight: bold; -fx-alignment: center;"
+                           alignment="CENTER" maxWidth="Infinity">
+                        <VBox.margin>
+                            <Insets left="20.0" top="0.0" bottom="10.0" />
+                        </VBox.margin>
+                    </Label>
                 </children>
             </VBox>
         </children>
