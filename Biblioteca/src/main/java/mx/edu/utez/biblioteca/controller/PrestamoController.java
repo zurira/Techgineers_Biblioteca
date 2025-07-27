@@ -94,6 +94,7 @@ public class PrestamoController {
 
 
         // Configuración de la columna de Acciones con Ikonli
+        colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
             private final Button editButton = new Button();
             private final Button deleteButton = new Button();
