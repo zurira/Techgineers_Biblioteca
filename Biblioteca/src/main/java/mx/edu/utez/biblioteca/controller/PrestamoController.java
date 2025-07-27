@@ -97,19 +97,13 @@ public class PrestamoController {
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
             private final Button editButton = new Button();
-            private final Button deleteButton = new Button();
             private final Button viewButton = new Button();
 
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
-                editIcon.getStyleClass().add("action-icon"); // <-- CORRECTO
+                editIcon.getStyleClass().add("action-icon");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
-
-                FontIcon deleteIcon = new FontIcon("fa-trash");
-                deleteIcon.getStyleClass().add("action-icon");
-                deleteButton.setGraphic(deleteIcon);
-                deleteButton.getStyleClass().add("action-button");
 
                 FontIcon viewIcon = new FontIcon("fa-eye");
                 viewIcon.getStyleClass().add("action-icon");
@@ -121,11 +115,6 @@ public class PrestamoController {
                 editButton.setOnAction(event -> {
                     Prestamo prestamo = getTableView().getItems().get(getIndex());
                     onEditPrestamo(prestamo);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Prestamo prestamo = getTableView().getItems().get(getIndex());
-                    onDeletePrestamo(prestamo);
                 });
 
                 viewButton.setOnAction(event -> {
@@ -140,7 +129,7 @@ public class PrestamoController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton, deleteButton, viewButton);
+                    HBox buttons = new HBox(5, editButton, viewButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -201,29 +190,6 @@ public class PrestamoController {
         // Implementación de la lógica para editar un préstamo existente
     }
 
-    private void onDeletePrestamo(Prestamo prestamo) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar eliminación");
-        alert.setHeaderText("Eliminar préstamo");
-        alert.setContentText("¿Estás seguro de que quieres eliminar el préstamo con ID: " + prestamo.getId() + "?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                prestamoDao.delete(prestamo.getId());
-                cargarPrestamos();
-                System.out.println("Préstamo eliminado exitosamente.");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("Error al eliminar el préstamo: " + e.getMessage());
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Error de Eliminación");
-                errorAlert.setHeaderText("No se pudo eliminar el préstamo");
-                errorAlert.setContentText("Hubo un error al intentar eliminar el préstamo.");
-                errorAlert.showAndWait();
-            }
-        }
-    }
 
     private void onViewPrestamo(Prestamo prestamo) {
         System.out.println("Ver detalles del préstamo: " + prestamo.getId());

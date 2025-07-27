@@ -112,16 +112,6 @@ public class PrestamoDaoImpl implements IPrestamo {
     }
 
     @Override
-    public void delete(int id) throws Exception {
-        String query = "DELETE FROM PRESTAMO WHERE ID = ?";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        }
-    }
-
-    @Override
     public List<Prestamo> search(String searchTerm) throws Exception {
         List<Prestamo> prestamos = new ArrayList<>();
         String query = "SELECT p.ID AS ID_PRESTAMO, p.FECHA_PRESTAMO, p.FECHA_LIMITE, p.FECHA_DEVOLUCION, p.ESTADO, " +
