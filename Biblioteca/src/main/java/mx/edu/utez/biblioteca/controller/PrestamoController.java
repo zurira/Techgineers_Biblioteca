@@ -56,5 +56,145 @@ public class PrestamoController {
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
 
+    @FXML
+    public void initialize() {
+        prestamoDao = new PrestamoDaoImpl();
+        configurarColumnasTabla();
+        cargarPrestamos();
 
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        });
+    }
+
+    private void configurarColumnasTabla() {
+        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        // Configuración para el nombre del usuario, con manejo de nulidad
+        colNombreUsuario.setCellValueFactory(cellData -> {
+            UsuarioBiblioteca usuario = cellData.getValue().getUsuario();
+            // Si el usuario es null, muestra "N/A" o un string vacío.
+            return new SimpleStringProperty(usuario != null ? usuario.getNombre() : "N/A");
+        });
+
+        // Configuración para el título del libro, con manejo de nulidad
+        colTituloLibro.setCellValueFactory(cellData -> {
+            Libro libro = cellData.getValue().getLibro();
+            // Si el libro es null, muestra "N/A" o un string vacío.
+            return new SimpleStringProperty(libro != null ? libro.getTitulo() : "N/A");
+        });
+
+        colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<>("fechaPrestamo"));
+        colFechaLimite.setCellValueFactory(new PropertyValueFactory<>("fechaLimite"));
+        colFechaReal.setCellValueFactory(new PropertyValueFactory<>("fechaReal"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+
+        // Configuración de la columna de Acciones con Ikonli
+        colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
+            private final Button editButton = new Button();
+            private final Button deleteButton = new Button();
+            private final Button viewButton = new Button();
+
+            {
+                FontIcon editIcon = new FontIcon("fa-pencil");
+                editIcon.getStyleClass().add("action-icon"); // <-- CORRECTO
+                editButton.setGraphic(editIcon);
+                editButton.getStyleClass().add("action-button");
+
+                FontIcon deleteIcon = new FontIcon("fa-trash");
+                deleteIcon.getStyleClass().add("action-icon");
+                deleteButton.setGraphic(deleteIcon);
+                deleteButton.getStyleClass().add("action-button");
+
+                FontIcon viewIcon = new FontIcon("fa-eye");
+                viewIcon.getStyleClass().add("action-icon");
+                viewButton.setGraphic(viewIcon);
+                viewButton.getStyleClass().add("action-button");
+
+
+                // Manejadores de eventos para los botones
+                editButton.setOnAction(event -> {
+                    Prestamo prestamo = getTableView().getItems().get(getIndex());
+                    onEditPrestamo(prestamo);
+                });
+
+                deleteButton.setOnAction(event -> {
+                    Prestamo prestamo = getTableView().getItems().get(getIndex());
+                    onDeletePrestamo(prestamo);
+                });
+
+                viewButton.setOnAction(event -> {
+                    Prestamo prestamo = getTableView().getItems().get(getIndex());
+                    onViewPrestamo(prestamo);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox buttons = new HBox(5, editButton, deleteButton, viewButton);
+                    buttons.setAlignment(Pos.CENTER);
+                    setGraphic(buttons);
+                }
+            }
+        });
+    }
+
+    private void cargarPrestamos() {
+        try {
+            listaPrestamos = FXCollections.observableArrayList(prestamoDao.findAll()); // ¡CAMBIO: Usar findAll() de la interfaz!
+            tableViewPrestamos.setItems(listaPrestamos);
+        } catch (Exception e) {
+            e.printStackTrace(); // Imprime la traza completa del error para depuración
+            System.err.println("Error al cargar préstamos: " + e.getMessage());
+            // Considera mostrar un Alert al usuario aquí si el error es crítico
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de Carga");
+            alert.setHeaderText("No se pudieron cargar los préstamos");
+            alert.setContentText("Hubo un error al intentar obtener los datos de los préstamos. Por favor, revisa la conexión a la base de datos.");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    private void onAddPrestamo() {
+        System.out.println("Agregar nuevo préstamo");
+        // Implementación de la lógica para abrir el formulario de agregar préstamo
+    }
+
+    private void onEditPrestamo(Prestamo prestamo) {
+        System.out.println("Editar préstamo: " + prestamo.getId());
+        // Implementación de la lógica para editar un préstamo existente
+    }
+
+    private void onDeletePrestamo(Prestamo prestamo) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar eliminación");
+        alert.setHeaderText("Eliminar préstamo");
+        alert.setContentText("¿Estás seguro de que quieres eliminar el préstamo con ID: " + prestamo.getId() + "?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                prestamoDao.delete(prestamo.getId());
+                cargarPrestamos();
+                System.out.println("Préstamo eliminado exitosamente.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Error al eliminar el préstamo: " + e.getMessage());
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error de Eliminación");
+                errorAlert.setHeaderText("No se pudo eliminar el préstamo");
+                errorAlert.setContentText("Hubo un error al intentar eliminar el préstamo.");
+                errorAlert.showAndWait();
+            }
+        }
+    }
+
+    private void onViewPrestamo(Prestamo prestamo) {
+        System.out.println("Ver detalles del préstamo: " + prestamo.getId());
+        // Implementación de la lógica para ver detalles del préstamo
+    }
 }
