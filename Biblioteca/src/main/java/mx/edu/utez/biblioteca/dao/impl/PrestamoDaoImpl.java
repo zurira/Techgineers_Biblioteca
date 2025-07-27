@@ -98,7 +98,17 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public void update(Prestamo prestamo) throws Exception {
-
+        String query = "UPDATE PRESTAMO SET ID_USUARIO = ?, FECHA_PRESTAMO = ?, FECHA_LIMITE = ?, FECHA_DEVOLUCION = ?, ESTADO = ? WHERE ID = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, prestamo.getUsuario().getId());
+            ps.setDate(2, Date.valueOf(prestamo.getFechaPrestamo()));
+            ps.setDate(3, Date.valueOf(prestamo.getFechaLimite()));
+            ps.setDate(4, prestamo.getFechaReal() != null ? Date.valueOf(prestamo.getFechaReal()) : null);
+            ps.setString(5, prestamo.getEstado());
+            ps.setInt(6, prestamo.getId());
+            ps.executeUpdate();
+        }
     }
 
     @Override
