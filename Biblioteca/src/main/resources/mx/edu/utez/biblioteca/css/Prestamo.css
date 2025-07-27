@@ -1,14 +1,16 @@
 /* General styling */
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: #EDE9E3;
 }
 
 /* Sidebar */
 .sidebar {
-    -fx-background-color: #f1f0ee; /* Light beige */
+    -fx-background-color: #EDE9E3;
     -fx-padding: 0;
     -fx-alignment: top-center;
+    -fx-border-color: #A38F85;
+    -fx-border-width: 0px 1px 0px 0px;
 }
 
 .logo-text {
@@ -51,7 +53,7 @@
 
 /* Top Bar */
 .top-bar {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #A38F85;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 0 0 1px 0;
     -fx-padding: 10px 20px;
@@ -61,7 +63,7 @@
 .title-text {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #ffff;
 }
 
 .user-icon {
@@ -108,7 +110,7 @@
 
 /* Add Button */
 .add-button {
-    -fx-background-color: #4CAF50; /* Green */
+    -fx-background-color: #CCCCCC;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -119,7 +121,7 @@
 }
 
 .add-button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #A38F85;
 }
 
 .add-icon {
@@ -137,7 +139,7 @@
 /* Table View */
 .table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #CCCCCC;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -210,4 +212,37 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 5;
+}
+
+/* Estilo para el contenedor del recuadro de usuario */
+.user-info-box {
+    -fx-background-color: #D1CCC1;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.user-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-translate-y: 5px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.user-sub-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F0F0F0;
+    -fx-translate-y: -8px;
+}
+
+.arrow-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 20px;
+    -fx-translate-y: 5px;
 }
