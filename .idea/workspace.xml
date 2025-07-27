@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="archivo css modificado">
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="archivo css de modal ver usuario creado">
+      <change afterPath="$PROJECT_DIR$/Biblioteca/src/main/resources/mx/edu/utez/biblioteca/css/ver_usuario.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Biblioteca/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/module-info.java" afterDir="false" />
     </list>
@@ -94,7 +94,7 @@
       <workItem from="1753484364221" duration="1075000" />
       <workItem from="1753485464931" duration="175000" />
       <workItem from="1753485744169" duration="8320000" />
-      <workItem from="1753537424938" duration="9315000" />
+      <workItem from="1753537424938" duration="9727000" />
     </task>
     <task id="LOCAL-00001" summary="se creo el archivo de usuario">
       <option name="closed" value="true" />
@@ -320,14 +320,21 @@
       <option name="project" value="LOCAL" />
       <updated>1753576590338</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="archivo css de modal ver usuario creado">
+      <option name="closed" value="true" />
+      <created>1753577192128</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1753577192129</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="se creo el controller de agregar usuario" />
     <MESSAGE value="se implementaron los metodos al controller de bibliotecario" />
     <MESSAGE value="se implementaron métodos, getters y setters y se corrigió un error en el archivo de usuario" />
     <MESSAGE value="se implementaron métodos al archivo de controller bibliotecario y se corrigió un error" />
@@ -352,6 +359,7 @@
     <MESSAGE value="cambios en el archivo DBConnection" />
     <MESSAGE value="se creó archivo de css para modal de editar usuario" />
     <MESSAGE value="archivo css modificado" />
-    <option name="LAST_COMMIT_MESSAGE" value="archivo css modificado" />
+    <MESSAGE value="archivo css de modal ver usuario creado" />
+    <option name="LAST_COMMIT_MESSAGE" value="archivo css de modal ver usuario creado" />
   </component>
 </project>
