@@ -63,6 +63,7 @@ public class PrestamoController {
     public void initialize() {
         prestamoDao = new PrestamoDaoImpl();
         configurarColumnasTabla();
+        tableViewPrestamos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         cargarPrestamos();
 
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
