@@ -113,10 +113,15 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public void delete(int id) throws Exception {
-
+        String query = "DELETE FROM PRESTAMO WHERE ID = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
     }
 
-    @Override
+        @Override
     public List<Prestamo> search(String searchTerm) throws Exception {
         return List.of();
     }
