@@ -61,6 +61,7 @@
             </VBox>
             <VBox HBox.hgrow="ALWAYS">
                 <children>
+
                     <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
                         <children>
                             <Label styleClass="title-text" text="Préstamos de libros">
@@ -72,9 +73,20 @@
                                 </font>
                             </Label>
                             <HBox HBox.hgrow="ALWAYS" />
-                            <FontIcon iconLiteral="fa-user" iconSize="32" styleClass="user-icon" />
-                            <Label fx:id="lblUserName" styleClass="user-name" text="Bibliotecario" />
-                            <FontIcon iconLiteral="fa-arrow-right" iconSize="24" styleClass="arrow-icon" />
+
+                            <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
+                                <children>
+                                    <HBox alignment="CENTER" spacing="5.0">
+                                        <children>
+                                                <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
+                                                    <Label styleClass="user-name" text="Bibliotecario" />
+                                                <FontIcon iconLiteral="fa-arrow-right" iconSize="24" styleClass="arrow-icon" />
+                                        </children>
+                                    </HBox>
+                                    <Label styleClass="user-sub-label" text="Nombre usuario" />
+                                </children>
+                            </VBox>
+
                         </children>
                         <VBox.margin>
                             <Insets />
