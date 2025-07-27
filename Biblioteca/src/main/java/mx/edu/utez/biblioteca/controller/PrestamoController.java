@@ -53,6 +53,9 @@ public class PrestamoController {
     @FXML
     private TableColumn<Prestamo, Void> colAcciones; // Para los botones de acciones
 
+    @FXML
+    private Label lblSinResultados;
+
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
 
@@ -63,6 +66,7 @@ public class PrestamoController {
         cargarPrestamos();
 
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrarPrestamos(newValue);
         });
     }
 
@@ -158,6 +162,33 @@ public class PrestamoController {
             alert.showAndWait();
         }
     }
+
+    private void filtrarPrestamos(String filtro) {
+        if (filtro == null || filtro.trim().isEmpty()) {
+            tableViewPrestamos.setItems(listaPrestamos); // Mostrar todos
+            lblSinResultados.setVisible(false);  // Ocultar mensaje cuando no hay búsqueda
+            return;
+        }
+
+        String filtroLower = filtro.toLowerCase();
+
+        ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
+
+        for (Prestamo p : listaPrestamos) {
+            String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
+            String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
+            String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
+
+            if (nombreUsuario.contains(filtroLower) || tituloLibro.contains(filtroLower) || estado.contains(filtroLower)) {
+                prestamosFiltrados.add(p);
+            }
+        }
+
+        tableViewPrestamos.setItems(prestamosFiltrados);
+        lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
+    }
+
+
     @FXML
     private void onAddPrestamo() {
         System.out.println("Agregar nuevo préstamo");
