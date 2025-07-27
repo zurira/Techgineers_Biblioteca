@@ -56,7 +56,26 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public Prestamo findById(int id) throws Exception {
-        return null;
+        Prestamo prestamo = null;
+        String query = "SELECT p.ID AS ID_PRESTAMO, p.FECHA_PRESTAMO, p.FECHA_LIMITE, p.FECHA_DEVOLUCION, p.ESTADO, " +
+                "l.ID AS ID_LIBRO, l.TITULO AS TITULO_LIBRO, " +
+                "ub.ID AS ID_USUARIO, ub.NOMBRE AS NOMBRE_USUARIO " +
+                "FROM PRESTAMO p " +
+                "JOIN USUARIO_BIBLIOTECA ub ON p.ID_USUARIO = ub.ID " +
+                "JOIN DETALLE_PRESTAMO dp ON p.ID = dp.ID_PRESTAMO " +
+                "JOIN EJEMPLAR e ON dp.ID_EJEMPLAR = e.ID " +
+                "JOIN LIBRO l ON e.ID_LIBRO = l.ID " +
+                "WHERE p.ID = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    prestamo = buildPrestamoFromResultSet(rs);
+                }
+            }
+        }
+        return prestamo;
     }
 
     @Override
