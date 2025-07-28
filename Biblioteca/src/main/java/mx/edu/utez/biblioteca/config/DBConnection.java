@@ -13,7 +13,7 @@ public class DBConnection {
     // Obtiene una conexión nueva
     public static Connection getConnection() throws SQLException {
         // 1. Apunta al directorio donde descomprimiste el wallet
-        System.setProperty("oracle.net.tns_admin", "C:\\Users\\DELL\\Downloads\\Wallet_VYG59TE11JX0QYGS");
+        System.setProperty("oracle.net.tns_admin", "C:\\Users\\britt\\Downloads\\Wallet_VYG59TE11JX0QYGS");
         // 2. (Opcional) fuerza la validación de nombre de servidor en el certificado
         System.setProperty("oracle.net.ssl_server_dn_match", "true");
         // 3. Obtiene la conexión usando alias, user y pass
