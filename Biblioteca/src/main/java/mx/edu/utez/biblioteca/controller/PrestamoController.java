@@ -3,9 +3,15 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -181,10 +187,23 @@ public class PrestamoController {
 
 
     @FXML
-    private void onAddPrestamo() {
+    private void onAddPrestamo(ActionEvent e) {
         System.out.println("Agregar nuevo préstamo");
         // Implementación de la lógica para abrir el formulario de agregar préstamo
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarPrestamo.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+
 
     private void onEditPrestamo(Prestamo prestamo) {
         System.out.println("Editar préstamo: " + prestamo.getId());
