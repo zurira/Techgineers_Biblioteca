@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se agregaron dependencias faltantes en archivo de pom">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se borró archivo de interfaz ILibro, ya que no se utiliza">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +64,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
@@ -347,15 +346,29 @@
       <option name="project" value="LOCAL" />
       <updated>1753577661450</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="se borraron símbolos raros de los códigos">
+      <option name="closed" value="true" />
+      <created>1753722153430</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1753722153430</updated>
+    </task>
+    <task id="LOCAL-00033" summary="se borró archivo de interfaz ILibro, ya que no se utiliza">
+      <option name="closed" value="true" />
+      <created>1753722339803</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1753722339803</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="se implementaron métodos al archivo de controller bibliotecario y se corrigió un error" />
-    <MESSAGE value="se corrigió un error en bibliotecario controller" />
     <MESSAGE value="se creó archivo controller para modal de editar usuario" />
     <MESSAGE value="se creó archivo de controller para modal de ver usuario" />
     <MESSAGE value="se borró algo del archivo e implementación de getters y setters" />
@@ -379,6 +392,8 @@
     <MESSAGE value="archivo css de modal ver usuario creado" />
     <MESSAGE value="se modificó archivo css" />
     <MESSAGE value="se agregaron dependencias faltantes en archivo de pom" />
-    <option name="LAST_COMMIT_MESSAGE" value="se agregaron dependencias faltantes en archivo de pom" />
+    <MESSAGE value="se borraron símbolos raros de los códigos" />
+    <MESSAGE value="se borró archivo de interfaz ILibro, ya que no se utiliza" />
+    <option name="LAST_COMMIT_MESSAGE" value="se borró archivo de interfaz ILibro, ya que no se utiliza" />
   </component>
 </project>
