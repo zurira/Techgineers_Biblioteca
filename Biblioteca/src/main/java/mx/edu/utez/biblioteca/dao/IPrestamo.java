@@ -1,7 +1,9 @@
 package mx.edu.utez.biblioteca.dao;
 
+import javafx.collections.ObservableList;
 import mx.edu.utez.biblioteca.model.Prestamo;
-<<<<<<< HEAD
+import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
+
 import java.util.List;
 
 public interface IPrestamo {
@@ -10,10 +12,6 @@ public interface IPrestamo {
     void create(Prestamo prestamo) throws Exception;
     void update(Prestamo prestamo) throws Exception;
     List<Prestamo> search(String searchTerm) throws Exception;
+    public ObservableList<UsuarioBiblioteca> obtenerUsuarios();
 }
-=======
 
-public interface IPrestamo {
-    public int insertar(Prestamo prestamo);
-}
->>>>>>> TTS17
