@@ -3,6 +3,8 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -47,6 +49,9 @@ public class UsuarioBibliotecaController {
     @FXML
     private Label lblSinResultados;
 
+    @FXML
+    private TextField txtSearch;
+
     private UsuarioBibliotecaDaoImpl usuarioDao;
     private ObservableList<UsuarioBiblioteca> listaUsuarios;
 
@@ -56,6 +61,7 @@ public class UsuarioBibliotecaController {
         configurarColumnasTabla();
         tableViewUsuarios.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         cargarUsuarios();
+        configurarFiltroBusqueda();
     }
 
     private void configurarColumnasTabla() {
@@ -146,6 +152,36 @@ public class UsuarioBibliotecaController {
             mostrarAlertaError("Error de Carga", "No se pudieron cargar los usuarios", "Hubo un error al obtener los datos. Revisa la conexión.");
         }
     }
+
+    private void configurarFiltroBusqueda() {
+        FilteredList<UsuarioBiblioteca> listaFiltrada = new FilteredList<>(listaUsuarios, p -> true);
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            String filtro = newValue.toLowerCase();
+
+            listaFiltrada.setPredicate(usuario -> {
+                if (filtro == null || filtro.isEmpty()) return true;
+
+                boolean coincide =
+                        usuario.getNombre().toLowerCase().contains(filtro) ||
+                                (usuario.getCorreo() != null && usuario.getCorreo().toLowerCase().contains(filtro)) ||
+                                (usuario.getTelefono() != null && usuario.getTelefono().toLowerCase().contains(filtro)) ||
+                                (usuario.getDireccion() != null && usuario.getDireccion().toLowerCase().contains(filtro)) ||
+                                usuario.getFechaNacimiento().toString().contains(filtro) ||
+                                (usuario.getEstado().equalsIgnoreCase("S") && "activo".contains(filtro)) ||
+                                (usuario.getEstado().equalsIgnoreCase("N") && "inactivo".contains(filtro));
+
+                return coincide;
+            });
+
+            lblSinResultados.setVisible(listaFiltrada.isEmpty());
+        });
+
+        SortedList<UsuarioBiblioteca> listaOrdenada = new SortedList<>(listaFiltrada);
+        listaOrdenada.comparatorProperty().bind(tableViewUsuarios.comparatorProperty());
+        tableViewUsuarios.setItems(listaOrdenada);
+    }
+
 
     @FXML
     private void onAddUsuario() {
