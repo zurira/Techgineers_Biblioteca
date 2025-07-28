@@ -30,6 +30,7 @@
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Cancelar" onAction="#cancelar"/>
             <Button text="Guardar" onAction="#guardarUsuario" styleClass="boton-guardar"/>
+            <Button text="Agregar usuario" onAction="#onAddUsuario" />
         </HBox>
     </VBox>
 </AnchorPane>
