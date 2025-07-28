@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se borró archivo de interfaz ILibro, ya que no se utiliza">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se modificó archivo fxml de modal AgregarUsuario" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -362,14 +360,21 @@
       <option name="project" value="LOCAL" />
       <updated>1753722339803</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="se modificó archivo fxml de modal AgregarUsuario">
+      <option name="closed" value="true" />
+      <created>1753723465159</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1753723465159</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="se creó archivo controller para modal de editar usuario" />
     <MESSAGE value="se creó archivo de controller para modal de ver usuario" />
     <MESSAGE value="se borró algo del archivo e implementación de getters y setters" />
     <MESSAGE value="cambios en el archivo controller de editar usuario" />
@@ -394,6 +399,7 @@
     <MESSAGE value="se agregaron dependencias faltantes en archivo de pom" />
     <MESSAGE value="se borraron símbolos raros de los códigos" />
     <MESSAGE value="se borró archivo de interfaz ILibro, ya que no se utiliza" />
-    <option name="LAST_COMMIT_MESSAGE" value="se borró archivo de interfaz ILibro, ya que no se utiliza" />
+    <MESSAGE value="se modificó archivo fxml de modal AgregarUsuario" />
+    <option name="LAST_COMMIT_MESSAGE" value="se modificó archivo fxml de modal AgregarUsuario" />
   </component>
 </project>
