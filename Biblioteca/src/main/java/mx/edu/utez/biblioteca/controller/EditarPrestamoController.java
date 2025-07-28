@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
@@ -124,6 +125,23 @@ public class EditarPrestamoController implements Initializable {
        }
    }
 
+   @FXML
+   private void cancelarAccion(ActionEvent event) {
+       cerrarVentana();
+   }
+
+   private void mostrarAlerta(String mensaje) {
+       Alert alert = new Alert(Alert.AlertType.INFORMATION);
+       alert.setTitle("Información");
+       alert.setHeaderText(null);
+       alert.setContentText(mensaje);
+       alert.showAndWait();
+   }
+
+   private void cerrarVentana() {
+       Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
+       stage.close();
+   }
 
 
 }
