@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -71,5 +72,58 @@ public class EditarPrestamoController implements Initializable {
        cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
        cbEstado.setValue(prestamo.getEstado());
    }
+
+    @FXML
+   private void guardarCambiosPrestamo(ActionEvent event) {
+       UsuarioBiblioteca seleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
+       prestamoActual.setUsuario(seleccionado);
+       if (dpFechaPrestamo.getValue() == null ||
+               dpFechaLimite.getValue() == null ||
+               cbEstado.getValue() == null) {
+           mostrarAlerta("Completa todos los campos obligatorios.");
+           return;
+       }
+
+       if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
+           mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
+           return;
+       }
+
+       if (dpFechaDevolucion.getValue() != null &&
+               dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
+           mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
+           return;
+       }
+
+
+       // Actualizar préstamo
+       prestamoActual.setFechaPrestamo(dpFechaPrestamo.getValue());
+       prestamoActual.setFechaLimite(dpFechaLimite.getValue());
+       prestamoActual.setFechaReal(dpFechaDevolucion.getValue());
+       prestamoActual.setEstado(cbEstado.getValue());
+
+       boolean exito = true;
+       try {
+           boolean actualizado = prestamoDao.update(prestamoActual);
+           if (!actualizado) {
+               mostrarAlerta("No se pudo actualizar el préstamo.");
+               return;
+           }
+       } catch (Exception e) {
+           e.printStackTrace(); // Puedes mostrar un error al usuario si prefieres
+           mostrarAlerta("Ocurrió un error al actualizar el préstamo.");
+       }
+
+
+
+       if (exito) {
+           mostrarAlerta("Cambios guardados correctamente.");
+           cerrarVentana();
+       } else {
+           mostrarAlerta("Error al guardar los ejemplares.");
+       }
+   }
+
+
 
 }
