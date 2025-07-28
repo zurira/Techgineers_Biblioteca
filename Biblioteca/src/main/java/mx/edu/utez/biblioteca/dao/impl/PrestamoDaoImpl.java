@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.dao.impl;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mx.edu.utez.biblioteca.dao.IPrestamo;
 import mx.edu.utez.biblioteca.model.Prestamo;
@@ -140,8 +141,26 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public ObservableList<UsuarioBiblioteca> obtenerUsuarios() {
-        return null;
-    }
+       ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList();
+       String sql = "SELECT ID, NOMBRE FROM USUARIO_BIBLIOTECA";
+
+       try (Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+           while (rs.next()) {
+               UsuarioBiblioteca usuario = new UsuarioBiblioteca();
+               usuario.setId(rs.getInt("ID"));
+               usuario.setNombre(rs.getString("NOMBRE"));
+               usuarios.add(usuario);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+
+       return usuarios;
+   }
+
 
 }
 
