@@ -18,5 +18,9 @@
                 onAction="#onSeleccionarImagen" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
     </VBox>
 
-    
+    <!-- Este es el título del modal -->
+    <Label layoutX="30" layoutY="20" text="Editar información del administrador"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+
 </AnchorPane>
