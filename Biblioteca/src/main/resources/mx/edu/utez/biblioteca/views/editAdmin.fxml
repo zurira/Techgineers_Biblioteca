@@ -58,6 +58,11 @@
     <TextField fx:id="tfDireccion" layoutX="30" layoutY="305" prefWidth="860"/>
 
 
-    
+    <!-- Botones -->
+    <HBox layoutX="670" layoutY="500" spacing="10">
+        <Button text="Cancelar" onAction="#onCancelar" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+        <Button text="Guardar" onAction="#onGuardar" style="-fx-background-color: #A38F85; -fx-text-fill: white;"/>
+    </HBox>
+
 
 </AnchorPane>
