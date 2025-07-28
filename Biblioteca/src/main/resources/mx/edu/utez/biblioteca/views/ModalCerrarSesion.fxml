@@ -13,8 +13,8 @@
           style="-fx-font-size: 28px; -fx-font-weight: bold;" />
 
     <HBox spacing="20" layoutX="110" layoutY="170">
-    <Button text="Cancelar"
-            style="-fx-background-color: transparent;
+        <Button fx:id="cancelarButton" text="Cancelar"
+                style="-fx-background-color: transparent;
                        -fx-border-color: #A38F85;
                        -fx-border-width: 1.5;
                        -fx-text-fill: #A38F85;
@@ -24,7 +24,7 @@
                        -fx-background-radius: 5;
                        -fx-border-radius: 5;" />
 
-        <Button text="Aceptar"
+        <Button fx:id="aceptarButton" text="Aceptar"
                 style="-fx-background-color: #A38F85;
                        -fx-text-fill: white;
                        -fx-font-weight: bold;
@@ -33,6 +33,4 @@
                        -fx-background-radius: 5;
                        -fx-border-radius: 5;" />
     </HBox>
-
-
 </AnchorPane>
