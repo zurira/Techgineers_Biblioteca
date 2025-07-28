@@ -40,4 +40,15 @@ public class Administrador {
     public String getImagen() { return imagen; }
     public boolean getEstado() { return estado; }
 
-  
+    // Setters
+    public void setId(int id) { this.id = id; }
+    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+    public void setUsuario(String usuario) { this.usuario = usuario; }
+    public void setCorreo(String correo) { this.correo = correo; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    public void setRol(String rol) { this.rol = rol; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+    public void setEstado(boolean estado) { this.estado = estado; }
+}
