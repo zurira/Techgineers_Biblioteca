@@ -49,8 +49,8 @@
             <padding>
                 <Insets bottom="20" left="10" right="10" top="20" />
             </padding>
-            <Button text="Cancelar" onAction="" styleClass="button-cancelar"/>
-            <Button text="Guardar" onAction=""  styleClass="button-guardar"/>
+            <Button text="Cancelar" onAction="#cancelarAccion" styleClass="button-cancelar"/>
+            <Button text="Guardar" onAction="#guardarCambiosPrestamo"  styleClass="button-guardar"/>
         </HBox>
     </bottom>
 </BorderPane>
