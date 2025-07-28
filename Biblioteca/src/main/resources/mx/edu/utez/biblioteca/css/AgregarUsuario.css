@@ -1,1 +1,17 @@
+.titulo {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.boton-guardar {
+    -fx-background-color: #a18976;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5 15 5 15;
+}
 
