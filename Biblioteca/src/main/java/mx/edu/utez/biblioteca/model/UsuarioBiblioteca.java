@@ -8,13 +8,10 @@ public class UsuarioBiblioteca {
     private LocalDate fechaNacimiento;
     private String correo;
     private String telefono;
-    private String estado;
     private String direccion;
+    private String estado;
 
-    public UsuarioBiblioteca() {
-    }
-
-    public UsuarioBiblioteca(int id, String nombre, LocalDate fechaNacimiento, String correo, String telefono, String estado, String direccion) {
+    public UsuarioBiblioteca(int id, String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
