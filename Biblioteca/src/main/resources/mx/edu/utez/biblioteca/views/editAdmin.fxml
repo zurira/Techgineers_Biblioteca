@@ -23,4 +23,11 @@
            style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
 
+    <!-- Estos son los campos de texto del modal -->
+    <!-- Nombre -->
+    <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
+    <TextField fx:id="tfNombre" layoutX="250" layoutY="95" prefWidth="200"/>
+
+
+
 </AnchorPane>
