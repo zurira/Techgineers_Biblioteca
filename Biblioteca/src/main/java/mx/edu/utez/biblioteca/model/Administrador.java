@@ -28,4 +28,16 @@ public class Administrador {
         this.estado = estado;
     }
 
+    // Getters
+    public int getId() { return id; }
+    public String getNombreCompleto() { return nombreCompleto; }
+    public String getUsuario() { return usuario; }
+    public String getCorreo() { return correo; }
+    public String getTelefono() { return telefono; }
+    public String getContrasena() { return contrasena; }
+    public String getRol() { return rol; }
+    public String getDireccion() { return direccion; }
+    public String getImagen() { return imagen; }
+    public boolean getEstado() { return estado; }
 
+  
