@@ -2,7 +2,6 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,174 +15,174 @@ import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Prestamo;
-
+import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ModalPrestamoController implements Initializable {
+public class EditarPrestamoController implements Initializable {
 
-    @FXML private ComboBox<String> comboBoxUsuarios;
-    @FXML private TextField txtBuscarEjemplar;
-    @FXML private DatePicker dpFechaPrestamo, dpFechaLimite, dpFechaDevolucion;
-    @FXML private ComboBox<String> cbEstado;
-    @FXML private TableView<Ejemplar> tablaEjemplares;
-    @FXML private TableColumn<Ejemplar, String> colCodigo, colTitulo, colUbicacion;
-    @FXML private TableColumn<Ejemplar, Boolean> colSeleccionar;
+   @FXML private DatePicker dpFechaPrestamo;
+   @FXML private DatePicker dpFechaLimite;
+   @FXML private DatePicker dpFechaDevolucion;
+   @FXML private ComboBox<String> cbEstado;
+   @FXML private ComboBox<UsuarioBiblioteca> comboBoxUsuarios;
 
-    private final UsuarioDaoImpl usuarioDAO = new UsuarioDaoImpl();
-    private final EjemplarDaoImpl ejemplarDAO = new EjemplarDaoImpl();
-    private final PrestamoDaoImpl prestamoDAO = new PrestamoDaoImpl();
-    private final DetallePrestamoDaoImpl detalleDAO = new DetallePrestamoDaoImpl();
+   private Prestamo prestamoActual;
+   private final PrestamoDaoImpl prestamoDao = new PrestamoDaoImpl();
+   private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
+   private final DetallePrestamoDaoImpl detalleDao = new DetallePrestamoDaoImpl();
 
-    private ObservableList<String> nombresUsuarios = FXCollections.observableArrayList();
+   private ObservableList<Ejemplar> ejemplaresTotales = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Estados disponibles
-        cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
-        cbEstado.getSelectionModel().selectFirst();
+   @Override
+   public void initialize(URL url, ResourceBundle resourceBundle) {
+       // Estados
+       cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
 
-        // Configurar columnas de la tabla de ejemplares
-        colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        colUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
-        colSeleccionar.setCellValueFactory(cellData -> cellData.getValue().seleccionadoProperty());
-        colSeleccionar.setCellFactory(CheckBoxTableCell.forTableColumn(colSeleccionar));
-        tablaEjemplares.setEditable(true);
-
-        // Carga de todos los ejemplares disponibles
-        ObservableList<Ejemplar> ejemplaresTotales = ejemplarDAO.buscarEjemplaresDisponibles("");
-        FilteredList<Ejemplar> ejemplaresFiltrados = new FilteredList<>(ejemplaresTotales, e -> true);
-        tablaEjemplares.setItems(ejemplaresFiltrados);
-
-        // Autocompletado dinámico para ComboBox de usuarios
-        nombresUsuarios.setAll(usuarioDAO.obtenerTodosLosNombres());
-        comboBoxUsuarios.setEditable(true);
-        comboBoxUsuarios.setItems(nombresUsuarios);
-
-        comboBoxUsuarios.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
-            FilteredList<String> filtrados = nombresUsuarios.filtered(nombre ->
-                    nombre.toLowerCase().contains(newVal.toLowerCase())
-            );
-            comboBoxUsuarios.setItems(filtrados);
-            comboBoxUsuarios.show();
-        });
-
-    }
-
-    @FXML
-    private void buscarEjemplares(ActionEvent event) {
-        try {
-            String filtro = txtBuscarEjemplar.getText().trim();
-            ObservableList<Ejemplar> resultados = ejemplarDAO.buscarEjemplaresDisponibles(filtro);
-            tablaEjemplares.setItems(resultados);
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error interno al buscar ejemplares: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void registrarPrestamo(ActionEvent event) {
-        String nombreUsuario = comboBoxUsuarios.getEditor().getText().trim();
-
-        if (nombreUsuario.isEmpty()
-                || dpFechaPrestamo.getValue() == null
-                || dpFechaLimite.getValue() == null
-                || cbEstado.getValue() == null) {
-            mostrarAlerta("Completa todos los campos obligatorios.");
-            return;
-        }
-
-        // Validar fechas
-        if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
-            mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
-            return;
-        }
-
-        if (dpFechaDevolucion.getValue() != null &&
-                dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
-            mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
-            return;
-        }
-
-        // Valida si el usuario existe, mediante el ID
-        int idUsuario = usuarioDAO.obtenerIdPorNombre(nombreUsuario);
-        if (idUsuario == -1) {
-            mostrarAlerta("El usuario seleccionado no existe.");
-            return;
-        }
-
-        List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
-                .filter(Ejemplar::isSeleccionado)
-                .collect(Collectors.toList());
-
-        // Valida que haya un ejemplar seleccionado
-        if (seleccionados.isEmpty()) {
-            mostrarAlerta("Debes seleccionar al menos un ejemplar.");
-            return;
-        }
-
-        Prestamo prestamo = new Prestamo();
-        prestamo.setIdUsuario(idUsuario); // usuario solicitante
-        prestamo.setFechaPrestamo(dpFechaPrestamo.getValue());
-        prestamo.setFechaLimite(dpFechaLimite.getValue());
-        prestamo.setFechaDevolucion(dpFechaDevolucion.getValue());
-        prestamo.setEstado(cbEstado.getValue());
-
-        int idPrestamo = prestamoDAO.insertar(prestamo);
-
-        //valida si el prestamo tuvo errores
-        if (idPrestamo == -1) {
-            mostrarAlerta("Error al registrar el préstamo.");
-            return;
-        }
-
-        boolean exito = true;
-        for (Ejemplar ej : seleccionados) {
-            boolean detalleInsertado = detalleDAO.insertarEjemplar(idPrestamo, ej.getIdEjemplar());
-            boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ej.getIdEjemplar(), false);
-            if (!detalleInsertado || !disponibilidadActualizada) {
-                exito = false;
-                break;
-            }
-        }
-
-        if (exito) {
-            mostrarAlerta("Préstamo registrado correctamente.");
-            limpiarFormulario();
-        } else {
-            mostrarAlerta("Hubo un error al registrar los ejemplares.");
-        }
-    }
+   }
 
 
-    private void limpiarFormulario() {
-        comboBoxUsuarios.getEditor().clear();
-        txtBuscarEjemplar.clear();
-        tablaEjemplares.getItems().clear();
-        dpFechaPrestamo.setValue(null);
-        dpFechaLimite.setValue(null);
-        cbEstado.getSelectionModel().selectFirst();
-        comboBoxUsuarios.setItems(nombresUsuarios); // restaurar lista completa
-    }
+   // 🔄 Método para cargar datos del préstamo al formulario
+          public void inicializar(Prestamo prestamo) {
+      ObservableList<UsuarioBiblioteca> listaUsuarios = prestamoDao.obtenerUsuarios();
+       comboBoxUsuarios.setItems(listaUsuarios);
 
-    private void mostrarAlerta(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+// Mostrar solo nombre
+       comboBoxUsuarios.setCellFactory(lv -> new ListCell<>() {
+           @Override
+          protected void updateItem(UsuarioBiblioteca item, boolean empty) {
+               super.updateItem(item, empty);
+               setText(empty || item == null ? null : item.getNombre());
+           }
+       });
+       comboBoxUsuarios.setButtonCell(new ListCell<>() {
+           @Override
+           protected void updateItem(UsuarioBiblioteca item, boolean empty) {
+               super.updateItem(item, empty);
+               setText(empty || item == null ? null : item.getNombre());
+           }
+       });
 
-@FXML
-private void cancelarAccion(ActionEvent event) {
-    Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
-    stage.close();
-}
+// Seleccionar usuario actual del préstamo
+       for (UsuarioBiblioteca u : listaUsuarios) {
+           if (u.getId() == prestamo.getUsuario().getId()) {
+               comboBoxUsuarios.getSelectionModel().select(u);
+               break;
+           }
+       }
+       //comboBoxUsuarios.getSelectionModel().select(prestamo.getUsuarioNombre());
 
-    // Aquí voy a agregar los  métodos para guardar o cancelar
+
+       comboBoxUsuarios.setEditable(false);
+
+       dpFechaPrestamo.setValue(prestamo.getFechaPrestamo());
+       dpFechaLimite.setValue(prestamo.getFechaLimite());
+       dpFechaDevolucion.setValue(prestamo.getFechaReal());
+
+       cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
+       cbEstado.setValue(prestamo.getEstado());
+
+
+
+       // Si tienes ejemplares asignados previamente, marcarlos como seleccionados aquí
+       // Aquí puedes agregar lógica para obtener ejemplares del préstamo y hacer setSeleccionado(true)
+   }
+
+   // 💾 Método para guardar los cambios
+   @FXML
+   private void guardarCambiosPrestamo(ActionEvent event) {
+       UsuarioBiblioteca seleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
+       prestamoActual.setUsuario(seleccionado);
+       if (dpFechaPrestamo.getValue() == null ||
+               dpFechaLimite.getValue() == null ||
+               cbEstado.getValue() == null) {
+           mostrarAlerta("Completa todos los campos obligatorios.");
+           return;
+       }
+
+       if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
+           mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
+           return;
+       }
+
+       if (dpFechaDevolucion.getValue() != null &&
+               dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
+           mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
+           return;
+       }
+
+
+       // Actualizar préstamo
+       prestamoActual.setFechaPrestamo(dpFechaPrestamo.getValue());
+       prestamoActual.setFechaLimite(dpFechaLimite.getValue());
+       prestamoActual.setFechaReal(dpFechaDevolucion.getValue());
+       prestamoActual.setEstado(cbEstado.getValue());
+
+       boolean exito = true;
+       try {
+           boolean actualizado = prestamoDao.update(prestamoActual);
+           if (!actualizado) {
+               mostrarAlerta("No se pudo actualizar el préstamo.");
+               return;
+           }
+       } catch (Exception e) {
+           e.printStackTrace(); // Puedes mostrar un error al usuario si prefieres
+           mostrarAlerta("Ocurrió un error al actualizar el préstamo.");
+       }
+
+
+
+       if (exito) {
+           mostrarAlerta("Cambios guardados correctamente.");
+           cerrarVentana();
+       } else {
+           mostrarAlerta("Error al guardar los ejemplares.");
+       }
+   }
+
+   public void setPrestamo(Prestamo prestamo) {
+       this.prestamoActual = prestamo;
+
+       // Establecer datos en los campos
+       dpFechaPrestamo.setValue(prestamo.getFechaPrestamo());
+       dpFechaLimite.setValue(prestamo.getFechaLimite());
+       dpFechaDevolucion.setValue(prestamo.getFechaReal());
+       cbEstado.setValue(prestamo.getEstado());
+
+       // Cargar lista de usuarios y seleccionar el correspondiente
+       ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioDaoImpl().findAll());
+       comboBoxUsuarios.setItems(usuarios);
+
+       if (prestamo.getUsuario() != null) {
+           for (UsuarioBiblioteca usuario : usuarios) {
+               if (usuario.getId() == prestamo.getUsuario().getId()) {
+                   comboBoxUsuarios.getSelectionModel().select(usuario);
+                   break;
+               }
+           }
+       }
+   }
+
+
+   @FXML
+   private void cancelarAccion(ActionEvent event) {
+       cerrarVentana();
+   }
+
+   private void mostrarAlerta(String mensaje) {
+       Alert alert = new Alert(Alert.AlertType.INFORMATION);
+       alert.setTitle("Información");
+       alert.setHeaderText(null);
+       alert.setContentText(mensaje);
+       alert.showAndWait();
+   }
+
+   private void cerrarVentana() {
+       Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
+       stage.close();
+   }
 }
