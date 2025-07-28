@@ -29,5 +29,35 @@
     <TextField fx:id="tfNombre" layoutX="250" layoutY="95" prefWidth="200"/>
 
 
+    <!-- Correo -->
+    <Label layoutX="470" layoutY="70" text="Correo:*"/>
+    <TextField fx:id="tfCorreo" layoutX="470" layoutY="95" prefWidth="200"/>
+
+    <!-- Teléfono -->
+    <Label layoutX="690" layoutY="70" text="Teléfono:*"/>
+    <TextField fx:id="tfTelefono" layoutX="690" layoutY="95" prefWidth="200"/>
+
+    <!-- Usuario -->
+    <Label layoutX="250" layoutY="135" text="Usuario:*"/>
+    <TextField fx:id="tfUsuario" layoutX="250" layoutY="160" prefWidth="200"/>
+
+    <!-- Contraseña -->
+    <Label layoutX="470" layoutY="135" text="Contraseña:*"/>
+    <PasswordField fx:id="pfContrasena" layoutX="470" layoutY="160" prefWidth="200"/>
+
+    <!-- Rol -->
+    <Label layoutX="690" layoutY="135" text="Rol:*"/>
+    <TextField fx:id="tfRol" layoutX="690" layoutY="160" prefWidth="200"/>
+
+    <!-- Estado -->
+    <Label layoutX="250" layoutY="200" text="Estado:*"/>
+    <TextField fx:id="tfEstado" layoutX="250" layoutY="225" prefWidth="200"/>
+
+    <!-- Dirección -->
+    <Label layoutX="30" layoutY="280" text="Dirección:"/>
+    <TextField fx:id="tfDireccion" layoutX="30" layoutY="305" prefWidth="860"/>
+
+
+    
 
 </AnchorPane>
