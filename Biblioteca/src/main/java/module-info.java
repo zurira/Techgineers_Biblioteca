@@ -17,4 +17,9 @@ module mx.edu.utez.biblioteca {
     exports mx.edu.utez.biblioteca.dao;
     exports mx.edu.utez.biblioteca.dao.impl;
 
+    requires javafx.graphics;
+    requires org.controlsfx.controls;
+
+    opens mx.edu.utez.biblioteca to javafx.graphics;
+
 }

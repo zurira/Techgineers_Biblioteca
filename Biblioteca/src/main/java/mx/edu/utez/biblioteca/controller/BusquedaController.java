@@ -1,5 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,43 +9,82 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.CategoriaDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
 
-public class BienvenidaController {
+public class BusquedaController {
+    @FXML private TextField txtBuscar;
+    @FXML private ComboBox<String> cmbCategoria;
+    @FXML private FlowPane contenedorResultados;
+
     LibroDaoImpl libroDao = new LibroDaoImpl();
-
-    @FXML private FlowPane contenedorLibros;
-    @FXML
-    private ScrollPane scrollLibros;
+    CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
     @FXML
     public void initialize() {
-        cargarLibros();
+        // Carga las categorías y los libros
+        cargarCategorias();
+        cargarLibros(null, null);
+
+        // cuando se escribe texto, se filtra
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrarLibros();
+        });
+
+        //cuando se selecciona una categoría, se filtra
+        cmbCategoria.setOnAction(event -> {
+            filtrarLibros();
+        });
     }
 
-    private void cargarLibros() {
-        contenedorLibros.getChildren().clear();
-        List<Libro> libros = libroDao.obtenerLibros();
+
+    private void cargarCategorias() {
+        List<String> categorias = categoriaDao.obtenerNombresCategorias();
+        ObservableList<String> lista = FXCollections.observableArrayList();
+        lista.add(""); // opción vacía (sin filtro)
+        lista.addAll(categorias);
+        cmbCategoria.setItems(lista);
+    }
+
+
+    private void filtrarLibros() {
+        String texto = txtBuscar.getText().trim();
+        String categoria = cmbCategoria.getValue();
+
+        if (categoria != null && categoria.isEmpty()) {
+            categoria = null;
+        }
+
+        cargarLibros(texto, categoria);
+    }
+
+    private void cargarLibros(String filtro, String categoria) {
+        contenedorResultados.getChildren().clear();
+
+        List<Libro> libros = libroDao.obtenerLibrosPorFiltro(
+                filtro == null ? "" : filtro,
+                categoria
+        );
 
         for (Libro libro : libros) {
             VBox card = crearCardLibro(libro);
-            contenedorLibros.getChildren().add(card);
+            contenedorResultados.getChildren().add(card);
         }
-
-
     }
+
 
     private VBox crearCardLibro (Libro libro){
         VBox card = new VBox(10);
@@ -103,12 +144,10 @@ public class BienvenidaController {
         return card;
     }
 
-
-
     @FXML
-    private void irBusqueda(ActionEvent e) {
+    private void irInicio(ActionEvent e) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/busqueda.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -136,6 +175,4 @@ public class BienvenidaController {
             ex.printStackTrace();
         }
     }
-
 }
-

@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.model;
 
 public class Autor {
+
         private int id;
         private String nombreCompleto;
 
@@ -22,4 +23,6 @@ public class Autor {
         public void setNombreCompleto(String nombreCompleto) {
             this.nombreCompleto = nombreCompleto;
         }
+
 }
+

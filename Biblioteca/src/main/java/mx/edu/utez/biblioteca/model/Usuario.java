@@ -5,6 +5,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String correo;
+    private String username;
     private String telefono;
     private String password;
     private String rol;
@@ -13,6 +14,14 @@ public class Usuario {
     private byte[] foto;
 
     public Usuario() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getNombreRol(){

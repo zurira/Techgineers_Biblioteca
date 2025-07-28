@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.dao;
 
 import mx.edu.utez.biblioteca.model.Prestamo;
+<<<<<<< HEAD
 import java.util.List;
 
 public interface IPrestamo {
@@ -10,3 +11,9 @@ public interface IPrestamo {
     void update(Prestamo prestamo) throws Exception;
     List<Prestamo> search(String searchTerm) throws Exception;
 }
+=======
+
+public interface IPrestamo {
+    public int insertar(Prestamo prestamo);
+}
+>>>>>>> TTS17

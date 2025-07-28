@@ -16,6 +16,7 @@ public class LibroDaoImpl implements ILibro {
     @Override
     public List<Libro> obtenerLibros() {
         List<Libro> libros = new ArrayList<>();
+<<<<<<< HEAD
         String sql = "SELECT \n" +
                 "    l.ID, \n" +
                 "    l.TITULO, \n" +
@@ -38,19 +39,41 @@ public class LibroDaoImpl implements ILibro {
             PreparedStatement ps=con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+=======
+        String sql = "SELECT " +
+                "l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.SINOPSIS, l.ISBN, " +
+                "e.ID AS ID_EDITORIAL, e.NOMBRE AS NOMBRE_EDITORIAL, " +
+                "a.ID AS ID_AUTOR, a.NOMBRE_COMPLETO AS AUTORES " +
+                "FROM LIBRO l " +
+                "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID " +
+                "LEFT JOIN AUTOR a ON l.ID_AUTOR = a.ID";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+>>>>>>> TTS17
                 Libro libro = new Libro();
                 libro.setId(rs.getInt("ID"));
                 libro.setTitulo(rs.getString("TITULO"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
+<<<<<<< HEAD
                 libro.setResumen(rs.getString("RESUMEN"));
 
                 // Cargar datos de la editorial
+=======
+                libro.setResumen(rs.getString("SINOPSIS"));
+                libro.setIsbn(rs.getString("ISBN"));
+
+>>>>>>> TTS17
                 Editorial editorial = new Editorial();
                 editorial.setId(rs.getInt("ID_EDITORIAL"));
                 editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
                 libro.setEditorial(editorial);
 
+<<<<<<< HEAD
                 // Cargar datos del autor
                 Autor autor = new Autor();
                 autor.setNombreCompleto(rs.getString("AUTORES")); // concatenado
@@ -79,17 +102,51 @@ public class LibroDaoImpl implements ILibro {
                 "WHERE (LOWER(l.TITULO) LIKE ? OR LOWER(l.ISBN) LIKE ? OR EXISTS " +
                 " (SELECT 1 FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID " +
                 "  WHERE la.ID_LIBRO = l.ID AND LOWER(a.NOMBRE_COMPLETO) LIKE ?))";
+=======
+                Autor autor = new Autor();
+                autor.setId(rs.getInt("ID_AUTOR"));
+                autor.setNombreCompleto(rs.getString("AUTORES"));
+                libro.setAutor(autor);
+
+                libros.add(libro);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return libros;
+    }
+
+    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria) {
+        List<Libro> libros = new ArrayList<>();
+        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.SINOPSIS, l.ISBN, " +
+                "e.ID AS ID_EDITORIAL, e.NOMBRE AS NOMBRE_EDITORIAL, " +
+                "a.ID AS ID_AUTOR, a.NOMBRE_COMPLETO AS AUTORES " +
+                "FROM LIBRO l " +
+                "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID " +
+                "LEFT JOIN AUTOR a ON l.ID_AUTOR = a.ID " +
+                "LEFT JOIN CATEGORIA c ON l.ID_CATEGORIA = c.ID " +
+                "WHERE (LOWER(l.TITULO) LIKE ? OR LOWER(l.ISBN) LIKE ? OR LOWER(a.NOMBRE_COMPLETO) LIKE ?)";
+>>>>>>> TTS17
 
         if (categoria != null && !categoria.isBlank()) {
             sql += " AND LOWER(c.NOMBRE) = ?";
         }
 
+<<<<<<< HEAD
         try {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
 
             String filtroLike = "%" + filtro.toLowerCase() + "%";
 
+=======
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            String filtroLike = "%" + filtro.toLowerCase() + "%";
+>>>>>>> TTS17
             int index = 1;
             ps.setString(index++, filtroLike);
             ps.setString(index++, filtroLike);
@@ -99,8 +156,11 @@ public class LibroDaoImpl implements ILibro {
                 ps.setString(index++, categoria.toLowerCase());
             }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> TTS17
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Libro libro = new Libro();
@@ -108,25 +168,43 @@ public class LibroDaoImpl implements ILibro {
                 libro.setTitulo(rs.getString("TITULO"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
+<<<<<<< HEAD
                 libro.setResumen(rs.getString("RESUMEN"));
 
                 //Se cargan los datos de la editorial
+=======
+                libro.setResumen(rs.getString("SINOPSIS"));
+                libro.setIsbn(rs.getString("ISBN"));
+
+>>>>>>> TTS17
                 Editorial editorial = new Editorial();
                 editorial.setId(rs.getInt("ID_EDITORIAL"));
                 editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
                 libro.setEditorial(editorial);
 
+<<<<<<< HEAD
                 //Se cargan datos del autor
                 Autor autor = new Autor();
+=======
+                Autor autor = new Autor();
+                autor.setId(rs.getInt("ID_AUTOR"));
+>>>>>>> TTS17
                 autor.setNombreCompleto(rs.getString("AUTORES"));
                 libro.setAutor(autor);
 
                 libros.add(libro);
             }
 
+<<<<<<< HEAD
         }catch(Exception e) {
             e.printStackTrace();
         }
+=======
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+>>>>>>> TTS17
         return libros;
     }
 }

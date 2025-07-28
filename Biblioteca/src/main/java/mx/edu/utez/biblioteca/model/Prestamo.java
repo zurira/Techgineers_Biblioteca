@@ -4,32 +4,22 @@ import java.time.LocalDate;
 
 public class Prestamo {
     private int id;
-    private Libro libro;
-    private UsuarioBiblioteca usuario;
+    private String usuarioNombre;
+    private String correo;
     private LocalDate fechaPrestamo;
     private LocalDate fechaLimite;
     private LocalDate fechaReal;
     private String estado;
+    private int idUsuario;
+    private Libro libro;
+    private UsuarioBiblioteca usuario;
 
-    public Prestamo() {
+    public UsuarioBiblioteca getUsuario() {
+        return usuario;
     }
 
-    public Prestamo(int id, Libro libro, UsuarioBiblioteca usuario, LocalDate fechaPrestamo, LocalDate fechaLimite, LocalDate fechaReal, String estado) {
-        this.id = id;
-        this.libro = libro;
+    public void setUsuario(UsuarioBiblioteca usuario) {
         this.usuario = usuario;
-        this.fechaPrestamo = fechaPrestamo;
-        this.fechaLimite = fechaLimite;
-        this.fechaReal = fechaReal;
-        this.estado = estado;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Libro getLibro() {
@@ -40,12 +30,49 @@ public class Prestamo {
         this.libro = libro;
     }
 
-    public UsuarioBiblioteca getUsuario() {
-        return usuario;
+    public Prestamo(int id, String usuarioNombre, String correo, LocalDate fechaPrestamo, LocalDate fechaLimite, String estado, LocalDate fechaDevolucion) {
+        this.id = id;
+        this.usuarioNombre = usuarioNombre;
+        this.correo = correo;
+        this.fechaPrestamo = fechaPrestamo;
+        this.fechaLimite = fechaLimite;
+        this.estado = estado;
+        this.fechaReal = fechaDevolucion;
     }
 
-    public void setUsuario(UsuarioBiblioteca usuario) {
-        this.usuario = usuario;
+    public Prestamo() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getFechaReal() {
+        return fechaReal;
+    }
+
+    public void setFechaReal(LocalDate fechaDevolucion) {
+        this.fechaReal = fechaDevolucion;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsuarioNombre() {
+        return usuarioNombre;
+    }
+
+    public void setUsuarioNombre(String usuarioNombre) {
+        this.usuarioNombre = usuarioNombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public LocalDate getFechaPrestamo() {
@@ -64,14 +91,6 @@ public class Prestamo {
         this.fechaLimite = fechaLimite;
     }
 
-    public LocalDate getFechaReal() {
-        return fechaReal;
-    }
-
-    public void setFechaReal(LocalDate fechaReal) {
-        this.fechaReal = fechaReal;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -79,17 +98,6 @@ public class Prestamo {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    @Override
-    public String toString() {
-        return "Prestamo{" +
-                "id=" + id +
-                ", libro=" + (libro != null ? libro.getTitulo() : "N/A") + // Asegura que no sea null
-                ", usuario=" + (usuario != null ? usuario.getNombre() : "N/A") + // Asegura que no sea null
-                ", fechaPrestamo=" + fechaPrestamo +
-                ", fechaLimite=" + fechaLimite +
-                ", fechaReal=" + fechaReal +
-                ", estado='" + estado + '\'' +
-                '}';
-    }
+    public int getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 }
