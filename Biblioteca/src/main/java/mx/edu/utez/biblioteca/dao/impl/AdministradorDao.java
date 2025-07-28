@@ -44,4 +44,7 @@ public class AdministradorDao {
         return lista;
     }
 
- 
+    public static List<Administrador> obtenerTodos() {
+        return buscarAdministrador(""); // Carga todos sin filtro
+    }
+}
