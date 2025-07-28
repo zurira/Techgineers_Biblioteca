@@ -11,7 +11,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {//se estructuraron las carpetas
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
         Scene scene = new Scene(root, 1024, 640);
         stage.setTitle("Biblioteca");
         stage.setScene(scene);
