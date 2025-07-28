@@ -8,12 +8,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
-        Scene scene = new Scene(root, 1024, 640);
-        stage.setTitle("Biblioteca");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Bibliotecario - Usuarios");
         stage.setScene(scene);
         stage.show();
     }
