@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
@@ -115,8 +116,6 @@ public class EditarPrestamoController implements Initializable {
            mostrarAlerta("Ocurrió un error al actualizar el préstamo.");
        }
 
-
-
        if (exito) {
            mostrarAlerta("Cambios guardados correctamente.");
            cerrarVentana();
@@ -125,7 +124,31 @@ public class EditarPrestamoController implements Initializable {
        }
    }
 
-   @FXML
+      public void setPrestamo(Prestamo prestamo) {
+       this.prestamoActual = prestamo;
+
+       // Establecer datos en los campos
+       dpFechaPrestamo.setValue(prestamo.getFechaPrestamo());
+       dpFechaLimite.setValue(prestamo.getFechaLimite());
+       dpFechaDevolucion.setValue(prestamo.getFechaReal());
+       cbEstado.setValue(prestamo.getEstado());
+
+       // Cargar lista de usuarios y seleccionar el correspondiente
+       ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioDaoImpl().findAll());
+       comboBoxUsuarios.setItems(usuarios);
+
+       if (prestamo.getUsuario() != null) {
+           for (UsuarioBiblioteca usuario : usuarios) {
+               if (usuario.getId() == prestamo.getUsuario().getId()) {
+                   comboBoxUsuarios.getSelectionModel().select(usuario);
+                   break;
+               }
+           }
+       }
+   }
+
+
+    @FXML
    private void cancelarAccion(ActionEvent event) {
        cerrarVentana();
    }

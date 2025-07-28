@@ -99,7 +99,7 @@ public class PrestamoDaoImpl implements IPrestamo {
     }
 
     @Override
-    public void update(Prestamo prestamo) throws Exception {
+    public boolean update(Prestamo prestamo) throws Exception {
         String query = "UPDATE PRESTAMO SET ID_USUARIO = ?, FECHA_PRESTAMO = ?, FECHA_LIMITE = ?, FECHA_DEVOLUCION = ?, ESTADO = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -111,6 +111,7 @@ public class PrestamoDaoImpl implements IPrestamo {
             ps.setInt(6, prestamo.getId());
             ps.executeUpdate();
         }
+        return true;
     }
 
     @Override
