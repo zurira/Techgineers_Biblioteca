@@ -1,7 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,7 +20,9 @@ public class SuperAdminController {
         cargarAdministradores();
 
         searchField.textProperty().addListener((obs, oldValue, newValue) -> {
-            AdministradorDao.buscarAdministrador(adminTable, newValue);
+            adminTable.getItems().setAll(
+                    AdministradorDao.buscarAdministrador(newValue)
+            );
         });
 
         logoutButton.setOnAction(event -> {
@@ -55,7 +56,6 @@ public class SuperAdminController {
         TableColumn<Administrador, Boolean> colEstado = new TableColumn<>("Estado");
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Estas son las  Columnas de acciones
         TableColumn<Administrador, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button("✏️");
@@ -66,7 +66,7 @@ public class SuperAdminController {
                 editButton.setOnAction(e -> {
                     Administrador admin = getTableView().getItems().get(getIndex());
                     System.out.println("Editar: " + admin.getNombreCompleto());
-                    // Aquie va a ir la Lógica para abrir ventana de edición
+                    // Aquí puedes abrir el modal de edición
                 });
 
                 deleteButton.setOnAction(e -> {
@@ -75,7 +75,7 @@ public class SuperAdminController {
                     confirm.setHeaderText("Eliminar administrador");
                     confirm.setContentText("¿Estás segura que deseas eliminar a " + admin.getNombreCompleto() + "?");
                     confirm.showAndWait();
-                    // Aquí iría la lógica DAO para eliminar
+                    // Aquí puedes agregar lógica para eliminar
                 });
             }
 
@@ -90,6 +90,8 @@ public class SuperAdminController {
     }
 
     private void cargarAdministradores() {
-        AdministradorDao.cargarAdministradores(adminTable);
+        adminTable.getItems().setAll(
+                AdministradorDao.obtenerTodos()
+        );
     }
 }
