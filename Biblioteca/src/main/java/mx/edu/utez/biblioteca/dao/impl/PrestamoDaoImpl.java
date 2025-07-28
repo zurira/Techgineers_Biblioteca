@@ -81,7 +81,7 @@ public class PrestamoDaoImpl implements IPrestamo {
     }
 
     @Override
-    public void create(Prestamo prestamo) throws Exception {
+    public boolean create(Prestamo prestamo) throws Exception {
         String query = "INSERT INTO PRESTAMO (ID_USUARIO, FECHA_PRESTAMO, FECHA_LIMITE, ESTADO) VALUES (?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -93,8 +93,10 @@ public class PrestamoDaoImpl implements IPrestamo {
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     prestamo.setId(rs.getInt(1));
+                    return true;
                 }
             }
+            return false;
         }
     }
 
