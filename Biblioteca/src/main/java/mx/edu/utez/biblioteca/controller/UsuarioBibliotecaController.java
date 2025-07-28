@@ -186,7 +186,22 @@ public class UsuarioBibliotecaController {
     @FXML
     private void onAddUsuario() {
         System.out.println("Abrir formulario para agregar usuario");
-        // Implementar apertura de formulario para agregar usuario
+        @FXML
+        private void onAddUsuario() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AgregarUsuario.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setTitle("Agregar usuario");
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void onEditUsuario(UsuarioBiblioteca usuario) {
