@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
@@ -121,7 +122,7 @@ public class PrestamoController {
                 // Manejadores de eventos para los botones
                 editButton.setOnAction(event -> {
                     Prestamo prestamo = getTableView().getItems().get(getIndex());
-                    onEditPrestamo(prestamo);
+                    onEditPrestamo(prestamo, event);
                 });
 
                 viewButton.setOnAction(event -> {
@@ -194,21 +195,43 @@ public class PrestamoController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarPrestamo.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 720);
-            stage.setScene(scene);
-            stage.show();
+            // Crear nuevo Stage para que sea modal
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Editar Préstamo");
+            modalStage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana anterior
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root, 800, 600)); // Puedes ajustar tamaño
+
+            modalStage.showAndWait();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
+    private void onEditPrestamo(Prestamo prestamo, ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarPrestamo.fxml"));
+            Parent root = loader.load();
 
-    private void onEditPrestamo(Prestamo prestamo) {
-        System.out.println("Editar préstamo: " + prestamo.getId());
-        // Implementación de la lógica para editar un préstamo existente
+            // Obtener el controlador y pasarle el préstamo
+            EditarPrestamoController controller = loader.getController();
+            controller.setPrestamo(prestamo);
+
+            // Crear nuevo Stage para que sea modal
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Editar Préstamo");
+            modalStage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana anterior
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root, 800, 600)); // Puedes ajustar tamaño
+
+            modalStage.showAndWait(); // Espera a que se cierre
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+
 
 
     private void onViewPrestamo(Prestamo prestamo) {
