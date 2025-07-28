@@ -1,4 +1,4 @@
-/*package mx.edu.utez.biblioteca.controller;
+package mx.edu.utez.biblioteca.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -52,4 +52,4 @@ public class AgregarUsuarioController {
             guardado = true;
             ((Stage) txtNombre.getScene().getWindow()).close();
         }
-    }*/
+    }
