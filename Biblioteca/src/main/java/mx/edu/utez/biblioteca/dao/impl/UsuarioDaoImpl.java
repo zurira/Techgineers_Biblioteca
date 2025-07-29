@@ -2,12 +2,15 @@ package mx.edu.utez.biblioteca.dao.impl;
 
 import mx.edu.utez.biblioteca.config.DBConnection;
 import mx.edu.utez.biblioteca.dao.IUsuario;
+import mx.edu.utez.biblioteca.model.Rol;
 import mx.edu.utez.biblioteca.model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDaoImpl implements IUsuario {
 
@@ -29,7 +32,7 @@ public class UsuarioDaoImpl implements IUsuario {
                     usuario.setId(resultSet.getInt("ID"));
                     usuario.setCorreo(resultSet.getString("CORREO"));
                     usuario.setPassword(resultSet.getString("PASSWORD"));
-                    usuario.setRol(resultSet.getString("ID_ROL"));
+                    usuario.setRol(new Rol(resultSet.getInt("ID_ROL"), resultSet.getString("NOMBRE_ROL")));
                     usuario.setNombreRol(resultSet.getString("NOMBRE_ROL"));
             }
         }catch (Exception e){
@@ -38,6 +41,8 @@ public class UsuarioDaoImpl implements IUsuario {
         return usuario;
 
     }
+
+
 
     public static void main(String[] args) {
         UsuarioDaoImpl dao = new UsuarioDaoImpl();

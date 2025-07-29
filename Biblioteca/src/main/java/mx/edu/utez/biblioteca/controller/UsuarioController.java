@@ -43,7 +43,7 @@ public class UsuarioController {
                 switch (usuario.getNombreRol().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
                         System.out.println("Cargando vista de superadministrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
 
                         break;
                     case "ADMINISTRADOR":
