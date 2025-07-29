@@ -1,4 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-public class BienvenidaController {
+public class VerUsuarioController {
+
 }
