@@ -152,3 +152,8 @@ public class SuperAdminController {
             ex.printStackTrace();
         }
     }
+
+    private void onDeleteAdmin(Usuario usuario) {
+        // Lógica pendiente
+    }
+}
