@@ -1,0 +1,14 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #F1EFEF;
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-background-radius: 6;
+}
+
+.text-field, .password-field {
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+}
