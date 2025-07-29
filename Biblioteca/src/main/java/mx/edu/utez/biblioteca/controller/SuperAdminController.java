@@ -116,4 +116,17 @@ public class SuperAdminController {
         }
     }
 
-    
+    private void buscarAdministradores(String filtro) {
+        try {
+            List<Usuario> todos = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
+            List<Usuario> filtrados = todos.stream()
+                    .filter(u -> u.getNombre().toLowerCase().contains(filtro.toLowerCase())
+                            || u.getUsername().toLowerCase().contains(filtro.toLowerCase())
+                            || u.getCorreo().toLowerCase().contains(filtro.toLowerCase()))
+                    .toList();
+
+            adminTable.setItems(FXCollections.observableArrayList(filtrados));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
