@@ -59,7 +59,6 @@
     -fx-padding: 4 0 0 0;
 }
 
-/* 🌙 ToggleButton para estado activo/inactivo */
 .toggle-estado {
     -fx-background-color: #d5cfc7;
     -fx-text-fill: #5e4631;
