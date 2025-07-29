@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se modificó archivo css, ahora incluyendo la foto">
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="&#10;se modificó archivo AgregarUsuarioController">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/AgregarUsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/AgregarUsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/EditarUsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/EditarUsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/UsuarioBibliotecaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/UsuarioBibliotecaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/resources/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/resources/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +84,26 @@
       <command value="mvn clean install" />
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mx.edu.utez.biblioteca.HelloApplication" />
+      <module name="Techgineers_Biblioteca" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mx.edu.utez.biblioteca.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.HelloApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -106,54 +125,6 @@
       <workItem from="1753485464931" duration="175000" />
       <workItem from="1753485744169" duration="8320000" />
       <workItem from="1753537424938" duration="10702000" />
-    </task>
-    <task id="LOCAL-00001" summary="se creo el archivo de usuario">
-      <option name="closed" value="true" />
-      <created>1753487578112</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1753487578112</updated>
-    </task>
-    <task id="LOCAL-00002" summary="se creo el archivo controller de bibliotecario">
-      <option name="closed" value="true" />
-      <created>1753487651086</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1753487651086</updated>
-    </task>
-    <task id="LOCAL-00003" summary="se creo el controller de agregar usuario">
-      <option name="closed" value="true" />
-      <created>1753488063374</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1753488063374</updated>
-    </task>
-    <task id="LOCAL-00004" summary="se implementaron los metodos al controller de bibliotecario">
-      <option name="closed" value="true" />
-      <created>1753488437351</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1753488437351</updated>
-    </task>
-    <task id="LOCAL-00005" summary="se implementaron métodos, getters y setters y se corrigió un error en el archivo de usuario">
-      <option name="closed" value="true" />
-      <created>1753488622991</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1753488622991</updated>
-    </task>
-    <task id="LOCAL-00006" summary="se implementaron métodos al archivo de controller bibliotecario y se corrigió un error">
-      <option name="closed" value="true" />
-      <created>1753488781388</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1753488781388</updated>
     </task>
     <task id="LOCAL-00007" summary="se corrigió un error en bibliotecario controller">
       <option name="closed" value="true" />
@@ -451,25 +422,109 @@
       <option name="project" value="LOCAL" />
       <updated>1753732740222</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="se solucionó error de que no reconocía el fxml">
+      <option name="closed" value="true" />
+      <created>1753754536347</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1753754536348</updated>
+    </task>
+    <task id="LOCAL-00045" summary="se borraron líneas y un método duplicado">
+      <option name="closed" value="true" />
+      <created>1753754606757</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1753754606758</updated>
+    </task>
+    <task id="LOCAL-00046" summary="se importaron métodos">
+      <option name="closed" value="true" />
+      <created>1753754651702</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1753754651702</updated>
+    </task>
+    <task id="LOCAL-00047" summary="se importaron clases">
+      <option name="closed" value="true" />
+      <created>1753754701117</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1753754701119</updated>
+    </task>
+    <task id="LOCAL-00048" summary="se importaron clases fxml">
+      <option name="closed" value="true" />
+      <created>1753754778393</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1753754778393</updated>
+    </task>
+    <task id="LOCAL-00049" summary="se borró archivo duplicado de controller de UsuarioBiblioteca">
+      <option name="closed" value="true" />
+      <created>1753755022648</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1753755022649</updated>
+    </task>
+    <task id="LOCAL-00050" summary="se importaron clases y se quitó una llave que estaba de más en el código">
+      <option name="closed" value="true" />
+      <created>1753755173374</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1753755173420</updated>
+    </task>
+    <task id="LOCAL-00051" summary="se hicieron cambios en archivo de HelloApplication">
+      <option name="closed" value="true" />
+      <created>1753755855027</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1753755855033</updated>
+    </task>
+    <task id="LOCAL-00052" summary="se importaron clases en UsuarioBibliotecaController para método de agregar usuario">
+      <option name="closed" value="true" />
+      <created>1753756580821</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1753756580821</updated>
+    </task>
+    <task id="LOCAL-00053" summary="se implementó método para mostrar alerta de error en controller de UsuarioBiblioteca">
+      <option name="closed" value="true" />
+      <created>1753756903971</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1753756903971</updated>
+    </task>
+    <task id="LOCAL-00054" summary="&#10;se borró método que estaba duplicado en el controller de UsuarioBiblioteca">
+      <option name="closed" value="true" />
+      <created>1753757968289</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1753757968289</updated>
+    </task>
+    <task id="LOCAL-00055" summary="&#10;se modificó archivo AgregarUsuarioController">
+      <option name="closed" value="true" />
+      <created>1753758695669</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1753758695671</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="se modificó archivo de usuario controller y se agregaron los métodos" />
-    <MESSAGE value="se creó el archivo de usuario dao impl" />
-    <MESSAGE value="se creó archivo de IUsuarioDao" />
-    <MESSAGE value="se agregó un nuevo constructor" />
-    <MESSAGE value="se declaró el método para realizar el inicio de sesión en IUsuarioDao" />
-    <MESSAGE value="archivo DBConnection para conexión a base de datos creado" />
-    <MESSAGE value="importación de métodos y paquete en DBConnection" />
-    <MESSAGE value="importación de paquete en DBConnection e importación para la inyección sql a la base de datos" />
-    <MESSAGE value="cambios en el archivo DBConnection" />
-    <MESSAGE value="se creó archivo de css para modal de editar usuario" />
-    <MESSAGE value="archivo css modificado" />
-    <MESSAGE value="archivo css de modal ver usuario creado" />
     <MESSAGE value="se modificó archivo css" />
     <MESSAGE value="se agregaron dependencias faltantes en archivo de pom" />
     <MESSAGE value="se borraron símbolos raros de los códigos" />
@@ -483,6 +538,18 @@
     <MESSAGE value="se modificó archivo de HelloApplication, ahora adaptado para agregar un usuario" />
     <MESSAGE value="se modificó controller de agregar usuario, se hizo la inyección sql" />
     <MESSAGE value="se modificó archivo css, ahora incluyendo la foto" />
-    <option name="LAST_COMMIT_MESSAGE" value="se modificó archivo css, ahora incluyendo la foto" />
+    <MESSAGE value="se solucionó error de que no reconocía el fxml" />
+    <MESSAGE value="se borraron líneas y un método duplicado" />
+    <MESSAGE value="se importaron métodos" />
+    <MESSAGE value="se importaron clases" />
+    <MESSAGE value="se importaron clases fxml" />
+    <MESSAGE value="se borró archivo duplicado de controller de UsuarioBiblioteca" />
+    <MESSAGE value="se importaron clases y se quitó una llave que estaba de más en el código" />
+    <MESSAGE value="se hicieron cambios en archivo de HelloApplication" />
+    <MESSAGE value="se importaron clases en UsuarioBibliotecaController para método de agregar usuario" />
+    <MESSAGE value="se implementó método para mostrar alerta de error en controller de UsuarioBiblioteca" />
+    <MESSAGE value="&#10;se borró método que estaba duplicado en el controller de UsuarioBiblioteca" />
+    <MESSAGE value="&#10;se modificó archivo AgregarUsuarioController" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;se modificó archivo AgregarUsuarioController" />
   </component>
 </project>

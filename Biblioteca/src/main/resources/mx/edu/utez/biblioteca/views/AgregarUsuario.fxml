@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.UsuarioController"
-            stylesheets="@../css/estilos.css" prefWidth="600" prefHeight="400">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.UsuarioBibliotecaController"
+            stylesheets="@../css/AgregarUsuario.css" prefWidth="600" prefHeight="400">
     <VBox spacing="10" alignment="TOP_CENTER" padding="20">
         <Label text="Agregar usuario" styleClass="titulo"/>
         <Label text="Ingresa la información del usuario" styleClass="subtitulo"/>
@@ -15,7 +15,7 @@
             <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
             <Label text="Fecha de nacimiento *:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtFecha" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <DatePicker fx:id="dateNacimiento" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
             <Label text="Email *:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <TextField fx:id="txtEmail" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
@@ -25,6 +25,9 @@
 
             <Label text="Dirección:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
             <TextArea fx:id="txtDireccion" prefRowCount="2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Button text="Seleccionar Foto" onAction="#seleccionarFoto" />
+            <Label fx:id="lblFotoSeleccionada" text="Sin foto seleccionada" />
         </GridPane>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
