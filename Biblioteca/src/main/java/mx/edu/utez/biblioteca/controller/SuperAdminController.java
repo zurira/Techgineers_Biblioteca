@@ -106,3 +106,14 @@ public class SuperAdminController {
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
 
+
+    private void cargarAdministradores() {
+        try {
+            List<Usuario> admins = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
+            adminTable.setItems(FXCollections.observableArrayList(admins));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
