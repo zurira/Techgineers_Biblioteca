@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.UsuarioBibliotecaController"
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.AgregarUsuarioController"
             stylesheets="@../css/AgregarUsuario.css" prefWidth="600" prefHeight="400">
     <VBox spacing="10" alignment="TOP_CENTER" padding="20">
         <Label text="Agregar usuario" styleClass="titulo"/>
@@ -32,7 +32,7 @@
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Cancelar" onAction="#cancelar"/>
-            <Button text="Guardar" onAction="#guardarUsuario" styleClass="boton-guardar"/>
+            <Button text="Guardar" onAction="#onguardarUsuario" styleClass="boton-guardar"/>
             <Button text="Agregar usuario" onAction="#onAddUsuario" />
         </HBox>
     </VBox>
