@@ -190,3 +190,19 @@ public class UsuarioDaoImpl implements IUsuario {
     }
 
 
+
+
+    public static void main(String[] args) {
+        UsuarioDaoImpl dao = new UsuarioDaoImpl();
+        try {
+            System.out.println(dao.login("",""));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+
