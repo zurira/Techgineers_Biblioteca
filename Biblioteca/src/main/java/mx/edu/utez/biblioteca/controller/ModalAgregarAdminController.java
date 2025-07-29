@@ -28,4 +28,9 @@ public class ModalAgregarAdminController {
 
     private File imagenSeleccionada;
 
-    
+    @FXML
+    public void initialize() {
+        btnSeleccionarImagen.setOnAction(event -> seleccionarImagen());
+        btnGuardar.setOnAction(event -> guardarAdministrador());
+        btnCancelar.setOnAction(event -> cerrarModal());
+    }
