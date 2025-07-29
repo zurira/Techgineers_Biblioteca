@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibroDaoImpl implements ILibro {
+
     @Override
     public List<Libro> obtenerLibros() {
         List<Libro> libros = new ArrayList<>();
@@ -22,6 +23,7 @@ public class LibroDaoImpl implements ILibro {
                 "    l.ANIO_PUBLICACION,\n" +
                 "    l.PORTADA,\n" +
                 "    l.RESUMEN,\n" +
+                "    l.ESTADO,\n" +
                 "    e.ID AS ID_EDITORIAL,\n" +
                 "    e.NOMBRE AS NOMBRE_EDITORIAL,\n" +
                 "    (\n" +
@@ -33,42 +35,42 @@ public class LibroDaoImpl implements ILibro {
                 "    ) AS AUTORES\n" +
                 "FROM LIBRO l\n" +
                 "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID";
-        try{
-            Connection con= DBConnection.getConnection();
-            PreparedStatement ps=con.prepareStatement(sql);
+
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Libro libro = new Libro();
                 libro.setId(rs.getInt("ID"));
                 libro.setTitulo(rs.getString("TITULO"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
                 libro.setResumen(rs.getString("RESUMEN"));
+                libro.setEstado(rs.getString("ESTADO"));
 
-                // Cargar datos de la editorial
                 Editorial editorial = new Editorial();
                 editorial.setId(rs.getInt("ID_EDITORIAL"));
                 editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
                 libro.setEditorial(editorial);
 
-                // Cargar datos del autor
                 Autor autor = new Autor();
-                autor.setNombreCompleto(rs.getString("AUTORES")); // concatenado
+                autor.setNombreCompleto(rs.getString("AUTORES"));
                 libro.setAutor(autor);
 
                 libros.add(libro);
-
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return libros;
     }
 
-    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria){
+    @Override
+    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria) {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.RESUMEN, " +
+        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.RESUMEN, l.ESTADO, " +
                 "e.ID AS ID_EDITORIAL, e.NOMBRE AS NOMBRE_EDITORIAL, " +
                 "(SELECT LISTAGG(a.NOMBRE_COMPLETO, ', ') WITHIN GROUP (ORDER BY a.NOMBRE_COMPLETO) " +
                 " FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID WHERE la.ID_LIBRO = l.ID) AS AUTORES " +
@@ -99,8 +101,6 @@ public class LibroDaoImpl implements ILibro {
                 ps.setString(index++, categoria.toLowerCase());
             }
 
-
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Libro libro = new Libro();
@@ -109,14 +109,13 @@ public class LibroDaoImpl implements ILibro {
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
                 libro.setResumen(rs.getString("RESUMEN"));
+                libro.setEstado(rs.getString("ESTADO"));
 
-                //Se cargan los datos de la editorial
                 Editorial editorial = new Editorial();
                 editorial.setId(rs.getInt("ID_EDITORIAL"));
                 editorial.setNombre(rs.getString("NOMBRE_EDITORIAL"));
                 libro.setEditorial(editorial);
 
-                //Se cargan datos del autor
                 Autor autor = new Autor();
                 autor.setNombreCompleto(rs.getString("AUTORES"));
                 libro.setAutor(autor);
@@ -124,9 +123,10 @@ public class LibroDaoImpl implements ILibro {
                 libros.add(libro);
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return libros;
     }
 }
+
