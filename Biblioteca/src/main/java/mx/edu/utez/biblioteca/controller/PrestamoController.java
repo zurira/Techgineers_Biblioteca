@@ -202,6 +202,7 @@ public class PrestamoController {
             modalStage.setScene(new Scene(root, 1000, 600));
 
             modalStage.showAndWait();
+            cargarPrestamos();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -225,7 +226,7 @@ public class PrestamoController {
             modalStage.setScene(new Scene(root, 1000, 600)); // Puedes ajustar tamaño
 
             modalStage.showAndWait(); // Espera a que se cierre
-            //cargarPrestamos();
+            cargarPrestamos();
 
         } catch (Exception ex) {
             ex.printStackTrace();
