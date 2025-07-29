@@ -6,6 +6,7 @@ module mx.edu.utez.biblioteca {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires org.kordamp.ikonli.javafx;
+    requires java.desktop;
 
 
     opens mx.edu.utez.biblioteca to javafx.fxml;

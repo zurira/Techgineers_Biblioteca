@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se modificó archivo fxml de modal AgregarUsuario" />
+    <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="se modificó archivo css, ahora incluyendo la foto">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/AgregarUsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/AgregarUsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/EditarUsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/EditarUsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/UsuarioBibliotecaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/java/mx/edu/utez/biblioteca/controller/UsuarioBibliotecaController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +56,7 @@
   "keyToString": {
     "Application.DBConnection.executor": "Run",
     "Application.HelloApplication.executor": "Run",
+    "Maven.Biblioteca [clean,install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -73,6 +79,11 @@
       <recent name="C:\Users\owner\Desktop\Techgineers_Biblioteca\Biblioteca\src\main\resources" />
       <recent name="C:\Users\owner\Desktop\Techgineers_Biblioteca\Biblioteca\src\main\resources\mx\edu\utez\biblioteca" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -368,21 +379,85 @@
       <option name="project" value="LOCAL" />
       <updated>1753723465159</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="en carpeta de css se agregó el archivo css de Agregar Usuario">
+      <option name="closed" value="true" />
+      <created>1753723598269</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1753723598269</updated>
+    </task>
+    <task id="LOCAL-00036" summary="en carpeta de css se agregó el archivo css de Agregar Usuario">
+      <option name="closed" value="true" />
+      <created>1753723649953</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1753723649953</updated>
+    </task>
+    <task id="LOCAL-00037" summary="se agregaron los estilos en archivo css para modal de agregar usuario">
+      <option name="closed" value="true" />
+      <created>1753723784739</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1753723784739</updated>
+    </task>
+    <task id="LOCAL-00038" summary="se modificó la ruta en donde se encuentra la carpeta de wallet descomprimida en el archivo para la conexión a base de datos">
+      <option name="closed" value="true" />
+      <created>1753725750193</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1753725750193</updated>
+    </task>
+    <task id="LOCAL-00039" summary="se implementó método para agregar usuario en archivo de UsuarioBibliotecaController">
+      <option name="closed" value="true" />
+      <created>1753725971468</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1753725971468</updated>
+    </task>
+    <task id="LOCAL-00040" summary="se agregó botón para agregar usuario en el archivo fxml de agregar usuario">
+      <option name="closed" value="true" />
+      <created>1753726260914</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1753726260914</updated>
+    </task>
+    <task id="LOCAL-00041" summary="se modificó archivo de HelloApplication, ahora adaptado para agregar un usuario">
+      <option name="closed" value="true" />
+      <created>1753726406254</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1753726406254</updated>
+    </task>
+    <task id="LOCAL-00042" summary="se modificó controller de agregar usuario, se hizo la inyección sql">
+      <option name="closed" value="true" />
+      <created>1753732187657</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1753732187658</updated>
+    </task>
+    <task id="LOCAL-00043" summary="se modificó archivo css, ahora incluyendo la foto">
+      <option name="closed" value="true" />
+      <created>1753732740222</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1753732740222</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="se creó archivo de controller para modal de ver usuario" />
-    <MESSAGE value="se borró algo del archivo e implementación de getters y setters" />
-    <MESSAGE value="cambios en el archivo controller de editar usuario" />
-    <MESSAGE value="creación en implementación de métodos en controller del modal editar usuario" />
-    <MESSAGE value="creación e implementación de métodos del archivo controller del modal de agregar usuario" />
-    <MESSAGE value="creación del archivo de controller para el modal de ver usuario" />
-    <MESSAGE value="implementación de métodos y declaración de variables en controller de ver usuario" />
-    <MESSAGE value="se creó archivo de usuario controller" />
     <MESSAGE value="se modificó archivo de usuario controller y se agregaron los métodos" />
     <MESSAGE value="se creó el archivo de usuario dao impl" />
     <MESSAGE value="se creó archivo de IUsuarioDao" />
@@ -400,6 +475,14 @@
     <MESSAGE value="se borraron símbolos raros de los códigos" />
     <MESSAGE value="se borró archivo de interfaz ILibro, ya que no se utiliza" />
     <MESSAGE value="se modificó archivo fxml de modal AgregarUsuario" />
-    <option name="LAST_COMMIT_MESSAGE" value="se modificó archivo fxml de modal AgregarUsuario" />
+    <MESSAGE value="en carpeta de css se agregó el archivo css de Agregar Usuario" />
+    <MESSAGE value="se agregaron los estilos en archivo css para modal de agregar usuario" />
+    <MESSAGE value="se modificó la ruta en donde se encuentra la carpeta de wallet descomprimida en el archivo para la conexión a base de datos" />
+    <MESSAGE value="se implementó método para agregar usuario en archivo de UsuarioBibliotecaController" />
+    <MESSAGE value="se agregó botón para agregar usuario en el archivo fxml de agregar usuario" />
+    <MESSAGE value="se modificó archivo de HelloApplication, ahora adaptado para agregar un usuario" />
+    <MESSAGE value="se modificó controller de agregar usuario, se hizo la inyección sql" />
+    <MESSAGE value="se modificó archivo css, ahora incluyendo la foto" />
+    <option name="LAST_COMMIT_MESSAGE" value="se modificó archivo css, ahora incluyendo la foto" />
   </component>
 </project>
