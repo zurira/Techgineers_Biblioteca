@@ -3,10 +3,10 @@ module mx.edu.utez.biblioteca {
     requires javafx.controls;
     requires javafx.graphics;
     requires java.sql;
-
-    exports mx.edu.utez.biblioteca.controller;
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+
+    exports mx.edu.utez.biblioteca.controller;
 
     // Exporta el paquete raíz para que otras clases puedan usarse
     exports mx.edu.utez.biblioteca;
@@ -20,6 +20,7 @@ module mx.edu.utez.biblioteca {
 
     exports mx.edu.utez.biblioteca.model;
     opens mx.edu.utez.biblioteca.model to javafx.fxml;
+
 
 }
 
