@@ -6,6 +6,7 @@ module mx.edu.utez.biblioteca {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.fxml;
+    requires org.kordamp.ikonli.javafx; // Nuevo nombre del módulo para Ikonli
 
 
     exports mx.edu.utez.biblioteca.controller;
