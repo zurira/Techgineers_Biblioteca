@@ -6,7 +6,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.DashboardController"
             prefWidth="400" prefHeight="300"
-            stylesheets="/mx/edu/utez/biblioteca/css/dashboard.css">
+            stylesheets="/mx/edu/utez/biblioteca/css/Dashboard.css">
 
     <VBox spacing="20.0" alignment="CENTER"
           AnchorPane.leftAnchor="0.0"
