@@ -4,9 +4,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class EditarUsuarioController {
-    @FXML private TextField txtNombre, txtEmail, txtTelefono;
-    @FXML private DatePicker dateNacimiento;
-    @FXML private TextArea txtDireccion;
+    @FXML
+    private TextField txtNombre, txtEmail, txtTelefono;
+    @FXML
+    private DatePicker dateNacimiento;
+    @FXML
+    private TextArea txtDireccion;
 
     @FXML
     private void guardar() {
@@ -23,3 +26,4 @@ public class EditarUsuarioController {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();
     }
+}
