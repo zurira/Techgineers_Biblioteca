@@ -6,18 +6,30 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/"));
-        Parent root = fxmlLoader.load();
+        // Ajusta la ruta al archivo FXML, por ejemplo "Usuarios.fxml"
+        String fxmlPath = "mx/edu/utez/biblioteca/views/Usuarios.fxml";
+
+        URL fxmlUrl = getClass().getClassLoader().getResource(fxmlPath);
+        if (fxmlUrl == null) {
+            throw new RuntimeException("No se encontró el archivo FXML en recursos: " + fxmlPath);
+        }
+
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        Parent root = loader.load();
+
         Scene scene = new Scene(root);
-        stage.setTitle("Bibliotecario - Agregar usuario");
+        stage.setTitle("Bibliotecario – Usuarios");
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
