@@ -220,6 +220,15 @@ public class UsuarioBibliotecaController {
 
     }
 
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+
     private void onEditUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Editar usuario: " + usuario.getNombre());
         // Implementar apertura de formulario para editar usuario
