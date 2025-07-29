@@ -14,8 +14,8 @@
           AnchorPane.rightAnchor="10.0"
           AnchorPane.bottomAnchor="10.0">
 
-        <Label text="Agregar usuario" styleClass="titulo"/>
-        <Label text="Ingresa la información del usuario" styleClass="subtitulo"/>
+        <Label text="Editar usuario" styleClass="titulo"/>
+        <Label text="Modifica la información del usuario" styleClass="subtitulo"/>
 
         <GridPane hgap="10" vgap="10">
             <Label text="Nombre completo *:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
@@ -36,10 +36,19 @@
             <Label text="Fotografía:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
             <Button text="Seleccionar Foto" onAction="#seleccionarFoto" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
             <Label fx:id="lblFotoSeleccionada" text="Sin foto seleccionada" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <!-- ToggleButton para estado -->
+            <Label text="Estado del usuario:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <ToggleButton fx:id="btnEstado"
+                          text="Activo"
+                          onAction="#cambiarEstado"
+                          styleClass="toggle-estado"
+                          prefWidth="120"
+                          GridPane.rowIndex="7" GridPane.columnIndex="1"/>
         </GridPane>
 
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
-            <Button fx:id="btnGuardar" text="Guardar" onAction="#guardar"/>
+            <Button fx:id="btnGuardar" text="Guardar cambios" onAction="#guardar"/>
             <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar"/>
         </HBox>
 
