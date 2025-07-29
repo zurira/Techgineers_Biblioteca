@@ -34,8 +34,8 @@ public class AgregarUsuarioController {
         this.usuarioExistente = usuario;
 
         txtNombre.setText(usuario.getNombre());
-        dateNacimiento.setValue(LocalDate.parse(usuario.getFechaNacimiento()));
-        txtEmail.setText(usuario.getEmail());
+        dateNacimiento.setValue((usuario.getFechaNacimiento()));
+        txtEmail.setText(usuario.getCorreo());
         txtTelefono.setText(usuario.getTelefono());
         txtDireccion.setText(usuario.getDireccion());
 
@@ -76,7 +76,7 @@ public class AgregarUsuarioController {
                 sql = "UPDATE usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
                         "email = ?, telefono = ?, direccion = ?, fotografia = ? WHERE id_usuario = ?";
                 ps = con.prepareStatement(sql);
-                ps.setInt(7, usuarioExistente.getIdUsuario());
+                ps.setInt(7, usuarioExistente.getId());
             }
 
             ps.setString(1, txtNombre.getText());
