@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.time.LocalDate;
 
 public class AgregarUsuarioController {
 
@@ -32,13 +31,11 @@ public class AgregarUsuarioController {
 
     public void setUsuarioExistente(UsuarioBiblioteca usuario) {
         this.usuarioExistente = usuario;
-
         txtNombre.setText(usuario.getNombre());
-        dateNacimiento.setValue((usuario.getFechaNacimiento()));
+        dateNacimiento.setValue(usuario.getFechaNacimiento());
         txtEmail.setText(usuario.getCorreo());
         txtTelefono.setText(usuario.getTelefono());
         txtDireccion.setText(usuario.getDireccion());
-
         lblFotoSeleccionada.setText("(foto actual)");
     }
 
@@ -46,7 +43,9 @@ public class AgregarUsuarioController {
     private void seleccionarFoto() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Seleccionar Fotografía");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png"));
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png")
+        );
         File selected = chooser.showOpenDialog(txtNombre.getScene().getWindow());
 
         if (selected != null) {
@@ -63,10 +62,9 @@ public class AgregarUsuarioController {
             return;
         }
 
-        String sql;
-        try {
-            Connection con = DBConnection.getConnection();
+        try (Connection con = DBConnection.getConnection()) {
             PreparedStatement ps;
+            String sql;
 
             if (usuarioExistente == null) {
                 sql = "INSERT INTO usuarios (nombre, fecha_nacimiento, email, telefono, direccion, fotografia, activo) " +
@@ -86,14 +84,14 @@ public class AgregarUsuarioController {
             ps.setString(5, txtDireccion.getText());
 
             if (archivoFoto != null) {
-                FileInputStream fis = new FileInputStream(archivoFoto);
-                ps.setBinaryStream(6, fis, (int) archivoFoto.length());
+                try (FileInputStream fis = new FileInputStream(archivoFoto)) {
+                    ps.setBinaryStream(6, fis, (int) archivoFoto.length());
+                }
             } else {
                 ps.setBinaryStream(6, null);
             }
 
             ps.executeUpdate();
-
             guardado = true;
             mostrarAlerta("Éxito", usuarioExistente == null ? "Usuario agregado correctamente." : "Usuario actualizado.");
             cancelar();
@@ -106,7 +104,8 @@ public class AgregarUsuarioController {
 
     @FXML
     private void cancelar() {
-        ((Stage) txtNombre.getScene().getWindow()).close();
+        Stage stage = (Stage) txtNombre.getScene().getWindow();
+        if (stage != null) stage.close();
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
