@@ -13,6 +13,7 @@ public class EditarUsuarioController {
     @FXML private TextField txtTelefono;
     @FXML private TextField txtDireccion;
     @FXML private ToggleButton toggleEstado;
+    @FXML private Label lblFotoSeleccionada;
     @FXML private Button btnGuardar;
 
     private UsuarioBiblioteca usuarioEditando;
@@ -25,17 +26,24 @@ public class EditarUsuarioController {
         txtTelefono.setText(usuario.getTelefono());
         txtDireccion.setText(usuario.getDireccion());
         toggleEstado.setSelected("S".equalsIgnoreCase(usuario.getEstado()));
-        toggleEstado.setText(toggleEstado.isSelected() ? "Activo" : "Inactivo");
+        actualizarTextoToggle();
 
-        toggleEstado.selectedProperty().addListener((obs, oldVal, newVal) -> {
-            toggleEstado.setText(newVal ? "Activo" : "Inactivo");
-        });
+        toggleEstado.selectedProperty().addListener((obs, oldVal, newVal) -> actualizarTextoToggle());
+    }
+
+    private void actualizarTextoToggle() {
+        toggleEstado.setText(toggleEstado.isSelected() ? "Activo" : "Inactivo");
     }
 
     @FXML
     private void onGuardar() {
         if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()) {
             mostrarAlerta("Campos obligatorios", "El nombre y correo son requeridos.");
+            return;
+        }
+
+        if (!txtCorreo.getText().contains("@")) {
+            mostrarAlerta("Correo inválido", "Introduce un correo válido.");
             return;
         }
 
@@ -49,6 +57,7 @@ public class EditarUsuarioController {
             UsuarioBibliotecaDaoImpl dao = new UsuarioBibliotecaDaoImpl();
             dao.update(usuarioEditando);
             guardado = true;
+            mostrarAlerta("Usuario actualizado", "Los datos se guardaron correctamente.");
             cerrarVentana();
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +75,7 @@ public class EditarUsuarioController {
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
