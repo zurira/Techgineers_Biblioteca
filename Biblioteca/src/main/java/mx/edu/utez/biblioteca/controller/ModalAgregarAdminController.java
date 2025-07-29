@@ -57,4 +57,7 @@ public class ModalAgregarAdminController {
     }
 
 
-    
+    private void cerrarModal() {
+        btnCancelar.getScene().getWindow().hide();
+    }
+}
