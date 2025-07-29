@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ILibro {
     public List<Libro> obtenerLibros();
+    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria);
+
 }
