@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -183,15 +182,12 @@ public class UsuarioBibliotecaController {
     }
 
 
-    @FXML
-    private void onAddUsuario() {
-        System.out.println("Abrir formulario para agregar usuario");
+
         @FXML
         private void onAddUsuario() {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AgregarUsuario.fxml"));
                 Parent root = loader.load();
-
                 Stage stage = new Stage();
                 stage.setTitle("Agregar usuario");
                 stage.setScene(new Scene(root));
