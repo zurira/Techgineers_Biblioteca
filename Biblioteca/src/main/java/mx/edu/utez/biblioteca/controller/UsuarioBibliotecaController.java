@@ -187,33 +187,33 @@ public class UsuarioBibliotecaController {
         tableViewUsuarios.setItems(listaOrdenada);
     }
 
-        @FXML
-        private void onAddUsuario() {
-            System.out.println("Abrir formulario para agregar usuario");
-            // Implementar apertura de formulario para agregar usuario
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AgregarUsuario.fxml"));
-                Parent root = loader.load();
+    @FXML
+    private void onAddUsuario() {
+        System.out.println("Abrir formulario para agregar usuario");
+        // Implementar apertura de formulario para agregar usuario
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AgregarUsuario.fxml"));
+            Parent root = loader.load();
 
-                AgregarUsuarioController controller = loader.getController();
+            AgregarUsuarioController controller = loader.getController();
 
-                // Mostrar el modal
-                Stage stage = new Stage();
-                stage.setTitle("Agregar Usuario");
-                stage.setScene(new Scene(root));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
+            // Mostrar el modal
+            Stage stage = new Stage();
+            stage.setTitle("Agregar Usuario");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
 
-                // Si se guardó correctamente, recargar la tabla
-                if (controller.isGuardado()) {
-                    cargarUsuarios(); // Método que recarga los usuarios desde la BD
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                mostrarAlerta("Error", "No se pudo abrir el formulario de agregar usuario.");
+            // Si se guardó correctamente, recargar la tabla
+            if (controller.isGuardado()) {
+                cargarUsuarios(); // Método que recarga los usuarios desde la BD
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir el formulario de agregar usuario.");
         }
+    }
 
 
     private void mostrarAlerta(String titulo, String mensaje) {
