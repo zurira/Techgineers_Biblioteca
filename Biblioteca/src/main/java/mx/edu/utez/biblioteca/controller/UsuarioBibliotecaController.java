@@ -187,13 +187,10 @@ public class UsuarioBibliotecaController {
         tableViewUsuarios.setItems(listaOrdenada);
     }
 
-
-    @FXML
-    private void onAddUsuario() {
-        System.out.println("Abrir formulario para agregar usuario");
-        // Implementar apertura de formulario para agregar usuario
         @FXML
         private void onAddUsuario() {
+            System.out.println("Abrir formulario para agregar usuario");
+            // Implementar apertura de formulario para agregar usuario
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AgregarUsuario.fxml"));
                 Parent root = loader.load();
@@ -218,7 +215,6 @@ public class UsuarioBibliotecaController {
             }
         }
 
-    }
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
