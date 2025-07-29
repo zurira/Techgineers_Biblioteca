@@ -2,11 +2,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.AgregarUsuarioController"
-            stylesheets="@../css/AgregarUsuario.css" prefWidth="600" prefHeight="400">
-    <VBox spacing="10" alignment="TOP_CENTER" padding="20">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.AgregarUsuarioController"
+            stylesheets="/mx/edu/utez/biblioteca/css/AgregarUsuario.css"
+            prefWidth="600" prefHeight="400">
+
+    <VBox spacing="15.0" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="10.0"
+          AnchorPane.leftAnchor="10.0"
+          AnchorPane.rightAnchor="10.0"
+          AnchorPane.bottomAnchor="10.0">
+
         <Label text="Agregar usuario" styleClass="titulo"/>
         <Label text="Ingresa la información del usuario" styleClass="subtitulo"/>
 
@@ -26,14 +33,13 @@
             <Label text="Dirección:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
             <TextArea fx:id="txtDireccion" prefRowCount="2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-            <Button text="Seleccionar Foto" onAction="#seleccionarFoto" />
-            <Label fx:id="lblFotoSeleccionada" text="Sin foto seleccionada" />
+            <Label text="Fotografía:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Button text="Seleccionar Foto" onAction="#seleccionarFoto" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            <Label fx:id="lblFotoSeleccionada" text="Sin foto seleccionada" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
         </GridPane>
 
-        <HBox spacing="10" alignment="CENTER_RIGHT">
+        <HBox spacing="10.0" alignment="CENTER_RIGHT">
             <Button text="Cancelar" onAction="#cancelar"/>
-            <Button text="Guardar" onAction="#onguardarUsuario" styleClass="boton-guardar"/>
-            <Button text="Agregar usuario" onAction="#onAddUsuario" />
         </HBox>
     </VBox>
 </AnchorPane>
