@@ -42,7 +42,7 @@ public class UsuarioController {
         try {
             Usuario usuario = dao.login(input,pass);
             if(usuario != null){
-                System.out.println("Se pudo logear con Exito como:" + usuario.getNombreRol());
+                System.out.println("Se pudo logear con Exito como:" + usuario.getRol().getNombre());
 
                 FXMLLoader loader;
                 switch (usuario.getRol().getNombre().trim().toUpperCase()) {

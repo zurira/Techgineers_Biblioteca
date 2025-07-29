@@ -9,14 +9,13 @@ public class Usuario {
     private String password;
     private Rol rol;
     private String direccion;
-    private String nombreRol;
     private String estado;
     private byte[] foto;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String telefono, String correo, String username, String password, Rol rol, String direccion, String nombreRol, String estado, byte[] foto) {
+    public Usuario(int id, String nombre, String telefono, String correo, String username, String password, Rol rol, String direccion, String estado, byte[] foto) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -25,7 +24,6 @@ public class Usuario {
         this.password = password;
         this.rol = rol;
         this.direccion = direccion;
-        this.nombreRol = nombreRol;
         this.estado = estado;
         this.foto = foto;
     }
@@ -92,14 +90,6 @@ public class Usuario {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public String getNombreRol() {
-        return nombreRol;
-    }
-
-    public void setNombreRol(String nombreRol) {
-        this.nombreRol = nombreRol;
     }
 
     public String getEstado() {
