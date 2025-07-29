@@ -30,4 +30,8 @@ private void onEditUsuario(UsuarioBiblioteca usuario) {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+
+void main() {
+
 }
