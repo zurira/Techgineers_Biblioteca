@@ -12,7 +12,6 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Ajusta la ruta al archivo FXML, por ejemplo "Usuarios.fxml"
         String fxmlPath = "mx/edu/utez/biblioteca/views/AgregarUsuario.fxml";
 
         URL fxmlUrl = getClass().getClassLoader().getResource(fxmlPath);
