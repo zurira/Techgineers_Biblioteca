@@ -75,8 +75,6 @@ public class UsuarioDaoImpl implements IUsuario {
         return lista;
     }
 
-
-
     @Override
     public void create(Usuario usuario) throws Exception {
         String query = "INSERT INTO USUARIO_SISTEMA (NOMBRE, CORREO, TELEFONO, USERNAME, PASSWORD, FOTO, ID_ROL, ESTADO, DIRECCION) " +
@@ -188,8 +186,6 @@ public class UsuarioDaoImpl implements IUsuario {
         }
         return lista;
     }
-
-
 
 
     public static void main(String[] args) {

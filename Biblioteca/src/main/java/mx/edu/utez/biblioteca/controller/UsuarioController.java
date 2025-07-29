@@ -37,10 +37,10 @@ public class UsuarioController {
         try {
             Usuario usuario = dao.login(correo,pass);
             if(usuario != null){
-                System.out.println("Se pudo logear con Exito como:" + usuario.getNombreRol());
+                System.out.println("Se pudo logear con Exito como:" + usuario.getRol().getNombre());
 
                 FXMLLoader loader;
-                switch (usuario.getNombreRol().trim().toUpperCase()) {
+                switch (usuario.getRol().getNombre().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
                         System.out.println("Cargando vista de superadministrador");
                         loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
