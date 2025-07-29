@@ -28,34 +28,4 @@ public class ModalAgregarAdminController {
 
     private File imagenSeleccionada;
 
-    @FXML
-    public void initialize() {
-        btnSeleccionarImagen.setOnAction(event -> seleccionarImagen());
-        btnGuardar.setOnAction(event -> guardarAdministrador());
-        btnCancelar.setOnAction(event -> cerrarModal());
-    }
-
-    private void seleccionarImagen() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar Imagen");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.png", "*.jpeg")
-        );
-
-        imagenSeleccionada = fileChooser.showOpenDialog(null);
-        if (imagenSeleccionada != null) {
-            Image imagen = new Image(imagenSeleccionada.toURI().toString());
-            imageView.setImage(imagen);
-        }
-    }
-
-    private void guardarAdministrador() {
-        System.out.println("Guardando administrador:");
-        System.out.println("Nombre: " + txtNombre.getText());
-        // Aquí puedes agregar lógica para guardar en base de datos o backend.
-    }
-
-    private void cerrarModal() {
-        btnCancelar.getScene().getWindow().hide();
-    }
-}
+    
