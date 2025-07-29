@@ -2,21 +2,14 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import database.ConexionDB;
-import model.UsuarioBiblioteca;
 import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
-import java.awt.*;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.io.FileInputStream;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
@@ -27,57 +20,62 @@ public class AgregarUsuarioController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtTelefono;
     @FXML private TextArea txtDireccion;
-    @FXML private Label lblFoto;
+    @FXML private Label lblFotoSeleccionada;
 
-    private File fotoSeleccionada;
-    private UsuarioBiblioteca usuarioExistente = null;
+    private File archivoFoto;
+    private UsuarioBiblioteca usuarioExistente;
     private boolean guardado = false;
-
-    public void setUsuarioExistente(UsuarioBiblioteca usuario) {
-        this.usuarioExistente = usuario;
-        txtNombre.setText(usuario.getNombre());
-        dateNacimiento.setValue(LocalDate.parse(usuario.getFechaNacimiento()));
-        txtEmail.setText(usuario.getEmail());
-        txtTelefono.setText(usuario.getTelefono());
-        txtDireccion.setText(usuario.getDireccion());
-        lblFoto.setText(usuario.getFotoNombre());
-    }
 
     public boolean isGuardado() {
         return guardado;
     }
 
-    public UsuarioBiblioteca getUsuario() {
-        return usuarioExistente;
+    public void setUsuarioExistente(UsuarioBiblioteca usuario) {
+        this.usuarioExistente = usuario;
+
+        txtNombre.setText(usuario.getNombre());
+        dateNacimiento.setValue(LocalDate.parse(usuario.getFechaNacimiento()));
+        txtEmail.setText(usuario.getEmail());
+        txtTelefono.setText(usuario.getTelefono());
+        txtDireccion.setText(usuario.getDireccion());
+
+        lblFotoSeleccionada.setText("(foto actual)");
     }
 
     @FXML
-    private void cancelar() {
-        ((Stage) txtNombre.getScene().getWindow()).close();
+    private void seleccionarFoto() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Seleccionar Fotografía");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png"));
+        File selected = chooser.showOpenDialog(txtNombre.getScene().getWindow());
+
+        if (selected != null) {
+            archivoFoto = selected;
+            lblFotoSeleccionada.setText(selected.getName());
+        }
     }
 
     @FXML
     private void guardar() {
         if (txtNombre.getText().isEmpty() || dateNacimiento.getValue() == null ||
                 txtEmail.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
-            mostrarAlerta("Campos obligatorios", "Por favor, completa todos los campos marcados con *.");
+            mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
             return;
         }
 
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql;
-            PreparedStatement stmt;
-
-            String nombreFoto = (fotoSeleccionada != null) ? fotoSeleccionada.getName() :
-                    (usuarioExistente != null ? usuarioExistente.getFotoNombre() : null);
+        String sql;
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps;
 
             if (usuarioExistente == null) {
-                sql = "INSERT INTO usuarios (nombre, fecha_nacimiento, email, telefono, direccion, foto) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?)";
-                ps = conn.prepareStatement(sql);
+                sql = "INSERT INTO usuarios (nombre, fecha_nacimiento, email, telefono, direccion, fotografia, activo) " +
+                        "VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?, 1)";
+                ps = con.prepareStatement(sql);
             } else {
                 sql = "UPDATE usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
-                        "email = ?, telefono = ?, direccion = ?, foto = ? WHERE id_usuario = ?";
-                ps = conn.prepareStatement(sql);
+                        "email = ?, telefono = ?, direccion = ?, fotografia = ? WHERE id_usuario = ?";
+                ps = con.prepareStatement(sql);
                 ps.setInt(7, usuarioExistente.getIdUsuario());
             }
 
@@ -86,43 +84,36 @@ public class AgregarUsuarioController {
             ps.setString(3, txtEmail.getText());
             ps.setString(4, txtTelefono.getText());
             ps.setString(5, txtDireccion.getText());
-            ps.setString(6, nombreFoto);
+
+            if (archivoFoto != null) {
+                FileInputStream fis = new FileInputStream(archivoFoto);
+                ps.setBinaryStream(6, fis, (int) archivoFoto.length());
+            } else {
+                ps.setBinaryStream(6, null);
+            }
 
             ps.executeUpdate();
 
-            if (fotoSeleccionada != null) {
-                Files.copy(fotoSeleccionada.toPath(),
-                        new File("src/main/resources/fotos/" + fotoSeleccionada.getName()).toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
-            }
-
             guardado = true;
-            mostrarAlerta("Éxito", usuarioExistente == null ? "Usuario agregado correctamente." : "Usuario editado correctamente.");
+            mostrarAlerta("Éxito", usuarioExistente == null ? "Usuario agregado correctamente." : "Usuario actualizado.");
             cancelar();
 
         } catch (Exception e) {
-            mostrarAlerta("Error", "No se pudo guardar el usuario:\n" + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo guardar el usuario: " + e.getMessage());
         }
     }
 
     @FXML
-    private void seleccionarFoto() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar fotografía");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
-        );
-        fotoSeleccionada = fileChooser.showOpenDialog(txtNombre.getScene().getWindow());
-        if (fotoSeleccionada != null) {
-            lblFoto.setText(fotoSeleccionada.getName());
-        }
+    private void cancelar() {
+        ((Stage) txtNombre.getScene().getWindow()).close();
     }
 
-    private void mostrarAlerta(String titulo, String contenido) {
+    private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
-        alert.setContentText(contenido);
+        alert.setContentText(mensaje);
         alert.showAndWait();
     }
 }
