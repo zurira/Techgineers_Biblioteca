@@ -88,7 +88,7 @@ public class PrestamoController {
     }
 
     private void configurarColumnasTabla() {
-        // Número visual de fila (No.)
+
         colNo.setCellFactory(column -> new TableCell<Prestamo, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
