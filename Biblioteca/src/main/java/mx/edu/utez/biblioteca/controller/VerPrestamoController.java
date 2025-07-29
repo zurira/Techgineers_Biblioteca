@@ -56,5 +56,11 @@ public class VerPrestamoController {
         dialogStage.close();
     }
 
-
+    @FXML
+    public void initialize() {
+        Platform.runLater(() -> {
+            txtNombreUsuario.deselect();
+            txtNombreUsuario.getParent().requestFocus();
+        });
+    }
 }
