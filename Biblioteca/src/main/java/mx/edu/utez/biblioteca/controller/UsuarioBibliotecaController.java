@@ -189,24 +189,20 @@ public class UsuarioBibliotecaController {
 
     @FXML
     private void onAddUsuario() {
-        System.out.println("Abrir formulario para agregar usuario");
-        // Implementar apertura de formulario para agregar usuario
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AgregarUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml"));
             Parent root = loader.load();
 
             AgregarUsuarioController controller = loader.getController();
 
-            // Mostrar el modal
             Stage stage = new Stage();
             stage.setTitle("Agregar Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            // Si se guardó correctamente, recargar la tabla
             if (controller.isGuardado()) {
-                cargarUsuarios(); // Método que recarga los usuarios desde la BD
+                cargarUsuarios();
             }
 
         } catch (Exception e) {
@@ -214,7 +210,6 @@ public class UsuarioBibliotecaController {
             mostrarAlerta("Error", "No se pudo abrir el formulario de agregar usuario.");
         }
     }
-
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
