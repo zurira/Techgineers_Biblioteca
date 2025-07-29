@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.views.Dashboard"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.DashboardController"
+            prefWidth="400" prefHeight="300"
+            stylesheets="/mx/edu/utez/biblioteca/css/dashboard.css">
 
+    <VBox spacing="20.0" alignment="CENTER"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          padding="20">
+
+        <Label text="Panel Principal" styleClass="titulo"/>
+        <Button text="Editar usuario" onAction="#abrirModalEdicion" styleClass="boton-principal"/>
+    </VBox>
 </AnchorPane>
