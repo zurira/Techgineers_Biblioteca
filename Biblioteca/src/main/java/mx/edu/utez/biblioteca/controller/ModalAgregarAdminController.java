@@ -34,3 +34,17 @@ public class ModalAgregarAdminController {
         btnGuardar.setOnAction(event -> guardarAdministrador());
         btnCancelar.setOnAction(event -> cerrarModal());
     }
+
+    private void seleccionarImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Imagen");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.png", "*.jpeg")
+        );
+
+        imagenSeleccionada = fileChooser.showOpenDialog(null);
+        if (imagenSeleccionada != null) {
+            Image imagen = new Image(imagenSeleccionada.toURI().toString());
+            imageView.setImage(imagen);
+        }
+    }
