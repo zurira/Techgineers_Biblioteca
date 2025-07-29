@@ -1,18 +1,20 @@
-// AgregarUsuarioController.java (con soporte para insertar/editar usuario y seleccionar foto)
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import database.ConexionDB;
 import model.UsuarioBiblioteca;
 import mx.edu.utez.biblioteca.config.DBConnection;
 
+import java.awt.*;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
@@ -69,9 +71,10 @@ public class AgregarUsuarioController {
 
             if (usuarioExistente == null) {
                 sql = "INSERT INTO usuarios (nombre, fecha_nacimiento, email, telefono, direccion, foto) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?)";
-                stmt = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
             } else {
-                sql = "UPDATE usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), email = ?, telefono = ?, direccion = ?, foto = ? WHERE id_usuario = ?";
+                sql = "UPDATE usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
+                        "email = ?, telefono = ?, direccion = ?, foto = ? WHERE id_usuario = ?";
                 ps = conn.prepareStatement(sql);
                 ps.setInt(7, usuarioExistente.getIdUsuario());
             }
