@@ -7,24 +7,25 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
-        URL fxmlPath = getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml");
+        URL fxmlPath = getClass().getResource("/mx/edu/utez/biblioteca/views/Dashboard.fxml");
         if (fxmlPath == null) {
-            System.out.println("¡No se encontró el archivo FXML!");
+            System.out.println("❌ No se encontró Dashboard.fxml");
             return;
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlPath);
         Scene scene = new Scene(fxmlLoader.load());
 
-        // Agregar CSS desde Java (opcional si no está en el FXML)
-        URL cssPath = getClass().getResource("/mx/edu/utez/biblioteca/css/AgregarUsuario.css");
+        // Si tienes un CSS específico para el dashboard
+        URL cssPath = getClass().getResource("/mx/edu/utez/biblioteca/css/dashboard.css");
         if (cssPath != null) {
             scene.getStylesheets().add(cssPath.toExternalForm());
         }
 
-        stage.setTitle("Biblioteca - Agregar Usuario");
+        stage.setTitle("Biblioteca - Panel Principal");
         stage.setScene(scene);
         stage.show();
     }
