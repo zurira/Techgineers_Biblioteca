@@ -66,6 +66,7 @@ public class PrestamoController {
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
 
+
     @FXML
     public void initialize() {
         prestamoDao = new PrestamoDaoImpl();
@@ -190,17 +191,15 @@ public class PrestamoController {
     @FXML
     private void onAddPrestamo(ActionEvent e) {
         System.out.println("Agregar nuevo préstamo");
-        // Implementación de la lógica para abrir el formulario de agregar préstamo
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarPrestamo.fxml"));
             Parent root = loader.load();
-
-            // Crear nuevo Stage para que sea modal
             Stage modalStage = new Stage();
-            modalStage.setTitle("Editar Préstamo");
-            modalStage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana anterior
+            modalStage.setTitle("Nuevo Préstamo");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setResizable(false);
-            modalStage.setScene(new Scene(root, 800, 600)); // Puedes ajustar tamaño
+            modalStage.setScene(new Scene(root, 1000, 600));
 
             modalStage.showAndWait();
 
@@ -210,22 +209,23 @@ public class PrestamoController {
     }
 
     private void onEditPrestamo(Prestamo prestamo, ActionEvent e) {
+        Prestamo prestamoSeleccionado = tableViewPrestamos.getSelectionModel().getSelectedItem();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarPrestamo.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador y pasarle el préstamo
             EditarPrestamoController controller = loader.getController();
-            controller.setPrestamo(prestamo);
+            controller.inicializar(prestamo);
 
             // Crear nuevo Stage para que sea modal
             Stage modalStage = new Stage();
             modalStage.setTitle("Editar Préstamo");
             modalStage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana anterior
             modalStage.setResizable(false);
-            modalStage.setScene(new Scene(root, 800, 600)); // Puedes ajustar tamaño
+            modalStage.setScene(new Scene(root, 1000, 600)); // Puedes ajustar tamaño
 
             modalStage.showAndWait(); // Espera a que se cierre
+            //cargarPrestamos();
 
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -10,15 +10,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Prestamo;
-import mx.edu.utez.biblioteca.model.Usuario;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
-
 
 import java.net.URL;
 import java.util.List;
@@ -40,9 +39,7 @@ public class ModalPrestamoController implements Initializable {
     private final PrestamoDaoImpl prestamoDAO = new PrestamoDaoImpl();
     private final DetallePrestamoDaoImpl detalleDAO = new DetallePrestamoDaoImpl();
 
-    private ObservableList<String> nombresUsuarios = FXCollections.observableArrayList();
     private ObservableList<UsuarioBiblioteca> listaUsuarios;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,7 +58,6 @@ public class ModalPrestamoController implements Initializable {
 
         listaUsuarios = FXCollections.observableArrayList(prestamoDAO.obtenerUsuarios());
         comboBoxUsuarios.setItems(listaUsuarios);
-        comboBoxUsuarios.setEditable(true);
 
         comboBoxUsuarios.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -79,15 +75,34 @@ public class ModalPrestamoController implements Initializable {
             }
         });
 
+        // Filtro interactivo
+        comboBoxUsuarios.setEditable(true);
         comboBoxUsuarios.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
             FilteredList<UsuarioBiblioteca> filtrados = listaUsuarios.filtered(usuario ->
-                    usuario.getNombre().toLowerCase().contains(newVal.toLowerCase())
-            );
+                    usuario.getNombre().toLowerCase().contains(newVal.toLowerCase()));
             comboBoxUsuarios.setItems(filtrados);
             comboBoxUsuarios.show();
         });
-    }
 
+        comboBoxUsuarios.setConverter(new StringConverter<UsuarioBiblioteca>() {
+            @Override
+            public String toString(UsuarioBiblioteca user) {
+                return user != null ? user.getNombre() : "";
+            }
+
+            @Override
+            public UsuarioBiblioteca fromString(String nombre) {
+                // Busca el objeto completo en tu lista según el nombre
+                for (UsuarioBiblioteca usuario : listaUsuarios) {
+                    if (usuario.getNombre().equalsIgnoreCase(nombre)) {
+                        return usuario;
+                    }
+                }
+                return null;
+            }
+        });
+
+    }
 
     @FXML
     private void buscarEjemplares(ActionEvent event) {
@@ -103,17 +118,18 @@ public class ModalPrestamoController implements Initializable {
 
     @FXML
     private void registrarPrestamo(ActionEvent event) {
-        String nombreUsuario = comboBoxUsuarios.getEditor().getText().trim();
+        UsuarioBiblioteca usuarioSeleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
 
-        if (nombreUsuario.isEmpty()
-                || dpFechaPrestamo.getValue() == null
-                || dpFechaLimite.getValue() == null
-                || cbEstado.getValue() == null) {
+        if (usuarioSeleccionado == null) {
+            mostrarAlerta("Por favor, selecciona un usuario");
+            return;
+        }
+
+        if (dpFechaPrestamo.getValue() == null || dpFechaLimite.getValue() == null || cbEstado.getValue() == null) {
             mostrarAlerta("Completa todos los campos obligatorios.");
             return;
         }
 
-        // Validar fechas
         if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
             mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
             return;
@@ -125,25 +141,17 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        // Valida si el usuario existe, mediante el ID
-        int idUsuario = usuarioDAO.obtenerIdPorNombre(nombreUsuario);
-        if (idUsuario == -1) {
-            mostrarAlerta("El usuario seleccionado no existe.");
-            return;
-        }
-
         List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
                 .filter(Ejemplar::isSeleccionado)
                 .collect(Collectors.toList());
 
-        // Valida que haya un ejemplar seleccionado
         if (seleccionados.isEmpty()) {
             mostrarAlerta("Debes seleccionar al menos un ejemplar.");
             return;
         }
 
         Prestamo prestamo = new Prestamo();
-        prestamo.setIdUsuario(idUsuario); // usuario solicitante
+        prestamo.setUsuario(usuarioSeleccionado);
         prestamo.setFechaPrestamo(dpFechaPrestamo.getValue());
         prestamo.setFechaLimite(dpFechaLimite.getValue());
         prestamo.setFechaReal(dpFechaDevolucion.getValue());
@@ -153,11 +161,11 @@ public class ModalPrestamoController implements Initializable {
             boolean creado = prestamoDAO.create(prestamo);
 
             if (!creado) {
-                mostrarAlerta("No se pudo crear el préstamo inicial.");
+                mostrarAlerta("No se pudo crear el préstamo.");
                 return;
             }
 
-            int idPrestamo = prestamo.getId(); // ✅ ID generado automáticamente
+            int idPrestamo = prestamo.getId();
             boolean exito = true;
 
             for (Ejemplar ej : seleccionados) {
@@ -172,9 +180,9 @@ public class ModalPrestamoController implements Initializable {
 
             if (exito) {
                 mostrarAlerta("Préstamo registrado exitosamente con todos los ejemplares.");
+                cerrarVentana();
             } else {
-                mostrarAlerta("Error al registrar algún ejemplar del préstamo.");
-                // Podrías considerar revertir el préstamo o marcarlo como incompleto
+                mostrarAlerta("Ocurrió un error al registrar uno o más ejemplares.");
             }
 
         } catch (Exception e) {
@@ -184,6 +192,11 @@ public class ModalPrestamoController implements Initializable {
     }
 
 
+    private void cerrarVentana() {
+        Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
+        stage.close();
+    }
+
     private void limpiarFormulario() {
         comboBoxUsuarios.getEditor().clear();
         txtBuscarEjemplar.clear();
@@ -191,7 +204,7 @@ public class ModalPrestamoController implements Initializable {
         dpFechaPrestamo.setValue(null);
         dpFechaLimite.setValue(null);
         cbEstado.getSelectionModel().selectFirst();
-        comboBoxUsuarios.setItems(listaUsuarios); // restaurar lista completa
+        comboBoxUsuarios.setItems(listaUsuarios);
     }
 
     private void mostrarAlerta(String msg) {
@@ -204,9 +217,6 @@ public class ModalPrestamoController implements Initializable {
 
     @FXML
     private void cancelarAccion(ActionEvent event) {
-        Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();
-        stage.close();
+        cerrarVentana();
     }
-
-    // Aquí voy a agregar los  métodos para guardar o cancelar
 }

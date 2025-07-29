@@ -83,22 +83,33 @@ public class PrestamoDaoImpl implements IPrestamo {
     @Override
     public boolean create(Prestamo prestamo) throws Exception {
         String query = "INSERT INTO PRESTAMO (ID_USUARIO, FECHA_PRESTAMO, FECHA_LIMITE, ESTADO) VALUES (?, ?, ?, ?)";
+
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = con.prepareStatement(query, new String[]{"ID"})) {
+
             ps.setInt(1, prestamo.getUsuario().getId());
             ps.setDate(2, Date.valueOf(prestamo.getFechaPrestamo()));
             ps.setDate(3, Date.valueOf(prestamo.getFechaLimite()));
             ps.setString(4, prestamo.getEstado());
-            ps.executeUpdate();
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                return false;
+            }
+
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     prestamo.setId(rs.getInt(1));
-                    return true;
+                    System.out.println("ID del préstamo generado: " + prestamo.getId());
                 }
             }
-            return false;
+
+            return true;
         }
     }
+
+
 
     @Override
     public boolean update(Prestamo prestamo) throws Exception {
