@@ -2,29 +2,29 @@ package mx.edu.utez.biblioteca;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.net.URL;
 
 public class HelloApplication extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
-        String fxmlPath = "mx/edu/utez/biblioteca/views/AgregarUsuario.fxml";
-        URL fxmlUrl = getClass().getClassLoader().getResource(fxmlPath);
-        System.out.println("URL encontrada: " + fxmlUrl);
-
-        if (fxmlUrl == null) {
-            throw new RuntimeException("No se encontró el archivo FXML en recursos: " + fxmlPath);
+        URL fxmlPath = getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml");
+        if (fxmlPath == null) {
+            System.out.println("¡No se encontró el archivo FXML!");
+            return;
         }
 
-        FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        Parent root = loader.load();
+        FXMLLoader fxmlLoader = new FXMLLoader(fxmlPath);
+        Scene scene = new Scene(fxmlLoader.load());
 
-        Scene scene = new Scene(root);
-        stage.setTitle("Bibliotecario – Agregar Usuario");
+        // Agregar CSS desde Java (opcional si no está en el FXML)
+        URL cssPath = getClass().getResource("/mx/edu/utez/biblioteca/css/AgregarUsuario.css");
+        if (cssPath != null) {
+            scene.getStylesheets().add(cssPath.toExternalForm());
+        }
+
+        stage.setTitle("Biblioteca - Agregar Usuario");
         stage.setScene(scene);
         stage.show();
     }
