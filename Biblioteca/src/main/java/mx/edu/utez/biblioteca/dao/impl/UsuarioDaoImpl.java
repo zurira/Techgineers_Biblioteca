@@ -76,3 +76,27 @@ public class UsuarioDaoImpl implements IUsuario {
     }
 
 
+
+    @Override
+    public void create(Usuario usuario) throws Exception {
+        String query = "INSERT INTO USUARIO_SISTEMA (NOMBRE, CORREO, TELEFONO, USERNAME, PASSWORD, FOTO, ID_ROL, ESTADO, DIRECCION) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getCorreo());
+            ps.setString(3, usuario.getTelefono());
+            ps.setString(4, usuario.getUsername());
+            ps.setString(5, usuario.getPassword());
+            ps.setBytes(6, usuario.getFoto());
+            ps.setInt(7, usuario.getRol().getId());
+            ps.setString(8, usuario.getEstado());
+            ps.setString(9, usuario.getDireccion());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new Exception("Error al crear usuario: " + e.getMessage(), e);
+        }
+    }
+
+
+
