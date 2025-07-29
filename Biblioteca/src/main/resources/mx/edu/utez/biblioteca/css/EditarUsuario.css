@@ -58,3 +58,21 @@
     -fx-font-style: italic;
     -fx-padding: 4 0 0 0;
 }
+
+/* 🌙 ToggleButton para estado activo/inactivo */
+.toggle-estado {
+    -fx-background-color: #d5cfc7;
+    -fx-text-fill: #5e4631;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 6 20;
+    -fx-font-size: 13px;
+    -fx-border-color: #cbb9a5;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+}
+
+.toggle-estado:selected {
+    -fx-background-color: #a18976;
+    -fx-text-fill: white;
+}
