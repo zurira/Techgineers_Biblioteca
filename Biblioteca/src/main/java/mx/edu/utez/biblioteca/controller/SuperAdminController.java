@@ -130,3 +130,25 @@ public class SuperAdminController {
             e.printStackTrace();
         }
     }
+
+
+    private void onEditAdmin(Usuario usuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarAdmin.fxml"));
+            Parent root = loader.load();
+
+            //EditarAdminController controller = loader.getController();
+            //controller.initData(usuario);
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Editar administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root, 600, 400));
+            modalStage.showAndWait();
+
+            cargarAdministradores(); // Refresca después de cerrar
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
