@@ -1,16 +1,25 @@
 package mx.edu.utez.biblioteca.controller;
 
-
-
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import mx.edu.utez.biblioteca.dao.impl.AdministradorDao;
-import mx.edu.utez.biblioteca.model.Administrador;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import mx.edu.utez.biblioteca.model.Usuario;
+import java.util.List;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class SuperAdminController {
-    @FXML private TableView<Administrador> adminTable;
+    @FXML private TableView<Usuario> adminTable;
     @FXML private TextField searchField;
     @FXML private Button addButton;
     @FXML private Button logoutButton;
@@ -20,9 +29,7 @@ public class SuperAdminController {
         configurarColumnas();
         cargarAdministradores();
 
-        searchField.textProperty().addListener((obs, oldValue, newValue) -> {
-            AdministradorDao.buscarAdministrador(adminTable, newValue);
-        });
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> buscarAdministradores(newValue));
 
         logoutButton.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -40,56 +47,62 @@ public class SuperAdminController {
     }
 
     private void configurarColumnas() {
-        TableColumn<Administrador, Number> colId = new TableColumn<>("No.");
+        TableColumn<Usuario, Number> colId = new TableColumn<>("No.");
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Administrador, String> colNombre = new TableColumn<>("Nombre completo");
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
+        TableColumn<Usuario, String> colNombre = new TableColumn<>("Nombre completo");
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
-        TableColumn<Administrador, String> colUsuario = new TableColumn<>("Usuario");
-        colUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
+        TableColumn<Usuario, String> colUsuario = new TableColumn<>("Usuario");
+        colUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<Administrador, String> colCorreo = new TableColumn<>("Correo");
+        TableColumn<Usuario, String> colCorreo = new TableColumn<>("Correo");
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
-        TableColumn<Administrador, Boolean> colEstado = new TableColumn<>("Estado");
-        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        TableColumn<Usuario, String> colEstado = new TableColumn<>("Estado");
+        colEstado.setCellValueFactory(cellData -> {
+            String estado = cellData.getValue().getEstado();
+            return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
+        });
 
-        // Estas son las  Columnas de acciones
-        TableColumn<Administrador, Void> colAcciones = new TableColumn<>("Acciones");
+        TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
-            private final Button editButton = new Button("✏️");
-            private final Button deleteButton = new Button("🗑️");
-            private final HBox hbox = new HBox(5, editButton, deleteButton);
+            private final Button editButton = new Button();
+            private final Button deleteButton = new Button();
 
             {
-                editButton.setOnAction(e -> {
-                    Administrador admin = getTableView().getItems().get(getIndex());
-                    System.out.println("Editar: " + admin.getNombreCompleto());
-                    // Aquie va a ir la Lógica para abrir ventana de edición
+                FontIcon editIcon = new FontIcon("fa-pencil");
+                editButton.setGraphic(editIcon);
+                editButton.getStyleClass().add("action-button");
+
+                FontIcon viewIcon = new FontIcon("fa-eye");
+                deleteButton.setGraphic(viewIcon);
+                deleteButton.getStyleClass().add("action-button");
+
+                editButton.setOnAction(event -> {
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+                    onEditAdmin(usuario);
                 });
 
-                deleteButton.setOnAction(e -> {
-                    Administrador admin = getTableView().getItems().get(getIndex());
-                    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-                    confirm.setHeaderText("Eliminar administrador");
-                    confirm.setContentText("¿Estás segura que deseas eliminar a " + admin.getNombreCompleto() + "?");
-                    confirm.showAndWait();
-                    // Aquí iría la lógica DAO para eliminar
+                deleteButton.setOnAction(event -> {
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+                    onDeleteAdmin(usuario);
                 });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : hbox);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox buttons = new HBox(5, editButton, deleteButton);
+                    buttons.setAlignment(Pos.CENTER);
+                    setGraphic(buttons);
+                }
             }
         });
 
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
 
-    private void cargarAdministradores() {
-        AdministradorDao.cargarAdministradores(adminTable);
-    }
-}
