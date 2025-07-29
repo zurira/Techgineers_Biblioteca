@@ -13,7 +13,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Ajusta la ruta al archivo FXML, por ejemplo "Usuarios.fxml"
-        String fxmlPath = "mx/edu/utez/biblioteca/views/Usuarios.fxml";
+        String fxmlPath = "mx/edu/utez/biblioteca/views/AgregarUsuario.fxml";
 
         URL fxmlUrl = getClass().getClassLoader().getResource(fxmlPath);
         if (fxmlUrl == null) {
@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
-        stage.setTitle("Bibliotecario – Usuarios");
+        stage.setTitle("Bibliotecario – Agregar Usuario");
         stage.setScene(scene);
         stage.show();
     }
