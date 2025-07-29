@@ -67,11 +67,11 @@ public class AgregarUsuarioController {
             String sql;
 
             if (usuarioExistente == null) {
-                sql = "INSERT INTO usuarios (nombre, fecha_nacimiento, email, telefono, direccion, fotografia, activo) " +
+                sql = "INSERT INTO agregar_usuarios (nombre, fecha_nacimiento, email, telefono, direccion, fotografia, activo) " +
                         "VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?, 1)";
                 ps = con.prepareStatement(sql);
             } else {
-                sql = "UPDATE usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
+                sql = "UPDATE agregar_usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
                         "email = ?, telefono = ?, direccion = ?, fotografia = ? WHERE id_usuario = ?";
                 ps = con.prepareStatement(sql);
                 ps.setInt(7, usuarioExistente.getId());
