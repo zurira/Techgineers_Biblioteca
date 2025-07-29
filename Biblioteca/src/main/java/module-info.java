@@ -1,6 +1,6 @@
 module mx.edu.utez.biblioteca {
+
     requires javafx.controls;
-    requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
 
@@ -22,3 +22,4 @@ module mx.edu.utez.biblioteca {
     opens mx.edu.utez.biblioteca.model to javafx.fxml;
 
 }
+
