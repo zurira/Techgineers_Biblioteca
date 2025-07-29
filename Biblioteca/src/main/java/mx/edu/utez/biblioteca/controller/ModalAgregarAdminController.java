@@ -48,3 +48,13 @@ public class ModalAgregarAdminController {
             imageView.setImage(imagen);
         }
     }
+
+
+    private void guardarAdministrador() {
+        System.out.println("Guardando administrador:");
+        System.out.println("Nombre: " + txtNombre.getText());
+        // Aquí puedes agregar lógica para guardar en base de datos o backend.
+    }
+
+
+    
