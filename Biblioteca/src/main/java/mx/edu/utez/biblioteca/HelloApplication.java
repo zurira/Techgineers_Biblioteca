@@ -14,9 +14,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         String fxmlPath = "mx/edu/utez/biblioteca/views/AgregarUsuario.fxml";
 
-        URL fxmlUrl = getClass().getClassLoader().getResource(fxmlPath);
+        URL fxmlUrl = getClass().getClassLoader().getResource("mx/edu/utez/biblioteca/views/AgregarUsuario.fxml");
         if (fxmlUrl == null) {
-            throw new RuntimeException("No se encontró el archivo FXML en recursos: " + fxmlPath);
+            throw new RuntimeException("No se encontró el archivo FXML en recursos: " + "mx/edu/utez/biblioteca/views/AgregarUsuario.fxml");
         }
 
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
