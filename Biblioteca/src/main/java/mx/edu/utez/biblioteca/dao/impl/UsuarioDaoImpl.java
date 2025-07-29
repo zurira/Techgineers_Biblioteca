@@ -5,53 +5,74 @@ import mx.edu.utez.biblioteca.dao.IUsuario;
 import mx.edu.utez.biblioteca.model.Rol;
 import mx.edu.utez.biblioteca.model.Usuario;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDaoImpl implements IUsuario {
 
     @Override
-    public Usuario login(String correo, String pass) throws Exception {
+    public Usuario login(String input, String pass) throws Exception {
         Usuario usuario = null;
-        String sql = "SELECT u.ID, u.CORREO, u.PASSWORD, r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
-                "FROM USUARIO u " +
+        String sql = "SELECT u.ID, u.CORREO, u.USERNAME, u.PASSWORD, r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
+                "FROM USUARIO_SISTEMA u " +
                 "JOIN ROL r ON u.ID_ROL = r.ID " +
-                "WHERE u.CORREO = ? AND u.PASSWORD = ?";
-        try {
-            Connection con = DBConnection.getConnection(); // se estable la conexion
-            PreparedStatement ps =  con.prepareStatement(sql); //se prepara la consulta para evitar la inyecion de SQL
-            ps.setString(1,correo);
-            ps.setString(2, pass);
-            ResultSet resultSet=ps.executeQuery(); //se ejecuta la consulta
-            if(resultSet.next()){
-                    usuario = new Usuario();
-                    usuario.setId(resultSet.getInt("ID"));
-                    usuario.setCorreo(resultSet.getString("CORREO"));
-                    usuario.setPassword(resultSet.getString("PASSWORD"));
-                    usuario.setRol(new Rol(resultSet.getInt("ID_ROL"), resultSet.getString("NOMBRE_ROL")));
-                    usuario.setNombreRol(resultSet.getString("NOMBRE_ROL"));
+                "WHERE (u.CORREO = ? OR u.USERNAME = ?) AND u.PASSWORD = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, input);
+            ps.setString(2, input);
+            ps.setString(3, pass);
+
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                usuario = new Usuario();
+                usuario.setId(resultSet.getInt("ID"));
+                usuario.setCorreo(resultSet.getString("CORREO"));
+                usuario.setPassword(resultSet.getString("PASSWORD"));
+                usuario.setUsername(resultSet.getString("USERNAME"));
+
+                Rol rol = new Rol();
+                rol.setId(resultSet.getInt("ID_ROL"));
+                rol.setNombre(resultSet.getString("NOMBRE_ROL"));
+                usuario.setRol(rol);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e);
         }
         return usuario;
-
     }
 
+    @Override
+    public List<Usuario> findAll() throws Exception {
+        List<Usuario> lista = new ArrayList<>();
+        String query = "SELECT u.*, r.ID AS ROL_ID, r.NOMBRE AS ROL_NOMBRE FROM USUARIO_SISTEMA u JOIN ROL r ON u.ID_ROL = r.ID";
 
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
 
-    public static void main(String[] args) {
-        UsuarioDaoImpl dao = new UsuarioDaoImpl();
-        try {
-            System.out.println(dao.login("",""));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+            while (rs.next()) {
+                Rol rol = new Rol(rs.getInt("ROL_ID"), rs.getString("ROL_NOMBRE"));
+                Usuario usuario = new Usuario(
+                        rs.getInt("ID"),
+                        rs.getString("NOMBRE"),
+                        rs.getString("TELEFONO"),
+                        rs.getString("CORREO"),
+                        rs.getString("USERNAME"),
+                        rs.getString("PASSWORD"),
+                        rol,
+                        rs.getString("DIRECCION"),
+                        rs.getString("ESTADO"),
+                        rs.getBytes("FOTO")
+                );
+                lista.add(usuario);
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error al obtener usuarios: " + e.getMessage(), e);
         }
+        return lista;
     }
-}
+
 
