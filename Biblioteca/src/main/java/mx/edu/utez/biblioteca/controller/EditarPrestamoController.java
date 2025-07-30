@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
-import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
@@ -135,7 +135,7 @@ public class EditarPrestamoController implements Initializable {
         cbEstado.setValue(prestamo.getEstado());
 
         // Cargar lista de usuarios y seleccionar el correspondiente
-        ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioDaoImpl().findAll());
+        ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioBibliotecaDaoImpl().findAll());
         comboBoxUsuarios.setItems(usuarios);
 
         if (prestamo.getUsuario() != null) {

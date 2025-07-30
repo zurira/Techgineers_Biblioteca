@@ -14,7 +14,7 @@ import javafx.util.StringConverter;
 import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
-import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
@@ -34,7 +34,7 @@ public class ModalPrestamoController implements Initializable {
     @FXML private TableColumn<Ejemplar, String> colCodigo, colTitulo, colUbicacion;
     @FXML private TableColumn<Ejemplar, Boolean> colSeleccionar;
 
-    private final UsuarioDaoImpl usuarioDAO = new UsuarioDaoImpl();
+    private final UsuarioBibliotecaDaoImpl usuarioDAO = new UsuarioBibliotecaDaoImpl();
     private final EjemplarDaoImpl ejemplarDAO = new EjemplarDaoImpl();
     private final PrestamoDaoImpl prestamoDAO = new PrestamoDaoImpl();
     private final DetallePrestamoDaoImpl detalleDAO = new DetallePrestamoDaoImpl();
