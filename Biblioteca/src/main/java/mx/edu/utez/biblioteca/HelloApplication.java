@@ -11,7 +11,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/AdminDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/AdminDashboard.fxml"));//Dirección para correr la vista
         Scene scene = new Scene(root, 1024, 640);
         stage.setTitle("Administrador - Libros");
         stage.setScene(scene);

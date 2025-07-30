@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Controller de administrador
 public class AdminDashboardController {
 
     @FXML

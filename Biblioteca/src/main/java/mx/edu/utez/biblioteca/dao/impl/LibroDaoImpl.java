@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//El dao del libro
 public class LibroDaoImpl implements ILibro {
 
     // Método auxiliar para construir un objeto Libro desde un ResultSet

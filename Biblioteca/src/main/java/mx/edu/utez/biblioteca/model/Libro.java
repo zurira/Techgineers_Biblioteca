@@ -1,7 +1,7 @@
 package mx.edu.utez.biblioteca.model;
 
 import java.util.List;
-
+//Clase de libro y aqui agregamos los getters y setters
 public class Libro {
     private int id;
     private String titulo;
