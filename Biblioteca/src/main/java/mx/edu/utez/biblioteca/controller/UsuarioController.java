@@ -30,20 +30,25 @@ public class UsuarioController {
     //Metodo funcionando, ya realiza la validación de cada rol
     @FXML
     private void onLogin(ActionEvent e){
-        String correo=txtcorreo.getText().trim();
+        String input=txtcorreo.getText().trim();
         String pass=txtPassword.getText().trim();
+
+        if (input.isEmpty() || pass.isEmpty()) {
+            showAlert("Advertencia", "Correo/Usuario y contraseña son requeridos.");
+            return;
+        }
 
         UsuarioDaoImpl dao=new UsuarioDaoImpl();
         try {
-            Usuario usuario = dao.login(correo,pass);
+            Usuario usuario = dao.login(input,pass);
             if(usuario != null){
-                System.out.println("Se pudo logear con Exito como:" + usuario.getNombreRol());
+                System.out.println("Se pudo logear con Exito como:" + usuario.getRol().getNombre());
 
                 FXMLLoader loader;
-                switch (usuario.getNombreRol().trim().toUpperCase()) {
+                switch (usuario.getRol().getNombre().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
                         System.out.println("Cargando vista de superadministrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
 
                         break;
                     case "ADMINISTRADOR":
@@ -98,6 +103,22 @@ public class UsuarioController {
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
         );
         loginPane.setBackground(new Background(bgImage));
+    }
+
+    @FXML
+    private void irInicio(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

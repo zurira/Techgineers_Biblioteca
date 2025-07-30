@@ -6,6 +6,8 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.paint.Color?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="mx.edu.utez.biblioteca.controller.UsuarioController"
@@ -14,6 +16,20 @@
            fx:id="loginPane">
 
     <children>
+        <Button fx:id="regresar"
+                onAction="#irInicio"
+                styleClass="login-button"
+                StackPane.alignment="TOP_LEFT"
+                style="-fx-translate-x: 15; -fx-translate-y: 15;">
+            <graphic>
+                <ImageView fitHeight="24" fitWidth="24">
+                    <image>
+                        <Image url="@../img/regresar.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
         <VBox alignment="CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
             <padding>
                 <Insets top="30" right="30" bottom="30" left="30"/>
@@ -36,7 +52,7 @@
             <Label text="INICIO DE SESIÓN" styleClass="login-title"/>
 
             <Label text="USUARIO"/>
-            <TextField fx:id="txtcorreo" promptText="Ingresa tu correo" styleClass="login-input"/>
+            <TextField fx:id="txtcorreo" promptText="Ingresa tu correo o usuario" styleClass="login-input"/>
             <Label text="CONTRASEÑA"/>
             <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input"/>
             <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button "/>

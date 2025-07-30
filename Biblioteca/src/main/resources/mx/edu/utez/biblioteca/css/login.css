@@ -8,6 +8,12 @@
     -fx-alignment: center;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
+    -fx-min-width: 300;
+    -fx-max-width: 300;
+    -fx-min-height: 400;
+    -fx-max-height: 400;
+
+
 }
 
 .login-title {

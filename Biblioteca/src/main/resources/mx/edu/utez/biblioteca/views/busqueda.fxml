@@ -1,82 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane stylesheets="@../css/busqueda.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.BusquedaController">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-    <left>
-        <VBox alignment="TOP_CENTER" spacing="10" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="20" left="10" right="10" top="20" />
-            </padding>
-            <Button styleClass="nav-button" text="Inicio" onAction="#irInicio">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../img/bienvenida.png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button styleClass="nav-button" text="Búsqueda">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../img/buscar.png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </VBox>
-    </left>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.edu.utez.biblioteca.controller.BusquedaController"
+            prefHeight="700.0" prefWidth="1200.0"
+            stylesheets="@../css/busqueda.css">
 
-    <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="628.0" spacing="10" styleClass="header">
-            <padding>
-                <Insets bottom="10" left="20" right="20" top="10" />
-            </padding>
-            <Label styleClass="titulo" text="Búsqueda de libros" />
-            <Button styleClass="botonLogin" text="Iniciar sesión" onAction="#irLogin">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../img/login.png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </HBox>
-    </top>
+    <HBox prefHeight="700.0" prefWidth="1200.0"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-    <center>
-        <VBox alignment="TOP_CENTER" spacing="15">
-            <padding>
-                <Insets bottom="20" left="20" right="20" top="20" />
-            </padding>
-            <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
-                <content>
-                    <VBox spacing="15">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
-                        <HBox spacing="10">
-                            <TextField fx:id="txtBuscar" promptText="Buscar libro..." HBox.hgrow="ALWAYS"/>
-                            <ComboBox fx:id="cmbCategoria" promptText="Categoría" />
-                        </HBox>
-                        <FlowPane fx:id="contenedorResultados" hgap="20" vgap="20" />
+        <children>
+            <!-- Menú lateral -->
+            <VBox prefWidth="250.0" styleClass="sidebar">
+                <children>
+
+                    <VBox alignment="CENTER_LEFT" spacing="20.0" prefWidth="200.0">
+                        <children>
+                            <Button onAction="#irInicio" styleClass="sidebar-item" prefWidth="250.0">
+                                <graphic>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-home" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Inicio"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                            <Button  styleClass="sidebar-item-active" prefWidth="250.0">
+                                <graphic>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-search" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Búsqueda"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </children>
+                        <VBox.margin>
+                            <Insets left="20.0" top="50.0"/>
+                        </VBox.margin>
                     </VBox>
-                </content>
-            </ScrollPane>
+                </children>
+            </VBox>
 
-        </VBox>
-    </center>
+            <!-- Contenido principal -->
+            <VBox HBox.hgrow="ALWAYS">
+                <children>
 
-</BorderPane>
+                    <!-- Barra superior -->
+                    <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="10.0" styleClass="top-bar">
+                        <children>
+                            <Label styleClass="title-text" text="Bienvenido">
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets left="20.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <HBox HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#irLogin" styleClass="user-info-button">
+                                <graphic>
+                                    <HBox alignment="CENTER" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>
+                                        <Label text="Iniciar sesión" styleClass="user-name"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </children>
+                        <padding>
+                            <Insets right="20.0"/>
+                        </padding>
+                    </HBox>
+
+                    <!-- Centro: libros -->
+                    <VBox alignment="TOP_CENTER" spacing="15.0">
+                        <padding>
+                            <Insets top="20.0" left="20.0" right="20.0" bottom="20.0"/>
+                        </padding>
+                        <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
+                            <content>
+                                <VBox spacing="15">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+                                    <HBox spacing="10">
+                                        <TextField fx:id="txtBuscar" promptText="Buscar libro..." HBox.hgrow="ALWAYS"/>
+                                        <ComboBox fx:id="cmbCategoria" promptText="Categoría" />
+                                    </HBox>
+                                    <FlowPane fx:id="contenedorResultados" hgap="20" vgap="20" />
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+                        <Label fx:id="lblSinLibros"
+                               text="No hay libros disponibles"
+                               visible="false"
+                               alignment="CENTER"
+                               maxWidth="Infinity"
+                               style="-fx-text-fill: brown; -fx-font-weight: bold; -fx-alignment: center;"/>
+                    </VBox>
+                </children>
+            </VBox>
+        </children>
+    </HBox>
+</AnchorPane>
 
