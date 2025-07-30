@@ -39,13 +39,34 @@ public class EstadisticasDaoImpl implements IEstadisticas {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Error al obtener los libros más prestados: " + e.getMessage());
-            // Manejo de errores
         }
         return topBooks;
     }
 
     @Override
     public List<Map<String, Object>> getTop5MostActiveClients() {
-        return List.of();
+        List<Map<String, Object>> topClients = new ArrayList<>();
+        // Consulta para obtener los 5 usuarios de biblioteca con más préstamos en el último mes
+        String query = "SELECT UB.NOMBRE AS NOMBRE_USUARIO, COUNT(P.ID) AS NUM_PRESTAMOS " +
+                "FROM PRESTAMO P " +
+                "JOIN USUARIO_BIBLIOTECA UB ON P.ID_USUARIO = UB.ID " +
+                "WHERE P.FECHA_PRESTAMO >= ADD_MONTHS(SYSDATE, -1) " +
+                "GROUP BY UB.NOMBRE " +
+                "ORDER BY NUM_PRESTAMOS DESC " +
+                "FETCH FIRST 5 ROWS ONLY";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> clientData = new HashMap<>();
+                clientData.put("nombre_usuario", rs.getString("NOMBRE_USUARIO"));
+                clientData.put("num_prestamos", rs.getInt("NUM_PRESTAMOS"));
+                topClients.add(clientData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error al obtener los clientes más activos: " + e.getMessage());
+        }
+        return topClients;
     }
 }
