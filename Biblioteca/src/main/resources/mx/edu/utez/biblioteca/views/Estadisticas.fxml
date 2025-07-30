@@ -17,5 +17,104 @@
             fx:controller="mx.edu.utez.biblioteca.controller.EstadisticasController"
             prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/Estadisticas.css">
 
+    <HBox alignment="TOP_LEFT" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <VBox prefHeight="700.0" prefWidth="250.0" styleClass="sidebar">
+                <children>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <children>
+                            <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                            <Label styleClass="logo-text" text="Logo" />
+                        </children>
+                        <VBox.margin>
+                            <Insets top="30.0" />
+                        </VBox.margin>
+                    </StackPane>
+                    <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
+                                <children>
+                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Usuarios" />
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
+                                <children>
+                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Préstamos" />
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item-active">
+                                <children>
+                                    <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Estadísticas" />
+                                </children>
+                            </HBox>
+                        </children>
+                        <VBox.margin>
+                            <Insets left="20.0" top="50.0" />
+                        </VBox.margin>
+                    </VBox>
+                </children>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+                <children>
+                    <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
+                        <children>
+                            <Label styleClass="title-text" text="Estadísticas">
+                                <HBox.margin>
+                                    <Insets left="20.0" />
+                                </HBox.margin>
+                                <font>
+                                    <Font size="24.0" />
+                                </font>
+                            </Label>
+                            <HBox HBox.hgrow="ALWAYS" />
+                            <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
+                                <children>
+                                    <HBox alignment="CENTER" spacing="5.0">
+                                        <children>
+                                            <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
+                                            <Label styleClass="user-name" text="Bibliotecario" />
 
+                                        </children>
+                                    </HBox>
+                                    <Label styleClass="user-sub-label" text="Nombre usuario" />
+                                </children>
+                            </VBox>
+                        </children>
+                        <padding>
+                            <Insets right="20.0" />
+                        </padding>
+                    </HBox>
+
+                    <VBox styleClass="statistics-section">
+                        <VBox.margin>
+                            <Insets left="20.0" right="20.0" top="20.0" />
+                        </VBox.margin>
+                        <Label styleClass="section-title" text="Libros más prestados" />
+                        <Label styleClass="section-subtitle" text="Estos fueron los top 5 libros más prestados en el mes" />
+                        <VBox fx:id="vboxTopBooks" spacing="10.0">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </VBox>
+                    </VBox>
+
+                    <VBox styleClass="statistics-section">
+                        <VBox.margin>
+                            <Insets left="20.0" right="20.0" top="20.0" />
+                        </VBox.margin>
+                        <Label styleClass="section-title" text="Cliente con más préstamos" />
+                        <Label styleClass="section-subtitle" text="Este fue el top 5 de clientes que más préstamos hicieron en el mes" />
+                        <VBox fx:id="vboxTopClients" spacing="10.0">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </VBox>
+                    </VBox>
+                </children>
+            </VBox>
+        </children>
+    </HBox>
 </AnchorPane>
