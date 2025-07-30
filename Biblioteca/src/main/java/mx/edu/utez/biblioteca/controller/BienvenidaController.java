@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,10 +28,16 @@ public class BienvenidaController {
     @FXML private FlowPane contenedorLibros;
     @FXML
     private ScrollPane scrollLibros;
+    @FXML private HBox btnBusqueda;
+    @FXML private HBox btnLogin;
+
 
     @FXML
     public void initialize() {
+            btnBusqueda.setOnMouseClicked(event -> irBusqueda(new ActionEvent()));
+        btnLogin.setOnMouseClicked(event -> irLogin(new ActionEvent()));
         cargarLibros();
+
     }
 
     private void cargarLibros() {

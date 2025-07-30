@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,12 +30,19 @@ public class BusquedaController {
     @FXML private TextField txtBuscar;
     @FXML private ComboBox<String> cmbCategoria;
     @FXML private FlowPane contenedorResultados;
+    @FXML private HBox btnInicio;
+    @FXML private HBox btnLogin;
+
 
     LibroDaoImpl libroDao = new LibroDaoImpl();
     CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
     @FXML
     public void initialize() {
+        btnInicio.setOnMouseClicked(event -> irInicio(new ActionEvent()));
+        btnLogin.setOnMouseClicked(event -> irLogin(new ActionEvent()));
+
+
         // Carga las categorías y los libros
         cargarCategorias();
         cargarLibros(null, null);
