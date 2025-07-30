@@ -41,6 +41,7 @@ public class HelloApplication extends Application {
         System.out.println("¡Aplicación JavaFX debería estar visible!");
     }
 
+
     public static void main(String[] args) {
         launch();
     }
