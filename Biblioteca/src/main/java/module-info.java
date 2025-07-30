@@ -3,7 +3,8 @@ module mx.edu.utez.biblioteca {
         requires javafx.controls;
         requires javafx.fxml;
         requires java.sql;
-        requires org.kordamp.ikonli.javafx; // Nuevo nombre del módulo para Ikonli
+        requires org.kordamp.ikonli.javafx;
+        requires org.kordamp.ikonli.fontawesome; // Nuevo nombre del módulo para Ikonli
 
         opens mx.edu.utez.biblioteca.controller to javafx.fxml;
         opens mx.edu.utez.biblioteca.views to javafx.fxml;
