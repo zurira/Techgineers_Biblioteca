@@ -1,43 +1,141 @@
 package mx.edu.utez.biblioteca.model;
 
+import java.util.List;
+
 public class Libro {
-    private String NO;
-    private String ISBN;
+    private int id;
     private String titulo;
-    private String autor;
-    private String editorial;
-    private String descripcion;
-    private String categoria;
+    private String isbn;
+    private String resumen;
+    private int anioPublicacion;
+    private String portada;
+    private Autor autor;
+    private Editorial editorial;
+    private Categoria categoria;
+    private List<Autor> autores;
+    private String estado;
 
+    // Constructor vacío
     public Libro() {
-
     }
 
-    public String getNO() { return NO;}
+    // Constructor existente, actualizado para incluir 'estado'
+    public Libro(int id, String titulo, String isbn, String resumen, int anioPublicacion, String portada,
+                 Autor autor, Editorial editorial, Categoria categoria, String estado) {
+        this.id = id;
+        this.titulo = titulo;
+        this.isbn = isbn;
+        this.resumen = resumen;
+        this.anioPublicacion = anioPublicacion;
+        this.portada = portada;
+        this.autor = autor;
+        this.editorial = editorial;
+        this.categoria = categoria;
+        this.estado = estado;
+    }
 
-    public void setNO(String NO) { this.NO = NO;}
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
 
-    public String getISBN() { return ISBN; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setISBN(String ISBN) { this.ISBN = ISBN; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public String getAutor() { return autor; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public void setAutor(String autor) { this.autor = autor; }
+    public String getResumen() {
+        return resumen;
+    }
 
-    public String getEditorial() { return editorial; }
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
 
-    public void setEditorial(String editorial) { this.editorial = editorial; }
+    public int getAnioPublicacion() {
+        return anioPublicacion;
+    }
 
-    public String getDescripcion() { return descripcion; }
+    public void setAnioPublicacion(int anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
 
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getPortada() {
+        return portada;
+    }
 
-    public String getCategoria() { return categoria; }
+    public void setPortada(String portada) {
+        this.portada = portada;
+    }
 
-    public void setCategoria(String categoria) { this.categoria = categoria; }
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<Autor> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", resumen='" + resumen + '\'' +
+                ", anioPublicacion=" + anioPublicacion +
+                ", portada='" + portada + '\'' +
+                ", autor=" + (autor != null ? autor.getNombreCompleto() : "N/A") +
+                ", editorial=" + (editorial != null ? editorial.getNombre() : "N/A") +
+                ", categoria=" + (categoria != null ? categoria.getNombre() : "N/A") +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 }

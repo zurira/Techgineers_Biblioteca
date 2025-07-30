@@ -1,68 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="mx.edu.utez.biblioteca.controller.AdminDashboardController"
-            stylesheets="@../css/Administrador.css">
+            prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/Administrador.css">
 
-    <!-- Menú lateral -->
-    <left>
-        <VBox fx:id="menuLateral" spacing="10.0" alignment="TOP_CENTER" prefWidth="200" styleClass="menu-lateral">
-            <Label text="Logo" styleClass="titulo-logo"/>
-            <Button text="📚 Libros" styleClass="boton-menu"/>
-            <Button text="👥 Bibliotecarios" styleClass="boton-menu"/>
-        </VBox>
-    </left>
+    <HBox alignment="TOP_LEFT" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <VBox prefHeight="700.0" prefWidth="250.0" styleClass="sidebar">
+                <children>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <children>
+                            <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                            <Label styleClass="logo-text" text="Logo" />
+                        </children>
+                        <VBox.margin>
+                            <Insets top="30.0" />
+                        </VBox.margin>
+                    </StackPane>
+                    <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
+                                <children>
+                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Bibliotecarios" />
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item-active">
+                                <children>
+                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Libros" />
+                                </children>
+                            </HBox>
 
-    <!-- Encabezado -->
-    <top>
-        <HBox spacing="10.0" alignment="CENTER_RIGHT" styleClass="encabezado">
-            <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
-            </padding>
-            <Label text="Administrador" styleClass="nombre-rol"/>
-            <Label fx:id="nombreUsuario" text="Nombre Usuario" />
-            <Button fx:id="btnCerrarSesion" styleClass="logout-button">
-                <graphic>
-                    <ImageView fitWidth="20.0" fitHeight="20.0">
-                        <image>
-                            <Image url="@../Imagenes/logoutProyect.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </HBox>
-    </top>
+                        </children>
+                        <VBox.margin>
+                            <Insets left="20.0" top="50.0" />
+                        </VBox.margin>
+                    </VBox>
+                </children>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+                <children>
 
-    <!-- Centro -->
-    <center>
-        <VBox spacing="15.0" alignment="TOP_LEFT" styleClass="contenido">
-            <HBox spacing="10.0">
-                <TextField fx:id="campoBusqueda" promptText="Buscar usuario" prefWidth="400"/>
-                <Button text="+ Agregar libro" fx:id="btnAgregarLibro"/>
-            </HBox>
+                    <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
+                        <children>
+                            <Label styleClass="title-text" text="Gestión de Libros">
+                                <HBox.margin>
+                                    <Insets left="20.0" />
+                                </HBox.margin>
+                                <font>
+                                    <Font size="24.0" />
+                                </font>
+                            </Label>
+                            <HBox HBox.hgrow="ALWAYS" />
 
-            <Label text="Información de libros" styleClass="titulo-tabla" />
+                            <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
+                                <children>
+                                    <HBox alignment="CENTER" spacing="5.0">
+                                        <children>
+                                            <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
+                                            <Label styleClass="user-name" text="Bibliotecario" />
 
-            <TableView fx:id="tablaLibros" prefHeight="300">
-                <columns>
-                    <TableColumn text="NO." prefWidth="50"/>
-                    <TableColumn text="ISBN" prefWidth="100"/>
-                    <TableColumn text="Título del Libro" prefWidth="150"/>
-                    <TableColumn text="Autor" prefWidth="120"/>
-                    <TableColumn text="Editorial" prefWidth="120"/>
-                    <TableColumn text="Descripción" prefWidth="200"/>
-                    <TableColumn text="Categoría" prefWidth="100"/>
-                    <TableColumn text="Acciones" prefWidth="100"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
+                                            <Button fx:id="btnLogOut" styleClass="logout-icon-button">
+                                                <graphic>
+                                                    <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon"/>
+                                                </graphic>
+                                            </Button>
 
-</BorderPane>
+                                        </children>
+                                    </HBox>
+                                    <Label styleClass="user-sub-label" text="Nombre usuario" />
+                                </children>
+                            </VBox>
+
+                        </children>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                        <padding>
+                            <Insets right="20.0" />
+                        </padding>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                        <VBox.margin>
+                            <Insets left="20.0" right="20.0" top="20.0" />
+                        </VBox.margin>
+                        <children>
+                            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
+                                <children>
+                                    <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
+                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                                </children>
+                            </HBox>
+                            <Button fx:id="btnAddLibro" mnemonicParsing="false" onAction="#onAddLibro" prefHeight="40.0" styleClass="add-button" text="Agregar libro">
+                                <graphic>
+                                    <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
+                                </graphic>
+                                <HBox.margin>
+                                    <Insets left="20.0" />
+                                </HBox.margin>
+                            </Button>
+                        </children>
+                    </HBox>
+                    <Label styleClass="section-title" text="Información de Libros">
+                        <VBox.margin>
+                            <Insets left="20.0" top="20.0" />
+                        </VBox.margin>
+                    </Label>
+                    <TableView fx:id="tableViewLibros" prefHeight="450.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colNo" prefWidth="50.0" text="No." />
+                            <TableColumn fx:id="colISBN" prefWidth="100.0" text="ISBN" />
+                            <TableColumn fx:id="colTituloLibro" prefWidth="180.0" text="Título del Libro" />
+                            <TableColumn fx:id="colAutor" prefWidth="120.0" text="Autor" />
+                            <TableColumn fx:id="colEditorial" prefWidth="100.0" text="Editorial" />
+                            <TableColumn fx:id="colResumen" prefWidth="150.0" text="Sinopsis" />
+                            <TableColumn fx:id="colCategoria" prefWidth="100.0" text="Categoría" />
+                            <TableColumn fx:id="colAnioPublicacion" prefWidth="80.0" text="Año Pub." />
+                            <TableColumn fx:id="colAcciones" prefWidth="90.0" text="Acciones" />
+                        </columns>
+                        <VBox.margin>
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                        </VBox.margin>
+                    </TableView>
+                    <Label fx:id="lblSinResultados"
+                           text="No se encontraron resultados"
+                           visible="false"
+                           style="-fx-text-fill: brown; -fx-font-weight: bold; -fx-alignment: center;"
+                           alignment="CENTER" maxWidth="Infinity">
+                        <VBox.margin>
+                            <Insets left="20.0" top="0.0" bottom="10.0" />
+                        </VBox.margin>
+                    </Label>
+                </children>
+            </VBox>
+        </children>
+    </HBox>
+</AnchorPane>

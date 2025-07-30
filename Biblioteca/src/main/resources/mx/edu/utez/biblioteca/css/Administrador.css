@@ -1,48 +1,280 @@
-.menu-lateral {
-    -fx-background-color: #f5f0ea;
-    -fx-padding: 15px;
+/* El diseño general de la vista */
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: #EDE9E3;
 }
 
-.titulo-logo {
-    -fx-font-size: 18px;
-    -fx-text-fill: #887766;
+/* Barra lateral */
+.sidebar {
+    -fx-background-color: #EDE9E3;
+    -fx-padding: 0;
+    -fx-alignment: top-center;
+    -fx-border-color: #A38F85;
+    -fx-border-width: 0px 1px 0px 0px;
 }
 
-.boton-menu {
-    -fx-pref-width: 180px;
-    -fx-background-color: #e6e6e6;
-    -fx-text-fill: #333;
-}
-
-.boton-menu:hover {
-    -fx-background-color: #ccc;
-}
-
-.encabezado {
-    -fx-background-color: #ffffff;
-    -fx-padding: 10px;
-}
-
-.nombre-rol {
+.logo-text {
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
+    -fx-text-fill: #333333;
 }
 
-.logout-button {
+.sidebar-item {
     -fx-background-color: transparent;
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
     -fx-cursor: hand;
-    -fx-padding: 0 5px 0 5px;
+    -fx-pref-width: 250px;
 }
 
-.logout-button:hover {
-    -fx-background-color: #eeeeee;
+.sidebar-item:hover {
+    -fx-background-color: #e0e0e0;
 }
 
-.contenido {
-    -fx-background-color: #f5f0ea;
-    -fx-padding: 20px;
+.sidebar-item-active {
+    -fx-background-color: #d1ccc1; /*Más oscuro si el objeto esta seleccionado */
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
 }
 
-.titulo-tabla {
+.sidebar-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+    -fx-padding: 0 10px 0 0;
+}
+
+.sidebar-label {
     -fx-font-size: 16px;
+    -fx-text-fill: #333333;
     -fx-font-weight: bold;
+}
+
+
+/* Barra superior */
+.top-bar {
+    -fx-background-color: #A38F85;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center-right;
+}
+
+.title-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffff;
+}
+
+.user-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+}
+
+/* Diseño barra de busqueda */
+.search-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.search-icon {
+    -fx-fill: #888888;
+    -fx-padding: 0 5px 0 0;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #aaaaaa;
+    -fx-text-fill: #333333;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Diseño para el botón de agregar */
+.add-button {
+    -fx-background-color: #CCCCCC;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #A38F85;
+}
+
+.add-icon {
+    -fx-fill: white;
+}
+
+/* Diseño para la sección de titulo */
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+/* Diseño para la tabla */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f1f0ee; /* Beige claro para parte de arriba */
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.table-view .table-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555555;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d1e5f0; /* Light blue for selected row */
+}
+
+/* Action buttons in table cellsDiseño de los botónes de accion de la tabla */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.action-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 1.2em;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff; /* Azul on hover */
+}
+
+/* Scrollbar */
+.table-view .scroll-bar:vertical .increment-button ,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .scroll-bar:vertical .increment-arrow,
+.table-view .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #cccccc;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+}
+
+/* Estilo para el contenedor del recuadro de usuario */
+.user-info-box {
+    -fx-background-color: #726262;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.user-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.user-sub-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F0F0F0;
+    -fx-translate-y: -8px;
+}
+
+.signout-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 26px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: 6px;
+}
+/*Cambios para que solo se vea el icono y funcione como botón*/
+.logout-icon-button {
+    -fx-background-color: transparent; /* Elimina el fondo del botón */
+    -fx-padding: 0; /* Elimina el padding del botón */
+    -fx-border-color: transparent; /* Elimina el borde del botón */
+    -fx-cursor: hand; /* Cambia el cursor para indicar que es clickeable */
+    /* Quitar el foco alrededor del botón cuando se selecciona */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.logout-icon-button:hover .signout-icon {
+    -fx-fill: #CDC6C3; /* Cambia el color del icono al pasar el ratón */
+}
+
+/* Estilos para el label del estado de los libros */
+.status-label {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-alignment: center;
+    -fx-padding: 3px 8px; /* Ajusta el padding para que se vea como un botón pequeño */
+}
+
+.status-active {
+    -fx-background-color: #4CAF50; /* Verde(activo) */
+    -fx-text-fill: white;
+}
+
+.status-inactive {
+    -fx-background-color: #f44336; /* Rojo(inactivo) */
+    -fx-text-fill: white;
 }
