@@ -2,19 +2,12 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="mx.edu.utez.biblioteca.controller.DashboardController"
-            prefWidth="400.0" prefHeight="300.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8" fx:controller="mx.edu.utez.biblioteca.controller.DashboardController"
+            prefWidth="800.0" prefHeight="600.0"
+            stylesheets="@/mx/edu/utez/biblioteca/css/Dashboard.css"> <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+    <Text text="Panel Principal" styleClass="titulo" /> <Button text="Editar usuario" onAction="#abrirModalEdicion" styleClass="boton-principal" /> </VBox>
 
-    <VBox spacing="20.0" alignment="CENTER"
-          AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0"
-          AnchorPane.bottomAnchor="0.0">
-
-        <Label text="Panel Principal" styleClass="titulo"/>
-        <Button text="Editar usuario" onAction="#abrirModalEdicion" styleClass="boton-principal"/>
-    </VBox>
 </AnchorPane>
