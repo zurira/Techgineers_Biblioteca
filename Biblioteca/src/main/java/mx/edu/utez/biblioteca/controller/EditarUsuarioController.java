@@ -95,7 +95,7 @@ public class EditarUsuarioController {
                     new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
             );
 
-            File archivoSeleccionado = fileChooser.showOpenDialog(btnSeleccionarFoto.getScene().getWindow());
+            File archivoSeleccionado = fileChooser.showOpenDialog(lblFotoSeleccionada.getScene().getWindow());
             if (archivoSeleccionado != null) {
                 lblFotoSeleccionada.setText(archivoSeleccionado.getName());
                 // Aquí puedes guardar la ruta o incluso previsualizar la imagen
