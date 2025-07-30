@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
 
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root, 900, 500);
 
         stage.setTitle("Biblioteca");
         stage.setScene(scene);
