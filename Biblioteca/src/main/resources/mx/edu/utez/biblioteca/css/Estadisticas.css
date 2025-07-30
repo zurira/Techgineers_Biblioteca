@@ -148,3 +148,26 @@
     -fx-translate-y: 5px;
     -fx-translate-x: 6px;
 }
+
+/* Estilos para las secciones de estadísticas*/
+.statistics-section {
+    -fx-background-color: #e7d8c9;
+    -fx-padding: 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-vbox-fill-width: true;
+}
+
+.section-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 8 0;
+}
+
+.section-subtitle {
+    -fx-font-size: 15px;
+    -fx-text-fill: #666;
+    -fx-padding: 0 0 15 0;
+}
