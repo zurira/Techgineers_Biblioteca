@@ -267,6 +267,7 @@ public class UsuarioBibliotecaController {
             }
         }
 
+
     private void onViewUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Ver detalles de usuario: " + usuario.getNombre());
         // Implementar vista de detalles del usuario
