@@ -1,0 +1,150 @@
+/* Estilo general */
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: #EDE9E3;
+}
+
+/* Barra lateral */
+.sidebar {
+    -fx-background-color: #EDE9E3;
+    -fx-padding: 0;
+    -fx-alignment: top-center;
+    -fx-border-color: #A38F85;
+    -fx-border-width: 0px 1px 0px 0px;
+}
+
+.logo-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.sidebar-item-active {
+    -fx-background-color: #d1ccc1; /* Darker beige for active item */
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
+}
+
+.sidebar-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+    -fx-padding: 0 10px 0 0;
+}
+
+.sidebar-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Barra superior */
+.top-bar {
+    -fx-background-color: #A38F85;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center-right;
+}
+
+.title-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffff;
+}
+
+.user-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+}
+
+
+/* Titulo */
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+/* Action buttons in table cells */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.action-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 1.2em;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff; /* Blue on hover */
+}
+
+/* Scrollbar */
+.table-view .scroll-bar:vertical .increment-button ,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .scroll-bar:vertical .increment-arrow,
+.table-view .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+}
+
+/* Estilo para el contenedor del recuadro de usuario */
+.user-info-box {
+    -fx-background-color: #726262;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.user-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.user-sub-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F0F0F0;
+    -fx-translate-y: -8px;
+}
+
+.signout-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 26px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: 6px;
+}
