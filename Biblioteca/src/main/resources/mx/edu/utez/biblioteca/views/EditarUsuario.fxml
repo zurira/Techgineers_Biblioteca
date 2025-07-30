@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.GridPane?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
@@ -48,7 +50,7 @@
         </GridPane>
 
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
-            <Button fx:id="btnGuardar" text="Guardar cambios" onAction="#guardar"/>
+            <Button fx:id="btnGuardar" text="Guardar cambios" onAction="#onGuardar"/>
             <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar"/>
         </HBox>
 
