@@ -51,7 +51,6 @@ public class EstadisticasController implements Initializable {
         for (int i = 0; i < items.size(); i++) {
             Map<String, Object> item = items.get(i);
             String itemName = (String) item.get(nameKey);
-
             HBox itemBox = new HBox();
             itemBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
             itemBox.setSpacing(10);
