@@ -11,6 +11,10 @@ public class UsuarioBiblioteca {
     private String direccion;
     private String estado;
 
+    public UsuarioBiblioteca(){
+
+    }
+
     public UsuarioBiblioteca(int id, String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
         this.id = id;
         this.nombre = nombre;
