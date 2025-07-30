@@ -219,15 +219,53 @@ public class UsuarioBibliotecaController {
         alert.showAndWait();
     }
 
-
     private void onEditUsuario(UsuarioBiblioteca usuario) {
-        System.out.println("Editar usuario: " + usuario.getNombre());
-        // Implementar apertura de formulario para editar usuario
+        try {
+            System.out.println("Editar usuario: " + usuario.getNombre());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/EditarUsuario.fxml"));
+            Parent root = loader.load();
+
+            AgregarUsuarioController controller = loader.getController();
+            controller.cargarDatosParaEdicion(usuario); // Llenar campos con los datos actuales
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Usuario");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            if (controller.isGuardado()) {
+                recargarTablaUsuarios(); // Si se guardó, actualiza la tabla
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error al editar", null, "No se pudo abrir el formulario.");
+        }
     }
 
-    private void onDeleteUsuario(UsuarioBiblioteca usuario) {
-        // No se elimina el usuario (de debe desactivar) checar eso
+    private void recargarTablaUsuarios() {
+
     }
+
+        private void onDeleteUsuario(UsuarioBiblioteca usuario) {
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("Confirmar desactivación");
+            confirmacion.setHeaderText("¿Deseas desactivar a este usuario?");
+            confirmacion.setContentText("El usuario no se eliminará, solo se cambiará su estado a inactivo.");
+
+            Optional<ButtonType> resultado = confirmacion.showAndWait();
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                try {
+                    usuario.setEstado("N"); // Inactivo
+                    usuarioDao.update(usuario); // Actualizar en base de datos
+                    recargarTablaUsuarios();   // Refrescar tabla
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mostrarAlertaError("Error al desactivar", null, "No se pudo actualizar el estado del usuario.");
+                }
+            }
+        }
 
     private void onViewUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Ver detalles de usuario: " + usuario.getNombre());
