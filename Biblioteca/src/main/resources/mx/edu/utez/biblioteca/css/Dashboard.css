@@ -1,0 +1,13 @@
+.titulo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3a3a3a;
+}
+
+.boton-principal {
+    -fx-background-color: #959867;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+}

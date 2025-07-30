@@ -24,3 +24,4 @@ public class VerUsuarioController {
             stage.close();
         }
     }
+
