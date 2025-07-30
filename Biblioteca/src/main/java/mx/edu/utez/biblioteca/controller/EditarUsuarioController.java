@@ -106,7 +106,6 @@ public class EditarUsuarioController {
         File archivoSeleccionado = fileChooser.showOpenDialog(lblFotoSeleccionada.getScene().getWindow());
         if (archivoSeleccionado != null) {
             lblFotoSeleccionada.setText(archivoSeleccionado.getName());
-            // Aquí puedes guardar la ruta o incluso previsualizar la imagen
         } else {
             lblFotoSeleccionada.setText("Sin archivo seleccionado");
         }
@@ -123,11 +122,12 @@ public class EditarUsuarioController {
     @FXML
     public void cambiarEstado(ActionEvent event) {
         if (toggleEstado.isSelected()) {
-            toggleEstado.setText("Inactivo");
-            toggleEstado.setStyle("-fx-background-color: #9b9593; -fx-text-fill: white;");
-        } else {
             toggleEstado.setText("Activo");
             toggleEstado.setStyle("-fx-background-color: #807d59; -fx-text-fill: white;");
+        } else {
+            toggleEstado.setText("Inactivo");
+            toggleEstado.setStyle("-fx-background-color: #9b9593; -fx-text-fill: white;");
         }
     }
 }
+
