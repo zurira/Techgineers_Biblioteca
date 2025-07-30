@@ -1,5 +1,4 @@
 package mx.edu.utez.biblioteca.model;
-
 import java.util.List;
 
 public class Libro {
@@ -12,13 +11,14 @@ public class Libro {
     private Autor autor;
     private Editorial editorial;
     private Categoria categoria;
+    private String estado;
     private List<Autor> autores;
 
     public Libro() {
     }
 
     public Libro(int id, String titulo, String resumen, int anioPublicacion, String urlPortada,
-                 Autor autor, Editorial editorial) {
+                 Autor autor, Editorial editorial, String estado) {
         this.id = id;
         this.titulo = titulo;
         this.resumen = resumen;
@@ -26,6 +26,15 @@ public class Libro {
         this.portada = portada;
         this.autor = autor;
         this.editorial = editorial;
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public int getId() {
@@ -118,8 +127,7 @@ public class Libro {
                 ", anioPublicacion=" + anioPublicacion +
                 ", portada='" + portada + '\'' +
                 ", Editorial=" + editorial +
-
+                ", estado='" + estado + '\'' +
                 '}';
     }
-    //modelado terminado
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.ModalPrestamoController"
+            stylesheets="@../css/agregarPrestamo.css">
+
+    <top>
+        <VBox spacing="10" styleClass="root">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Label text="Agregar Préstamo" style="-fx-font-size: 24px; -fx-font-weight: bold;"  />
+            <GridPane hgap="10" vgap="10" styleClass="form-container">
+                <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ComboBox fx:id="comboBoxUsuarios" editable="true" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          promptText="Escribe y selecciona el usuario..." prefWidth="250.0" styleClass="combo-box"/>
+
+                <Label text="Estado:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <ComboBox fx:id="cbEstado" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="combo-box"/>
+
+                <Label text="Fecha Préstamo:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="date-picker"/>
+
+                <Label text="Fecha Límite:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="date-picker"/>
+
+                <Label text="Fecha Devolución:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="date-picker"/>
+
+
+            </GridPane>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10" alignment="TOP_LEFT" >
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Label text="Buscar Ejemplares Disponibles" />
+            <HBox spacing="10">
+                <TextField fx:id="txtBuscarEjemplar" promptText="Código o título..." onAction="#buscarEjemplares" />
+                <Button text="Buscar" onAction="#buscarEjemplares" styleClass="button-buscar" />
+            </HBox>
+            <TableView fx:id="tablaEjemplares" styleClass="table-view">
+                <columns>
+                    <TableColumn text="Código" fx:id="colCodigo" />
+                    <TableColumn text="Título" fx:id="colTitulo" />
+                    <TableColumn text="Ubicación" fx:id="colUbicacion" />
+                    <TableColumn text="Seleccionar" fx:id="colSeleccionar" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="20">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Button text="Cancelar" onAction="#cancelarAccion" styleClass="button-cancelar"/>
+            <Button text="Guardar" onAction="#registrarPrestamo"  styleClass="button-guardar"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+

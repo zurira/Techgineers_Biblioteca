@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.EditarPrestamoController"
+            stylesheets="@../css/agregarPrestamo.css">
+
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20"/>
+            </padding>
+            <Label text="Editar Préstamo" style="-fx-font-size: 20px;" />
+            <GridPane hgap="10" vgap="10">
+                <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ComboBox fx:id="comboBoxUsuarios" editable="false" prefWidth="250.0"
+                          GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+                <Label text="Estado:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <ComboBox fx:id="cbEstado" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Fecha Préstamo:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                <Label text="Fecha Límite:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+                <Label text="Fecha Devolución:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </GridPane>
+        </VBox>
+    </top>
+
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="20">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="20" />
+            </padding>
+            <Button text="Cancelar" onAction="#cancelarAccion" styleClass="button-cancelar"/>
+            <Button text="Guardar" onAction="#guardarCambiosPrestamo"  styleClass="button-guardar"/>
+        </HBox>
+    </bottom>
+</BorderPane>
