@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,8 @@ public class SuperAdminController {
     @FXML private TextField searchField;
     @FXML private Button addButton;
     @FXML private Button logoutButton;
+
+    private ObservableList<Usuario> listaAdmin;
 
     @FXML
     public void initialize() {
@@ -116,19 +119,28 @@ public class SuperAdminController {
         }
     }
 
-    private void buscarAdministradores(String filtro) {
-        try {
-            List<Usuario> todos = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
-            List<Usuario> filtrados = todos.stream()
-                    .filter(u -> u.getNombre().toLowerCase().contains(filtro.toLowerCase())
-                            || u.getUsername().toLowerCase().contains(filtro.toLowerCase())
-                            || u.getCorreo().toLowerCase().contains(filtro.toLowerCase()))
-                    .toList();
-
-            adminTable.setItems(FXCollections.observableArrayList(filtrados));
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void filtrarAdmin(String filtro) {
+        if (filtro == null || filtro.trim().isEmpty()) {
+            adminTable.setItems(listaAdmin);
+            lblSinResultados.setVisible(false);
+            return;
         }
+
+        String filtroLower = filtro.toLowerCase();
+        ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
+
+        for (Prestamo p : listaPrestamos) {
+            String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
+            String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
+            String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
+
+            if (nombreUsuario.contains(filtroLower) || tituloLibro.contains(filtroLower) || estado.contains(filtroLower)) {
+                prestamosFiltrados.add(p);
+            }
+        }
+
+        tableViewPrestamos.setItems(prestamosFiltrados);
+        lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
     }
 
 
