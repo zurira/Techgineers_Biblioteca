@@ -50,6 +50,7 @@ public class EditarUsuarioController {
     }
 
     // Método para actualizar el texto y el estilo del ToggleButton
+    @FXML
     private void actualizarTextoYEstiloToggle() {
         if (toggleEstado.isSelected()) {
             toggleEstado.setText("Activo");
