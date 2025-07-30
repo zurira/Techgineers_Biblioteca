@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.AgregarUsuarioController"
-            stylesheets="/mx/edu/utez/biblioteca/css/AgregarUsuario.css"
+            fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
+            stylesheets="/mx/edu/utez/biblioteca/css/EditarUsuario.css"
             prefWidth="600" prefHeight="400">
 
     <VBox spacing="15.0" alignment="TOP_CENTER"
@@ -14,7 +14,7 @@
           AnchorPane.rightAnchor="10.0"
           AnchorPane.bottomAnchor="10.0">
 
-        <Label text="Agregar usuario" styleClass="titulo"/>
+        <Label text="Editar usuario" styleClass="titulo"/>
         <Label text="Ingresa la información del usuario" styleClass="subtitulo"/>
 
         <GridPane hgap="10" vgap="10">
@@ -31,7 +31,7 @@
             <TextField fx:id="txtTelefono" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
             <Label text="Dirección:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextArea fx:id="txtDireccion" prefRowCount="2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <TextField fx:id="txtDireccion" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
 
             <Label text="Fotografía:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
             <Button text="Seleccionar Foto" onAction="#seleccionarFoto" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
@@ -39,8 +39,8 @@
         </GridPane>
 
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
-            <Button fx:id="btnGuardar" text="Guardar" onAction="#guardar"/>
-            <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar"/>
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar"/>
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onGuardar"/>
         </HBox>
 
     </VBox>
