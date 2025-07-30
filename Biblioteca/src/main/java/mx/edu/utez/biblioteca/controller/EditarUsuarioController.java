@@ -12,14 +12,22 @@ import java.io.File;
 
 public class EditarUsuarioController {
 
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCorreo;
-    @FXML private TextField txtTelefono;
-    @FXML private TextField txtDireccion;
-    @FXML private ToggleButton toggleEstado;
-    @FXML private Label lblFotoSeleccionada;
-    @FXML private Button btnGuardar;
-    @FXML private Button btnCancelar;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtCorreo;
+    @FXML
+    private TextField txtTelefono;
+    @FXML
+    private TextField txtDireccion;
+    @FXML
+    private ToggleButton toggleEstado;
+    @FXML
+    private Label lblFotoSeleccionada;
+    @FXML
+    private Button btnGuardar;
+    @FXML
+    private Button btnCancelar;
 
     private UsuarioBiblioteca usuarioEditando;
     private boolean guardado = false;
@@ -87,26 +95,35 @@ public class EditarUsuarioController {
         alert.showAndWait();
     }
 
-        @FXML
-        public void seleccionarFoto(ActionEvent event) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Seleccionar foto de usuario");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
-            );
+    @FXML
+    public void seleccionarFoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar foto de usuario");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
 
-            File archivoSeleccionado = fileChooser.showOpenDialog(lblFotoSeleccionada.getScene().getWindow());
-            if (archivoSeleccionado != null) {
-                lblFotoSeleccionada.setText(archivoSeleccionado.getName());
-                // Aquí puedes guardar la ruta o incluso previsualizar la imagen
-            } else {
-                lblFotoSeleccionada.setText("Sin archivo seleccionado");
-            }
+        File archivoSeleccionado = fileChooser.showOpenDialog(lblFotoSeleccionada.getScene().getWindow());
+        if (archivoSeleccionado != null) {
+            lblFotoSeleccionada.setText(archivoSeleccionado.getName());
+            // Aquí puedes guardar la ruta o incluso previsualizar la imagen
+        } else {
+            lblFotoSeleccionada.setText("Sin archivo seleccionado");
         }
-
-    public void cancelar(ActionEvent event) {
     }
 
+    public void cancelar(ActionEvent event) {
+
+    }
+
+    @FXML
     public void cambiarEstado(ActionEvent event) {
+        if (toggleEstado.isSelected()) {
+            toggleEstado.setText("Inactivo");
+            toggleEstado.setStyle("-fx-background-color: #9b9593; -fx-text-fill: white;");
+        } else {
+            toggleEstado.setText("Activo");
+            toggleEstado.setStyle("-fx-background-color: #807d59; -fx-text-fill: white;");
+        }
     }
 }
