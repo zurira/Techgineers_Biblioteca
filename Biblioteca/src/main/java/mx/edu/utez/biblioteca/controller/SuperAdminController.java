@@ -42,6 +42,7 @@ public class SuperAdminController {
             tv.refresh();
             return sorted;
         });
+        addButton.setOnAction(event -> onAddAdmin());
     }
 
     private void configurarColumnas() {
@@ -153,6 +154,31 @@ public class SuperAdminController {
             ex.printStackTrace();
         }
     }
+
+    private void onAddAdmin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalAgregarAdministrador.fxml"));
+            Parent root = loader.load();
+
+            ModalAgregarAdminController controller = loader.getController();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Agregar administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+
+            //  Verifica si se agregó exitosamente
+            if (controller.seAgregoUsuario()) {
+                cargarAdministradores();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void onDeleteAdmin(Usuario usuario) {
         // Lógica pendiente
