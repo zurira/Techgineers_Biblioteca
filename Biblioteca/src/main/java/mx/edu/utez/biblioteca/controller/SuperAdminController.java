@@ -1,10 +1,14 @@
 package mx.edu.utez.biblioteca.controller;
 
+<<<<<<< HEAD
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+=======
+
+>>>>>>> TTS24
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -34,7 +38,15 @@ public class SuperAdminController {
         configurarColumnas();
         cargarAdministradores();
 
+<<<<<<< HEAD
         searchField.textProperty().addListener((obs, oldValue, newValue) -> filtrarAdmin(newValue));
+=======
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> {
+            adminTable.getItems().setAll(
+                    AdministradorDao.buscarAdministrador(newValue)
+            );
+        });
+>>>>>>> TTS24
 
         adminTable.getItems().addListener((ListChangeListener<Usuario>) c -> adminTable.refresh());
         adminTable.sortPolicyProperty().set(tv -> {
@@ -63,12 +75,17 @@ public class SuperAdminController {
             return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         });
 
+<<<<<<< HEAD
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
+=======
+        TableColumn<Administrador, Void> colAcciones = new TableColumn<>("Acciones");
+>>>>>>> TTS24
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
             private final Button deleteButton = new Button();
 
             {
+<<<<<<< HEAD
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
@@ -76,6 +93,21 @@ public class SuperAdminController {
                 editButton.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
                     onEditAdmin(usuario);
+=======
+                editButton.setOnAction(e -> {
+                    Administrador admin = getTableView().getItems().get(getIndex());
+                    System.out.println("Editar: " + admin.getNombreCompleto());
+                    // Aquí puedes abrir el modal de edición
+                });
+
+                deleteButton.setOnAction(e -> {
+                    Administrador admin = getTableView().getItems().get(getIndex());
+                    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirm.setHeaderText("Eliminar administrador");
+                    confirm.setContentText("¿Estás segura que deseas eliminar a " + admin.getNombreCompleto() + "?");
+                    confirm.showAndWait();
+                    // Aquí puedes agregar lógica para eliminar
+>>>>>>> TTS24
                 });
             }
 
@@ -97,6 +129,7 @@ public class SuperAdminController {
 
 
     private void cargarAdministradores() {
+<<<<<<< HEAD
         try {
             List<Usuario> admins = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
             listaAdmin = FXCollections.observableArrayList(admins); // <-- Aquí guardas en la lista
@@ -157,4 +190,10 @@ public class SuperAdminController {
     private void onDeleteAdmin(Usuario usuario) {
         // Lógica pendiente
     }
+=======
+        adminTable.getItems().setAll(
+                AdministradorDao.obtenerTodos()
+        );
+    }
+>>>>>>> TTS24
 }

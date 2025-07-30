@@ -1,49 +1,50 @@
 package mx.edu.utez.biblioteca.dao.impl;
 
 
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-import mx.edu.utez.biblioteca.config.DBConnection;
 import mx.edu.utez.biblioteca.model.Administrador;
+import mx.edu.utez.biblioteca.config.DBConnection;
+
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdministradorDao {
-    public static void cargarAdministradores(TableView<Administrador> tabla) {
-        tabla.setItems(getListaAdmins(""));
-    }
 
-    public static void buscarAdministrador(TableView<Administrador> tabla, String filtro) {
-        tabla.setItems(getListaAdmins(filtro));
-    }
+    public static List<Administrador> buscarAdministrador(String filtro) {
+        List<Administrador> lista = new ArrayList<>();
+        String sql = "SELECT * FROM administradores WHERE LOWER(nombre) LIKE ?";
 
-    private static ObservableList<Administrador> getListaAdmins(String filtro) {
-        ObservableList<Administrador> lista = FXCollections.observableArrayList();
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = """
-                SELECT ID, NOMBRE, USERNAME, CORREO, ESTADO
-                FROM USUARIO_SISTEMA
-                WHERE LOWER(NOMBRE) LIKE ?
-                AND ID_ROL = (SELECT ID FROM ROL WHERE NOMBRE = 'Administrador')
-            """;
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, "%" + filtro.toLowerCase() + "%");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                lista.add(new Administrador(
-                        rs.getInt("ID"),
-                        rs.getString("NOMBRE"),
-                        rs.getString("USERNAME"),
-                        rs.getString("CORREO"),
-                        rs.getString("ESTADO").equals("S")
-                ));
+                Administrador admin = new Administrador(
+                        rs.getInt("id_admin"),
+                        rs.getString("nombre"),
+                        rs.getString("usuario"),
+                        rs.getString("correo"),
+                        rs.getString("telefono"),
+                        rs.getString("contrasena"),
+                        rs.getString("rol"),
+                        rs.getString("direccion"),
+                        rs.getString("imagen"),
+                        rs.getBoolean("estado")
+                );
+                lista.add(admin);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return lista;
+    }
+
+    public static List<Administrador> obtenerTodos() {
+        return buscarAdministrador(""); // Carga todos sin filtro
     }
 }
