@@ -43,7 +43,40 @@ public class SuperAdminController {
             return sorted;
         });
         addButton.setOnAction(event -> onAddAdmin());
+        //AGREGO ESO NUEVO PARA HACER FUNCIONAL PARA CERRAR SESION
+        logoutButton.setOnAction(event -> cerrarSesion());
+
     }
+
+    //AGREGO ESTO PARA CERRAR SESION
+    private void cerrarSesion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
+            Parent modalRoot = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("¿Cerrar sesión?");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+            if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
+
+                Stage currentStage = (Stage) logoutButton.getScene().getWindow();
+                currentStage.setScene(new Scene(loginRoot, 600, 400));
+                currentStage.setTitle("Inicio de sesión");
+            }
+
+            ModalCerrarSesionController.cerrarSesionConfirmado = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void configurarColumnas() {
         TableColumn<Usuario, Number> colId = new TableColumn<>("No.");
