@@ -90,15 +90,15 @@
                         <padding>
                             <Insets top="20.0" left="20.0" right="20.0" bottom="20.0"/>
                         </padding>
-                        <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
+                        <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true" >
                             <content>
                                 <VBox spacing="15">
                                     <padding>
                                         <Insets top="10" right="10" bottom="10" left="10"/>
                                     </padding>
-                                    <HBox spacing="10">
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
                                         <TextField fx:id="txtBuscar" promptText="Buscar libro..." HBox.hgrow="ALWAYS"/>
-                                        <ComboBox fx:id="cmbCategoria" promptText="Categoría" />
+                                        <ComboBox fx:id="cmbCategoria" promptText="Categoría" styleClass="comboBox-cat" />
                                     </HBox>
                                     <FlowPane fx:id="contenedorResultados" hgap="20" vgap="20" />
                                 </VBox>

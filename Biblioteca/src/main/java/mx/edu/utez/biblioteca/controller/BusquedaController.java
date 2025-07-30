@@ -54,6 +54,7 @@ public class BusquedaController {
         //cuando se selecciona una categoría, se filtra
         cmbCategoria.setOnAction(event -> {
             filtrarLibros();
+
         });
     }
 
@@ -61,7 +62,7 @@ public class BusquedaController {
     private void cargarCategorias() {
         List<String> categorias = categoriaDao.obtenerNombresCategorias();
         ObservableList<String> lista = FXCollections.observableArrayList();
-        lista.add("Todo"); // opción vacía (sin filtro)
+        lista.add(""); // opción vacía (sin filtro)
         lista.addAll(categorias);
         cmbCategoria.setItems(lista);
     }

@@ -145,3 +145,12 @@
     -fx-alignment: center;
 }
 
+.comboBox-cat {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-padding: 5 10 5 10;
+    -fx-pref-height: 20px;
+}
+
