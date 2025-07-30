@@ -14,6 +14,15 @@ public class Administrador {
     private String imagen; // puedes usar String para la ruta o cambiarlo por byte[] si usas BLOB
     private boolean estado;
 
+    public Administrador(int id, String nombreCompleto, String correo, String contrasena, boolean estado) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.estado = estado;
+    }
+
+
     public Administrador(int id, String nombreCompleto, String usuario, String correo, String telefono,
                          String contrasena, String rol, String direccion, String imagen, boolean estado) {
         this.id = id;
@@ -27,6 +36,8 @@ public class Administrador {
         this.imagen = imagen;
         this.estado = estado;
     }
+
+
 
     // Getters
     public int getId() { return id; }
