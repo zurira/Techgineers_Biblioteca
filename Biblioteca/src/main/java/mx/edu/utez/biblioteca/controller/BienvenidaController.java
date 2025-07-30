@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +20,10 @@ import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 
+import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
+import java.util.Map;
 
 public class BienvenidaController {
     LibroDaoImpl libroDao = new LibroDaoImpl();
@@ -28,14 +31,10 @@ public class BienvenidaController {
     @FXML private FlowPane contenedorLibros;
     @FXML
     private ScrollPane scrollLibros;
-    @FXML private HBox btnBusqueda;
-    @FXML private HBox btnLogin;
 
 
     @FXML
     public void initialize() {
-            btnBusqueda.setOnMouseClicked(event -> irBusqueda(new ActionEvent()));
-        btnLogin.setOnMouseClicked(event -> irLogin(new ActionEvent()));
         cargarLibros();
 
     }
@@ -52,35 +51,48 @@ public class BienvenidaController {
 
     }
 
-    private VBox crearCardLibro (Libro libro){
+    private final Map<String, Image> cacheImagenes = new HashMap<>();
+
+    private VBox crearCardLibro(Libro libro) {
         VBox card = new VBox(10);
         card.getStyleClass().add("card-libro");
         card.setPrefWidth(150);
         card.setAlignment(Pos.CENTER);
+
         ImageView portada = new ImageView();
-        try {
-            Image img = null;
-            try {
-                //System.out.println("Cargando desde: " + libro.getPortada());
-                img = new Image(libro.getPortada(), false);  //Se carga la url remota de la base de datos
-                portada.setImage(img);
-            } catch (Exception e) {
-                //En caso de error con la carga de la imagen, el programa sigue y se carga una imagen por defecto
-                System.out.println("Error al cargar imagen: " + e.getMessage());
-                portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
-
-            }
-
-        } catch (Exception e) {
-            // En caso de error, se puede cargar una imagen por defecto
-            portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen"));
-        }
-
         portada.setFitWidth(130);
         portada.setFitHeight(190);
         portada.setPreserveRatio(false);
         portada.setSmooth(true);
         portada.setCache(true);
+
+        portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Cargando...")); // Imagen temporal
+
+        String url = libro.getPortada();
+
+        if (cacheImagenes.containsKey(url)) {
+            portada.setImage(cacheImagenes.get(url));
+        } else {
+            Task<Image> tareaCarga = new Task<>() {
+                @Override
+                protected Image call() {
+                    try {
+                        return new Image(url, true); // true = carga en background
+                    } catch (Exception e) {
+                        System.out.println("Error al cargar imagen: " + e.getMessage());
+                        return new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen");
+                    }
+                }
+            };
+
+            tareaCarga.setOnSucceeded(e -> {
+                Image imagenCargada = tareaCarga.getValue();
+                portada.setImage(imagenCargada);
+                cacheImagenes.put(url, imagenCargada);
+            });
+
+            new Thread(tareaCarga).start();
+        }
 
         Label titulo = new Label(libro.getTitulo());
         titulo.getStyleClass().add("titulo-libro");
@@ -90,13 +102,12 @@ public class BienvenidaController {
         card.getChildren().addAll(portada, titulo);
 
         card.setOnMouseClicked(event -> {
-
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/detallesModal.fxml"));
                 Parent root = loader.load();
 
                 DetallesModalController controller = loader.getController();
-                controller.cargarDatos(libro); // El libro seleccionado
+                controller.cargarDatos(libro);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
@@ -107,6 +118,7 @@ public class BienvenidaController {
                 e.printStackTrace();
             }
         });
+
         return card;
     }
 

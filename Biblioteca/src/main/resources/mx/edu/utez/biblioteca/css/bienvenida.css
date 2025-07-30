@@ -75,7 +75,7 @@
 .arrow-icon {
     -fx-fill: #555555;
 }
-.user-info-box {
+.user-info-button {
     -fx-background-color: #726262;
     -fx-background-radius: 20px;
     -fx-padding: 8px 15px 5px 15px;
