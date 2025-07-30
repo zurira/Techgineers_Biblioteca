@@ -19,9 +19,9 @@
     -fx-text-fill: #ffffff;
 }
 
-/* Información del usuario */
+/* Información del usuario – Estilo actualizado */
 .user-info-box {
-    -fx-background-color: #D1CCC1;
+    -fx-background-color: #726262;
     -fx-background-radius: 20px;
     -fx-padding: 8px 15px 5px 15px;
     -fx-alignment: center;
@@ -32,6 +32,7 @@
     -fx-fill: #FFFFFF;
     -fx-font-size: 24px;
     -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
 }
 
 .user-name {
@@ -46,10 +47,11 @@
     -fx-translate-y: -8px;
 }
 
-.arrow-icon {
+.signout-icon {
     -fx-fill: #FFFFFF;
-    -fx-font-size: 20px;
+    -fx-font-size: 26px;
     -fx-translate-y: 5px;
+    -fx-translate-x: 6px;
 }
 
 .logout-button {
@@ -118,7 +120,7 @@
     -fx-background-color: #d1ccc1;
 }
 
-/* Ítem activo (puedes alternar dinámicamente la clase nav-item-active) */
+/* Ítem activo */
 .nav-item-active {
     -fx-background-color: #A38F85;
 }
@@ -134,8 +136,9 @@
     -fx-text-fill: #333333;
     -fx-font-weight: bold;
 }
+
 .table-view .column-header-background {
-    -fx-background-color: #f1f0ee;  /* Color de fondo para la cabecera */
+    -fx-background-color: #f1f0ee;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 0 0 1px 0;
 }
@@ -152,18 +155,18 @@
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;  /* Color para filas impares */
+    -fx-background-color: #f9f9f9;
 }
 
 .table-row-cell:even {
-    -fx-background-color: #ffffff;  /* Color para filas pares */
+    -fx-background-color: #ffffff;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #d1e5f0;  /* Color para fila seleccionada */
+    -fx-background-color: #d1e5f0;
 }
 
-/* Scroll personalizado opcional */
+/* Scroll personalizado */
 .table-view .scroll-bar .thumb {
     -fx-background-color: #cccccc;
     -fx-background-radius: 5;
@@ -172,3 +175,8 @@
 .table-view .scroll-bar .track {
     -fx-background-color: transparent;
 }
+
+.arrow-icon {
+    -fx-fill: white;
+}
+

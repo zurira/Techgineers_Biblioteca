@@ -1,14 +1,10 @@
 package mx.edu.utez.biblioteca.controller;
 
-<<<<<<< HEAD
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-=======
-
->>>>>>> TTS24
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -38,15 +34,7 @@ public class SuperAdminController {
         configurarColumnas();
         cargarAdministradores();
 
-<<<<<<< HEAD
         searchField.textProperty().addListener((obs, oldValue, newValue) -> filtrarAdmin(newValue));
-=======
-        searchField.textProperty().addListener((obs, oldValue, newValue) -> {
-            adminTable.getItems().setAll(
-                    AdministradorDao.buscarAdministrador(newValue)
-            );
-        });
->>>>>>> TTS24
 
         adminTable.getItems().addListener((ListChangeListener<Usuario>) c -> adminTable.refresh());
         adminTable.sortPolicyProperty().set(tv -> {
@@ -54,7 +42,41 @@ public class SuperAdminController {
             tv.refresh();
             return sorted;
         });
+        addButton.setOnAction(event -> onAddAdmin());
+        //AGREGO ESO NUEVO PARA HACER FUNCIONAL PARA CERRAR SESION
+        logoutButton.setOnAction(event -> cerrarSesion());
+
     }
+
+    //AGREGO ESTO PARA  CERRAR SESION
+    private void cerrarSesion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
+            Parent modalRoot = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("¿Cerrar sesión?");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+            if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
+
+                Stage currentStage = (Stage) logoutButton.getScene().getWindow();
+                currentStage.setScene(new Scene(loginRoot, 600, 400));
+                currentStage.setTitle("Inicio de sesión");
+            }
+
+            ModalCerrarSesionController.cerrarSesionConfirmado = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void configurarColumnas() {
         TableColumn<Usuario, Number> colId = new TableColumn<>("No.");
@@ -75,17 +97,12 @@ public class SuperAdminController {
             return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         });
 
-<<<<<<< HEAD
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
-=======
-        TableColumn<Administrador, Void> colAcciones = new TableColumn<>("Acciones");
->>>>>>> TTS24
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
             private final Button deleteButton = new Button();
 
             {
-<<<<<<< HEAD
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
@@ -93,21 +110,6 @@ public class SuperAdminController {
                 editButton.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
                     onEditAdmin(usuario);
-=======
-                editButton.setOnAction(e -> {
-                    Administrador admin = getTableView().getItems().get(getIndex());
-                    System.out.println("Editar: " + admin.getNombreCompleto());
-                    // Aquí puedes abrir el modal de edición
-                });
-
-                deleteButton.setOnAction(e -> {
-                    Administrador admin = getTableView().getItems().get(getIndex());
-                    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-                    confirm.setHeaderText("Eliminar administrador");
-                    confirm.setContentText("¿Estás segura que deseas eliminar a " + admin.getNombreCompleto() + "?");
-                    confirm.showAndWait();
-                    // Aquí puedes agregar lógica para eliminar
->>>>>>> TTS24
                 });
             }
 
@@ -129,7 +131,6 @@ public class SuperAdminController {
 
 
     private void cargarAdministradores() {
-<<<<<<< HEAD
         try {
             List<Usuario> admins = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
             listaAdmin = FXCollections.observableArrayList(admins); // <-- Aquí guardas en la lista
@@ -187,13 +188,32 @@ public class SuperAdminController {
         }
     }
 
+    private void onAddAdmin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalAgregarAdministrador.fxml"));
+            Parent root = loader.load();
+
+            ModalAgregarAdminController controller = loader.getController();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Agregar administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+
+            //  Verifica si se agregó exitosamente
+            if (controller.seAgregoUsuario()) {
+                cargarAdministradores();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void onDeleteAdmin(Usuario usuario) {
         // Lógica pendiente
     }
-=======
-        adminTable.getItems().setAll(
-                AdministradorDao.obtenerTodos()
-        );
-    }
->>>>>>> TTS24
 }

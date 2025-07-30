@@ -158,13 +158,14 @@ public class UsuarioDaoImpl implements IUsuario {
         String query = "SELECT u.*, r.ID AS ROL_ID, r.NOMBRE AS ROL_NOMBRE " +
                 "FROM USUARIO_SISTEMA u " +
                 "JOIN ROL r ON u.ID_ROL = r.ID " +
-                "WHERE r.NOMBRE = ?";
+                "WHERE UPPER(r.NOMBRE) = ?";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, nombreRol);
-            ResultSet rs = ps.executeQuery();
 
+            ps.setString(1, nombreRol.toUpperCase());
+
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Rol rol = new Rol(rs.getInt("ROL_ID"), rs.getString("ROL_NOMBRE"));
                 Usuario usuario = new Usuario(
@@ -187,11 +188,10 @@ public class UsuarioDaoImpl implements IUsuario {
         return lista;
     }
 
-
     public static void main(String[] args) {
         UsuarioDaoImpl dao = new UsuarioDaoImpl();
         try {
-            System.out.println(dao.login("",""));
+            System.out.println(dao.login("", ""));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
