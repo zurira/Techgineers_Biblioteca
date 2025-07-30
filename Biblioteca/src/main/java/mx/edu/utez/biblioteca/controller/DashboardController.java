@@ -14,8 +14,7 @@ import java.io.IOException;
 
 public class DashboardController {
 
-    // Este sería el usuario que seleccionaste en tu TableView, lo puedes obtener con getSelectionModel().getSelectedItem()
-    private UsuarioBiblioteca usuarioSeleccionado;
+    private UsuarioBiblioteca usuarioSeleccionado = new UsuarioBiblioteca();
 
     @FXML
     private void abrirModalEdicion(ActionEvent event) {
@@ -37,9 +36,8 @@ public class DashboardController {
             modal.setScene(new Scene(root));
             modal.showAndWait();
 
-            // Si se guardó correctamente, recargamos los datos
             if (controller.isGuardado()) {
-                recargarTablaUsuarios(); // Método que tú defines para refrescar tu vista
+                recargarTablaUsuarios();
             }
 
         } catch (IOException e) {
@@ -48,19 +46,16 @@ public class DashboardController {
         }
     }
 
-    // Método auxiliar para mostrar alertas
+    private void recargarTablaUsuarios() {
+
+
+    }
+
     private void mostrarAlerta(String titulo, String mensaje) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
-    }
-
-    // Este método deberías implementarlo tú para que actualice tu tabla:
-    private void recargarTablaUsuarios() {
-        // Ejemplo:
-        // tablaUsuarios.setItems(FXCollections.observableArrayList(dao.findAll()));
-        // tablaUsuarios.refresh();
     }
 }
