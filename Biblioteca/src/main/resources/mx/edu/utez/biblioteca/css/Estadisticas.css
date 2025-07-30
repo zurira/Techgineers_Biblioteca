@@ -171,3 +171,36 @@
     -fx-text-fill: #666;
     -fx-padding: 0 0 15 0;
 }
+
+/* Estilos para los elementos de medalla */
+.medal-item {
+    -fx-background-color: #f5f3f4;
+    -fx-padding: 12;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+
+    -fx-border-color: #f5f3f4;
+    -fx-border-width: 1;
+}
+
+.medal-image {
+    -fx-fit-width: 38px;
+    -fx-fit-height: 38px;
+}
+
+.medal-text {
+    -fx-font-size: 17px;
+    -fx-text-fill: #424242;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 12;
+}
+
+/* Estilo para mensajes de "no resultados" */
+.label-no-results {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-max-width: Infinity;
+    -fx-padding: 20 0 20 0;
+}
