@@ -1,10 +1,14 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
+
+import java.io.File;
 
 public class EditarUsuarioController {
 
@@ -15,6 +19,7 @@ public class EditarUsuarioController {
     @FXML private ToggleButton toggleEstado;
     @FXML private Label lblFotoSeleccionada;
     @FXML private Button btnGuardar;
+    @FXML private Button btnCancelar;
 
     private UsuarioBiblioteca usuarioEditando;
     private boolean guardado = false;
@@ -80,5 +85,28 @@ public class EditarUsuarioController {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+        @FXML
+        public void seleccionarFoto(ActionEvent event) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Seleccionar foto de usuario");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+            );
+
+            File archivoSeleccionado = fileChooser.showOpenDialog(btnSeleccionarFoto.getScene().getWindow());
+            if (archivoSeleccionado != null) {
+                lblFotoSeleccionada.setText(archivoSeleccionado.getName());
+                // Aquí puedes guardar la ruta o incluso previsualizar la imagen
+            } else {
+                lblFotoSeleccionada.setText("Sin archivo seleccionado");
+            }
+        }
+
+    public void cancelar(ActionEvent event) {
+    }
+
+    public void cambiarEstado(ActionEvent event) {
     }
 }
