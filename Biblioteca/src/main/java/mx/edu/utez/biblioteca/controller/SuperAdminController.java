@@ -48,7 +48,7 @@ public class SuperAdminController {
 
     }
 
-    //AGREGO ESTO PARA CERRAR SESION
+    //AGREGO ESTO PARA  CERRAR SESION
     private void cerrarSesion() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
