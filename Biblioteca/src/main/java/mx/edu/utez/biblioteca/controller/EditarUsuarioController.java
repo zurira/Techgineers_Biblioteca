@@ -112,9 +112,13 @@ public class EditarUsuarioController {
         }
     }
 
-    public void cancelar(ActionEvent event) {
+        @FXML
+        public void cancelar(ActionEvent event) {
+            // Cierra el modal actual
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
+            stage.close();
+        }
 
-    }
 
     @FXML
     public void cambiarEstado(ActionEvent event) {
