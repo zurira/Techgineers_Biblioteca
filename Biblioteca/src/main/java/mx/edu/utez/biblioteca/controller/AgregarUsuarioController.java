@@ -39,6 +39,10 @@ public class AgregarUsuarioController {
         lblFotoSeleccionada.setText("(foto actual)");
     }
 
+    public void cargarDatosParaEdicion(UsuarioBiblioteca usuario) {
+        setUsuarioExistente(usuario);
+    }
+
     @FXML
     private void seleccionarFoto() {
         FileChooser chooser = new FileChooser();
