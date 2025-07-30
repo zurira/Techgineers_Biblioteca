@@ -2,6 +2,7 @@ package mx.edu.utez.biblioteca.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,28 +25,22 @@ public class SuperAdminController {
     @FXML private TextField searchField;
     @FXML private Button addButton;
     @FXML private Button logoutButton;
+    @FXML private Label lblSinResultados;
 
-    private ObservableList<Usuario> listaAdmin;
+    private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         configurarColumnas();
         cargarAdministradores();
 
-        searchField.textProperty().addListener((obs, oldValue, newValue) -> buscarAdministradores(newValue));
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> filtrarAdmin(newValue));
 
-        logoutButton.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("¿Cerrar sesión?");
-            alert.setContentText("¿Estás segura que quieres cerrar sesión?");
-            alert.showAndWait();
-        });
-
-        addButton.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Agregar administrador");
-            alert.setContentText("Aquí iría la lógica para abrir formulario de alta.");
-            alert.showAndWait();
+        adminTable.getItems().addListener((ListChangeListener<Usuario>) c -> adminTable.refresh());
+        adminTable.sortPolicyProperty().set(tv -> {
+            boolean sorted = TableView.DEFAULT_SORT_POLICY.call(tv);
+            tv.refresh();
+            return sorted;
         });
     }
 
@@ -78,18 +73,9 @@ public class SuperAdminController {
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
 
-                FontIcon viewIcon = new FontIcon("fa-eye");
-                deleteButton.setGraphic(viewIcon);
-                deleteButton.getStyleClass().add("action-button");
-
                 editButton.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
                     onEditAdmin(usuario);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    onDeleteAdmin(usuario);
                 });
             }
 
@@ -99,7 +85,7 @@ public class SuperAdminController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton, deleteButton);
+                    HBox buttons = new HBox(5, editButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -113,7 +99,8 @@ public class SuperAdminController {
     private void cargarAdministradores() {
         try {
             List<Usuario> admins = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
-            adminTable.setItems(FXCollections.observableArrayList(admins));
+            listaAdmin = FXCollections.observableArrayList(admins); // <-- Aquí guardas en la lista
+            adminTable.setItems(listaAdmin);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,20 +114,22 @@ public class SuperAdminController {
         }
 
         String filtroLower = filtro.toLowerCase();
-        ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
+        ObservableList<Usuario> adminsFiltrados = FXCollections.observableArrayList();
 
-        for (Prestamo p : listaPrestamos) {
-            String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
-            String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
+        for (Usuario p : listaAdmin) {
+            String nombre = p.getNombre() != null ? p.getNombre().toLowerCase() : "";
+            String usuario = p.getUsername() != null ? p.getUsername().toLowerCase() : "";
+            String correo = p.getCorreo() != null ? p.getCorreo().toLowerCase() : "";
             String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
 
-            if (nombreUsuario.contains(filtroLower) || tituloLibro.contains(filtroLower) || estado.contains(filtroLower)) {
-                prestamosFiltrados.add(p);
+            if (nombre.contains(filtroLower) || usuario.contains(filtroLower)
+                    || correo.contains(filtroLower) || estado.contains(filtroLower)) {
+                adminsFiltrados.add(p);
             }
         }
 
-        tableViewPrestamos.setItems(prestamosFiltrados);
-        lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
+        adminTable.setItems(adminsFiltrados);
+        lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
 

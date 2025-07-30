@@ -73,7 +73,7 @@
 }
 
 .search-field {
-    -fx-background-color: transparent;
+    -fx-background-color: #CCCCCC;
     -fx-prompt-text-fill: #aaaaaa;
     -fx-text-fill: #333333;
     -fx-border-width: 0;
