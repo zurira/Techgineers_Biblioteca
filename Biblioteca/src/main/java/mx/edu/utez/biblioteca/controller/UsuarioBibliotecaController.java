@@ -226,8 +226,8 @@ public class UsuarioBibliotecaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/EditarUsuario.fxml"));
             Parent root = loader.load();
 
-            AgregarUsuarioController controller = loader.getController();
-            controller.cargarDatosParaEdicion(usuario); // Llenar campos con los datos actuales
+            EditarUsuarioController controller = loader.getController();
+            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
 
             Stage stage = new Stage();
             stage.setTitle("Editar Usuario");
