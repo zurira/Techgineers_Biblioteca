@@ -1,13 +1,61 @@
 .root {
-    -fx-background-color: #f0f8ff; /* Un color muy claro y diferente */
+    -fx-background-color: #f9f5f0;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5e4631;
+}
+
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7b6c5d;
+    -fx-font-style: italic;
 }
 
 .label {
-    -fx-text-fill: #333333; /* Texto oscuro para las etiquetas */
-    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #5e4631;
+}
+
+.text-field, .text-area, .date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbb9a5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 5 10;
+    -fx-font-size: 13px;
+}
+
+.text-area {
+    -fx-pref-row-count: 2;
+    -fx-wrap-text: true;
 }
 
 .button {
-    -fx-background-color: #959867;
-    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
+
+.boton-guardar {
+    -fx-background-color: #a18976;
+    -fx-text-fill: white;
+    -fx-padding: 6 20;
+}
+
+.boton-cancelar {
+    -fx-background-color: #d9d0c4;
+    -fx-text-fill: #896b51;
+    -fx-padding: 6 20;
+}
+
+.label-foto {
+    -fx-font-size: 12px;
+    -fx-text-fill: #8a7c70;
+    -fx-font-style: italic;
+    -fx-padding: 4 0 0 0;
+}
+
