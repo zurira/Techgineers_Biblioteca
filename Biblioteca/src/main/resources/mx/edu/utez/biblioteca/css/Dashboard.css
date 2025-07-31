@@ -1,13 +1,13 @@
-.titulo {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #3a3a3a;
+.root {
+    -fx-background-color: #f0f8ff; /* Un color muy claro y diferente */
 }
 
-.boton-principal {
-    -fx-background-color: #959867;
+.label {
+    -fx-text-fill: #333333; /* Texto oscuro para las etiquetas */
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-background-color: #b3987f;
     -fx-text-fill: white;
-    -fx-padding: 10 20;
-    -fx-font-size: 14px;
-    -fx-background-radius: 8;
 }
