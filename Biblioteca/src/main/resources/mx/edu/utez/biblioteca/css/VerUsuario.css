@@ -1,20 +1,20 @@
 /* VerUsuario.css */
 
 .root {
-    -fx-background-color: #f0f2f5; /* Un gris claro para el fondo */
+    -fx-background-color: #838163; /* Un gris claro para el fondo */
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
 .titulo {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-fill: #333333; /* Color de texto oscuro */
+    -fx-fill: #896b51; /* Color de texto oscuro */
     -fx-padding: 10px 0 0 0;
 }
 
 .subtitulo {
     -fx-font-size: 14px;
-    -fx-fill: #666666;
+    -fx-fill: #807d59;
     -fx-padding: 0 0 10px 0;
 }
 
@@ -26,7 +26,7 @@
 /* Estilo para los valores de los Labels */
 .label {
     -fx-font-size: 13px;
-    -fx-text-fill: #222222;
+    -fx-text-fill: #b3987f;
 }
 
 .grid-pane {
