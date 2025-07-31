@@ -1,13 +1,65 @@
 .root {
-    -fx-background-color: #f0f8ff; /* Un color muy claro y diferente */
+    -fx-background-color: #838163; /* Un gris claro para el fondo */
+    -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.label {
-    -fx-text-fill: #333333; /* Texto oscuro para las etiquetas */
+.titulo {
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
+    -fx-fill: #896b51; /* Color de texto oscuro */
+    -fx-padding: 10px 0 0 0;
 }
 
-.button {
-    -fx-background-color: #977a60; /* Azul vibrante */
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-fill: #807d59;
+    -fx-padding: 0 0 10px 0;
+}
+
+.label-bold {
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+/* Estilo para los valores de los Labels */
+.label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #b3987f;
+}
+
+.grid-pane {
+    -fx-alignment: center; /* Centrar el GridPane */
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff; /* Fondo blanco para el área de datos */
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.user-photo {
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 60px; /* Para hacerlo circular */
+    -fx-background-radius: 60px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);
+}
+
+.boton-cerrar {
+    -fx-background-color: #6c757d; /* Gris para cerrar */
     -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.boton-cerrar:hover {
+    -fx-background-color: #5a6268;
+}
+
+/* Ajustes de VBox */
+.vbox {
+    -fx-padding:15px;
 }
