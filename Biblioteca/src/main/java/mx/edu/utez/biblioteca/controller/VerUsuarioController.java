@@ -11,6 +11,7 @@ import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import java.io.ByteArrayInputStream;
 import java.time.format.DateTimeFormatter; // Para formatear la fecha
 
+
 public class VerUsuarioController {
 
     @FXML private Label lblNombre;
