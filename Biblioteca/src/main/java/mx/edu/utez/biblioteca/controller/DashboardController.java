@@ -43,7 +43,7 @@ public class DashboardController {
 
             // El controlador es AgregarUsuarioController, no EditarUsuarioController
             AgregarUsuarioController controller = loader.getController();
-            controller.setUsuarioParaFormulario(usuarioSeleccionado); // Método para cargar datos en el formulario
+            controller.setUsuarioExistente(usuarioSeleccionado); // Método para cargar datos en el formulario
 
             Stage modal = new Stage();
             modal.initModality(Modality.APPLICATION_MODAL);
@@ -74,7 +74,7 @@ public class DashboardController {
             Parent root = loader.load();
 
             AgregarUsuarioController controller = loader.getController();
-            controller.setUsuarioParaFormulario(null); // Pasa null para indicar que es un nuevo usuario
+            controller.setUsuarioExistente(null); // Pasa null para indicar que es un nuevo usuario
 
             Stage modal = new Stage();
             modal.initModality(Modality.APPLICATION_MODAL);
