@@ -34,6 +34,7 @@ public class HelloApplication extends Application {
         }
         // ************************************************
 
+
         stage.setTitle("Mi Aplicación Biblioteca");
         stage.setScene(scene);
         stage.show();
