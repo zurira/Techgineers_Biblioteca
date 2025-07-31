@@ -7,11 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import mx.edu.utez.biblioteca.model.UsuarioBiblioteca; // Importa tu modelo de usuario
-import javafx.scene.control.Alert; // Importa Alert
+import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
-import java.time.LocalDate; // Asegúrate de importar LocalDate para crear usuarios de prueba
+import java.net.URL; // Asegúrate de importar URL
+import java.time.LocalDate;
 
 public class DashboardController {
 
@@ -29,48 +30,101 @@ public class DashboardController {
 
     @FXML
     private void abrirModalEdicion(ActionEvent event) {
-        System.out.println("¡Botón 'Editar usuario' presionado en DashboardController!"); // <-- Depuración de clic
+        System.out.println("¡Botón 'Editar usuario' presionado en DashboardController!");
 
-        // Si tu tabla de usuarios no está implementada y seleccionas un usuario REAL,
-        // el usuarioSeleccionado será este de prueba.
-        // Si tu tabla ya selecciona usuarios, puedes quitar este bloque de ejemplo
         if (usuarioSeleccionado == null) {
             mostrarAlerta("Sin selección", "Por favor, selecciona un usuario para editar.");
             return;
         }
 
         try {
-            // Carga el FXML para el modal de edición
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/EditarUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml")); // Usamos AgregarUsuario.fxml para edición
             Parent root = loader.load();
 
-            // Obtiene el controlador del FXML cargado
-            EditarUsuarioController controller = loader.getController();
+            // El controlador es AgregarUsuarioController, no EditarUsuarioController
+            AgregarUsuarioController controller = loader.getController();
+            controller.setUsuarioParaFormulario(usuarioSeleccionado); // Método para cargar datos en el formulario
 
-            // Pasa el usuario seleccionado al controlador del modal
-            controller.cargarUsuario(usuarioSeleccionado);
-
-            // Crea un nuevo Stage para el modal
             Stage modal = new Stage();
-            modal.initModality(Modality.APPLICATION_MODAL); // Hace que el modal bloquee la ventana principal
-            modal.setTitle("Editar usuario"); // Título del modal
-            modal.setScene(new Scene(root)); // Asigna la escena al modal
-            modal.showAndWait(); // Muestra el modal y espera a que se cierre
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.setTitle("Editar usuario");
+            modal.setScene(new Scene(root));
+            modal.showAndWait();
 
-            // Si el usuario fue guardado en el modal, recarga la tabla principal (cuando la tengas)
             if (controller.isGuardado()) {
                 System.out.println("Usuario guardado/actualizado. Recargando tabla...");
-                recargarTablaUsuarios(); // Este método está vacío por ahora
+                recargarTablaUsuarios();
             }
 
         } catch (IOException e) {
-            e.printStackTrace(); // Imprime el stack trace completo si hay un error al cargar el FXML
+            e.printStackTrace();
             mostrarAlerta("Error al abrir formulario", "No se pudo abrir el formulario de edición: " + e.getMessage());
-        } catch (Exception e) { // Captura cualquier otra excepción inesperada
+        } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Error inesperado", "Ocurrió un error: " + e.getMessage());
         }
     }
+
+    @FXML
+    private void abrirModalAgregarUsuario(ActionEvent event) { // <-- NUEVO MÉTODO PARA AGREGAR
+        System.out.println("¡Botón 'Agregar usuario' presionado en DashboardController!");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml"));
+            Parent root = loader.load();
+
+            AgregarUsuarioController controller = loader.getController();
+            controller.setUsuarioParaFormulario(null); // Pasa null para indicar que es un nuevo usuario
+
+            Stage modal = new Stage();
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.setTitle("Agregar nuevo usuario");
+            modal.setScene(new Scene(root));
+            modal.showAndWait();
+
+            if (controller.isGuardado()) {
+                System.out.println("Nuevo usuario agregado. Recargando tabla...");
+                recargarTablaUsuarios();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al abrir formulario", "No se pudo abrir el formulario de agregar usuario: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error inesperado", "Ocurrió un error: " + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    private void abrirModalVerUsuario(ActionEvent event) { // <-- MÉTODO PARA VER USUARIO
+        System.out.println("¡Botón 'Ver detalles' presionado en DashboardController!");
+
+        if (usuarioSeleccionado == null) {
+            mostrarAlerta("Sin selección", "Por favor, selecciona un usuario para ver sus detalles.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerUsuario.fxml"));
+            Parent root = loader.load();
+
+            VerUsuarioController controller = loader.getController();
+            controller.cargarUsuario(usuarioSeleccionado); // Pasa el usuario seleccionado
+
+            Stage modal = new Stage();
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.setTitle("Detalles del Usuario");
+            modal.setScene(new Scene(root));
+            modal.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al abrir detalles", "No se pudo abrir la ventana de detalles: " + e.getMessage());
+        }
+    }
+
 
     private void recargarTablaUsuarios() {
         // Aquí iría la lógica para volver a cargar los datos de la tabla de usuarios
