@@ -1,13 +1,8 @@
-.titulo {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #3a3a3a;
+.root {
+    -fx-background-color: lightblue; /* Un azul claro muy visible */
 }
 
-.boton-principal {
-    -fx-background-color: #959867;
+.button {
+    -fx-background-color: #896b51;
     -fx-text-fill: white;
-    -fx-padding: 10 20;
-    -fx-font-size: 14px;
-    -fx-background-radius: 8;
 }
