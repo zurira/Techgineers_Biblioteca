@@ -56,11 +56,10 @@ public class EstadisticasController implements Initializable {
             itemBox.setSpacing(10);
             itemBox.getStyleClass().add("medal-item");
 
-            // Lógica para mostrar o no la imagen de medalla
-            if (i < 3) { // Solo para los 3 primeros puestos (0, 1, 2)
+            if (i < 5) {
                 ImageView medalImageView = new ImageView();
-                medalImageView.setFitWidth(38); // Usar el mismo tamaño que en el CSS
-                medalImageView.setFitHeight(38); // Usar el mismo tamaño que en el CSS
+                medalImageView.setFitWidth(45);
+                medalImageView.setFitHeight(45);
                 try {
                     String medalPath = getMedalImagePath(i);
                     Image medalImage = new Image(getClass().getResourceAsStream(medalPath));
@@ -74,7 +73,6 @@ public class EstadisticasController implements Initializable {
                 medalImageView.getStyleClass().add("medal-image");
                 itemBox.getChildren().add(medalImageView);
             } else {
-                // Para los puestos 4 y 5, añade un Label vacío para mantener la alineación
                 Label emptySpaceLabel = new Label();
                 emptySpaceLabel.setPrefWidth(38);
                 emptySpaceLabel.setPrefHeight(38);
@@ -91,10 +89,12 @@ public class EstadisticasController implements Initializable {
 
     private String getMedalImagePath(int index) {
         switch (index) {
-            case 0: return "/mx/edu/utez/biblioteca/img/gold_medal.png";
-            case 1: return "/mx/edu/utez/biblioteca/img/silver_medal.png";
-            case 2: return "/mx/edu/utez/biblioteca/img/bronze_medal.png";
-            default: return ""; // No se usará, pero el switch requiere un default
+            case 0: return "/mx/edu/utez/biblioteca/img/first.png";
+            case 1: return "/mx/edu/utez/biblioteca/img/second.png";
+            case 2: return "/mx/edu/utez/biblioteca/img/third.png";
+            case 3: return "/mx/edu/utez/biblioteca/img/fourth.png";
+            case 4: return "/mx/edu/utez/biblioteca/img/fifth.png";
+            default: return "";
         }
     }
 }
