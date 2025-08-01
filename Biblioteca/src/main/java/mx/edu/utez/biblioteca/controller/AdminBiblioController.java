@@ -24,7 +24,7 @@ public class AdminBiblioController {
     @FXML
     private TableView<Bibliotecario> tableViewBibliotecarios;
     @FXML
-    private TableColumn<Bibliotecario, Integer> colNo;
+    private TableColumn<Bibliotecario, Void> colNo;
     @FXML
     private TableColumn<Bibliotecario, String> colNombre;
     @FXML
@@ -62,7 +62,21 @@ public class AdminBiblioController {
     }
 
     private void configurarColumnasTabla() {
-        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colNo.setCellFactory(column -> {
+            return new TableCell<Bibliotecario, Void>() {
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        // Si la celda está vacía, no mostrar nada
+                        setText(null);
+                    } else {
+                        // Muestra el número de fila, empezando desde 1
+                        setText(String.valueOf(getIndex() + 1));
+                    }
+                }
+            };
+        });
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
