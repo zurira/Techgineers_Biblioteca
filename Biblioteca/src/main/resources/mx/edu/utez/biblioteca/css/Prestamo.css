@@ -1,4 +1,4 @@
-/* General styling */
+/* General*/
 .root {
     -fx-font-family: "Arial", sans-serif;
     -fx-background-color: #EDE9E3;
@@ -136,58 +136,63 @@
     -fx-padding: 10px 0;
 }
 
-/* Table View */
+/* Estilos generales de la tabla */
 .table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Encabezado */
 .table-view .column-header-background {
-    -fx-background-color: #f1f0ee; /* Light beige for header */
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #dee2e6; /* Borde inferior */
     -fx-border-width: 0 0 1px 0;
+    -fx-border-radius: 8px 8px 0 0;
+}
+.table-view .column-header-background,
+.table-view .column-header,
+.table-view .filler,
+.table-view .table-header-row {
+    -fx-background-color: transparent;
 }
 
 .table-view .column-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-}
-
-.table-view .table-cell {
-    -fx-font-size: 13px;
-    -fx-text-fill: #555555;
+    -fx-text-fill: #495057;
     -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 10px;
 }
 
+/* Celdas de la tabla */
+.table-view .table-cell {
+    -fx-font-size: 12px;
+    -fx-text-fill: #495057; /* <-- Color */
+    -fx-font-weight: 600; /* <-- Grosor */
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 15px 10px;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Filas alternas: una con color, la otra sin color */
 .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: #f8f9fa;
 }
 
 .table-row-cell:even {
     -fx-background-color: #ffffff;
 }
 
-.table-row-cell:selected {
-    -fx-background-color: #d1e5f0; /* Light blue for selected row */
-}
-
-/* Action buttons in table cells */
-.action-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
+/* Estado de la fila seleccionada y al pasar el ratón */
+.table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
     -fx-cursor: hand;
 }
 
-.action-icon {
-    -fx-fill: #555555;
-    -fx-font-size: 1.2em;
-}
-
-.action-icon:hover {
-    -fx-fill: #007bff; /* Blue on hover */
+.table-row-cell:selected {
+    -fx-background-color: #e8f5ff;
+    -fx-text-fill: #212529;
 }
 
 /* Scrollbar */
@@ -203,7 +208,7 @@
 }
 
 .table-view .scroll-bar .thumb {
-    -fx-background-color: #cccccc;
+    -fx-background-color: #ced4da;
     -fx-background-insets: 0;
     -fx-background-radius: 5;
 }
@@ -214,9 +219,29 @@
     -fx-background-radius: 5;
 }
 
+
+/* Botones de acción en las celdas de la tabla */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-effect: null;
+}
+
+.action-icon {
+    -fx-fill: #6c757d;
+    -fx-font-size: 1.2em;
+    -fx-opacity: 0.8;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff;
+    -fx-opacity: 1.0;
+}
+
 /* Estilo para el contenedor del recuadro de usuario */
 .user-info-box {
-    -fx-background-color: #D1CCC1;
+    -fx-background-color: #726262;
     -fx-background-radius: 20px;
     -fx-padding: 8px 15px 5px 15px;
     -fx-alignment: center;
@@ -227,6 +252,7 @@
     -fx-fill: #FFFFFF;
     -fx-font-size: 24px;
     -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
 }
 
 .user-name {
@@ -241,8 +267,30 @@
     -fx-translate-y: -8px;
 }
 
-.arrow-icon {
+.signout-icon {
     -fx-fill: #FFFFFF;
-    -fx-font-size: 20px;
+    -fx-font-size: 26px;
     -fx-translate-y: 5px;
+    -fx-translate-x:6px;
+}
+
+/* Estilos para las etiquetas de estado en la tabla */
+.status-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 15px;
+    -fx-font-size: 12px;
+}
+
+.status-activo {
+    -fx-background-color: #a3b18a;
+}
+
+.status-retrasado {
+    -fx-background-color: #dd9787;
+}
+
+.status-finalizado {
+    -fx-background-color: #dda15e;
 }
