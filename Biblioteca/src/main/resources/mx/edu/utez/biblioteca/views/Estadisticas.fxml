@@ -10,10 +10,12 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import javafx.scene.control.ScrollPane?> <AnchorPane xmlns="http://javafx.com/javafx/21"
-                                                       xmlns:fx="http://javafx.com/fxml/1"
-                                                       fx:controller="mx.edu.utez.biblioteca.controller.EstadisticasController"
-                                                       prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/Estadisticas.css">
+<?import javafx.scene.control.ScrollPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.edu.utez.biblioteca.controller.EstadisticasController"
+            prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/Estadisticas.css">
 
     <HBox alignment="TOP_LEFT" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
