@@ -83,6 +83,37 @@ public class AdminBiblioController {
                 return new SimpleStringProperty("Inactivo");
             }
         });
+        colEstado.setCellFactory(column -> {
+            return new TableCell<Bibliotecario, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Label label = new Label(item);
+                        label.setAlignment(Pos.CENTER);
+                        label.getStyleClass().add("status-label");
+
+                        if ("Activo".equals(item)) {
+                            label.getStyleClass().add("status-active");
+                        } else {
+                            label.getStyleClass().add("status-inactive");
+                        }
+
+                        // Centra el contenido del Label dentro de la celda
+                        this.setAlignment(Pos.CENTER);
+
+                        // Establece el Label como el gráfico de la celda
+                        setGraphic(label);
+                        setText(null); // No mostrar el texto directamente en la celda
+                    }
+                }
+            };
+        });
+
+
 
         colAcciones.setCellFactory(param -> new TableCell<Bibliotecario, Void>() {
             private final Button editButton = new Button();
