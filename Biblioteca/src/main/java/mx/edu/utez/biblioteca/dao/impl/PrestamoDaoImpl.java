@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrestamoDaoImpl implements IPrestamo {
-
     private Prestamo buildPrestamoFromResultSet(ResultSet rs) throws SQLException {
         Prestamo prestamo = new Prestamo();
         prestamo.setId(rs.getInt("ID_PRESTAMO"));
@@ -45,7 +44,8 @@ public class PrestamoDaoImpl implements IPrestamo {
                 "JOIN USUARIO_BIBLIOTECA ub ON p.ID_USUARIO = ub.ID " +
                 "JOIN DETALLE_PRESTAMO dp ON p.ID = dp.ID_PRESTAMO " +
                 "JOIN EJEMPLAR e ON dp.ID_EJEMPLAR = e.ID " +
-                "JOIN LIBRO l ON e.ID_LIBRO = l.ID";
+                "JOIN LIBRO l ON e.ID_LIBRO = l.ID " +
+                "ORDER BY p.ID ASC";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -138,7 +138,8 @@ public class PrestamoDaoImpl implements IPrestamo {
                 "JOIN DETALLE_PRESTAMO dp ON p.ID = dp.ID_PRESTAMO " +
                 "JOIN EJEMPLAR e ON dp.ID_EJEMPLAR = e.ID " +
                 "JOIN LIBRO l ON e.ID_LIBRO = l.ID " +
-                "WHERE l.TITULO LIKE ? OR ub.NOMBRE LIKE ?";
+                "WHERE l.TITULO LIKE ? OR ub.NOMBRE LIKE ? " +
+                "ORDER BY p.ID ASC";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -155,26 +156,23 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public ObservableList<UsuarioBiblioteca> obtenerUsuarios() {
-       ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList();
-       String sql = "SELECT ID, NOMBRE FROM USUARIO_BIBLIOTECA";
+        ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList();
+        String sql = "SELECT ID, NOMBRE FROM USUARIO_BIBLIOTECA";
 
-       try (Connection conn = DBConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-           while (rs.next()) {
-               UsuarioBiblioteca usuario = new UsuarioBiblioteca();
-               usuario.setId(rs.getInt("ID"));
-               usuario.setNombre(rs.getString("NOMBRE"));
-               usuarios.add(usuario);
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+            while (rs.next()) {
+                UsuarioBiblioteca usuario = new UsuarioBiblioteca();
+                usuario.setId(rs.getInt("ID"));
+                usuario.setNombre(rs.getString("NOMBRE"));
+                usuarios.add(usuario);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-       return usuarios;
-   }
-
-
+        return usuarios;
+    }
 }
-
