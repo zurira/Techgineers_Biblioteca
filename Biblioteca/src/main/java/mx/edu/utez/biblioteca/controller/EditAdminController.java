@@ -1,25 +1,45 @@
 package mx.edu.utez.biblioteca.controller;
 
-
-
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import mx.edu.utez.biblioteca.model.Rol;
+import mx.edu.utez.biblioteca.model.Usuario;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.*;
+import java.nio.file.Files;
 
 public class EditAdminController {
 
-    @FXML private TextField tfNombre, tfCorreo, tfTelefono, tfUsuario, tfRol, tfEstado, tfDireccion;
+    @FXML private TextField tfNombre, tfCorreo, tfTelefono, tfUsuario, tfRol, tfDireccion;
     @FXML private PasswordField pfContrasena;
+    @FXML private ComboBox<String> cbEstado;
     @FXML private ImageView imageView;
 
     private File imagenSeleccionada;
+    private Usuario usuarioActual;
+
+    public void setUsuario(Usuario usuario) {
+        this.usuarioActual = usuario;
+
+        tfNombre.setText(usuario.getNombre());
+        tfCorreo.setText(usuario.getCorreo());
+        tfTelefono.setText(usuario.getTelefono());
+        tfUsuario.setText(usuario.getUsername());
+        pfContrasena.setText(usuario.getPassword());
+        tfRol.setText(usuario.getRol().getNombre());
+        cbEstado.setValue(usuario.getEstado().equalsIgnoreCase("S") ? "Activo" : "Inactivo");
+        tfDireccion.setText(usuario.getDireccion());
+
+        if (usuario.getFoto() != null) {
+            Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
+            imageView.setImage(img);
+        }
+    }
 
     @FXML
     void onSeleccionarImagen() {
@@ -36,36 +56,42 @@ public class EditAdminController {
         }
     }
 
+    //ESTO AGREGUE/MODIFIQUE
     @FXML
     void onGuardar() {
-        String sql = "UPDATE administradores SET nombre=?, correo=?, telefono=?, usuario=?, contrasena=?, rol=?, estado=?, direccion=?, foto=? WHERE usuario=?";
-        try (Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "usuario", "contraseña");
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        if (tfNombre.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfUsuario.getText().isEmpty()
+                || pfContrasena.getText().isEmpty() || tfRol.getText().isEmpty() || cbEstado.getValue() == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor llena todos los campos obligatorios.");
+            return;
+        }
 
-            stmt.setString(1, tfNombre.getText());
-            stmt.setString(2, tfCorreo.getText());
-            stmt.setString(3, tfTelefono.getText());
-            stmt.setString(4, tfUsuario.getText());
-            stmt.setString(5, pfContrasena.getText());
-            stmt.setString(6, tfRol.getText());
-            stmt.setString(7, tfEstado.getText());
-            stmt.setString(8, tfDireccion.getText());
+        try {
+            Usuario usuarioEditado = new Usuario();
+            usuarioEditado.setId(usuarioActual.getId());
+            usuarioEditado.setNombre(tfNombre.getText());
+            usuarioEditado.setCorreo(tfCorreo.getText());
+            usuarioEditado.setTelefono(tfTelefono.getText());
+            usuarioEditado.setUsername(tfUsuario.getText());
+            usuarioEditado.setPassword(pfContrasena.getText());
+            usuarioEditado.setDireccion(tfDireccion.getText());
+            usuarioEditado.setEstado(cbEstado.getValue().equalsIgnoreCase("Activo") ? "S" : "N");
+
+            Rol rol = new Rol();
+            rol.setId(usuarioActual.getRol().getId());
+            rol.setNombre(tfRol.getText());
+            usuarioEditado.setRol(rol);
 
             if (imagenSeleccionada != null) {
-                InputStream fis = new FileInputStream(imagenSeleccionada);
-                stmt.setBlob(9, fis);
+                usuarioEditado.setFoto(Files.readAllBytes(imagenSeleccionada.toPath()));
             } else {
-                stmt.setNull(9, Types.BLOB);
+                usuarioEditado.setFoto(usuarioActual.getFoto());
             }
 
-            stmt.setString(10, tfUsuario.getText());
+            UsuarioDaoImpl dao = new UsuarioDaoImpl();
+            dao.update(usuarioEditado);
 
-            int filas = stmt.executeUpdate();
-            if (filas > 0) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Actualizado", "Datos actualizados correctamente.");
-            } else {
-                mostrarAlerta(Alert.AlertType.WARNING, "Error", "No se actualizó ningún registro.");
-            }
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Actualizado", "Datos actualizados correctamente.");
+            tfNombre.getScene().getWindow().hide();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,12 +101,13 @@ public class EditAdminController {
 
     @FXML
     void onCancelar() {
-        ((Button) tfNombre.getScene().lookup("#btnSeleccionarImagen")).getScene().getWindow().hide();
+        tfNombre.getScene().getWindow().hide();
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
         alerta.setContentText(contenido);
         alerta.showAndWait();
     }
