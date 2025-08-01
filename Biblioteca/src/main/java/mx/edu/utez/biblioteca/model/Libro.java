@@ -34,6 +34,19 @@ public class Libro {
         this.estado = estado;
     }
 
+    public Libro(String titulo, String isbn, String resumen, int anioPublicacion, String portada,
+                 Autor autor, Editorial editorial, Categoria categoria, String estado) {
+        this.titulo = titulo;
+        this.isbn = isbn;
+        this.resumen = resumen;
+        this.anioPublicacion = anioPublicacion;
+        this.portada = portada;
+        this.autor = autor;
+        this.editorial = editorial;
+        this.categoria = categoria;
+        this.estado = estado;
+    }
+
     // Getters y Setters
     public int getId() {
         return id;
