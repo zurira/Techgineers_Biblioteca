@@ -80,7 +80,7 @@
                                         <children>
                                                 <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
                                                     <Label styleClass="user-name" text="Bibliotecario" />
-                                                <FontIcon iconLiteral="fa-arrow-right" iconSize="24" styleClass="arrow-icon" />
+                                                <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon" />
                                         </children>
                                     </HBox>
                                     <Label styleClass="user-sub-label" text="Nombre usuario" />
