@@ -161,7 +161,7 @@ public class SuperAdminController {
         lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
-    //MODIFIQUE ESO 
+    //MODIFIQUE ESO
     private void onEditAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
