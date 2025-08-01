@@ -22,7 +22,7 @@ import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
-import java.io.IOException; // Importar IOException
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -78,7 +78,6 @@ public class PrestamoController {
             filtrarPrestamos(newValue);
         });
 
-        // Refrescar numeración visual al modificar la lista o al ordenar
         tableViewPrestamos.getItems().addListener((ListChangeListener<Prestamo>) c -> tableViewPrestamos.refresh());
         tableViewPrestamos.sortPolicyProperty().set(tv -> {
             boolean sorted = TableView.DEFAULT_SORT_POLICY.call(tv);
@@ -114,13 +113,48 @@ public class PrestamoController {
         colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<>("fechaPrestamo"));
         colFechaLimite.setCellValueFactory(new PropertyValueFactory<>("fechaLimite"));
         colFechaReal.setCellValueFactory(new PropertyValueFactory<>("fechaReal"));
+
+        // Bloque de código para la columna 'Estado'
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colEstado.setCellFactory(column -> {
+            return new TableCell<Prestamo, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Label statusLabel = new Label(item);
+                        statusLabel.getStyleClass().add("status-label");
+
+                        switch (item) {
+                            case "Finalizado":
+                                statusLabel.getStyleClass().add("status-finalizado");
+                                break;
+                            case "Retrasado":
+                                statusLabel.getStyleClass().add("status-retrasado");
+                                break;
+                            case "Activo":
+                                statusLabel.getStyleClass().add("status-activo");
+                                break;
+                            default:
+                                break;
+                        }
+
+                        HBox container = new HBox(statusLabel);
+                        container.setAlignment(Pos.CENTER);
+                        setGraphic(container);
+                        setText(null);
+                    }
+                }
+            };
+        });
 
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
             private final Button editButton = new Button();
             private final Button viewButton = new Button();
-
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
@@ -232,12 +266,11 @@ public class PrestamoController {
 
     private void onViewPrestamo(Prestamo prestamo) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerPrestamo.fxml")); // Asegúrate de que esta ruta sea correcta
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerPrestamo.fxml"));
             Parent root = loader.load();
 
             VerPrestamoController controller = loader.getController();
             Stage dialogStage = new Stage();
-            //dialogStage.setTitle("Detalles del Préstamo");
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.setResizable(false);
             dialogStage.setScene(new Scene(root));
@@ -245,7 +278,7 @@ public class PrestamoController {
             controller.setDialogStage(dialogStage);
             controller.setPrestamo(prestamo);
 
-            dialogStage.showAndWait(); // Muestra la ventana y espera a que se cierre
+            dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
