@@ -39,15 +39,17 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
         return bibliotecario;
     }
 
+    // Se corrigió el nombre de las tablas a USUARIO_SISTEMA y ROL
     private final String BASE_QUERY = "SELECT u.ID, u.NOMBRE, u.CORREO, u.TELEFONO, u.USERNAME, u.PASSWORD, u.FOTO, u.DIRECCION, u.ESTADO, " +
             "r.ID AS ID_ROL, r.NOMBRE AS NOMBRE_ROL " +
-            "FROM USUARIOS u " +
-            "LEFT JOIN ROLES r ON u.ID_ROL = r.ID ";
+            "FROM USUARIO_SISTEMA u " +
+            "LEFT JOIN ROL r ON u.ID_ROL = r.ID ";
 
     @Override
     public List<Bibliotecario> findAll() throws Exception {
         List<Bibliotecario> bibliotecarios = new ArrayList<>();
-        String query = BASE_QUERY + "WHERE r.NOMBRE = 'Bibliotecario' AND u.ESTADO = 'S'";
+        // Se corrigió el nombre de la tabla a ROL en la cláusula WHERE
+        String query = BASE_QUERY + "WHERE r.NOMBRE = 'Bibliotecario'";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
@@ -76,7 +78,8 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
 
     @Override
     public boolean create(Bibliotecario bibliotecario) throws Exception {
-        String query = "INSERT INTO USUARIOS (NOMBRE, CORREO, TELEFONO, USERNAME, PASSWORD, FOTO, ID_ROL, ESTADO, DIRECCION) " +
+        // Se corrigió el nombre de la tabla a USUARIO_SISTEMA
+        String query = "INSERT INTO USUARIO_SISTEMA (NOMBRE, CORREO, TELEFONO, USERNAME, PASSWORD, FOTO, ID_ROL, ESTADO, DIRECCION) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -96,7 +99,8 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
 
     @Override
     public boolean update(Bibliotecario bibliotecario) throws Exception {
-        String query = "UPDATE USUARIOS SET NOMBRE = ?, CORREO = ?, TELEFONO = ?, USERNAME = ?, PASSWORD = ?, FOTO = ?, ID_ROL = ?, ESTADO = ?, DIRECCION = ? " +
+        // Se corrigió el nombre de la tabla a USUARIO_SISTEMA
+        String query = "UPDATE USUARIO_SISTEMA SET NOMBRE = ?, CORREO = ?, TELEFONO = ?, USERNAME = ?, PASSWORD = ?, FOTO = ?, ID_ROL = ?, ESTADO = ?, DIRECCION = ? " +
                 "WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -117,7 +121,8 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
 
     @Override
     public boolean delete(int id) throws Exception {
-        String query = "DELETE FROM USUARIOS WHERE ID = ?";
+        // Se corrigió el nombre de la tabla a USUARIO_SISTEMA
+        String query = "DELETE FROM USUARIO_SISTEMA WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, id);
@@ -129,6 +134,7 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
     @Override
     public List<Bibliotecario> search(String searchTerm) throws Exception {
         List<Bibliotecario> bibliotecarios = new ArrayList<>();
+        // Se corrigió el nombre de la tabla a ROL en la cláusula WHERE
         String query = BASE_QUERY + "WHERE (LOWER(u.NOMBRE) LIKE ? OR LOWER(u.CORREO) LIKE ? OR LOWER(u.USERNAME) LIKE ?) AND r.NOMBRE = 'Bibliotecario'";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -147,7 +153,8 @@ public class BibliotecarioDaoImpl implements IBibliotecario {
 
     @Override
     public boolean updateStatus(int idBibliotecario, String estado) throws Exception {
-        String query = "UPDATE USUARIOS SET ESTADO = ? WHERE ID = ?";
+        // Se corrigió el nombre de la tabla a USUARIO_SISTEMA
+        String query = "UPDATE USUARIO_SISTEMA SET ESTADO = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, estado);
