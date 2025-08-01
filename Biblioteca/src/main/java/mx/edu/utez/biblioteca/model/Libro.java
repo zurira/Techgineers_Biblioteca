@@ -1,46 +1,28 @@
 package mx.edu.utez.biblioteca.model;
 
-import java.util.List;
-//Clase de libro y aqui agregamos los getters y setters
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+// No se necesita LocalDate si ANIO_PUBLICACION es NUMBER en la BD
+// import java.time.LocalDate;
+
 public class Libro {
-    private int id;
-    private String titulo;
-    private String isbn;
-    private String resumen;
+    private String titulo, isbn, sinopsis, estado, autor, categoria, editorial, portada;
     private int anioPublicacion;
-    private String portada;
-    private Autor autor;
-    private Editorial editorial;
-    private Categoria categoria;
-    private List<Autor> autores;
-    private String estado;
 
-    // Constructor vacío
-    public Libro() {
-    }
-
-    // Constructor existente, actualizado para incluir 'estado'
-    public Libro(int id, String titulo, String isbn, String resumen, int anioPublicacion, String portada,
-                 Autor autor, Editorial editorial, Categoria categoria, String estado) {
-        this.id = id;
+    public Libro(String titulo, String isbn, String sinopsis, int anioPublicacion, String estado,
+                 String autor, String categoria, String editorial, String portada) {
         this.titulo = titulo;
         this.isbn = isbn;
-        this.resumen = resumen;
+        this.sinopsis = sinopsis;
         this.anioPublicacion = anioPublicacion;
-        this.portada = portada;
-        this.autor = autor;
-        this.editorial = editorial;
-        this.categoria = categoria;
         this.estado = estado;
-    }
-
-    // Getters y Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.autor = autor;
+        this.categoria = categoria;
+        this.editorial = editorial;
+        this.portada = portada;
     }
 
     public String getTitulo() {
@@ -59,60 +41,12 @@ public class Libro {
         this.isbn = isbn;
     }
 
-    public String getResumen() {
-        return resumen;
+    public String getSinopsis() {
+        return sinopsis;
     }
 
-    public void setResumen(String resumen) {
-        this.resumen = resumen;
-    }
-
-    public int getAnioPublicacion() {
-        return anioPublicacion;
-    }
-
-    public void setAnioPublicacion(int anioPublicacion) {
-        this.anioPublicacion = anioPublicacion;
-    }
-
-    public String getPortada() {
-        return portada;
-    }
-
-    public void setPortada(String portada) {
-        this.portada = portada;
-    }
-
-    public Autor getAutor() {
-        return autor;
-    }
-
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
-
-    public Editorial getEditorial() {
-        return editorial;
-    }
-
-    public void setEditorial(Editorial editorial) {
-        this.editorial = editorial;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<Autor> getAutores() {
-        return autores;
-    }
-
-    public void setAutores(List<Autor> autores) {
-        this.autores = autores;
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
 
     public String getEstado() {
@@ -123,19 +57,58 @@ public class Libro {
         this.estado = estado;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(String editorial) {
+        this.editorial = editorial;
+    }
+
+    public String getPortada() {
+        return portada;
+    }
+
+    public void setPortada(String portada) {
+        this.portada = portada;
+    }
+
+    public int getAnioPublicacion() {
+        return anioPublicacion;
+    }
+
+    public void setAnioPublicacion(int anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
+
     @Override
     public String toString() {
         return "Libro{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
+                "titulo='" + titulo + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", resumen='" + resumen + '\'' +
+                ", sinopsis='" + sinopsis + '\'' +
                 ", anioPublicacion=" + anioPublicacion +
-                ", portada='" + portada + '\'' +
-                ", autor=" + (autor != null ? autor.getNombreCompleto() : "N/A") +
-                ", editorial=" + (editorial != null ? editorial.getNombre() : "N/A") +
-                ", categoria=" + (categoria != null ? categoria.getNombre() : "N/A") +
                 ", estado='" + estado + '\'' +
+                ", autor='" + autor + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", editorial='" + editorial + '\'' +
+                ", portada='" + portada + '\'' +
                 '}';
     }
 }

@@ -1,0 +1,105 @@
+/* Estilos generales para el formulario */
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-padding: 20;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10;
+}
+
+/* Estilo para el título del formulario */
+.label-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Estilo para los Labels de los campos */
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+/* Estilo para TextField y TextArea */
+.text-field, .text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+.text-area {
+    -fx-wrap-text: true;
+}
+
+/* Estilo para DatePicker */
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-border-width: 1px;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-color: #007bff;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: white;
+}
+
+/* Estilo para ComboBox */
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-border-width: 1px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #007bff;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* Estilo para ImageView de la portada */
+.cover-image-view {
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+    -fx-background-color: #ffffff;
+}
+
+/* Estilos para los botones */
+.button {
+    -fx-background-color: #007bff; /* Color primario por defecto */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 20;
+    -fx-cursor: hand; /* Cambiar el cursor al pasar por encima */
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+}
+
+.button-save {
+    -fx-background-color: #28a745; /* Verde para guardar */
+}
+
+.button-cancel {
+    -fx-background-color: #dc3545; /* Rojo para cancelar */
+}
+
+.button-select-image {
+    -fx-background-color: #6c757d; /* Gris para seleccionar imagen */
+}
