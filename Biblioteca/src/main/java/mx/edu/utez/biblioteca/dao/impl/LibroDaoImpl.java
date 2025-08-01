@@ -35,10 +35,6 @@ public class LibroDaoImpl {
         }
     }
 
-    public List<String> obtenerAutores() {
-        return obtenerValores("SELECT NOMBRE_COMPLETO FROM AUTOR");
-    }
-
 
     private List<String> obtenerValores(String query) {
         List<String> lista = new ArrayList<>();

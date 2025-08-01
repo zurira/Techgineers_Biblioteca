@@ -27,4 +27,9 @@ public class Editorial {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        return nombre; // Para que el ComboBox muestre el nombre
+    }
 }
