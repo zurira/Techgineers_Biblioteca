@@ -46,6 +46,7 @@ public class SuperAdminController {
         //AGREGO ESO NUEVO PARA HACER FUNCIONAL PARA CERRAR SESION
         logoutButton.setOnAction(event -> cerrarSesion());
 
+
     }
 
     //AGREGO ESTO PARA  CERRAR SESION
@@ -79,8 +80,19 @@ public class SuperAdminController {
 
 
     private void configurarColumnas() {
-        TableColumn<Usuario, Number> colId = new TableColumn<>("No.");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Usuario, Void> colId = new TableColumn<>("No.");
+        colId.setCellFactory(column -> new TableCell<Usuario, Void>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
+                }
+            }
+        });
+
 
         TableColumn<Usuario, String> colNombre = new TableColumn<>("Nombre completo");
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -169,7 +181,7 @@ public class SuperAdminController {
 
     private void onEditAdmin(Usuario usuario) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarAdmin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
             Parent root = loader.load();
 
             //EditarAdminController controller = loader.getController();
@@ -179,7 +191,7 @@ public class SuperAdminController {
             modalStage.setTitle("Editar administrador");
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setResizable(false);
-            modalStage.setScene(new Scene(root, 600, 400));
+            modalStage.setScene(new Scene(root));
             modalStage.showAndWait();
 
             cargarAdministradores(); // Refresca después de cerrar

@@ -60,7 +60,7 @@
     -fx-cursor: hand;
 }
 
-/* Barra de búsqueda */
+/* Search Bar */
 .search-bar {
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;
@@ -75,7 +75,7 @@
 }
 
 .search-field {
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: transparent;
     -fx-prompt-text-fill: #aaaaaa;
     -fx-text-fill: #333333;
     -fx-border-width: 0;
