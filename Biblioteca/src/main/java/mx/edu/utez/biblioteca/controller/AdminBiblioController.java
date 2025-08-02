@@ -12,7 +12,7 @@ import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
 import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.Optional;
-
+//vista Administrador bibliotecario
 public class AdminBiblioController {
 
     @FXML
