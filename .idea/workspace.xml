@@ -35,9 +35,15 @@
     "Application.HelloApplication.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< HEAD
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "TTS04",
+    "last_opened_file_path": "C:/Users/letic/Documents/Techgineers_Biblioteca",
+=======
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "last_opened_file_path": "C:/Users/owner/Desktop/Techgineers_Biblioteca",
+>>>>>>> dev
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,8 +74,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -82,7 +88,11 @@
       <updated>1752549459605</updated>
       <workItem from="1752549476346" duration="6637000" />
       <workItem from="1752578724475" duration="53000" />
+<<<<<<< HEAD
+      <workItem from="1753135932152" duration="169000" />
+=======
       <workItem from="1753309405904" duration="137000" />
+>>>>>>> dev
     </task>
     <servers />
   </component>

@@ -1,15 +1,182 @@
+/* Fondo general */
 .root {
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: #EDE9E3;
 }
 
-.button {
+/* Barra superior */
+.top-bar {
     -fx-background-color: #A38F85;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center-right;
+}
+
+.title-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* Información del usuario – Estilo actualizado */
+.user-info-box {
+    -fx-background-color: #726262;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.user-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.user-sub-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F0F0F0;
+    -fx-translate-y: -8px;
+}
+
+.signout-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 26px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: 6px;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+/* Search Bar */
+.search-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.search-icon {
+    -fx-fill: #888888;
+    -fx-padding: 0 5px 0 0;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #aaaaaa;
+    -fx-text-fill: #333333;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Botón Agregar administrador */
+.add-button {
+    -fx-background-color: #CCCCCC;
     -fx-text-fill: white;
-    -fx-padding: 8 15;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #A38F85;
+}
+
+.add-icon {
+    -fx-fill: white;
+}
+
+/* Tabla de administradores */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.nav-item:hover {
+    -fx-background-color: #d1ccc1;
+}
+
+/* Ítem activo */
+.nav-item-active {
+    -fx-background-color: #A38F85;
+}
+
+.nav-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 1.6em;
+    -fx-padding: 0 10px 0 0;
+}
+
+.nav-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f1f0ee;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.table-view .table-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555555;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d1e5f0;
+}
+
+/* Scroll personalizado */
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #cccccc;
     -fx-background-radius: 5;
 }
 
-.text-field {
-    -fx-background-color: white;
-    -fx-border-color: #A38F85;
+.table-view .scroll-bar .track {
+    -fx-background-color: transparent;
 }
+
+.arrow-icon {
+    -fx-fill: white;
+}
+
