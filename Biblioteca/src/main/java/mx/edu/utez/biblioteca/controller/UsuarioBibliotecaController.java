@@ -70,7 +70,17 @@ public class UsuarioBibliotecaController {
     }
 
     private void configurarColumnasTabla() {
-        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colNo.setCellFactory(column -> new TableCell<UsuarioBiblioteca, Integer>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
+                }
+            }
+        });
 
         colNombreCompleto.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getNombre() != null ? cellData.getValue().getNombre() : "N/A")
@@ -200,10 +210,7 @@ public class UsuarioBibliotecaController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
-            if (controller.isGuardado()) {
-                cargarUsuarios();
-            }
+            cargarUsuarios();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,10 +241,8 @@ public class UsuarioBibliotecaController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            cargarUsuarios();
 
-            if (controller.isGuardado()) {
-                recargarTablaUsuarios(); // Si se guardó, actualiza la tabla
-            }
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlertaError("Error al editar", null, "No se pudo abrir el formulario.");
@@ -270,7 +275,22 @@ public class UsuarioBibliotecaController {
 
     private void onViewUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Ver detalles de usuario: " + usuario.getNombre());
-        // Implementar vista de detalles del usuario
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerUsuario.fxml"));
+            Parent root = loader.load();
+
+            VerUsuarioController controller = loader.getController();
+            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Usuario");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error al ver", null, "No se pudo abrir el formulario.");
+        }
     }
 
     private void mostrarAlertaError(String title, String header, String content) {

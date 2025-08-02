@@ -88,7 +88,7 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
     public void create(UsuarioBiblioteca usuario, File fotoFile) throws Exception {
         String query = "INSERT INTO USUARIO_BIBLIOTECA (NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO, FOTOGRAFIA) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = con.prepareStatement(query, new String[]{"ID"}))  {
             ps.setString(1, usuario.getNombre());
             ps.setDate(2, Date.valueOf(usuario.getFechaNacimiento()));
             ps.setString(3, usuario.getCorreo());
@@ -109,6 +109,7 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     usuario.setId(rs.getInt(1));
+                    System.out.println("ID del préstamo generado: " + usuario.getId());
                 }
             }
         }

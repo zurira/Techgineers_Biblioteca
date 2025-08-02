@@ -10,6 +10,7 @@ public class UsuarioBiblioteca {
     private String telefono;
     private String direccion;
     private String estado;
+    private byte[] fotografia;
 
     public UsuarioBiblioteca(){
 
@@ -17,6 +18,15 @@ public class UsuarioBiblioteca {
 
     public UsuarioBiblioteca(int id, String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
         this.id = id;
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.estado = estado;
+        this.direccion = direccion;
+    }
+
+    public UsuarioBiblioteca(String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
@@ -79,6 +89,14 @@ public class UsuarioBiblioteca {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public byte[] getFotografia() {
+        return fotografia;
+    }
+
+    public void setFotografia(byte[] fotografia) {
+        this.fotografia = fotografia;
     }
 
     @Override

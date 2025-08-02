@@ -1,16 +1,14 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class AgregarUsuarioController {
 
@@ -20,16 +18,18 @@ public class AgregarUsuarioController {
     @FXML private TextField txtTelefono;
     @FXML private TextArea txtDireccion;
     @FXML private Label lblFotoSeleccionada;
+    @FXML private Button btnCancelar;
 
     private File archivoFoto;
     private UsuarioBiblioteca usuarioExistente;
     private boolean guardado = false;
+    private final UsuarioBibliotecaDaoImpl dao = new UsuarioBibliotecaDaoImpl();
 
     public boolean isGuardado() {
         return guardado;
     }
 
-    public void setUsuarioExistente(UsuarioBiblioteca usuario) {
+    public void cargarDatosParaEdicion(UsuarioBiblioteca usuario) {
         this.usuarioExistente = usuario;
         txtNombre.setText(usuario.getNombre());
         dateNacimiento.setValue(usuario.getFechaNacimiento());
@@ -39,10 +39,6 @@ public class AgregarUsuarioController {
         lblFotoSeleccionada.setText("(foto actual)");
     }
 
-    public void cargarDatosParaEdicion(UsuarioBiblioteca usuario) {
-        setUsuarioExistente(usuario);
-    }
-
     @FXML
     private void seleccionarFoto() {
         FileChooser chooser = new FileChooser();
@@ -50,8 +46,7 @@ public class AgregarUsuarioController {
         chooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png")
         );
-        File selected = chooser.showOpenDialog(txtNombre.getScene().getWindow());
-
+        File selected = chooser.showOpenDialog(btnCancelar.getScene().getWindow());
         if (selected != null) {
             archivoFoto = selected;
             lblFotoSeleccionada.setText(selected.getName());
@@ -66,39 +61,28 @@ public class AgregarUsuarioController {
             return;
         }
 
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps;
-            String sql;
+        try {
+            UsuarioBiblioteca usuario = new UsuarioBiblioteca();
+            usuario.setNombre(txtNombre.getText());
+            usuario.setFechaNacimiento(dateNacimiento.getValue());
+            usuario.setCorreo(txtEmail.getText());
+            usuario.setTelefono(txtTelefono.getText());
+            usuario.setDireccion(txtDireccion.getText());
+            usuario.setEstado("S"); // Puede hacerse dinámico si decides usar un ComboBox
 
             if (usuarioExistente == null) {
-                sql = "INSERT INTO agregar_usuarios (nombre, fecha_nacimiento, email, telefono, direccion, fotografia, activo) " +
-                        "VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?, 1)";
-                ps = con.prepareStatement(sql);
+                // Nuevo usuario
+                dao.create(usuario, archivoFoto);
+                mostrarAlerta("Éxito", "Usuario agregado correctamente.");
             } else {
-                sql = "UPDATE agregar_usuarios SET nombre = ?, fecha_nacimiento = TO_DATE(?, 'YYYY-MM-DD'), " +
-                        "email = ?, telefono = ?, direccion = ?, fotografia = ? WHERE id_usuario = ?";
-                ps = con.prepareStatement(sql);
-                ps.setInt(7, usuarioExistente.getId());
+                // Actualización
+                usuario.setId(usuarioExistente.getId());
+                dao.update(usuario, archivoFoto);
+                mostrarAlerta("Éxito", "Usuario actualizado correctamente.");
             }
 
-            ps.setString(1, txtNombre.getText());
-            ps.setString(2, dateNacimiento.getValue().toString());
-            ps.setString(3, txtEmail.getText());
-            ps.setString(4, txtTelefono.getText());
-            ps.setString(5, txtDireccion.getText());
-
-            if (archivoFoto != null) {
-                try (FileInputStream fis = new FileInputStream(archivoFoto)) {
-                    ps.setBinaryStream(6, fis, (int) archivoFoto.length());
-                }
-            } else {
-                ps.setBinaryStream(6, null);
-            }
-
-            ps.executeUpdate();
             guardado = true;
-            mostrarAlerta("Éxito", usuarioExistente == null ? "Usuario agregado correctamente." : "Usuario actualizado.");
-            cancelar();
+            cerrarVentana();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,8 +91,12 @@ public class AgregarUsuarioController {
     }
 
     @FXML
-    private void cancelar() {
-        Stage stage = (Stage) txtNombre.getScene().getWindow();
+    public void cancelar(ActionEvent event) {
+        cerrarVentana();
+    }
+
+    private void cerrarVentana() {
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
         if (stage != null) stage.close();
     }
 

@@ -6,7 +6,8 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/8" fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
-            prefWidth="400.0" prefHeight="500.0"> <VBox alignment="TOP_CENTER" spacing="10" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+            prefWidth="400.0" prefHeight="500.0"> <VBox alignment="TOP_CENTER" spacing="10" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+            stylesheets="@../css/EditarUsuario.css">
 
     <Text text="Editar Usuario" styleClass="titulo" />
 
