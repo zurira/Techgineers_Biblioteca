@@ -1,0 +1,253 @@
+/* Estilo general */
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: #EDE9E3;
+}
+
+/* Barra lateral */
+.sidebar {
+    -fx-background-color: #EDE9E3;
+    -fx-padding: 0;
+    -fx-alignment: top-center;
+    -fx-border-color: #A38F85;
+    -fx-border-width: 0px 1px 0px 0px;
+}
+
+.logo-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.sidebar-item-active {
+    -fx-background-color: #d1ccc1; /* Darker beige for active item */
+    -fx-padding: 10px 0 10px 20px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-pref-width: 250px;
+}
+
+.sidebar-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+    -fx-padding: 0 10px 0 0;
+}
+
+.sidebar-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Barra superior */
+.top-bar {
+    -fx-background-color: #A38F85;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center-right;
+}
+
+.title-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffff;
+}
+
+.user-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 2em;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+}
+
+
+/* Titulo */
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+/* Action buttons in table cells */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.action-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 1.2em;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff; /* Blue on hover */
+}
+
+/* Scrollbar */
+.table-view .scroll-bar:vertical .increment-button ,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .scroll-bar:vertical .increment-arrow,
+.table-view .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+}
+
+/* Estilo para el contenedor del recuadro de usuario */
+.user-info-box {
+    -fx-background-color: #726262;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.user-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 24px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: -2px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.user-sub-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F0F0F0;
+    -fx-translate-y: -8px;
+}
+
+.signout-icon {
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 26px;
+    -fx-translate-y: 5px;
+    -fx-translate-x: 6px;
+}
+
+/* Estilos para las secciones de estadísticas*/
+.statistics-section {
+    -fx-background-color: #e7d8c9;
+    -fx-padding: 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    /* -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);*/
+    -fx-vbox-fill-width: true;
+}
+
+.section-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 8 0;
+}
+
+.section-subtitle {
+    -fx-font-size: 15px;
+    -fx-text-fill: #666;
+    -fx-padding: 0 0 15 0;
+}
+
+/* Estilos para los elementos de medalla */
+.medal-item {
+    -fx-background-color: #f5f3f4;
+    -fx-padding: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+
+    -fx-border-color: #f5f3f4;
+    -fx-border-width: 1;
+}
+
+.medal-image {
+    -fx-fit-width: 38px;
+    -fx-fit-height: 38px;
+}
+
+.medal-text {
+    -fx-font-size: 17px;
+    -fx-text-fill: #424242;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 12;
+}
+
+/* Estilo para mensajes de "no resultados" */
+.label-no-results {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-max-width: Infinity;
+    -fx-padding: 20 0 20 0;
+}
+
+/* Estilo del ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Fondo de la barra de desplazamiento */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+    -fx-padding: 0;
+}
+
+/* Estilo de la "pista" o "canal" de la barra */
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #A38F85;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 2px 2px 2px 2px;
+}
+
+/* Estilo del pulgar al pasar el ratón por encima */
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #726262;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Ocultar las flechas */
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
