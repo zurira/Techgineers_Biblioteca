@@ -269,7 +269,7 @@
 
 /* Estilos para el label del estado de los libros */
 .status-label {
-    -fx-background-radius: 5px;
+    -fx-background-radius: 10px;
     -fx-border-radius: 5px;
     -fx-font-weight: bold;
     -fx-font-size: 12px;
