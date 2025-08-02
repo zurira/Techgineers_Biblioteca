@@ -62,26 +62,28 @@ public class AdminBiblioController {
     }
 
     private void configurarColumnasTabla() {
+        // Columna "No." - Muestra el número de fila consecutivo
         colNo.setCellFactory(column -> {
             return new TableCell<Bibliotecario, Void>() {
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
                     if (empty) {
-                        // Si la celda está vacía, no mostrar nada
                         setText(null);
                     } else {
-                        // Muestra el número de fila, empezando desde 1
                         setText(String.valueOf(getIndex() + 1));
                     }
                 }
             };
         });
+
+        // Columnas de datos del bibliotecario
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
 
+        // Columna de Rol - Muestra el nombre del rol
         colRol.setCellValueFactory(cellData -> {
             if (cellData.getValue().getRol() != null) {
                 return new SimpleStringProperty(cellData.getValue().getRol().getNombre());
@@ -90,6 +92,7 @@ public class AdminBiblioController {
             }
         });
 
+        // Columna de Estado - Muestra "Activo" o "Inactivo" con estilos
         colEstado.setCellValueFactory(cellData -> {
             if ("S".equals(cellData.getValue().getEstado())) {
                 return new SimpleStringProperty("Activo");
@@ -116,48 +119,30 @@ public class AdminBiblioController {
                             label.getStyleClass().add("status-inactive");
                         }
 
-                        // Centra el contenido del Label dentro de la celda
                         this.setAlignment(Pos.CENTER);
-
-                        // Establece el Label como el gráfico de la celda
                         setGraphic(label);
-                        setText(null); // No mostrar el texto directamente en la celda
+                        setText(null);
                     }
                 }
             };
         });
 
-
-
+        // Columna de Acciones - Con botones e iconos dinámicos
         colAcciones.setCellFactory(param -> new TableCell<Bibliotecario, Void>() {
+            private final HBox buttons = new HBox(5);
             private final Button editButton = new Button();
-            private final Button deleteButton = new Button();
             private final Button changeStatusButton = new Button();
 
             {
-                // Botón de edición
+                // Configuración inicial de los botones
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
                 editButton.setTooltip(new Tooltip("Editar bibliotecario"));
 
-                editButton.setOnAction(event -> {
-                    Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
-                    onEditBibliotecario(bibliotecario);
-                });
-
-                // Botón de cambio de estado
-                FontIcon statusIcon = new FontIcon("fa-eye-slash");
-                statusIcon.getStyleClass().add("action-icon");
-                changeStatusButton.setGraphic(statusIcon);
-                changeStatusButton.getStyleClass().add("action-button");
-                changeStatusButton.setTooltip(new Tooltip("Cambiar estado"));
-
-                changeStatusButton.setOnAction(event -> {
-                    Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
-                    onChangeStatus(bibliotecario);
-                });
+                buttons.setAlignment(Pos.CENTER);
+                buttons.getChildren().addAll(editButton, changeStatusButton);
             }
 
             @Override
@@ -166,8 +151,25 @@ public class AdminBiblioController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton, changeStatusButton);
-                    buttons.setAlignment(Pos.CENTER);
+                    Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
+
+                    // Configura el botón de cambio de estado dinámicamente
+                    FontIcon statusIcon;
+                    if ("S".equals(bibliotecario.getEstado())) {
+                        statusIcon = new FontIcon("fa-toggle-on");
+                        changeStatusButton.setTooltip(new Tooltip("Desactivar"));
+                    } else {
+                        statusIcon = new FontIcon("fa-toggle-off");
+                        changeStatusButton.setTooltip(new Tooltip("Activar"));
+                    }
+                    statusIcon.getStyleClass().add("action-icon");
+                    changeStatusButton.setGraphic(statusIcon);
+                    changeStatusButton.getStyleClass().add("action-button");
+
+                    // Asigna las acciones a los botones
+                    editButton.setOnAction(event -> onEditBibliotecario(bibliotecario));
+                    changeStatusButton.setOnAction(event -> onChangeStatus(bibliotecario));
+
                     setGraphic(buttons);
                 }
             }
