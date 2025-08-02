@@ -54,6 +54,7 @@
             <artifactId>oraclepki</artifactId>
             <version>21.9.0.0</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>com.oracle.database.security</groupId>
             <artifactId>osdt_core</artifactId>
@@ -64,6 +65,8 @@
             <artifactId>osdt_cert</artifactId>
             <version>21.9.0.0</version>
         </dependency>
+=======
+>>>>>>> TTS21
 
         <!-- Ikonli -->
         <dependency>

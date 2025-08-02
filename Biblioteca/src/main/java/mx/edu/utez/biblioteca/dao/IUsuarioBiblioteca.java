@@ -5,7 +5,10 @@ import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import java.util.List;
 
 public interface IUsuarioBiblioteca {
-    public int obtenerIdPorNombre(String nombre);
-    public List<UsuarioBiblioteca> findAll();
+    List<UsuarioBiblioteca> findAll() throws Exception;
+    UsuarioBiblioteca findById(int id) throws Exception;
+    void create(UsuarioBiblioteca usuario) throws Exception;
+    void update(UsuarioBiblioteca usuario) throws Exception;
+    void delete(int id) throws Exception;
+    List<UsuarioBiblioteca> search(String searchTerm) throws Exception;
 }
-
