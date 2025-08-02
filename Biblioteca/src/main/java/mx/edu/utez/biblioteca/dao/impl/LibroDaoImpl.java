@@ -22,7 +22,7 @@ public class LibroDaoImpl implements ILibro {
                 "    l.TITULO, \n" +
                 "    l.ANIO_PUBLICACION,\n" +
                 "    l.PORTADA,\n" +
-                "    l.RESUMEN,\n" +
+                "    l.SINOPSIS,\n" +
                 "    l.ESTADO,\n" +
                 "    e.ID AS ID_EDITORIAL,\n" +
                 "    e.NOMBRE AS NOMBRE_EDITORIAL,\n" +
@@ -46,7 +46,7 @@ public class LibroDaoImpl implements ILibro {
                 libro.setTitulo(rs.getString("TITULO"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
-                libro.setResumen(rs.getString("RESUMEN"));
+                libro.setResumen(rs.getString("SINOPSIS"));
                 libro.setEstado(rs.getString("ESTADO"));
 
                 Editorial editorial = new Editorial();
@@ -70,7 +70,7 @@ public class LibroDaoImpl implements ILibro {
     @Override
     public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria) {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.RESUMEN, l.ESTADO, " +
+        String sql = "SELECT l.ID, l.TITULO, l.ANIO_PUBLICACION, l.PORTADA, l.SINOPSIS, l.ESTADO, " +
                 "e.ID AS ID_EDITORIAL, e.NOMBRE AS NOMBRE_EDITORIAL, " +
                 "(SELECT LISTAGG(a.NOMBRE_COMPLETO, ', ') WITHIN GROUP (ORDER BY a.NOMBRE_COMPLETO) " +
                 " FROM LIBRO_AUTOR la JOIN AUTOR a ON la.ID_AUTOR = a.ID WHERE la.ID_LIBRO = l.ID) AS AUTORES " +
@@ -108,7 +108,7 @@ public class LibroDaoImpl implements ILibro {
                 libro.setTitulo(rs.getString("TITULO"));
                 libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
                 libro.setPortada(rs.getString("PORTADA"));
-                libro.setResumen(rs.getString("RESUMEN"));
+                libro.setResumen(rs.getString("SINOPSIS"));
                 libro.setEstado(rs.getString("ESTADO"));
 
                 Editorial editorial = new Editorial();
