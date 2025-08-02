@@ -30,19 +30,33 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
     }
 
     @Override
-    public List<UsuarioBiblioteca> findAll() throws Exception {
+    public List<UsuarioBiblioteca> findAll() {
         List<UsuarioBiblioteca> usuarios = new ArrayList<>();
-        String query = "SELECT ID, NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO FROM USUARIO_BIBLIOTECA";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query);
+        String query = "SELECT * FROM USUARIO_BIBLIOTECA";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
-                usuarios.add(buildUsuarioFromResultSet(rs));
+                UsuarioBiblioteca usuario = new UsuarioBiblioteca();
+                usuario.setId(rs.getInt("ID"));
+                usuario.setNombre(rs.getString("NOMBRE"));
+                usuario.setFechaNacimiento(rs.getDate("FECHA_NACIMIENTO").toLocalDate());
+                usuario.setCorreo(rs.getString("CORREO"));
+                usuario.setTelefono(rs.getString("TELEFONO"));
+                usuario.setEstado(rs.getString("ESTADO"));
+                usuario.setDireccion(rs.getString("DIRECCION"));
+
+                usuarios.add(usuario);
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return usuarios;
     }
-
     @Override
     public UsuarioBiblioteca findById(int id) throws Exception {
         UsuarioBiblioteca usuario = null;
