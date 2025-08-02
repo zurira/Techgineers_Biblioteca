@@ -3,7 +3,6 @@ module mx.edu.utez.biblioteca {
         requires javafx.controls;
         requires javafx.fxml;
         requires java.sql;
-
         requires org.controlsfx.controls;
         requires org.kordamp.bootstrapfx.core;
         requires org.kordamp.ikonli.javafx;
