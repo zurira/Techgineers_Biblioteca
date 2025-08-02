@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -17,8 +16,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
-import java.util.List;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.util.List;
 
 public class SuperAdminController {
     @FXML private TableView<Usuario> adminTable;
@@ -43,13 +43,9 @@ public class SuperAdminController {
             return sorted;
         });
         addButton.setOnAction(event -> onAddAdmin());
-        //AGREGO ESO NUEVO PARA HACER FUNCIONAL PARA CERRAR SESION
         logoutButton.setOnAction(event -> cerrarSesion());
-
-
     }
 
-    //AGREGO ESTO PARA  CERRAR SESION
     private void cerrarSesion() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
@@ -77,7 +73,6 @@ public class SuperAdminController {
             e.printStackTrace();
         }
     }
-
 
     private void configurarColumnas() {
         TableColumn<Usuario, Void> colId = new TableColumn<>("No.");
@@ -112,7 +107,6 @@ public class SuperAdminController {
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
-            private final Button deleteButton = new Button();
 
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
@@ -141,11 +135,10 @@ public class SuperAdminController {
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
 
-
     private void cargarAdministradores() {
         try {
             List<Usuario> admins = new UsuarioDaoImpl().findByRolNombre("ADMINISTRADOR");
-            listaAdmin = FXCollections.observableArrayList(admins); // <-- Aquí guardas en la lista
+            listaAdmin = FXCollections.observableArrayList(admins);
             adminTable.setItems(listaAdmin);
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,14 +171,14 @@ public class SuperAdminController {
         lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
-
+    //MODIFIQUE ESO
     private void onEditAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
             Parent root = loader.load();
 
-            //EditarAdminController controller = loader.getController();
-            //controller.initData(usuario);
+            EditAdminController controller = loader.getController();
+            controller.setUsuario(usuario);
 
             Stage modalStage = new Stage();
             modalStage.setTitle("Editar administrador");
@@ -194,7 +187,7 @@ public class SuperAdminController {
             modalStage.setScene(new Scene(root));
             modalStage.showAndWait();
 
-            cargarAdministradores(); // Refresca después de cerrar
+            cargarAdministradores();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -214,7 +207,6 @@ public class SuperAdminController {
             modalStage.setScene(new Scene(root));
             modalStage.showAndWait();
 
-            //  Verifica si se agregó exitosamente
             if (controller.seAgregoUsuario()) {
                 cargarAdministradores();
             }
@@ -224,8 +216,7 @@ public class SuperAdminController {
         }
     }
 
-
     private void onDeleteAdmin(Usuario usuario) {
-        // Lógica pendiente
+        // Eliminación desactivada por decisión de Tania
     }
 }
