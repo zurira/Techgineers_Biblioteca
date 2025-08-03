@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Prestamos");
+        stage.setTitle("Usuarios");
         stage.setScene(scene);
         // Esta línea maximiza la ventana.
         stage.setMaximized(true);
