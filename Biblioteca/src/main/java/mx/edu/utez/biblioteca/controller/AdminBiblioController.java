@@ -69,7 +69,7 @@ public class AdminBiblioController {
     }
 
     private void configurarColumnasTabla() {
-        // Columna "No." - Muestra el número de fila consecutivo
+        // Columna "No." - Ayuda para que los usuarios se visualicen conforme vayan siedo registrados
         colNo.setCellFactory(column -> {
             return new TableCell<Bibliotecario, Void>() {
                 @Override
@@ -160,7 +160,7 @@ public class AdminBiblioController {
                 } else {
                     Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
 
-                    // Configura el botón de cambio de estado dinámicamente
+                    // Configura el botón de cambio de estado dinámicamente facilita el entendimiento del botón
                     FontIcon statusIcon;
                     if ("S".equals(bibliotecario.getEstado())) {
                         statusIcon = new FontIcon("fa-toggle-on");
@@ -243,7 +243,7 @@ public class AdminBiblioController {
             // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
             stage.showAndWait();
 
-            // Después de que el modal se cierra, verificamos si se agregó un nuevo usuario
+            // Después de que el modal se cierra, verificamos si se agregó un nuevo usuario,
             if (modalController.seAgregoUsuario()) {
                 // Si se agregó, recargamos los datos de la tabla
                 cargarBibliotecarios();
