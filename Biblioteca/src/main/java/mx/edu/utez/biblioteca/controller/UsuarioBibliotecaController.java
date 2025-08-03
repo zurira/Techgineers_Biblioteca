@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -81,65 +80,78 @@ public class UsuarioBibliotecaController {
                 }
             }
         });
-
+        // Ajuste de anchura para cada columna
+        colNo.setPrefWidth(70);
+        colNombreCompleto.setPrefWidth(180);
+        colFechaNacimiento.setPrefWidth(160);
+        colCorreo.setPrefWidth(180);
+        colTelefono.setPrefWidth(120);
+        colDireccion.setPrefWidth(200);
+        colEstado.setPrefWidth(100);
+        colAcciones.setPrefWidth(90);
         colNombreCompleto.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getNombre() != null ? cellData.getValue().getNombre() : "N/A")
         );
-
         colFechaNacimiento.setCellValueFactory(new PropertyValueFactory<>("fechaNacimiento"));
-
         colCorreo.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getCorreo() != null ? cellData.getValue().getCorreo() : "N/A")
         );
-
         colTelefono.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getTelefono() != null ? cellData.getValue().getTelefono() : "N/A")
         );
-
         colDireccion.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDireccion() != null ? cellData.getValue().getDireccion() : "N/A")
         );
-
         colEstado.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getEstado() != null ? cellData.getValue().getEstado() : "N/A")
         );
+        colEstado.setCellFactory(column -> new TableCell<UsuarioBiblioteca, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    Label statusLabel = new Label(item);
+                    statusLabel.getStyleClass().clear();
+                    if ("Activo".equals(item)) {
+                        statusLabel.getStyleClass().add("status-activo");
+                    } else if ("Inactivo".equals(item)) {
+                        statusLabel.getStyleClass().add("status-inactivo");
+                    }
+                    HBox hbox = new HBox(statusLabel);
+                    hbox.setAlignment(Pos.CENTER_LEFT);
+                    setGraphic(hbox);
+                    this.setAlignment(Pos.CENTER_LEFT);
+                }
+            }
+        });
 
-        colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<UsuarioBiblioteca, Void>() {
+            private final HBox buttons = new HBox(5);
             private final Button editButton = new Button();
-            private final Button deleteButton = new Button();
+            private final Button changeStatusButton = new Button();
             private final Button viewButton = new Button();
-
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
-
-                FontIcon deleteIcon = new FontIcon("fa-trash");
-                deleteIcon.getStyleClass().add("action-icon");
-                deleteButton.setGraphic(deleteIcon);
-                deleteButton.getStyleClass().add("action-button");
+                editButton.setTooltip(new Tooltip("Editar usuario"));
 
                 FontIcon viewIcon = new FontIcon("fa-eye");
                 viewIcon.getStyleClass().add("action-icon");
                 viewButton.setGraphic(viewIcon);
                 viewButton.getStyleClass().add("action-button");
+                viewButton.setTooltip(new Tooltip("Ver detalles"));
 
-                editButton.setOnAction(event -> {
-                    UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
-                    onEditUsuario(usuario);
-                });
+                // Alinea los botones a la izquierda
+                buttons.setAlignment(Pos.CENTER_LEFT);
+                buttons.getChildren().addAll(editButton, changeStatusButton, viewButton);
 
-                deleteButton.setOnAction(event -> {
-                    UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
-                    onDeleteUsuario(usuario);
-                });
-
-                viewButton.setOnAction(event -> {
-                    UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
-                    onViewUsuario(usuario);
-                });
+                editButton.setOnAction(event -> onEditUsuario(getTableView().getItems().get(getIndex())));
+                viewButton.setOnAction(event -> onViewUsuario(getTableView().getItems().get(getIndex())));
+                changeStatusButton.setOnAction(event -> onChangeStatus(getTableView().getItems().get(getIndex())));
             }
 
             @Override
@@ -148,8 +160,21 @@ public class UsuarioBibliotecaController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton, deleteButton, viewButton);
-                    buttons.setAlignment(Pos.CENTER);
+                    // Alinea la celda completa a la izquierda
+                    this.setAlignment(Pos.CENTER_LEFT);
+                    UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
+                    FontIcon statusIcon;
+                    if ("Activo".equals(usuario.getEstado())) {
+                        statusIcon = new FontIcon("fa-toggle-on");
+                        changeStatusButton.setTooltip(new Tooltip("Desactivar"));
+                    } else {
+                        statusIcon = new FontIcon("fa-toggle-off");
+                        changeStatusButton.setTooltip(new Tooltip("Activar"));
+                    }
+                    statusIcon.getStyleClass().add("action-icon");
+                    changeStatusButton.setGraphic(statusIcon);
+                    changeStatusButton.getStyleClass().add("action-button");
+
                     setGraphic(buttons);
                 }
             }
@@ -182,9 +207,8 @@ public class UsuarioBibliotecaController {
                                 (usuario.getCorreo() != null && usuario.getCorreo().toLowerCase().contains(filtro)) ||
                                 (usuario.getTelefono() != null && usuario.getTelefono().toLowerCase().contains(filtro)) ||
                                 (usuario.getDireccion() != null && usuario.getDireccion().toLowerCase().contains(filtro)) ||
-                                usuario.getFechaNacimiento().toString().contains(filtro) ||
-                                (usuario.getEstado().equalsIgnoreCase("S") && "activo".contains(filtro)) ||
-                                (usuario.getEstado().equalsIgnoreCase("N") && "inactivo".contains(filtro));
+                                (usuario.getFechaNacimiento() != null && usuario.getFechaNacimiento().toString().contains(filtro)) ||
+                                (usuario.getEstado() != null && usuario.getEstado().toLowerCase().contains(filtro));
 
                 return coincide;
             });
@@ -234,7 +258,7 @@ public class UsuarioBibliotecaController {
             Parent root = loader.load();
 
             EditarUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
+            controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
             stage.setTitle("Editar Usuario");
@@ -249,29 +273,28 @@ public class UsuarioBibliotecaController {
         }
     }
 
-    private void recargarTablaUsuarios() {
+    private void onChangeStatus(UsuarioBiblioteca usuario) {
+        String nuevoEstado = "Activo".equals(usuario.getEstado()) ? "Inactivo" : "Activo";
+        String accion = "Activo".equals(nuevoEstado) ? "activar" : "desactivar";
 
-    }
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar cambio de estado");
+        confirmacion.setHeaderText("¿Estás seguro de que quieres " + accion + " a este usuario?");
+        confirmacion.setContentText("El usuario no se eliminará, solo se cambiará su estado a " + nuevoEstado + ".");
 
-        private void onDeleteUsuario(UsuarioBiblioteca usuario) {
-            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.setTitle("Confirmar desactivación");
-            confirmacion.setHeaderText("¿Deseas desactivar a este usuario?");
-            confirmacion.setContentText("El usuario no se eliminará, solo se cambiará su estado a inactivo.");
-
-            Optional<ButtonType> resultado = confirmacion.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                try {
-                    usuario.setEstado("N"); // Inactivo
-                    usuarioDao.update(usuario); // Actualizar en base de datos
-                    recargarTablaUsuarios();   // Refrescar tabla
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    mostrarAlertaError("Error al desactivar", null, "No se pudo actualizar el estado del usuario.");
-                }
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            try {
+                usuario.setEstado(nuevoEstado);
+                usuarioDao.update(usuario);
+                mostrarAlertaInformacion("Éxito", "Estado actualizado", "El estado del usuario se ha actualizado correctamente.");
+                cargarUsuarios();
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAlertaError("Error de Actualización", "No se pudo actualizar el estado", "Hubo un error de conexión con la base de datos.");
             }
         }
-
+    }
 
     private void onViewUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Ver detalles de usuario: " + usuario.getNombre());
@@ -280,10 +303,10 @@ public class UsuarioBibliotecaController {
             Parent root = loader.load();
 
             VerUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
+            controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
-            stage.setTitle("Editar Usuario");
+            stage.setTitle("Ver Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -295,6 +318,14 @@ public class UsuarioBibliotecaController {
 
     private void mostrarAlertaError(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void mostrarAlertaInformacion(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);

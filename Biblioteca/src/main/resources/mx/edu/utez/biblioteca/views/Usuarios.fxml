@@ -14,6 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.chart.BubbleChart?>
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="mx.edu.utez.biblioteca.controller.UsuarioBibliotecaController"
@@ -33,25 +34,25 @@
                         </VBox.margin>
                     </StackPane>
                     <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
-                        <children>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item-active">
-                                <children>
-                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
-                                    <Label styleClass="sidebar-label" text="Usuarios" />
-                                </children>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
-                                <children>
+                        <children >
+                          <Button styleClass="sidebar-item-active">
+                              <graphic>
+                                  <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
+                                  <Label styleClass="sidebar-label" text="Usuarios" />
+                              </graphic>
+                          </Button>
+                            <Button styleClass="sidebar-item">
+                                <graphic>
                                     <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" />
                                     <Label styleClass="sidebar-label" text="Préstamos" />
-                                </children>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
-                                <children>
+                                </graphic>
+                            </Button>
+                            <Button styleClass="sidebar-item">
+                                <graphic>
                                     <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon" />
                                     <Label styleClass="sidebar-label" text="Estadísticas" />
-                                </children>
-                            </HBox>
+                                </graphic>
+                            </Button>
                         </children>
                         <VBox.margin>
                             <Insets left="20.0" top="50.0" />
@@ -80,7 +81,7 @@
                                         <children>
                                             <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
                                             <Label styleClass="user-name" text="Bibliotecario" />
-                                            <FontIcon iconLiteral="fa-arrow-right" iconSize="24" styleClass="arrow-icon" />
+                                            <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon" />
                                         </children>
                                     </HBox>
                                     <Label styleClass="user-sub-label" text="Nombre usuario" />
