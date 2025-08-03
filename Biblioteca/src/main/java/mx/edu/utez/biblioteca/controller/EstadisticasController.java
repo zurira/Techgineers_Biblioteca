@@ -1,12 +1,21 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.IEstadisticas;
 import mx.edu.utez.biblioteca.dao.impl.EstadisticasDaoImpl;
 import java.net.URL;
@@ -23,6 +32,7 @@ public class EstadisticasController implements Initializable {
     private VBox vboxTopClients;
 
     private IEstadisticas estadisticasDao;
+    @FXML private Button btnlogout;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,6 +105,73 @@ public class EstadisticasController implements Initializable {
             case 3: return "/mx/edu/utez/biblioteca/img/fourth.png";
             case 4: return "/mx/edu/utez/biblioteca/img/fifth.png";
             default: return "";
+        }
+    }
+
+    @FXML
+    private void irUsuarios(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irPrestamos(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Prestamo.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void cerrarSesion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
+            Parent modalRoot = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("¿Cerrar sesión?");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+            if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
+
+                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
+                currentStage.setScene(new Scene(loginRoot, 600, 400));
+                currentStage.setTitle("Inicio de sesión");
+            }
+
+            ModalCerrarSesionController.cerrarSesionConfirmado = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

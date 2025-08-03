@@ -112,8 +112,8 @@ public class UsuarioController {
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 720);
-            stage.setScene(scene);
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
             stage.show();
 
         } catch (Exception ex) {

@@ -34,23 +34,32 @@
                         </VBox.margin>
                     </StackPane>
                     <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
-                        <children >
-                          <Button styleClass="sidebar-item-active">
-                              <graphic>
-                                  <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
-                                  <Label styleClass="sidebar-label" text="Usuarios" />
-                              </graphic>
-                          </Button>
-                            <Button styleClass="sidebar-item">
+                        <children>
+
+                            <Button styleClass="sidebar-item-active" prefWidth="250.0">
                                 <graphic>
-                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" />
-                                    <Label styleClass="sidebar-label" text="Préstamos" />
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Usuarios"/>
+                                    </HBox>
                                 </graphic>
                             </Button>
-                            <Button styleClass="sidebar-item">
+
+                            <Button onAction="#irPrestamos" styleClass="sidebar-item" prefWidth="250.0">
                                 <graphic>
-                                    <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon" />
-                                    <Label styleClass="sidebar-label" text="Estadísticas" />
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Préstamos"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+
+                            <Button onAction="#irEstadisticas" styleClass="sidebar-item" prefWidth="250.0">
+                                <graphic>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                        <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Estadísticas"/>
+                                    </HBox>
                                 </graphic>
                             </Button>
                         </children>
@@ -77,13 +86,15 @@
 
                             <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
                                 <children>
-                                    <HBox alignment="CENTER" spacing="5.0">
-                                        <children>
-                                            <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon" />
-                                            <Label styleClass="user-name" text="Bibliotecario" />
-                                            <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon" />
-                                        </children>
-                                    </HBox>
+                                    <Button onAction="#cerrarSesion" styleClass="sidebar-item">
+                                        <graphic>
+                                            <HBox alignment="CENTER" spacing="5.0">
+                                                <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>
+                                                <Label styleClass="user-name" text="Bibliotecario"/>
+                                                <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon"/>
+                                            </HBox>
+                                        </graphic>
+                                    </Button>
                                     <Label styleClass="user-sub-label" text="Nombre usuario" />
                                 </children>
                             </VBox>
