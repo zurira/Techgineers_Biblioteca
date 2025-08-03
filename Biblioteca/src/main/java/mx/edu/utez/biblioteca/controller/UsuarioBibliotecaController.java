@@ -182,9 +182,8 @@ public class UsuarioBibliotecaController {
                                 (usuario.getCorreo() != null && usuario.getCorreo().toLowerCase().contains(filtro)) ||
                                 (usuario.getTelefono() != null && usuario.getTelefono().toLowerCase().contains(filtro)) ||
                                 (usuario.getDireccion() != null && usuario.getDireccion().toLowerCase().contains(filtro)) ||
-                                usuario.getFechaNacimiento().toString().contains(filtro) ||
-                                (usuario.getEstado().equalsIgnoreCase("S") && "activo".contains(filtro)) ||
-                                (usuario.getEstado().equalsIgnoreCase("N") && "inactivo".contains(filtro));
+                                (usuario.getFechaNacimiento() != null && usuario.getFechaNacimiento().toString().contains(filtro)) ||
+                                (usuario.getEstado() != null && usuario.getEstado().toLowerCase().contains(filtro)); // Corregido
 
                 return coincide;
             });
@@ -234,7 +233,7 @@ public class UsuarioBibliotecaController {
             Parent root = loader.load();
 
             EditarUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
+            controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
             stage.setTitle("Editar Usuario");
@@ -249,29 +248,24 @@ public class UsuarioBibliotecaController {
         }
     }
 
-    private void recargarTablaUsuarios() {
+    private void onDeleteUsuario(UsuarioBiblioteca usuario) {
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar desactivación");
+        confirmacion.setHeaderText("¿Deseas desactivar a este usuario?");
+        confirmacion.setContentText("El usuario no se eliminará, solo se cambiará su estado a inactivo.");
 
-    }
-
-        private void onDeleteUsuario(UsuarioBiblioteca usuario) {
-            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.setTitle("Confirmar desactivación");
-            confirmacion.setHeaderText("¿Deseas desactivar a este usuario?");
-            confirmacion.setContentText("El usuario no se eliminará, solo se cambiará su estado a inactivo.");
-
-            Optional<ButtonType> resultado = confirmacion.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                try {
-                    usuario.setEstado("N"); // Inactivo
-                    usuarioDao.update(usuario); // Actualizar en base de datos
-                    recargarTablaUsuarios();   // Refrescar tabla
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    mostrarAlertaError("Error al desactivar", null, "No se pudo actualizar el estado del usuario.");
-                }
+        Optional<ButtonType> resultado = confirmacion.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            try {
+                usuario.setEstado("Inactivo"); // <-- CORREGIDO
+                usuarioDao.update(usuario);
+                cargarUsuarios();   // <-- CORREGIDO: ahora recarga la tabla
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAlertaError("Error al desactivar", null, "No se pudo actualizar el estado del usuario.");
             }
         }
-
+    }
 
     private void onViewUsuario(UsuarioBiblioteca usuario) {
         System.out.println("Ver detalles de usuario: " + usuario.getNombre());
@@ -280,7 +274,7 @@ public class UsuarioBibliotecaController {
             Parent root = loader.load();
 
             VerUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario); // Llenar campos con los datos actuales
+            controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
             stage.setTitle("Editar Usuario");
