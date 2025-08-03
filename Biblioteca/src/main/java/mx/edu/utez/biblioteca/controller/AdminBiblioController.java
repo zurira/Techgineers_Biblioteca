@@ -4,14 +4,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
-import org.kordamp.ikonli.javafx.FontIcon;
+import java.io.IOException;
+import java.util.Comparator;
 import java.util.Optional;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 //vista Administrador bibliotecario
 public class AdminBiblioController {
 
@@ -179,6 +186,8 @@ public class AdminBiblioController {
     private void cargarBibliotecarios() {
         try {
             listaBibliotecarios = FXCollections.observableArrayList(bibliotecarioDao.findAll());
+            // Se ordena la lista por el ID de forma ascendente
+            listaBibliotecarios.sort(Comparator.comparing(Bibliotecario::getId));
             tableViewBibliotecarios.setItems(listaBibliotecarios);
             lblSinResultados.setVisible(listaBibliotecarios.isEmpty());
         } catch (Exception e) {
@@ -192,6 +201,7 @@ public class AdminBiblioController {
         if (filtro == null || filtro.trim().isEmpty()) {
             tableViewBibliotecarios.setItems(listaBibliotecarios);
             lblSinResultados.setVisible(false);
+            tableViewBibliotecarios.refresh();
             return;
         }
 
@@ -217,8 +227,32 @@ public class AdminBiblioController {
 
     @FXML
     private void onAddBibliotecario() {
-        System.out.println("Agregar nuevo bibliotecario");
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Agregar Bibliotecario", "Aquí se abrirá la ventana para agregar un nuevo bibliotecario.");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarBibliotecario.fxml"));
+            Parent root = fxmlLoader.load();
+
+            // Obtenemos una referencia al controlador del modal
+            ModalAgregarBibliotecarioController modalController = fxmlLoader.getController();
+
+            // Creamos y mostramos la ventana modal
+            Stage stage = new Stage();
+            stage.setTitle("Agregar Bibliotecario");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+
+            // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
+            stage.showAndWait();
+
+            // Después de que el modal se cierra, verificamos si se agregó un nuevo usuario
+            if (modalController.seAgregoUsuario()) {
+                // Si se agregó, recargamos los datos de la tabla
+                cargarBibliotecarios();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar bibliotecario.");
+        }
     }
 
     private void onEditBibliotecario(Bibliotecario bibliotecario) {
