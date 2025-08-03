@@ -27,6 +27,8 @@
     -fx-background-radius: 4;
     -fx-padding: 5 10;
     -fx-font-size: 13px;
+    -fx-min-width: 250;
+    -fx-max-width: 250;
 }
 
 .text-area {

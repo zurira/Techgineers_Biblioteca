@@ -10,7 +10,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Usuarios");
         stage.setScene(scene);

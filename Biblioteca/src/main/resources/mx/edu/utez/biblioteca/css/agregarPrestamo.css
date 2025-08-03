@@ -11,12 +11,6 @@
 
 }
 
-.combo-box, .date-picker {
-    -fx-padding: 3;
-    -fx-min-width: 250;
-    -fx-max-width: 250;
-}
-
 .table-view {
     -fx-pref-width: 600;
 }
@@ -41,8 +35,6 @@
 }
 
 .button-cancelar:hover {
-    -fx-background-color: #A38F85;
-    -fx-text-fill: #FFFFFF;
     -fx-cursor: hand;
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
@@ -54,4 +46,33 @@
     -fx-cursor: hand;
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
+}
+
+.titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5e4631;
+}
+
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7b6c5d;
+    -fx-font-style: italic;
+}
+
+.combo-box, .text-field, .text-area, .date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbb9a5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-size: 13px;
+    -fx-padding: 3;
+    -fx-min-width: 250;
+    -fx-max-width: 250;
+}
+
+.form-layout {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
 }

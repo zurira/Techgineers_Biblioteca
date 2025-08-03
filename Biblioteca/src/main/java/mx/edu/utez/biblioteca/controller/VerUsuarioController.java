@@ -25,6 +25,7 @@ public class VerUsuarioController {
     @FXML private ImageView imgFoto; // Para mostrar la foto
     @FXML private Button btnCerrar;
 
+
     private UsuarioBiblioteca usuarioVer;
 
     // Método para cargar los detalles del usuario en la vista

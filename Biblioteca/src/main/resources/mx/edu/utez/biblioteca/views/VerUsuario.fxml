@@ -10,11 +10,11 @@
 <?import javafx.scene.control.DatePicker?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.VerUsuarioController"
             prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;"
-            stylesheets="@../css/EditarUsuario.css">
+            stylesheets="@../css/verModal.css">
 
     <!-- Foto -->
     <VBox layoutX="30" layoutY="70">
-        <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"/>
+        <ImageView fx:id="imgFoto" fitWidth="160" fitHeight="160" preserveRatio="true"/>
         <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
     </VBox>
 
@@ -24,23 +24,23 @@
 
     <!-- Campos de texto -->
     <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
-    <TextField fx:id="txtNombre" layoutX="250" layoutY="95" prefWidth="200"/>
+    <TextField fx:id="txtNombre" layoutX="250" layoutY="95" prefWidth="200" style="-fx-background-color: #C7C7C7;"/>
 
     <Label layoutX="470" layoutY="70" text="Correo:*"/>
-    <TextField fx:id="txtCorreo" layoutX="470" layoutY="95" prefWidth="200"/>
+    <TextField fx:id="txtCorreo" layoutX="470" layoutY="95" prefWidth="200" style="-fx-background-color: #C7C7C7;"/>
 
     <Label layoutX="690" layoutY="70" text="Teléfono:*"/>
-    <TextField fx:id="txtTelefono" layoutX="690" layoutY="95" prefWidth="200"/>
+    <TextField fx:id="txtTelefono" layoutX="690" layoutY="95" prefWidth="200" style="-fx-background-color: #C7C7C7;"/>
 
     <Label text="Fecha Nacimiento:" layoutX="250" layoutY="135"/>
-    <DatePicker fx:id="dpFechaNacimiento" layoutX="250" layoutY="160"/>
+    <DatePicker fx:id="dpFechaNacimiento" layoutX="250" layoutY="160" style="-fx-background-color: #C7C7C7;"/>
 
     <Label layoutX="30" layoutY="280" text="Dirección:"/>
-    <TextField fx:id="txtDireccion" layoutX="30" layoutY="305" prefWidth="860"/>
+    <TextField fx:id="txtDireccion" layoutX="30" layoutY="305" prefWidth="860" style="-fx-background-color: #C7C7C7;"/>
 
     <!-- Botones -->
     <HBox layoutX="830" layoutY="360" spacing="10" alignment="CENTER">
-        <Button fx:id="btnCerrar" text="Cerrar" onAction="#cerrarVentana" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+        <Button fx:id="btnCerrar" text="Cerrar" onAction="#cerrarVentana" styleClass="button-guardar"/>
     </HBox>
 
 </AnchorPane>
