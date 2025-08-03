@@ -104,6 +104,28 @@ public class UsuarioBibliotecaController {
                 new SimpleStringProperty(cellData.getValue().getEstado() != null ? cellData.getValue().getEstado() : "N/A")
         );
 
+        // Celdas personalizadas para la columna 'Estado'
+        colEstado.setCellFactory(column -> new TableCell<UsuarioBiblioteca, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    Label statusLabel = new Label(item);
+                    statusLabel.getStyleClass().clear(); // Limpia estilos previos
+                    if ("Activo".equals(item)) {
+                        statusLabel.getStyleClass().add("status-activo");
+                    } else if ("Inactivo".equals(item)) {
+                        statusLabel.getStyleClass().add("status-inactivo");
+                    }
+                    HBox hbox = new HBox(statusLabel);
+                    hbox.setAlignment(Pos.CENTER);
+                    setGraphic(hbox);
+                }
+            }
+        });
+
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<UsuarioBiblioteca, Void>() {
             private final Button editButton = new Button();
@@ -183,7 +205,7 @@ public class UsuarioBibliotecaController {
                                 (usuario.getTelefono() != null && usuario.getTelefono().toLowerCase().contains(filtro)) ||
                                 (usuario.getDireccion() != null && usuario.getDireccion().toLowerCase().contains(filtro)) ||
                                 (usuario.getFechaNacimiento() != null && usuario.getFechaNacimiento().toString().contains(filtro)) ||
-                                (usuario.getEstado() != null && usuario.getEstado().toLowerCase().contains(filtro)); // Corregido
+                                (usuario.getEstado() != null && usuario.getEstado().toLowerCase().contains(filtro));
 
                 return coincide;
             });
@@ -257,9 +279,9 @@ public class UsuarioBibliotecaController {
         Optional<ButtonType> resultado = confirmacion.showAndWait();
         if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
             try {
-                usuario.setEstado("Inactivo"); // <-- CORREGIDO
+                usuario.setEstado("Inactivo");
                 usuarioDao.update(usuario);
-                cargarUsuarios();   // <-- CORREGIDO: ahora recarga la tabla
+                cargarUsuarios();
             } catch (Exception e) {
                 e.printStackTrace();
                 mostrarAlertaError("Error al desactivar", null, "No se pudo actualizar el estado del usuario.");
