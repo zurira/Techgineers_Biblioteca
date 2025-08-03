@@ -7,20 +7,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
-
     @Override
-
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
-        Parent root = fxmlLoader.load();
-        stage.setTitle("Prestamos de libros");
-        Scene scene = new Scene(root, 1024, 640);
+        Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/Prestamo.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Biblioteca");
         stage.setScene(scene);
+        // Esta línea maximiza la ventana.
+        stage.setMaximized(true);
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }
