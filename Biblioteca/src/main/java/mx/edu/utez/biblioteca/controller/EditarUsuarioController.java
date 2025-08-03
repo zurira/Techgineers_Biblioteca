@@ -17,7 +17,7 @@ public class EditarUsuarioController {
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
-    @FXML private TextField txtDireccion;
+    @FXML private TextArea txtDireccion;
     @FXML private DatePicker dpFechaNacimiento; // <-- AÑADIDO: Para la fecha de nacimiento
     @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;

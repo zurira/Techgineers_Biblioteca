@@ -60,7 +60,7 @@
     -fx-font-style: italic;
 }
 
-.combo-box, .text-field, .text-area, .date-picker {
+.combo-box, .text-field, .date-picker {
     -fx-background-color: #ffffff;
     -fx-border-color: #cbb9a5;
     -fx-border-radius: 4;
@@ -69,6 +69,13 @@
     -fx-padding: 3;
     -fx-min-width: 250;
     -fx-max-width: 250;
+}
+
+.text-area {
+    -fx-min-width: 1020;
+    -fx-max-width: 1020;
+    -fx-min-height: 80;
+    -fx-max-height: 80;
 }
 
 .form-layout {

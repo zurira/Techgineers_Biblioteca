@@ -13,6 +13,7 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
             prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;"
             stylesheets="@../css/agregarPrestamo.css">
@@ -32,20 +33,20 @@
     <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
     <TextField fx:id="txtNombre" layoutX="250" layoutY="95" styleClass="text-field"/>
 
-    <Label layoutX="470" layoutY="70" text="Correo:*"/>
-    <TextField fx:id="txtCorreo" layoutX="470" layoutY="95" styleClass="text-field"/>
+    <Label layoutX="520" layoutY="70" text="Correo:*"/>
+    <TextField fx:id="txtCorreo" layoutX="520" layoutY="95" styleClass="text-field"/>
 
-    <Label layoutX="690" layoutY="70" text="Teléfono:*"/>
-    <TextField fx:id="txtTelefono" layoutX="690" layoutY="95"  styleClass="text-field"/>
+    <Label layoutX="790" layoutY="70" text="Teléfono:*"/>
+    <TextField fx:id="txtTelefono" layoutX="790" layoutY="95"  styleClass="text-field"/>
 
     <Label text="Fecha Nacimiento:" layoutX="250" layoutY="135"/>
     <DatePicker fx:id="dpFechaNacimiento" layoutX="250" layoutY="160" styleClass="date-picker"/>
 
     <Label layoutX="30" layoutY="280" text="Dirección:"/>
-    <TextField fx:id="txtDireccion" layoutX="30" layoutY="305" prefWidth="860" styleClass="text-field"/>
+    <TextArea fx:id="txtDireccion" layoutX="30" layoutY="305" styleClass="text-area"/>
 
     <!-- Botones -->
-    <HBox layoutX="670" layoutY="500" spacing="10">
+    <HBox layoutX="840" layoutY="500" spacing="10">
         <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" styleClass="button-cancelar"/>
         <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="button-guardar"/>
     </HBox>

@@ -302,14 +302,12 @@ public class UsuarioBibliotecaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerUsuario.fxml"));
             Parent root = loader.load();
 
-            VerUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario);
-
             Stage stage = new Stage();
-            stage.setTitle("Ver Usuario");
+            stage.setTitle("Verr Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlertaError("Error al ver", null, "No se pudo abrir el formulario.");
