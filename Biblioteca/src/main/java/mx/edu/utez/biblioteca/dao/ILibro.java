@@ -1,9 +1,8 @@
 package mx.edu.utez.biblioteca.dao;
 
 import mx.edu.utez.biblioteca.model.Libro;
-
 import java.util.List;
-//creacion de la lista libro
+
 public interface ILibro {
     List<Libro> findAll() throws Exception;
     Libro findById(int id) throws Exception;

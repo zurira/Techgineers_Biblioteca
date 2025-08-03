@@ -7,6 +7,11 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
     public int getId() {
         return id;
     }
@@ -22,4 +27,10 @@ public class Categoria {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

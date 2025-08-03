@@ -133,34 +133,41 @@
     -fx-padding: 10px 0;
 }
 
-/* Diseño para la tabla */
+/* Diseño para la tabla de los libros */
 .table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #f1f0ee; /* Beige claro para parte de arriba */
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #dee2e6; /* Borde inferior */
     -fx-border-width: 0 0 1px 0;
+    -fx-border-radius: 8px 8px 0 0;
 }
 
 .table-view .column-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #495057;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 10px;;
 }
 
 .table-view .table-cell {
-    -fx-font-size: 13px;
-    -fx-text-fill: #555555;
+    -fx-font-size: 12px;
+    -fx-text-fill: #495057; /* <-- Color */
+    -fx-font-weight: 600; /* <-- Grosor */
     -fx-alignment: CENTER_LEFT;
+    -fx-padding: 15px 10px;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1px 0;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: #f8f9fa;
 }
 
 .table-row-cell:even {
@@ -168,7 +175,8 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #d1e5f0; /* Light blue for selected row */
+    -fx-background-color: #e8f5ff;
+    -fx-text-fill: #212529;
 }
 
 /* Action buttons in table cellsDiseño de los botónes de accion de la tabla */
@@ -261,7 +269,7 @@
 
 /* Estilos para el label del estado de los libros */
 .status-label {
-    -fx-background-radius: 5px;
+    -fx-background-radius: 10px;
     -fx-border-radius: 5px;
     -fx-font-weight: bold;
     -fx-font-size: 12px;

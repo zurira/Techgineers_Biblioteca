@@ -7,6 +7,11 @@ public class Autor {
     public Autor() {
     }
 
+    public Autor(int id, String nombreCompleto) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+    }
+
     public int getId() {
         return id;
     }
@@ -22,4 +27,10 @@ public class Autor {
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
+
+    @Override
+    public String toString() {
+        return nombreCompleto;
+    }
+
 }
