@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController"
-      spacing="15">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<AnchorPane prefHeight="600.0" prefWidth="620.0" style="-fx-background-color: #F1EFEF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController">
+    <VBox layoutX="20" layoutY="20" prefWidth="860" spacing="10">
+        <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Agregar Libro" />
+        <Label style="-fx-font-size: 14px;" text="Ingresa la información correctamente" />
 
-    <Label text="📚 Agregar Libro" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <HBox spacing="20">
+            <!-- Este es para la Imagen y botón -->
+            <VBox spacing="10">
+                <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true" />
+                <Button fx:id="btnSeleccionarImagen" mnemonicParsing="false"  prefWidth="150" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Seleccionar archivo" />
+            </VBox>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Título:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtTitulo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <!-- Campos del formulario -->
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.0" />
+                    <ColumnConstraints percentWidth="33.0" />
+                    <ColumnConstraints percentWidth="33.0" />
+                </columnConstraints>
+                <Label text="Título:*" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtTitulo" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label text="ISBN:*" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="txtIsbn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Año publicación:*" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <TextField fx:id="txtAnioPublicacion" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Label text="Autor:*" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="txtAutor" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <Label text="Editorial:*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="txtEditorial" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label text="Categoría:*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <TextField fx:id="txtCategoria" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            </GridPane>
+        </HBox>
 
-        <Label text="ISBN:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtIsbn" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <!-- Campo de sinopsis -->
+        <Label text="Sinopsis:" />
+        <TextArea fx:id="txtSinopsis" prefHeight="80" prefWidth="400" wrapText="true" />
 
-        <Label text="Sinopsis:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtSinopsis" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-        <Label text="Año de publicación:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtAnio" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-        <Label text="Autor:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cmbAutor" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-        <Label text="Categoría:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cmbCategoria" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-        <Label text="Editorial:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cmbEditorial" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-        <Label text="Estado:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cmbEstado" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-        <Label text="URL de portada:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtPortada" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-
-        <Label text="Vista previa:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-        <ImageView fx:id="imgPreview" fitWidth="150" fitHeight="200"
-                   preserveRatio="true" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-    </GridPane>
-
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button fx:id="btnGuardar" text="Guardar" onAction="#handleGuardar"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
-    </HBox>
-</VBox>
+        <!-- Botones -->
+        <HBox alignment="CENTER_RIGHT" spacing="20">
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cerrarModal" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cancelar" />
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarLibro" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" />
+        </HBox>
+    </VBox>
+</AnchorPane>
