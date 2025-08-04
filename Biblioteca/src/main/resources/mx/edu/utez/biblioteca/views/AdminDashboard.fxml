@@ -129,6 +129,7 @@
                             <TableColumn fx:id="colResumen" prefWidth="150.0" text="Sinopsis" />
                             <TableColumn fx:id="colCategoria" prefWidth="100.0" text="Categoría" />
                             <TableColumn fx:id="colAnioPublicacion" prefWidth="80.0" text="Año Pub." />
+                            <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado"/>
                             <TableColumn fx:id="colAcciones" prefWidth="90.0" text="Acciones" />
                         </columns>
                         <VBox.margin>
