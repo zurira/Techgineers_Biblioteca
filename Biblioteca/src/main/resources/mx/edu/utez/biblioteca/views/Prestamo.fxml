@@ -125,6 +125,11 @@
                                     <Insets left="20.0" />
                                 </HBox.margin>
                             </Button>
+                            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+                                <Label text="Tarifa por día de multa:"/>
+                                <TextField fx:id="txtTarifaMulta" promptText="Ej: 5.0" prefWidth="80.0"/>
+                                <Button fx:id="btnActualizarTarifa" text="Actualizar" onAction="#actualizarTarifaMulta" />
+                            </HBox>
                         </children>
                     </HBox>
                     <Label styleClass="section-title" text="Información de préstamos">
@@ -140,6 +145,7 @@
                             <TableColumn fx:id="colFechaPrestamo" prefWidth="120.0" text="Fecha préstamo" />
                             <TableColumn fx:id="colFechaLimite" prefWidth="120.0" text="Fecha límite" />
                             <TableColumn fx:id="colFechaReal" prefWidth="120.0" text="Fecha real" />
+                            <TableColumn fx:id="colMulta" prefWidth="100.0" text="Multa actual" />
                             <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
                             <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" />
                         </columns>

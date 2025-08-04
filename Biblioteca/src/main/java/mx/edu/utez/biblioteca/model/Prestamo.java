@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Prestamo {
     private int id;
@@ -41,6 +42,12 @@ public class Prestamo {
     }
 
     public Prestamo() {
+    }
+
+    public double calcularMulta(double tarifaPorDia) {
+        LocalDate fechaEvaluacion = (fechaReal != null) ? fechaReal : LocalDate.now();
+        long diasRetraso = ChronoUnit.DAYS.between(fechaLimite, fechaEvaluacion);
+        return diasRetraso > 0 ? diasRetraso * tarifaPorDia : 0.0;
     }
 
     public int getId() {

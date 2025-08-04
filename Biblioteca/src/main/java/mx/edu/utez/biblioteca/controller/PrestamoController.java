@@ -17,6 +17,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.dao.impl.ConfiguracionDaoImpl;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -27,6 +29,8 @@ import mx.edu.utez.biblioteca.model.Libro;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -68,9 +72,14 @@ public class PrestamoController {
     @FXML
     private Label lblSinResultados;
     @FXML private Button btnlogout;
+    @FXML
+    private TableColumn<Prestamo, String> colMulta;
+    @FXML
+    private TextField txtTarifaMulta;
 
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
+    private double tarifaMultaActual;
 
     @FXML
     public void initialize() {
@@ -89,6 +98,14 @@ public class PrestamoController {
             tv.refresh();
             return sorted;
         });
+
+        try {
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            double tarifaActual = configDao.obtenerTarifaMulta();
+            txtTarifaMulta.setText(String.valueOf(tarifaActual));
+        } catch (SQLException e) {
+            mostrarAlerta("Error al cargar la tarifa actual: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void configurarColumnasTabla() {
@@ -155,7 +172,20 @@ public class PrestamoController {
                 }
             };
         });
+        try {
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            tarifaMultaActual = configDao.obtenerTarifaMulta();
+        } catch (SQLException e) {
+            tarifaMultaActual = 0.0;
+            e.printStackTrace();
+        }
 
+// ⬇️ Definición de columna 'colMulta'
+        colMulta.setCellValueFactory(cellData -> {
+            Prestamo p = cellData.getValue();
+            double multa = p.calcularMulta(tarifaMultaActual);
+            return new SimpleStringProperty(String.format("$%.2f", multa));
+        });
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
             private final Button editButton = new Button();
@@ -180,6 +210,7 @@ public class PrestamoController {
                     Prestamo prestamo = getTableView().getItems().get(getIndex());
                     onViewPrestamo(prestamo);
                 });
+
             }
 
             @Override
@@ -364,5 +395,45 @@ public class PrestamoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void actualizarTarifaMulta() {
+        try {
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            tarifaMultaActual = configDao.obtenerTarifaMulta(); // refresca tarifa
+            tableViewPrestamos.refresh(); // recalcula celdas
+        } catch (SQLException e) {
+            mostrarAlerta("Error al obtener la tarifa desde la base de datos.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+            return; // evitar continuar si hay error
+        }
+
+        String textoTarifa = txtTarifaMulta.getText();
+        try {
+            double nuevaTarifa = Double.parseDouble(textoTarifa);
+            if (nuevaTarifa < 0) {
+                mostrarAlerta("La tarifa no puede ser negativa.", Alert.AlertType.WARNING);
+                return;
+            }
+
+            ConfiguracionDaoImpl configDao1 = new ConfiguracionDaoImpl();
+            configDao1.actualizarTarifaMulta(nuevaTarifa);
+            mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
+            cargarPrestamos(); // refrescar tabla con nueva tarifa
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Por favor ingresa un número válido.", Alert.AlertType.ERROR);
+        } catch (SQLException e) {
+            mostrarAlerta("Error al guardar la tarifa: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+        cargarPrestamos();
+    }
+
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
