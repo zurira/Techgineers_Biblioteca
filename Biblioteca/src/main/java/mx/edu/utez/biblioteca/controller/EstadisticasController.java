@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mx.edu.utez.biblioteca.dao.IEstadisticas;
 import mx.edu.utez.biblioteca.dao.impl.EstadisticasDaoImpl;
 import java.net.URL;
@@ -159,13 +161,19 @@ public class EstadisticasController implements Initializable {
             modalStage.setScene(new Scene(modalRoot));
             modalStage.showAndWait();
 
+
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
+                currentStage.close();
                 FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
                 Parent loginRoot = loginLoader.load();
 
-                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
-                currentStage.setScene(new Scene(loginRoot, 600, 400));
-                currentStage.setTitle("Inicio de sesión");
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true); //
+                newStage.show();
+
             }
 
             ModalCerrarSesionController.cerrarSesionConfirmado = false;

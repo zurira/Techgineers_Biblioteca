@@ -347,22 +347,16 @@ public class PrestamoController {
 
 
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
-                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
-                Region loginRoot = loginLoader.load();
-
-// Crear la transición fade
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), loginRoot);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-
-// Aplicar escena y animación
                 Stage currentStage = (Stage) btnlogout.getScene().getWindow();
-                currentStage.setScene(new Scene(loginRoot));
-                currentStage.setMaximized(true);
-                currentStage.setTitle("Inicio de sesión");
+                currentStage.close();
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
 
-// Iniciar transición antes de mostrar
-                fadeIn.play();
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true); //
+                newStage.show();
             }
 
             ModalCerrarSesionController.cerrarSesionConfirmado = false;

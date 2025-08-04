@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -128,12 +129,16 @@ public class BienvenidaController {
     private void irBusqueda(ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/busqueda.fxml"));
-            Parent root = loader.load();
+            Region root = (Region) loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 720);
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -144,12 +149,16 @@ public class BienvenidaController {
     private void irLogin(ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
-            Parent root = loader.load();
+            Region root = (Region) loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 720);
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

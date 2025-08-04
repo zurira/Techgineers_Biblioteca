@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -369,13 +371,19 @@ public class UsuarioBibliotecaController {
             modalStage.setScene(new Scene(modalRoot));
             modalStage.showAndWait();
 
+
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
+                currentStage.close();
                 FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
                 Parent loginRoot = loginLoader.load();
 
-                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
-                currentStage.setScene(new Scene(loginRoot, 600, 400));
-                currentStage.setTitle("Inicio de sesión");
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true); //
+                newStage.show();
+
             }
 
             ModalCerrarSesionController.cerrarSesionConfirmado = false;
