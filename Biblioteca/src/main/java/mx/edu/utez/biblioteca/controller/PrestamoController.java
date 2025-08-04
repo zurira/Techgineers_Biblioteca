@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -343,13 +345,24 @@ public class PrestamoController {
             modalStage.setScene(new Scene(modalRoot));
             modalStage.showAndWait();
 
+
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
                 FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
-                Parent loginRoot = loginLoader.load();
+                Region loginRoot = loginLoader.load();
 
+// Crear la transición fade
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), loginRoot);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+
+// Aplicar escena y animación
                 Stage currentStage = (Stage) btnlogout.getScene().getWindow();
-                currentStage.setScene(new Scene(loginRoot, 600, 400));
+                currentStage.setScene(new Scene(loginRoot));
+                currentStage.setMaximized(true);
                 currentStage.setTitle("Inicio de sesión");
+
+// Iniciar transición antes de mostrar
+                fadeIn.play();
             }
 
             ModalCerrarSesionController.cerrarSesionConfirmado = false;

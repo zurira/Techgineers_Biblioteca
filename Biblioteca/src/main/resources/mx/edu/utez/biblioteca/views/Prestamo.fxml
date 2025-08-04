@@ -44,7 +44,7 @@
                                 </graphic>
                             </Button>
 
-                            <Button  styleClass="sidebar-item" prefWidth="250.0">
+                            <Button  styleClass="sidebar-item-active" prefWidth="250.0">
                                 <graphic>
                                     <HBox alignment="CENTER_LEFT" spacing="5.0">
                                         <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
@@ -85,7 +85,7 @@
 
                             <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
                                 <children>
-                                    <Button onAction="#cerrarSesion" styleClass="sidebar-item">
+                                    <Button fx:id="btnlogout" onAction="#cerrarSesion" styleClass="btnlogout">
                                         <graphic>
                                             <HBox alignment="CENTER" spacing="5.0">
                                                 <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>

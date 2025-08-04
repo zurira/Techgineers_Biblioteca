@@ -246,6 +246,18 @@
     -fx-spacing: 5px;
 }
 
+.user-info-box:hover {
+    -fx-background-color: #605050;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.btnlogout {
+    -fx-background-color: transparent;
+}
+
 .user-icon {
     -fx-fill: #FFFFFF;
     -fx-font-size: 24px;

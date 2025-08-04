@@ -86,7 +86,7 @@
 
                             <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
                                 <children>
-                                    <Button onAction="#cerrarSesion" styleClass="sidebar-item">
+                                    <Button fx:id="btnlogout" onAction="#cerrarSesion" styleClass="btnlogout">
                                         <graphic>
                                             <HBox alignment="CENTER" spacing="5.0">
                                                 <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>
