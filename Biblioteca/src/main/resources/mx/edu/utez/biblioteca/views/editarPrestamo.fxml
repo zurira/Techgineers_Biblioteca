@@ -22,23 +22,23 @@
             <padding>
                 <Insets bottom="20" left="10" right="10" top="20"/>
             </padding>
-            <Label text="Editar Préstamo" style="-fx-font-size: 20px;" />
+            <Label text="Editar Préstamo" style="-fx-font-size: 20px;" styleClass="titulo"/>
             <GridPane hgap="10" vgap="10">
                 <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <ComboBox fx:id="comboBoxUsuarios" editable="false" prefWidth="250.0"
                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
                 <Label text="Estado:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <ComboBox fx:id="cbEstado" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <ComboBox fx:id="cbEstado" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="combo-box"/>
 
                 <Label text="Fecha Préstamo:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="date-picker"/>
 
                 <Label text="Fecha Límite:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="date-picker"/>
 
                 <Label text="Fecha Devolución:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="date-picker"/>
             </GridPane>
         </VBox>
     </top>

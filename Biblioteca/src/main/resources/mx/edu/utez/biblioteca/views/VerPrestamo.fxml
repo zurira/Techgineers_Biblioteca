@@ -5,7 +5,8 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #F1EFEF;"
             xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="mx.edu.utez.biblioteca.controller.VerPrestamoController">
+            fx:controller="mx.edu.utez.biblioteca.controller.VerPrestamoController"
+            stylesheets="@../css/verModal.css">
     <children>
         <VBox alignment="TOP_LEFT" layoutX="20.0" layoutY="20.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -13,7 +14,7 @@
                     <children>
                         <VBox spacing="0.0">
                             <children>
-                            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Préstamo" />
+                            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Préstamo" styleClass="titulo"/>
                             <Label style="-fx-font-size: 16px; -fx-text-fill: #555;" text="Detalles del préstamo:" />
                             </children>
                         </VBox>
@@ -53,8 +54,7 @@
                 </GridPane>
                 <HBox alignment="CENTER_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleCancelar" text="Cancelar" style="-fx-background-color: #ccc; -fx-text-fill: #333;" />
-                        <Button mnemonicParsing="false" onAction="#handleGuardar" text="Guardar" style="-fx-background-color: #A38F85; -fx-text-fill: white;" />
+                        <Button mnemonicParsing="false" onAction="#handleCancelar" text="Cerrar" styleClass="button-guardar" />
                     </children>
                     <VBox.margin>
                         <Insets top="20.0" />

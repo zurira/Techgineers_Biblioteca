@@ -13,11 +13,11 @@ import java.io.File;
 public class AgregarUsuarioController {
 
     @FXML private TextField txtNombre;
-    @FXML private DatePicker dateNacimiento;
-    @FXML private TextField txtEmail;
+    @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
     @FXML private TextArea txtDireccion;
-    @FXML private Label lblFotoSeleccionada;
+    @FXML private DatePicker dpFechaNacimiento;
+    @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;
 
     private File archivoFoto;
@@ -32,11 +32,11 @@ public class AgregarUsuarioController {
     public void cargarDatosParaEdicion(UsuarioBiblioteca usuario) {
         this.usuarioExistente = usuario;
         txtNombre.setText(usuario.getNombre());
-        dateNacimiento.setValue(usuario.getFechaNacimiento());
-        txtEmail.setText(usuario.getCorreo());
+        dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
+        txtCorreo.setText(usuario.getCorreo());
         txtTelefono.setText(usuario.getTelefono());
         txtDireccion.setText(usuario.getDireccion());
-        lblFotoSeleccionada.setText("(foto actual)");
+        btnSeleccionarImagen.setText("(foto actual)");
     }
 
     @FXML
@@ -49,14 +49,14 @@ public class AgregarUsuarioController {
         File selected = chooser.showOpenDialog(btnCancelar.getScene().getWindow());
         if (selected != null) {
             archivoFoto = selected;
-            lblFotoSeleccionada.setText(selected.getName());
+            btnSeleccionarImagen.setText(selected.getName());
         }
     }
 
     @FXML
     private void guardar() {
-        if (txtNombre.getText().isEmpty() || dateNacimiento.getValue() == null ||
-                txtEmail.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || dpFechaNacimiento.getValue() == null ||
+                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
             mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
             return;
         }
@@ -64,8 +64,8 @@ public class AgregarUsuarioController {
         try {
             UsuarioBiblioteca usuario = new UsuarioBiblioteca();
             usuario.setNombre(txtNombre.getText());
-            usuario.setFechaNacimiento(dateNacimiento.getValue());
-            usuario.setCorreo(txtEmail.getText());
+            usuario.setFechaNacimiento(dpFechaNacimiento.getValue());
+            usuario.setCorreo(txtCorreo.getText());
             usuario.setTelefono(txtTelefono.getText());
             usuario.setDireccion(txtDireccion.getText());
             usuario.setEstado("S"); // Puede hacerse dinámico si decides usar un ComboBox

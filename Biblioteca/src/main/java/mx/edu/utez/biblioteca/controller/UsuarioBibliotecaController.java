@@ -1,20 +1,25 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -55,6 +60,7 @@ public class UsuarioBibliotecaController {
 
     @FXML
     private TextField txtSearch;
+    @FXML private Button btnlogout;
 
     private UsuarioBibliotecaDaoImpl usuarioDao;
     private ObservableList<UsuarioBiblioteca> listaUsuarios;
@@ -302,17 +308,88 @@ public class UsuarioBibliotecaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerUsuario.fxml"));
             Parent root = loader.load();
 
-            VerUsuarioController controller = loader.getController();
-            controller.cargarUsuario(usuario);
-
             Stage stage = new Stage();
-            stage.setTitle("Ver Usuario");
+            stage.setTitle("Verr Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlertaError("Error al ver", null, "No se pudo abrir el formulario.");
+        }
+    }
+
+    @FXML
+    private void irPrestamos(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Prestamo.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irEstadisticas(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void cerrarSesion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
+            Parent modalRoot = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("¿Cerrar sesión?");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+
+            if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                Stage currentStage = (Stage) btnlogout.getScene().getWindow();
+                currentStage.close();
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
+
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true); //
+                newStage.show();
+
+            }
+
+            ModalCerrarSesionController.cerrarSesionConfirmado = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

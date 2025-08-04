@@ -46,6 +46,7 @@ public class SuperAdminController {
         logoutButton.setOnAction(event -> cerrarSesion());
     }
 
+    @FXML
     private void cerrarSesion() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
@@ -58,13 +59,18 @@ public class SuperAdminController {
             modalStage.setScene(new Scene(modalRoot));
             modalStage.showAndWait();
 
+
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                Stage currentStage = (Stage) logoutButton.getScene().getWindow();
+                currentStage.close();
                 FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
                 Parent loginRoot = loginLoader.load();
 
-                Stage currentStage = (Stage) logoutButton.getScene().getWindow();
-                currentStage.setScene(new Scene(loginRoot, 600, 400));
-                currentStage.setTitle("Inicio de sesión");
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true); //
+                newStage.show();
             }
 
             ModalCerrarSesionController.cerrarSesionConfirmado = false;

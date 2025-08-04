@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.collections.FXCollections?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/8" fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
-            prefWidth="400.0" prefHeight="500.0"> <VBox alignment="TOP_CENTER" spacing="10" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
-            stylesheets="@../css/EditarUsuario.css">
+<?import java.lang.String?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
+            prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;"
+            stylesheets="@../css/agregarPrestamo.css">
 
-    <Text text="Editar Usuario" styleClass="titulo" />
+    <!-- Foto -->
+    <VBox layoutX="30" layoutY="70">
+        <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"/>
+        <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
+                onAction="#seleccionarFoto" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+    </VBox>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <!-- Título del modal -->
+    <Label layoutX="30" layoutY="20" text="Editar información del administrador"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;" styleClass="titulo"/>
 
-        <Label text="Correo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtCorreo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <!-- Campos de texto -->
+    <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
+    <TextField fx:id="txtNombre" layoutX="250" layoutY="95" styleClass="text-field"/>
 
-        <Label text="Teléfono:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtTelefono" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Label layoutX="520" layoutY="70" text="Correo:*"/>
+    <TextField fx:id="txtCorreo" layoutX="520" layoutY="95" styleClass="text-field"/>
 
-        <Label text="Dirección:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtDireccion" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <Label layoutX="790" layoutY="70" text="Teléfono:*"/>
+    <TextField fx:id="txtTelefono" layoutX="790" layoutY="95"  styleClass="text-field"/>
 
-        <Label text="Fecha Nacimiento:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpFechaNacimiento" GridPane.rowIndex="4" GridPane.columnIndex="1"/> <Label text="Estado:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <ToggleButton fx:id="toggleEstado" onAction="#actualizarTextoYEstiloToggle" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    <Label text="Fecha Nacimiento:" layoutX="250" layoutY="135"/>
+    <DatePicker fx:id="dpFechaNacimiento" layoutX="250" layoutY="160" styleClass="date-picker"/>
 
-        <Label text="Foto:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-        <HBox spacing="5" GridPane.rowIndex="6" GridPane.columnIndex="1">
-            <Label fx:id="lblFotoSeleccionada" text="Ningún archivo" HBox.hgrow="ALWAYS"/>
-            <Button text="Seleccionar" onAction="#seleccionarFoto"/>
-        </HBox>
-    </GridPane>
+    <Label layoutX="30" layoutY="280" text="Dirección:"/>
+    <TextArea fx:id="txtDireccion" layoutX="30" layoutY="305" styleClass="text-area"/>
 
-    <HBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
-        <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="boton-principal"/>
-        <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" styleClass="boton-cancelar"/>
+    <!-- Botones -->
+    <HBox layoutX="840" layoutY="500" spacing="10">
+        <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" styleClass="button-cancelar"/>
+        <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="button-guardar"/>
     </HBox>
-</VBox>
+
 </AnchorPane>

@@ -57,7 +57,7 @@ public class UsuarioController {
                         break;
                     case "BIBLIOTECARIO":
                         System.out.println("Cargando vista de bibliotecario");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bibliotecario.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
                         break;
                     default:
                         showAlert("Error", "Rol no reconocido.");
@@ -65,12 +65,16 @@ public class UsuarioController {
                 }
 
                 //carga la vista y cierra la anterior
-                Parent root = loader.load();
+                Region root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
+                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                root.prefWidthProperty().bind(stage.widthProperty());
+                root.prefHeightProperty().bind(stage.heightProperty());
+                Scene scene = new Scene(root);
+                stage.setMaximized(true);
+                stage.setScene(scene);
                 stage.show();
-                ((Stage) txtcorreo.getScene().getWindow()).close();
+
             }else{
                 showAlert("Error","Credenciales incorrectas");
                 System.out.println("Credenciales incorrectas!");
@@ -109,10 +113,13 @@ public class UsuarioController {
     private void irInicio(ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
-            Parent root = loader.load();
+            Region root = loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 720);
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
 

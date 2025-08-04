@@ -17,11 +17,9 @@ public class EditarUsuarioController {
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
-    @FXML private TextField txtDireccion;
+    @FXML private TextArea txtDireccion;
     @FXML private DatePicker dpFechaNacimiento; // <-- AÑADIDO: Para la fecha de nacimiento
-    @FXML private ToggleButton toggleEstado;
-    @FXML private Label lblFotoSeleccionada;
-    @FXML private Button btnGuardar;
+    @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;
 
     private UsuarioBiblioteca usuarioEditando;
@@ -40,25 +38,6 @@ public class EditarUsuarioController {
             dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
         } else {
             dpFechaNacimiento.setValue(null); // O un valor por defecto si no hay fecha
-        }
-
-        toggleEstado.setSelected("S".equalsIgnoreCase(usuario.getEstado()));
-        actualizarTextoYEstiloToggle(); // Llama a esto para inicializar el estado visual del toggle
-
-        // Añade un listener para que el texto y estilo del toggle se actualicen automáticamente al cambiar
-        // Si el onAction del ToggleButton ya llama a actualizarTextoYEstiloToggle, este listener puede ser opcional
-        toggleEstado.selectedProperty().addListener((obs, oldVal, newVal) -> actualizarTextoYEstiloToggle());
-    }
-
-    // Método para actualizar el texto y el estilo del ToggleButton
-    @FXML
-    private void actualizarTextoYEstiloToggle() {
-        if (toggleEstado.isSelected()) {
-            toggleEstado.setText("Activo");
-            toggleEstado.setStyle("-fx-background-color: #807d59; -fx-text-fill: white;");
-        } else {
-            toggleEstado.setText("Inactivo");
-            toggleEstado.setStyle("-fx-background-color: #9b9593; -fx-text-fill: white;");
         }
     }
 
@@ -79,7 +58,6 @@ public class EditarUsuarioController {
         usuarioEditando.setCorreo(txtCorreo.getText().trim());
         usuarioEditando.setTelefono(txtTelefono.getText().trim());
         usuarioEditando.setDireccion(txtDireccion.getText().trim());
-        usuarioEditando.setEstado(toggleEstado.isSelected() ? "S" : "N");
         usuarioEditando.setFechaNacimiento(dpFechaNacimiento.getValue()); // <-- Asigna la fecha de nacimiento
 
         try {
@@ -123,13 +101,13 @@ public class EditarUsuarioController {
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif") // Añadido .gif
         );
 
-        File archivoSeleccionado = fileChooser.showOpenDialog(lblFotoSeleccionada.getScene().getWindow());
+        File archivoSeleccionado = fileChooser.showOpenDialog(btnSeleccionarImagen.getScene().getWindow());
         if (archivoSeleccionado != null) {
-            lblFotoSeleccionada.setText(archivoSeleccionado.getName());
+            btnSeleccionarImagen.setText(archivoSeleccionado.getName());
             // Aquí deberías guardar la ruta o copiar el archivo a tu proyecto si quieres persistirlo
             // usuarioEditando.setRutaFoto(archivoSeleccionado.getAbsolutePath()); // Si tienes un campo para esto
         } else {
-            lblFotoSeleccionada.setText("Sin archivo seleccionado");
+            btnSeleccionarImagen.setText("Sin archivo seleccionado");
         }
     }
 

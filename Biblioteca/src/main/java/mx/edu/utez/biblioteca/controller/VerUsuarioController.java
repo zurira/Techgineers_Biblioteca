@@ -1,7 +1,10 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image; // Para mostrar la imagen
 import javafx.scene.image.ImageView; // Para mostrar la imagen
 import javafx.stage.Stage;
@@ -14,13 +17,14 @@ import java.time.format.DateTimeFormatter; // Para formatear la fecha
 
 public class VerUsuarioController {
 
-    @FXML private Label lblNombre;
-    @FXML private Label lblFechaNacimiento;
-    @FXML private Label lblCorreo;
-    @FXML private Label lblTelefono;
-    @FXML private Label lblDireccion;
-    @FXML private Label lblEstado;
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtCorreo;
+    @FXML private TextField txtTelefono;
+    @FXML private TextField txtDireccion;
+    @FXML private DatePicker dpFechaNacimiento;
     @FXML private ImageView imgFoto; // Para mostrar la foto
+    @FXML private Button btnCerrar;
+
 
     private UsuarioBiblioteca usuarioVer;
 
@@ -29,18 +33,16 @@ public class VerUsuarioController {
         this.usuarioVer = usuario;
 
         if (usuarioVer != null) {
-            lblNombre.setText(usuarioVer.getNombre());
+            txtNombre.setText(usuarioVer.getNombre());
             // Formatear la fecha para una mejor presentación
-            if (usuarioVer.getFechaNacimiento() != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                lblFechaNacimiento.setText(usuarioVer.getFechaNacimiento().format(formatter));
+            if (usuario.getFechaNacimiento() != null) {
+                dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
             } else {
-                lblFechaNacimiento.setText("N/A");
+                dpFechaNacimiento.setValue(null); // O un valor por defecto si no hay fecha
             }
-            lblCorreo.setText(usuarioVer.getCorreo());
-            lblTelefono.setText(usuarioVer.getTelefono());
-            lblDireccion.setText(usuarioVer.getDireccion());
-            lblEstado.setText("S".equalsIgnoreCase(usuarioVer.getEstado()) ? "Activo" : "Inactivo");
+            txtCorreo.setText(usuarioVer.getCorreo());
+            txtTelefono.setText(usuarioVer.getTelefono());
+            txtDireccion.setText(usuarioVer.getDireccion());
 
             // Cargar y mostrar la fotografía (requiere modificar UsuarioBibliotecaDaoImpl.findById)
             cargarFotografia(usuarioVer.getId()); // Cargar la foto por ID
@@ -72,7 +74,7 @@ public class VerUsuarioController {
 
     @FXML
     private void cerrarVentana() {
-        Stage stage = (Stage) lblNombre.getScene().getWindow();
+        Stage stage = (Stage) btnCerrar.getScene().getWindow();
         if (stage != null) {
             stage.close();
         }
