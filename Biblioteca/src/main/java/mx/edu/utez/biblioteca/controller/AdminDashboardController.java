@@ -104,7 +104,22 @@ public class AdminDashboardController {
 
     //configuraciones de las columnas de la taba libros
     private void configurarColumnasTabla() {
-        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colNo.setCellValueFactory(null); // No necesita una propiedad del objeto Libro
+        colNo.setCellFactory(column -> {
+            return new TableCell<Libro, Integer>() {
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        // Muestra el índice de la fila + 1
+                        setText(String.valueOf(getIndex() + 1));
+                    }
+                }
+            };
+        });
+
         colISBN.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         colTituloLibro.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 
