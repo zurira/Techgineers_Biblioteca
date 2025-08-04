@@ -67,6 +67,10 @@ public class AdminDashboardController {
     @FXML
     private TableColumn<Libro, Integer> colAnioPublicacion;
 
+    // Se agrego la columna estado
+    @FXML
+    private TableColumn<Libro, String> colEstado;
+
     @FXML
     private TableColumn<Libro, Void> colAcciones;
 
@@ -75,6 +79,11 @@ public class AdminDashboardController {
 
     private LibroDaoImpl libroDao;
     private ObservableList<Libro> listaLibros;
+
+    // Valores correctos de la base de datos para la restricción de control
+    private static final String VALOR_ACTIVO = "ACTIVO";
+    private static final String VALOR_INACTIVO = "INACTIVO";
+
 
     @FXML
     public void initialize() {
@@ -118,11 +127,44 @@ public class AdminDashboardController {
 
         colAnioPublicacion.setCellValueFactory(new PropertyValueFactory<>("anioPublicacion"));
 
-        // Columna de Acciones (Editar y estado del libro)
-        colAcciones.setCellValueFactory(param -> null);
+        // Se configura la columna de estado
+        colEstado.setCellValueFactory(cellData -> {
+            if (VALOR_ACTIVO.equals(cellData.getValue().getEstado())) {
+                return new SimpleStringProperty("Activo");
+            } else {
+                return new SimpleStringProperty("Inactivo");
+            }
+        });
+        colEstado.setCellFactory(column -> {
+            return new TableCell<Libro, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Label label = new Label(item);
+                        label.setAlignment(Pos.CENTER);
+                        label.getStyleClass().add("status-label");
+
+                        if ("Activo".equals(item)) {
+                            label.getStyleClass().add("status-active");
+                        } else {
+                            label.getStyleClass().add("status-inactive");
+                        }
+                        this.setAlignment(Pos.CENTER);
+                        setGraphic(label);
+                        setText(null);
+                    }
+                }
+            };
+        });
+
+        // Columna de Acciones (Editar y cambiar estado)
         colAcciones.setCellFactory(param -> new TableCell<Libro, Void>() {
             private final Button editButton = new Button();
-            private final Label statusLabel = new Label(); // Usamos un Label en lugar de CheckBox
+            private final Button changeStatusButton = new Button();
 
             {
                 // Botón para editar
@@ -132,17 +174,8 @@ public class AdminDashboardController {
                 editButton.getStyleClass().add("action-button");
                 editButton.setTooltip(new Tooltip("Editar libro"));
 
-                editButton.setOnAction(event -> {
-                    Libro libro = getTableView().getItems().get(getIndex());
-                    onEditLibro(libro);
-                });
-
-                // Configuración del Label de estado del libro
-                statusLabel.getStyleClass().add("status-label");
-                statusLabel.setAlignment(Pos.CENTER);
-                statusLabel.setPrefWidth(70);
-                statusLabel.setMaxWidth(Double.MAX_VALUE);
-                statusLabel.setPadding(new Insets(5, 10, 5, 10)); // Padding para el Label
+                // Botón para cambiar el estado (el "switch")
+                changeStatusButton.getStyleClass().add("action-button");
             }
 
             @Override
@@ -153,18 +186,25 @@ public class AdminDashboardController {
                 } else {
                     Libro libro = getTableView().getItems().get(getIndex());
 
-                    // Actualizar el texto y el estilo del Label de estado
-                    if ("A".equals(libro.getEstado())) {
-                        statusLabel.setText("Activo");
-                        statusLabel.getStyleClass().remove("status-inactive");
-                        statusLabel.getStyleClass().add("status-active");
+                    FontIcon statusIcon;
+
+                    // Lógica para el "switch" de estado
+                    if (VALOR_ACTIVO.equals(libro.getEstado())) {
+                        statusIcon = new FontIcon("fa-toggle-on");
+                        changeStatusButton.setTooltip(new Tooltip("Desactivar"));
                     } else {
-                        statusLabel.setText("Inactivo");
-                        statusLabel.getStyleClass().remove("status-active");
-                        statusLabel.getStyleClass().add("status-inactive");
+                        statusIcon = new FontIcon("fa-toggle-off");
+                        changeStatusButton.setTooltip(new Tooltip("Activar"));
                     }
 
-                    HBox buttons = new HBox(5, editButton, statusLabel); // Contiene el botón de edición y el Label
+                    statusIcon.getStyleClass().add("action-icon");
+                    changeStatusButton.setGraphic(statusIcon);
+
+                    // Asigna las acciones a los botones
+                    editButton.setOnAction(event -> onEditLibro(libro));
+                    changeStatusButton.setOnAction(event -> onChangeStatusLibro(libro));
+
+                    HBox buttons = new HBox(5, editButton, changeStatusButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -246,9 +286,22 @@ public class AdminDashboardController {
     private void onEditLibro(Libro libro) {
         System.out.println("Editar libro: " + libro.getId());
         // Modal para implementar la lógica para abrir el formulario de edición con los datos del libro
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Libro", "Aquí se abrirá la ventana para editar el libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + ("A".equals(libro.getEstado()) ? "Activo" : "Inactivo"));
-
+        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Libro", "Aquí se abrirá la ventana para editar el libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + (VALOR_ACTIVO.equals(libro.getEstado()) ? "Activo" : "Inactivo"));
     }
+
+    // Método para cambiar el estado del libro
+    private void onChangeStatusLibro(Libro libro) {
+        try {
+            String nuevoEstado = VALOR_ACTIVO.equals(libro.getEstado()) ? VALOR_INACTIVO : VALOR_ACTIVO;
+            libroDao.updateStatus(libro.getId(), nuevoEstado);
+            showAlert(Alert.AlertType.INFORMATION, "Estado actualizado", "El estado del libro se ha actualizado correctamente.");
+            cargarLibros(); // Recargar la tabla para ver el cambio
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo actualizar el estado", "Ocurrió un error al intentar actualizar el estado del libro en la base de datos.");
+        }
+    }
+
 
     // Método para el cierre de sesión
     @FXML
@@ -256,6 +309,15 @@ public class AdminDashboardController {
         System.out.println("Cerrar sesión");
         // Modal para implementar la lógica para cerrar la sesión
         showAlert(Alert.AlertType.INFORMATION, "Cerrar Sesión", "Funcionalidad de Cierre de Sesión", "Aquí se implementará la lógica para cerrar la sesión y regresar a la pantalla de inicio de sesión.");
+    }
+
+    // Método sobrecargado para mostrar alertas con 3 argumentos
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
