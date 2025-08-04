@@ -230,6 +230,12 @@ public class PrestamoController {
     private void cargarPrestamos() {
         try {
             listaPrestamos = FXCollections.observableArrayList(prestamoDao.findAll());
+            LocalDate hoy = LocalDate.now();
+            for (Prestamo p : listaPrestamos) {
+                double tarifa = tarifaMultaActual;
+                String nuevoEstado = p.calcularEstado(hoy, tarifa);
+                p.setEstado(nuevoEstado); // ← Esto actualiza visualmente en la tabla
+            }
             tableViewPrestamos.setItems(listaPrestamos);
         } catch (Exception e) {
             e.printStackTrace();
@@ -400,33 +406,35 @@ public class PrestamoController {
     @FXML
     private void actualizarTarifaMulta() {
         try {
-            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
-            tarifaMultaActual = configDao.obtenerTarifaMulta(); // refresca tarifa
-            tableViewPrestamos.refresh(); // recalcula celdas
-        } catch (SQLException e) {
-            mostrarAlerta("Error al obtener la tarifa desde la base de datos.", Alert.AlertType.ERROR);
-            e.printStackTrace();
-            return; // evitar continuar si hay error
-        }
-
-        String textoTarifa = txtTarifaMulta.getText();
-        try {
+            String textoTarifa = txtTarifaMulta.getText();
             double nuevaTarifa = Double.parseDouble(textoTarifa);
             if (nuevaTarifa < 0) {
                 mostrarAlerta("La tarifa no puede ser negativa.", Alert.AlertType.WARNING);
                 return;
             }
 
-            ConfiguracionDaoImpl configDao1 = new ConfiguracionDaoImpl();
-            configDao1.actualizarTarifaMulta(nuevaTarifa);
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            configDao.actualizarTarifaMulta(nuevaTarifa);     // guardar en BD
+            tarifaMultaActual = nuevaTarifa;                  // actualizar variable local
+
+            // ⚙️ Recalcular multas y estados en cada préstamo
+            LocalDate hoy = LocalDate.now();
+            for (Prestamo p : listaPrestamos) {
+                double multa = p.calcularMulta(tarifaMultaActual);
+                p.setMulta(multa);  // si tienes una propiedad para mostrar
+                String nuevoEstado = p.calcularEstado(hoy, tarifaMultaActual);
+                p.setEstado(nuevoEstado);
+            }
+
+            tableViewPrestamos.refresh(); // 🔄 refresca visualmente celdas
+
             mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
-            cargarPrestamos(); // refrescar tabla con nueva tarifa
+
         } catch (NumberFormatException e) {
             mostrarAlerta("Por favor ingresa un número válido.", Alert.AlertType.ERROR);
         } catch (SQLException e) {
             mostrarAlerta("Error al guardar la tarifa: " + e.getMessage(), Alert.AlertType.ERROR);
         }
-        cargarPrestamos();
     }
 
     private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {

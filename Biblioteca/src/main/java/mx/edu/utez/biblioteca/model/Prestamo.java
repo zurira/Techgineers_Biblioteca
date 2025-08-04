@@ -15,6 +15,16 @@ public class Prestamo {
     private Libro libro;
     private UsuarioBiblioteca usuario;
 
+    private double multa; // ← esta propiedad debe existir
+
+    public void setMulta(double multa) {
+        this.multa = multa;
+    }
+
+    public double getMulta() {
+        return multa;
+    }
+
     public UsuarioBiblioteca getUsuario() {
         return usuario;
     }
@@ -38,7 +48,7 @@ public class Prestamo {
         this.fechaPrestamo = fechaPrestamo;
         this.fechaLimite = fechaLimite;
         this.estado = estado;
-        this.fechaReal = fechaDevolucion;
+        this.fechaReal = fechaReal;
     }
 
     public Prestamo() {
@@ -48,6 +58,22 @@ public class Prestamo {
         LocalDate fechaEvaluacion = (fechaReal != null) ? fechaReal : LocalDate.now();
         long diasRetraso = ChronoUnit.DAYS.between(fechaLimite, fechaEvaluacion);
         return diasRetraso > 0 ? diasRetraso * tarifaPorDia : 0.0;
+    }
+
+    public String calcularEstado(LocalDate fechaActual, double tarifaMulta) {
+        if (fechaReal != null) {
+            if (calcularMulta(tarifaMulta) > 0) {
+                return "Finalizado";
+            } else {
+                return "Finalizado";
+            }
+        }
+
+        if (fechaActual.isAfter(fechaLimite)) {
+            return "Retrasado";
+        }
+
+        return "Activo";
     }
 
     public int getId() {
