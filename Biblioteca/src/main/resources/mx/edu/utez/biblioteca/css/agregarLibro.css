@@ -1,105 +1,91 @@
-/* Estilos generales para el formulario */
-.root {
-    -fx-font-family: "Arial";
-    -fx-font-size: 14px;
-    -fx-padding: 20;
-    -fx-background-color: #f4f4f4;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-border-radius: 10;
+/* Estilos generales del panel de fondo */
+.background-pane {
+    -fx-background-color: #f4f7f6;
+    -fx-padding: 20px;
 }
 
-/* Estilo para el título del formulario */
-.label-title {
+/* Estilo del encabezado */
+.header-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #34495e;
+    -fx-padding: 0 0 10px 0;
 }
 
-/* Estilo para los Labels de los campos */
-.label {
+/* Estilo del campo de búsqueda */
+.search-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-padding: 8px 10px;
+}
+.search-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ecf0f1;
+}
+
+/* Estilo del botón de agregar */
+.add-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
-    -fx-text-fill: #555555;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+}
+.add-button:hover {
+    -fx-background-color: #27ae60;
 }
 
-/* Estilo para TextField y TextArea */
-.text-field, .text-area {
+/* Estilos de la tabla */
+.table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 5;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
 }
-
-.text-area {
-    -fx-wrap-text: true;
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 5px 5px 0 0;
 }
-
-/* Estilo para DatePicker */
-.date-picker {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 5;
-    -fx-border-width: 1px;
-}
-
-.date-picker > .arrow-button {
-    -fx-background-color: #007bff;
-    -fx-background-radius: 0 5 5 0;
-}
-
-.date-picker > .arrow-button > .arrow {
-    -fx-background-color: white;
-}
-
-/* Estilo para ComboBox */
-.combo-box {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 5;
-    -fx-border-width: 1px;
-}
-
-.combo-box .arrow-button {
-    -fx-background-color: #007bff;
-    -fx-background-radius: 0 5 5 0;
-}
-
-.combo-box .arrow-button .arrow {
-    -fx-background-color: white;
-}
-
-/* Estilo para ImageView de la portada */
-.cover-image-view {
-    -fx-border-color: #dddddd;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
-    -fx-background-color: #ffffff;
-}
-
-/* Estilos para los botones */
-.button {
-    -fx-background-color: #007bff; /* Color primario por defecto */
+.table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 8 20;
-    -fx-cursor: hand; /* Cambiar el cursor al pasar por encima */
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #ecf0f1;
+}
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: #ffffff;
 }
 
-.button:hover {
-    -fx-opacity: 0.9;
+/* Estilos de las etiquetas de estado */
+.status-label {
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 20px;
+}
+.status-active {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #ffffff;
+}
+.status-inactive {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: #ffffff;
 }
 
-.button-save {
-    -fx-background-color: #28a745; /* Verde para guardar */
+/* Estilos de los botones de acción */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
 }
-
-.button-cancel {
-    -fx-background-color: #dc3545; /* Rojo para cancelar */
+.action-button:hover {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5px;
 }
-
-.button-select-image {
-    -fx-background-color: #6c757d; /* Gris para seleccionar imagen */
+.action-icon {
+    -fx-fill: #7f8c8d;
 }
