@@ -4,9 +4,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -17,6 +22,8 @@ import mx.edu.utez.biblioteca.model.Autor;
 import mx.edu.utez.biblioteca.model.Categoria;
 import mx.edu.utez.biblioteca.model.Editorial;
 import mx.edu.utez.biblioteca.model.Libro;
+
+import java.io.IOException;
 import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -211,8 +218,28 @@ public class AdminDashboardController {
     @FXML
     // Método para añadir libro
     private void onAddLibro() {
-        System.out.println("Agregar nuevo libro");
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Agregar Libro", "Aquí se abrirá la ventana para agregar un nuevo libro.");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/agregarLibro.fxml"));
+            Parent root = fxmlLoader.load();
+
+            LibroFormController modalController = fxmlLoader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Agregar Libro");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+
+            // Si se agregó un libro, recargar la tabla
+            if (modalController.seAgregoLibro()) {
+                cargarLibros();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar libro.");
+        }
     }
     // Método para editar libro
 
