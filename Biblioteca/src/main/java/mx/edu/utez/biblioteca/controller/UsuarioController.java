@@ -38,7 +38,7 @@ public class UsuarioController {
     @FXML
     private void onLogin(ActionEvent e){
         String input=txtcorreo.getText().trim();
-        String pass = txtPassword.getText().trim();
+        String pass = txtPassword.isVisible() ? txtPassword.getText().trim() : txtPasswordVisible.getText().trim();
 
         if (input.isEmpty() || pass.isEmpty()) {
             showAlert("Advertencia", "Correo/Usuario y contraseña son requeridos.");
@@ -116,7 +116,32 @@ public class UsuarioController {
         loginPane.setBackground(new Background(bgImage));
     }
 
+    @FXML
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = txtPasswordVisible.isVisible();
 
+        if (isVisible) {
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtPassword.setVisible(true);
+            txtPassword.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye");
+            }
+        } else {
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPassword.setVisible(false);
+            txtPassword.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye-slash");
+            }
+        }
+    }
 
     @FXML
     private void irInicio(ActionEvent e) {
