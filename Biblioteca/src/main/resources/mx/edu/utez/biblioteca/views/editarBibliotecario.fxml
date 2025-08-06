@@ -13,7 +13,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.EditarBibliotecarioController"
             prefWidth="920" prefHeight="520"
-            style="-fx-background-color: #F1EFEF;">
+            style="-fx-background-color: #F1EFEF;"
+            stylesheets="@../css/editarBiblio.css">
 
 
     <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
