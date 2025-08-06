@@ -51,6 +51,7 @@ public class EditarBibliotecarioController implements Initializable {
         txtCorreo.setText(bibliotecarioActual.getCorreo());
         txtTelefono.setText(bibliotecarioActual.getTelefono());
         txtUsuario.setText(bibliotecarioActual.getUsername());
+        txtPassword.setText(bibliotecarioActual.getPassword());
         txtDireccion.setText(bibliotecarioActual.getDireccion());
         comboEstado.setValue(bibliotecarioActual.getEstado());
 
@@ -61,14 +62,7 @@ public class EditarBibliotecarioController implements Initializable {
     }
 
     public void setBibliotecario(Bibliotecario bibliotecario) {
-        this.bibliotecario = bibliotecario;
-
-        txtNombre.setText(bibliotecario.getNombre());
-        txtCorreo.setText(bibliotecario.getCorreo());
-        txtTelefono.setText(bibliotecario.getTelefono());
-        txtUsuario.setText(bibliotecario.getUsername());
-        txtPassword.setText(bibliotecario.getPassword());
-
+        this.bibliotecarioActual = bibliotecario;
         cargarDatos();
     }
 
