@@ -8,22 +8,18 @@ import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.*; // Asegúrate de que estos imports sean correctos
 import mx.edu.utez.biblioteca.model.*;   // Asegúrate de que estos imports sean correctos
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Optional;
 
 public class LibroFormController {
 
     @FXML private TextField txtIsbn;
     @FXML private TextField txtTitulo;
-    @FXML private ComboBox<Autor> cmbAutor; // Cambiado a ComboBox
-    @FXML private ComboBox<Editorial> cmbEditorial; // Cambiado a ComboBox
+    @FXML private ComboBox<Autor> cmbAutor;
+    @FXML private ComboBox<Editorial> cmbEditorial;
     @FXML private TextArea txtSinopsis;
-    @FXML private ComboBox<Categoria> cmbCategoria; // Cambiado a ComboBox
+    @FXML private ComboBox<Categoria> cmbCategoria;
     @FXML private TextField txtAnioPublicacion;
     @FXML private TextField txtEstado;
     @FXML private TextField txtUrlPortada; // Campo para la URL de la portada
@@ -35,7 +31,7 @@ public class LibroFormController {
 
     // Botones para agregar Autor, Editorial, Categoria
     @FXML private Button btnAgregarAutor;
-    @FXML private Button btnAgregarEditorial;
+    @FXML private Button btnAgregarEditorial; // <-- ¡Corregido!
     @FXML private Button btnAgregarCategoria;
 
     // DAOs para interactuar con la base de datos
@@ -45,12 +41,10 @@ public class LibroFormController {
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
     private boolean agregado = false;
-    private byte[] portadaBytes = null; // Para almacenar los bytes de la imagen cargada
 
     // Valores correctos de la base de datos para la restricción de control de ESTADO
     private static final String VALOR_ACTIVO = "ACTIVO";
     private static final String VALOR_INACTIVO = "INACTIVO";
-
 
     public boolean seAgregoLibro() {
         return agregado;
@@ -76,9 +70,9 @@ public class LibroFormController {
 
     /**
      * Carga la imagen desde la URL ingresada en txtUrlPortada y la muestra en el ImageView.
-     * También convierte la imagen a bytes para su posterior guardado.
+     * Solo carga y visualiza la imagen, no la convierte a bytes.
      */
-    @FXML // Asegúrate de que este método sea @FXML si se llama desde FXML
+    @FXML
     private void cargarImagenDesdeUrl() {
         String imageUrlString = txtUrlPortada.getText();
         if (imageUrlString.trim().isEmpty()) {
@@ -87,48 +81,39 @@ public class LibroFormController {
         }
 
         try {
-            // Cargar la imagen desde la URL. El segundo parámetro 'true' permite la carga en segundo plano.
-            Image image = new Image(imageUrlString, true);
+            // Cargar la imagen desde la URL.
+            // El segundo parámetro 'true' permite la carga en segundo plano.
+            // Usamos el constructor que acepta una URL para evitar errores con cadenas mal formadas
+            URL url = new URL(imageUrlString);
+            Image image = new Image(url.toExternalForm(), true);
 
             // Listener para monitorear el progreso de la carga de la imagen
             image.progressProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue.doubleValue() == 1.0) { // Cuando la carga está completa (1.0 = 100%)
+                if (newValue.doubleValue() == 1.0) { // Cuando la carga está completa
                     if (image.isError()) {
-                        // Si hubo un error al cargar la imagen (ej. URL inválida, formato incorrecto)
+                        // Si hubo un error al cargar la imagen
                         mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "No se pudo cargar la imagen", "La URL proporcionada es inválida o el archivo no es una imagen.");
                         imageView.setImage(null); // Limpiar el ImageView
-                        portadaBytes = null; // Limpiar los bytes de la portada
                     } else {
                         // Si la imagen se cargó correctamente
                         imageView.setImage(image);
-                        // Convertir la imagen cargada a un array de bytes para poder guardarla en la BD
-                        try {
-                            URL url = new URL(imageUrlString);
-                            InputStream is = url.openStream();
-                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            byte[] buffer = new byte[1024];
-                            int len;
-                            while ((len = is.read(buffer)) != -1) {
-                                bos.write(buffer, 0, len);
-                            }
-                            portadaBytes = bos.toByteArray();
-                            is.close();
-                        } catch (Exception e) {
-                            // Error al procesar los bytes de la imagen después de la carga
-                            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al procesar la imagen", "Ocurrió un error al intentar procesar la imagen desde la URL.");
-                            e.printStackTrace();
-                            portadaBytes = null; // Asegurarse de que los bytes sean nulos si hay error
-                        }
                     }
                 }
             });
-        } catch (Exception e) {
-            // Captura cualquier otra excepción durante el intento inicial de crear la Image (ej. URL mal formada inicial)
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "No se pudo cargar la imagen", "Ocurrió un error inesperado al cargar la imagen. Verifique la URL.");
+
+        } catch (MalformedURLException e) {
+            // Captura si la URL no está bien formada
+            mostrarAlerta(Alert.AlertType.ERROR, "URL Inválida", "La URL proporcionada no es un formato válido.");
+            imageView.setImage(null);
             e.printStackTrace();
-            portadaBytes = null; // Asegurarse de que los bytes sean nulos si hay error
+        } catch (Exception e) {
+            // Captura cualquier otra excepción durante el intento de cargar la imagen
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "Ocurrió un error inesperado al cargar la imagen. Verifique la URL.");
+            e.printStackTrace();
+            imageView.setImage(null);
         }
     }
+
 
     /**
      * Carga la lista de autores desde la base de datos y los agrega al ComboBox cmbAutor.
@@ -173,7 +158,7 @@ public class LibroFormController {
      * Abre un cuadro de diálogo para que el usuario ingrese el nombre de un nuevo autor.
      * Si el nombre es válido, intenta crear el autor en la base de datos y recarga el ComboBox.
      */
-    @FXML // Añadir @FXML a los métodos llamados desde onAction en FXML
+    @FXML
     private void handleAddAutor() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Agregar Autor");
@@ -208,7 +193,7 @@ public class LibroFormController {
      * Abre un cuadro de diálogo para que el usuario ingrese el nombre de una nueva editorial.
      * Si el nombre es válido, intenta crear la editorial en la base de datos y recarga el ComboBox.
      */
-    @FXML // Añadir @FXML a los métodos llamados desde onAction en FXML
+    @FXML
     private void handleAddEditorial() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Agregar Editorial");
@@ -241,7 +226,7 @@ public class LibroFormController {
      * Abre un cuadro de diálogo para que el usuario ingrese el nombre de una nueva categoría.
      * Si el nombre es válido, intenta crear la categoría en la base de datos y recarga el ComboBox.
      */
-    @FXML // Añadir @FXML a los métodos llamados desde onAction en FXML
+    @FXML
     private void handleAddCategoria() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Agregar Categoría");
@@ -275,15 +260,15 @@ public class LibroFormController {
         // Validar que todos los campos obligatorios estén llenos
         if (txtIsbn.getText().trim().isEmpty() ||
                 txtTitulo.getText().trim().isEmpty() ||
-                cmbAutor.getSelectionModel().isEmpty() || // Validar selección en ComboBox
-                cmbEditorial.getSelectionModel().isEmpty() || // Validar selección en ComboBox
+                cmbAutor.getSelectionModel().isEmpty() ||
+                cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
-                cmbCategoria.getSelectionModel().isEmpty() || // Validar selección en ComboBox
+                cmbCategoria.getSelectionModel().isEmpty() ||
                 txtAnioPublicacion.getText().trim().isEmpty() ||
                 txtEstado.getText().trim().isEmpty() ||
-                portadaBytes == null) { // Validar que la imagen se haya cargado desde la URL
+                txtUrlPortada.getText().trim().isEmpty()) { // Validar que el campo de URL no esté vacío
 
-            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos del formulario y asegúrate de cargar una portada desde la URL.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos del formulario y asegúrate de ingresar una URL de portada.");
             return;
         }
 
@@ -298,31 +283,25 @@ public class LibroFormController {
             Libro nuevoLibro = new Libro();
             nuevoLibro.setIsbn(txtIsbn.getText().trim());
             nuevoLibro.setTitulo(txtTitulo.getText().trim());
-            nuevoLibro.setAutor(cmbAutor.getValue()); // Obtener el objeto Autor seleccionado del ComboBox
-            nuevoLibro.setEditorial(cmbEditorial.getValue()); // Obtener el objeto Editorial seleccionado del ComboBox
+            nuevoLibro.setAutor(cmbAutor.getValue());
+            nuevoLibro.setEditorial(cmbEditorial.getValue());
             nuevoLibro.setResumen(txtSinopsis.getText().trim());
-            nuevoLibro.setCategoria(cmbCategoria.getValue()); // Obtener el objeto Categoria seleccionado del ComboBox
+            nuevoLibro.setCategoria(cmbCategoria.getValue());
             nuevoLibro.setAnioPublicacion(Integer.parseInt(txtAnioPublicacion.getText().trim()));
-            nuevoLibro.setEstado(estadoInput.toUpperCase()); // Usar el valor validado y en mayúsculas
-
-            // Convertir los bytes de la imagen a Base64 para guardarla en la base de datos
-            if (portadaBytes != null) {
-                nuevoLibro.setPortada(Base64.getEncoder().encodeToString(portadaBytes));
-            } else {
-                nuevoLibro.setPortada(null); // Asegurarse de que sea null si no hay imagen
-            }
+            nuevoLibro.setEstado(estadoInput.toUpperCase());
+            nuevoLibro.setPortada(txtUrlPortada.getText().trim()); // Asignar la URL directamente
 
             // Intentar guardar el libro en la base de datos
             libroDao.create(nuevoLibro);
 
-            agregado = true; // Indicar que el libro se agregó correctamente
+            agregado = true;
             mostrarAlerta(Alert.AlertType.INFORMATION, "¡Libro registrado exitosamente!", "El libro ha sido añadido a la biblioteca.");
-            cerrarModal(); // Cerrar la ventana modal después de guardar
+            cerrarModal();
 
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Año de Publicación Inválido", "El año de publicación debe ser un número válido (ej. 2023).");
         } catch (Exception e) {
-            e.printStackTrace(); // Imprimir la traza completa de la excepción para depuración
+            e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al registrar el libro.", e.getMessage());
         }
     }

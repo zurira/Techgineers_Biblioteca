@@ -84,7 +84,8 @@ public class EditorialDaoImpl implements IEditorial {
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        editorial.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
+                        //editorial.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
+                        return true;
                     }
                 }
                 return true;

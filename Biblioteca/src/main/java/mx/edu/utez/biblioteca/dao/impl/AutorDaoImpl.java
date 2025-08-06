@@ -84,7 +84,7 @@ public class AutorDaoImpl implements IAutor {
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        autor.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
+                        //autor.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
                    return true;
                     }
                 }

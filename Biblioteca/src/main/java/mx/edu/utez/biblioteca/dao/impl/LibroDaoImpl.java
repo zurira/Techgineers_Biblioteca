@@ -13,6 +13,13 @@ import java.util.List;
 
 public class LibroDaoImpl implements ILibro {
 
+    /**
+     * Extrae un objeto Libro y sus dependencias (Autor, Editorial, Categoria)
+     * de un ResultSet y lo retorna.
+     * @param rs El ResultSet que contiene los datos del libro.
+     * @return El objeto Libro.
+     * @throws SQLException Si ocurre un error al acceder a los datos.
+     */
     private Libro extractLibroFromResultSet(ResultSet rs) throws SQLException {
         Libro libro = new Libro();
         libro.setId(rs.getInt("LIBRO_ID"));
@@ -98,6 +105,42 @@ public class LibroDaoImpl implements ILibro {
         }
         return libro;
     }
+
+    /**
+     * Nuevo método para buscar un libro por su ISBN.
+     * @param isbn El ISBN del libro a buscar.
+     * @return El objeto Libro si se encuentra, o null si no.
+     * @throws Exception Si ocurre un error de SQL.
+     */
+    @Override
+    public Libro findByIsbn(String isbn) throws Exception {
+        Libro libro = null;
+        String query = "SELECT " +
+                "l.ID AS ID, l.TITULO, l.ISBN, l.SINOPSIS, l.ANIO_PUBLICACION, l.PORTADA, l.ESTADO, " +
+                "e.ID AS ID, e.NOMBRE AS EDITORIAL_NOMBRE, " +
+                "a.ID AS ID, a.NOMBRE_COMPLETO AS AUTOR_NOMBRE, " +
+                "c.ID AS ID, c.NOMBRE AS CATEGORIA_NOMBRE " +
+                "FROM LIBRO l " +
+                "LEFT JOIN EDITORIAL e ON l.ID = e.ID " +
+                "LEFT JOIN AUTOR a ON l.ID = a.ID " +
+                "LEFT JOIN CATEGORIA c ON l.ID = c.ID " +
+                "WHERE l.ISBN = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, isbn);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    libro = extractLibroFromResultSet(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar libro por ISBN: " + e.getMessage());
+            throw e;
+        }
+        return libro;
+    }
+
 
     @Override
     public void create(Libro libro) throws Exception {
