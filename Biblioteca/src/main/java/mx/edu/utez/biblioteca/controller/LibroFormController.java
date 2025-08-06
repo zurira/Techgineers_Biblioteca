@@ -357,3 +357,4 @@ public class LibroFormController {
         stage.close();
     }
 }
+/*Eliminar el estado del libro en el form*/
