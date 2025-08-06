@@ -18,7 +18,7 @@
 
 /* Contenedor del campo de contraseña con ícono */
 .password-container {
-    -fx-alignment: CENTER_LEFT;
+
     -fx-spacing: 5;
 }
 
@@ -34,6 +34,7 @@
     -fx-cursor: hand;
     -fx-padding: 0;
     -fx-translate-x: -5;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .eye-icon {
