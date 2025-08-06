@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,11 +29,16 @@ public class UsuarioController {
     private PasswordField txtPassword;
     @FXML
     private StackPane loginPane;
+    @FXML
+    private TextField txtPasswordVisible;
+    @FXML
+    private Button togglePasswordBtn;
+
     //Metodo funcionando, ya realiza la validación de cada rol
     @FXML
     private void onLogin(ActionEvent e){
         String input=txtcorreo.getText().trim();
-        String pass=txtPassword.getText().trim();
+        String pass = txtPassword.isVisible() ? txtPassword.getText().trim() : txtPasswordVisible.getText().trim();
 
         if (input.isEmpty() || pass.isEmpty()) {
             showAlert("Advertencia", "Correo/Usuario y contraseña son requeridos.");
@@ -107,6 +114,33 @@ public class UsuarioController {
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
         );
         loginPane.setBackground(new Background(bgImage));
+    }
+
+    @FXML
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = txtPasswordVisible.isVisible();
+
+        if (isVisible) {
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtPassword.setVisible(true);
+            txtPassword.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye");
+            }
+        } else {
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPassword.setVisible(false);
+            txtPassword.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye-slash");
+            }
+        }
     }
 
     @FXML

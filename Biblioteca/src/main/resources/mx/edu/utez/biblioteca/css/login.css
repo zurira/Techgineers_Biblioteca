@@ -40,3 +40,10 @@
 .circle-color {
     -fx-fill: #E7D7C9;
 }
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 8 0 0;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
