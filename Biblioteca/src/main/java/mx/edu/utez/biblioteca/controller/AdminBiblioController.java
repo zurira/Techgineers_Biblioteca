@@ -256,8 +256,28 @@ public class AdminBiblioController {
     }
 
     private void onEditBibliotecario(Bibliotecario bibliotecario) {
-        System.out.println("Editar bibliotecario: " + bibliotecario.getId());
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Bibliotecario", "Aquí se abrirá la ventana para editar al bibliotecario con ID: " + bibliotecario.getId() + " - " + bibliotecario.getNombre());
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarBibliotecario.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditarBibliotecarioController controller = fxmlLoader.getController();
+            controller.setBibliotecario(bibliotecario);
+
+            // Creamos y mostramos la ventana modal
+            Stage stage = new Stage();
+            stage.setTitle("Editar Bibliotecario");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+
+            // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
+            stage.showAndWait();
+
+            cargarBibliotecarios();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar bibliotecario.");
+        }
     }
 
     private void onChangeStatus(Bibliotecario bibliotecario) {
@@ -299,3 +319,4 @@ public class AdminBiblioController {
         alert.showAndWait();
     }
 }
+
