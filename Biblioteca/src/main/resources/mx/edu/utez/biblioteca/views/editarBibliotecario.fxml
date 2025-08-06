@@ -39,26 +39,26 @@
 
                 <!-- Fila 1 -->
                 <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtNombre" promptText="Nombre completo" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtNombre" promptText="Nombre completo" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-field"/>
 
                 <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtCorreo" promptText="Correo electrónico" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtCorreo" promptText="Correo electrónico" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-field" />
 
                 <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtTelefono" promptText="Teléfono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtTelefono" promptText="Teléfono" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="text-field"/>
 
                 <!-- Fila 2 -->
                 <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtUsuario" promptText="Usuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtUsuario" promptText="Usuario" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="text-field"/>
 
                 <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <PasswordField fx:id="txtPassword" promptText="Nueva contraseña (opcional)" />
+                <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="password-container">
+                    <PasswordField fx:id="txtPassword" promptText="Nueva contraseña (opcional)" styleClass="password-field" />
                     <TextField fx:id="txtPasswordVisible" promptText="Nueva contraseña (opcional)"
                                visible="false" managed="false" />
                     <Button fx:id="togglePasswordBtn" onAction="#togglePasswordVisibility" styleClass="icon-button">
                         <graphic>
-                            <FontIcon iconLiteral="fa-eye" />
+                            <FontIcon iconLiteral="fa-eye" styleClass="eye-icon" />
                         </graphic>
                     </Button>
                 </StackPane>
@@ -83,7 +83,7 @@
         <TextArea fx:id="txtDireccion"
                   prefWidth="400"
                   prefHeight="80"
-                  wrapText="true"/>
+                  wrapText="true" styleClass="text-area"/>
 
 
         <!-- Botones -->
