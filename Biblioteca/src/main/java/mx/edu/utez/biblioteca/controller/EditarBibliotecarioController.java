@@ -58,4 +58,22 @@ public class EditarBibliotecarioController implements Initializable {
         cargarDatos();
     }
 
+    @FXML
+    private void togglePasswordVisibility() {
+        boolean visible = txtPasswordVisible.isVisible();
+        if (visible) {
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtPassword.setVisible(true);
+            txtPassword.setManaged(true);
+        } else {
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPassword.setVisible(false);
+            txtPassword.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+        }
+    }
+
 }
