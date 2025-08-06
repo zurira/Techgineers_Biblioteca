@@ -6,8 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,6 +77,24 @@ public class EditarBibliotecarioController implements Initializable {
             txtPassword.setManaged(false);
             txtPasswordVisible.setVisible(true);
             txtPasswordVisible.setManaged(true);
+        }
+    }
+
+    @FXML
+    private void onSeleccionarImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar imagen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+        File file = fileChooser.showOpenDialog(btnSeleccionarImagen.getScene().getWindow());
+        if (file != null) {
+            try (FileInputStream fis = new FileInputStream(file)) {
+                nuevaFoto = fis.readAllBytes();
+                imageView.setImage(new Image(new java.io.ByteArrayInputStream(nuevaFoto)));
+            } catch (IOException e) {
+                mostrarAlerta("Error", "No se pudo cargar la imagen.");
+            }
         }
     }
 
