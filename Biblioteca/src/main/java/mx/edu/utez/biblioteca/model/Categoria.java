@@ -1,5 +1,7 @@
 package mx.edu.utez.biblioteca.model;
 
+import java.util.Objects;
+
 public class Categoria {
     private int id;
     private String nombre;
@@ -33,4 +35,22 @@ public class Categoria {
         return nombre;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        if (this.id != 0 && categoria.id != 0) {
+            return id == categoria.id;
+        }
+        return Objects.equals(nombre.toUpperCase(), categoria.nombre.toUpperCase());
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.id != 0) {
+            return Objects.hash(id);
+        }
+        return Objects.hash(nombre.toUpperCase());
+    }
 }

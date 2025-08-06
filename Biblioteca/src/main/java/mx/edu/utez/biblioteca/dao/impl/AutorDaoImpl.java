@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,19 +54,43 @@ public class AutorDaoImpl implements IAutor {
     }
 
     @Override
-    public void create(Autor autor) throws Exception {
+    public Autor findByName(String name) throws Exception {
+        Autor autor = null;
+        // Usar UPPER para hacer la búsqueda insensible a mayúsculas/minúsculas
+        String query = "SELECT ID, NOMBRE_COMPLETO FROM AUTOR WHERE UPPER(NOMBRE_COMPLETO) = UPPER(?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, name);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    autor = new Autor(rs.getInt("ID"), rs.getString("NOMBRE_COMPLETO"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar autor por nombre: " + e.getMessage());
+            throw e;
+        }
+        return autor;
+    }
+
+    @Override
+    public boolean create(Autor autor) throws Exception {
+        // Usar Statement.RETURN_GENERATED_KEYS para columnas IDENTITY
         String query = "INSERT INTO AUTOR (NOMBRE_COMPLETO) VALUES (?)";
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, autor.getNombreCompleto());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        autor.setId(rs.getInt(1));
+                        autor.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
+                   return true;
                     }
                 }
+                return true;
             }
+            return false;
         } catch (SQLException e) {
             System.err.println("Error al crear autor: " + e.getMessage());
             throw e;

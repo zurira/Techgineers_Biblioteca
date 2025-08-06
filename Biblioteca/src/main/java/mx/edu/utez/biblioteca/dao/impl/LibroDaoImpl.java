@@ -60,6 +60,9 @@ public class LibroDaoImpl implements ILibro {
             while (rs.next()) {
                 libros.add(extractLibroFromResultSet(rs));
             }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar todos los libros: " + e.getMessage());
+            throw e;
         }
         return libros;
     }
@@ -85,14 +88,19 @@ public class LibroDaoImpl implements ILibro {
                 if (rs.next()) {
                     libro = extractLibroFromResultSet(rs);
                 }
+            } catch (SQLException e) {
+                System.err.println("Error al buscar libro por ID: " + e.getMessage());
+                throw e;
             }
+        } catch (SQLException e) {
+            System.err.println("Error de conexión o preparación de la consulta para libro por ID: " + e.getMessage());
+            throw e;
         }
         return libro;
     }
 
     @Override
     public void create(Libro libro) throws Exception {
-
         String query = "INSERT INTO LIBRO (TITULO, ISBN, SINOPSIS, ANIO_PUBLICACION, PORTADA, ID_EDITORIAL, ID_AUTOR, ID_CATEGORIA, ESTADO) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
@@ -101,12 +109,23 @@ public class LibroDaoImpl implements ILibro {
             pstmt.setString(2, libro.getIsbn());
             pstmt.setString(3, libro.getResumen());
             pstmt.setInt(4, libro.getAnioPublicacion());
-            pstmt.setString(5, libro.getPortada());
+
+            // Manejo de portada: si es null, se guarda como NULL en la BD
+            if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
+                pstmt.setString(5, libro.getPortada());
+            } else {
+                pstmt.setNull(5, Types.VARCHAR); // O el tipo SQL adecuado para tu columna
+            }
+
+            // Manejo de IDs de objetos relacionados (Autor, Editorial, Categoria)
             pstmt.setObject(6, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
             pstmt.setObject(7, libro.getAutor() != null ? libro.getAutor().getId() : null);
             pstmt.setObject(8, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
             pstmt.setString(9, libro.getEstado());
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al crear libro: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -120,13 +139,23 @@ public class LibroDaoImpl implements ILibro {
             pstmt.setString(2, libro.getIsbn());
             pstmt.setString(3, libro.getResumen());
             pstmt.setInt(4, libro.getAnioPublicacion());
-            pstmt.setString(5, libro.getPortada());
+
+            // Manejo de portada en update
+            if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
+                pstmt.setString(5, libro.getPortada());
+            } else {
+                pstmt.setNull(5, Types.VARCHAR); // O el tipo SQL adecuado
+            }
+
             pstmt.setObject(6, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
             pstmt.setObject(7, libro.getAutor() != null ? libro.getAutor().getId() : null);
             pstmt.setObject(8, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
             pstmt.setString(9, libro.getEstado());
             pstmt.setInt(10, libro.getId());
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar libro: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -137,6 +166,9 @@ public class LibroDaoImpl implements ILibro {
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar libro: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -166,6 +198,9 @@ public class LibroDaoImpl implements ILibro {
                     libros.add(extractLibroFromResultSet(rs));
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar libros: " + e.getMessage());
+            throw e;
         }
         return libros;
     }
@@ -178,7 +213,9 @@ public class LibroDaoImpl implements ILibro {
             pstmt.setString(1, estado);
             pstmt.setInt(2, idLibro);
             return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar estado del libro: " + e.getMessage());
+            throw e;
         }
     }
 }
-

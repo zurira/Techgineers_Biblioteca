@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,19 +54,42 @@ public class CategoriaDaoImpl implements ICategoria {
     }
 
     @Override
-    public void create(Categoria categoria) throws Exception {
+    public Categoria findByName(String name) throws Exception {
+        Categoria categoria = null;
+        // Usar UPPER para hacer la búsqueda insensible a mayúsculas/minúsculas
+        String query = "SELECT ID, NOMBRE FROM CATEGORIA WHERE UPPER(NOMBRE) = UPPER(?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, name);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    categoria = new Categoria(rs.getInt("ID"), rs.getString("NOMBRE"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar categoría por nombre: " + e.getMessage());
+            throw e;
+        }
+        return categoria;
+    }
+
+    @Override
+    public boolean create(Categoria categoria) throws Exception {
+        // Usar Statement.RETURN_GENERATED_KEYS para columnas IDENTITY
         String query = "INSERT INTO CATEGORIA (NOMBRE) VALUES (?)";
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, categoria.getNombre());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        categoria.setId(rs.getInt(1));
+                        categoria.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
                     }
                 }
+                return true;
             }
+            return false;
         } catch (SQLException e) {
             System.err.println("Error al crear categoría: " + e.getMessage());
             throw e;

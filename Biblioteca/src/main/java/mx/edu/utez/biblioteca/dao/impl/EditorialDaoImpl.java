@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,19 +54,42 @@ public class EditorialDaoImpl implements IEditorial {
     }
 
     @Override
-    public void create(Editorial editorial) throws Exception {
+    public Editorial findByName(String name) throws Exception {
+        Editorial editorial = null;
+        // Usar UPPER para hacer la búsqueda insensible a mayúsculas/minúsculas
+        String query = "SELECT ID, NOMBRE FROM EDITORIAL WHERE UPPER(NOMBRE) = UPPER(?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, name);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    editorial = new Editorial(rs.getInt("ID"), rs.getString("NOMBRE"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar editorial por nombre: " + e.getMessage());
+            throw e;
+        }
+        return editorial;
+    }
+
+    @Override
+    public boolean create(Editorial editorial) throws Exception {
+        // Usar Statement.RETURN_GENERATED_KEYS para columnas IDENTITY
         String query = "INSERT INTO EDITORIAL (NOMBRE) VALUES (?)";
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, editorial.getNombre());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        editorial.setId(rs.getInt(1));
+                        editorial.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
                     }
                 }
+                return true;
             }
+            return false;
         } catch (SQLException e) {
             System.err.println("Error al crear editorial: " + e.getMessage());
             throw e;
