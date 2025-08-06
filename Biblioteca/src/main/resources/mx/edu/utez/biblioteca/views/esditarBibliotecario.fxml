@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextArea?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.EditarBibliotecarioController"
+            prefWidth="920" prefHeight="520"
+            style="-fx-background-color: #F1EFEF;">
+
+
+    <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
+        <Label text="Editar bibliotecario" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+        <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
+
+        <HBox spacing="20">
+            <!-- Este es para la Imagen y botón -->
+            <VBox spacing="10">
+                <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" />
+                <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
+                        style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
+                        prefWidth="150" />
+            </VBox>
+
+            <!-- Grid de campos -->
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                </columnConstraints>
+
+                <!-- Fila 1 -->
+                <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="txtNombre" promptText="Nombre completo" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+                <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <TextField fx:id="txtCorreo" promptText="Correo electrónico" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <TextField fx:id="txtTelefono" promptText="Teléfono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                <!-- Fila 2 -->
+                <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtUsuario" promptText="Usuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+                <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <PasswordField fx:id="txtPassword" promptText="Nueva contraseña (opcional)" />
+                    <TextField fx:id="txtPasswordVisible" promptText="Nueva contraseña (opcional)"
+                               visible="false" managed="false" />
+                    <Button fx:id="togglePasswordBtn" styleClass="icon-button">
+                        <graphic>
+                            <FontIcon iconLiteral="fa-eye" />
+                        </graphic>
+                    </Button>
+                </StackPane>
+
+                <Label text="Estado:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="comboEstado" promptText="Estado" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="S"/>
+                            <String fx:value="N"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+            </GridPane>
+        </HBox>
+
+
+
+        <!-- Este es el campo de Direccion -->
+        <Label text="Dirección:"/>
+        <TextArea fx:id="txtDireccion"
+                  prefWidth="400"
+                  prefHeight="80"
+                  wrapText="true"/>
+
+
+        <!-- Botones -->
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <Button text="Cancelar" fx:id="btnCancelar"
+                    style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"/>
+            <Button text="Guardar" fx:id="btnGuardar"
+                    style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" />
+        </HBox>
+    </VBox>
+</AnchorPane><?xml version="1.0" encoding="UTF-8"?>
+
+
