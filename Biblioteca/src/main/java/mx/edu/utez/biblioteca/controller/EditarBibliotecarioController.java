@@ -45,4 +45,17 @@ public class EditarBibliotecarioController implements Initializable {
             imageView.setImage(img);
         }
     }
+
+    public void setBibliotecario(Bibliotecario bibliotecario) {
+        this.bibliotecario = bibliotecario;
+
+        txtNombre.setText(bibliotecario.getNombre());
+        txtCorreo.setText(bibliotecario.getCorreo());
+        txtTelefono.setText(bibliotecario.getTelefono());
+        txtUsuario.setText(bibliotecario.getUsername());
+        txtPassword.setText(bibliotecario.getPassword());
+
+        cargarDatos();
+    }
+
 }
