@@ -20,5 +20,8 @@ public class EditarBibliotecarioController implements Initializable {
     @FXML private Button btnSeleccionarImagen;
     @FXML private Button btnGuardar, btnCancelar;
 
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
+    }
 }
