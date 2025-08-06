@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
 
 import java.io.File;
@@ -17,15 +18,24 @@ import java.util.ResourceBundle;
 
 public class EditarBibliotecarioController implements Initializable {
 
-    @FXML private TextField txtNombre, txtCorreo, txtTelefono, txtUsuario;
-    @FXML private PasswordField txtPassword;
-    @FXML private TextField txtPasswordVisible;
-    @FXML private Button togglePasswordBtn;
-    @FXML private ComboBox<String> comboEstado;
-    @FXML private TextArea txtDireccion;
-    @FXML private ImageView imageView;
-    @FXML private Button btnSeleccionarImagen;
-    @FXML private Button btnGuardar, btnCancelar;
+    @FXML
+    private TextField txtNombre, txtCorreo, txtTelefono, txtUsuario;
+    @FXML
+    private PasswordField txtPassword;
+    @FXML
+    private TextField txtPasswordVisible;
+    @FXML
+    private Button togglePasswordBtn;
+    @FXML
+    private ComboBox<String> comboEstado;
+    @FXML
+    private TextArea txtDireccion;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Button btnSeleccionarImagen;
+    @FXML
+    private Button btnGuardar, btnCancelar;
 
     private Bibliotecario bibliotecarioActual;
     private Bibliotecario bibliotecario;
@@ -106,5 +116,44 @@ public class EditarBibliotecarioController implements Initializable {
         alert.showAndWait();
     }
 
+    @FXML
+    private void onGuardar() {
+        try {
+            bibliotecarioActual.setNombre(txtNombre.getText());
+            bibliotecarioActual.setCorreo(txtCorreo.getText());
+            bibliotecarioActual.setTelefono(txtTelefono.getText());
+            bibliotecarioActual.setUsername(txtUsuario.getText());
+            bibliotecarioActual.setDireccion(txtDireccion.getText());
+            bibliotecarioActual.setEstado(comboEstado.getValue());
+
+            String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
+            if (!nuevaPass.isEmpty()) {
+                bibliotecarioActual.setPassword(nuevaPass); // Hashea si es necesario
+            }
+
+            if (nuevaFoto != null) {
+                bibliotecarioActual.setFoto(nuevaFoto);
+            }
+
+            BibliotecarioDaoImpl dao = new BibliotecarioDaoImpl();
+            boolean actualizado = dao.update(bibliotecarioActual);
+
+            if (actualizado) {
+                mostrarAlerta("Éxito", "Bibliotecario actualizado correctamente.");
+                // Cerrar ventana o refrescar vista
+            } else {
+                mostrarAlerta("Error", "No se pudo actualizar el bibliotecario.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "Ocurrió un error al actualizar.");
+        }
+    }
+
+    @FXML
+    private void onCancelar() {
+        // Cierra la ventana actual
+        btnCancelar.getScene().getWindow().hide();
+    }
 
 }
