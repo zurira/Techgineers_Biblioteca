@@ -10,10 +10,9 @@ public interface ILibro {
     void update(Libro libro) throws Exception;
     void delete(int id) throws Exception;
     List<Libro> search(String searchTerm) throws Exception;
-    boolean updateStatus(int idLibro, String estado) throws Exception;
-
-
-    // NUEVO MÉTODO AÑADIDO: Ahora la interfaz lo reconoce.
 
     Libro findByIsbn(String isbn) throws Exception;
+
+    // Método para actualizar el estado del libro
+    void updateStatus(int id, String estado) throws Exception;
 }

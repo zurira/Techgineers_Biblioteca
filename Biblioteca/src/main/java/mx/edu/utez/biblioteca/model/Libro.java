@@ -1,7 +1,5 @@
 package mx.edu.utez.biblioteca.model;
 
-import java.util.List;
-//Clase de libro y aqui agregamos los getters y setters
 public class Libro {
     private int id;
     private String titulo;
@@ -9,42 +7,25 @@ public class Libro {
     private String resumen;
     private int anioPublicacion;
     private String portada;
-    private Autor autor;
+    private String estado; // Restaurado
     private Editorial editorial;
+    private Autor autor;
     private Categoria categoria;
-    private List<Autor> autores;
-    private String estado;
 
-    // Constructor vacío
-    public Libro() {
-    }
+    // Constructores
+    public Libro() { }
 
-    // Constructor existente, actualizado para incluir 'estado'
-    public Libro(int id, String titulo, String isbn, String resumen, int anioPublicacion, String portada,
-                 Autor autor, Editorial editorial, Categoria categoria, String estado) {
+    public Libro(int id, String titulo, String isbn, String resumen, int anioPublicacion, String portada, String estado, Editorial editorial, Autor autor, Categoria categoria) {
         this.id = id;
         this.titulo = titulo;
         this.isbn = isbn;
         this.resumen = resumen;
         this.anioPublicacion = anioPublicacion;
         this.portada = portada;
-        this.autor = autor;
-        this.editorial = editorial;
-        this.categoria = categoria;
         this.estado = estado;
-    }
-
-    public Libro(String titulo, String isbn, String resumen, int anioPublicacion, String portada,
-                 Autor autor, Editorial editorial, Categoria categoria, String estado) {
-        this.titulo = titulo;
-        this.isbn = isbn;
-        this.resumen = resumen;
-        this.anioPublicacion = anioPublicacion;
-        this.portada = portada;
-        this.autor = autor;
         this.editorial = editorial;
+        this.autor = autor;
         this.categoria = categoria;
-        this.estado = estado;
     }
 
     // Getters y Setters
@@ -96,12 +77,12 @@ public class Libro {
         this.portada = portada;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Editorial getEditorial() {
@@ -112,6 +93,14 @@ public class Libro {
         this.editorial = editorial;
     }
 
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -120,35 +109,21 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public List<Autor> getAutores() {
-        return autores;
+    // Métodos para facilitar la visualización en la tabla (si se usan)
+    public String getEditorialNombre() {
+        return editorial != null ? editorial.getNombre() : "N/A";
     }
 
-    public void setAutores(List<Autor> autores) {
-        this.autores = autores;
+    public String getAutorNombre() {
+        return autor != null ? autor.getNombreCompleto() : "N/A";
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public String getCategoriaNombre() {
+        return categoria != null ? categoria.getNombre() : "N/A";
     }
 
     @Override
     public String toString() {
-        return "Libro{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", resumen='" + resumen + '\'' +
-                ", anioPublicacion=" + anioPublicacion +
-                ", portada='" + portada + '\'' +
-                ", autor=" + (autor != null ? autor.getNombreCompleto() : "N/A") +
-                ", editorial=" + (editorial != null ? editorial.getNombre() : "N/A") +
-                ", categoria=" + (categoria != null ? categoria.getNombre() : "N/A") +
-                ", estado='" + estado + '\'' +
-                '}';
+        return titulo;
     }
 }

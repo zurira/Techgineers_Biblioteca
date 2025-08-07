@@ -5,11 +5,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import mx.edu.utez.biblioteca.dao.impl.*; // Asegúrate de que estos imports sean correctos
-import mx.edu.utez.biblioteca.model.*;   // Asegúrate de que estos imports sean correctos
+import mx.edu.utez.biblioteca.dao.impl.*;
+import mx.edu.utez.biblioteca.model.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate; // Importación para obtener el año actual
 import java.util.Optional;
 
 public class LibroFormController {
@@ -21,57 +23,62 @@ public class LibroFormController {
     @FXML private TextArea txtSinopsis;
     @FXML private ComboBox<Categoria> cmbCategoria;
     @FXML private TextField txtAnioPublicacion;
-    @FXML private TextField txtEstado;
-    @FXML private TextField txtUrlPortada; // Campo para la URL de la portada
+    @FXML private TextField txtUrlPortada;
 
     @FXML private ImageView imageView;
-    @FXML private Button btnCargarUrl; // Botón para cargar la imagen desde la URL
+    @FXML private Button btnCargarUrl;
     @FXML private Button btnGuardar;
     @FXML private Button btnCancelar;
 
-    // Botones para agregar Autor, Editorial, Categoria
     @FXML private Button btnAgregarAutor;
-    @FXML private Button btnAgregarEditorial; // <-- ¡Corregido!
+    @FXML private Button btnAgregarEditorial;
     @FXML private Button btnAgregarCategoria;
 
-    // DAOs para interactuar con la base de datos
     private LibroDaoImpl libroDao = new LibroDaoImpl();
     private AutorDaoImpl autorDao = new AutorDaoImpl();
     private EditorialDaoImpl editorialDao = new EditorialDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
 
+    private Libro libroEditado;
     private boolean agregado = false;
 
-    // Valores correctos de la base de datos para la restricción de control de ESTADO
-    private static final String VALOR_ACTIVO = "ACTIVO";
-    private static final String VALOR_INACTIVO = "INACTIVO";
-
-    public boolean seAgregoLibro() {
+    public boolean isAgregado() {
         return agregado;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libroEditado = libro;
+        if (libro != null) {
+            txtTitulo.setText(libro.getTitulo());
+            txtIsbn.setText(libro.getIsbn());
+            txtSinopsis.setText(libro.getResumen());
+            txtAnioPublicacion.setText(String.valueOf(libro.getAnioPublicacion()));
+            txtUrlPortada.setText(libro.getPortada());
+            cmbEditorial.getSelectionModel().select(libro.getEditorial());
+            cmbAutor.getSelectionModel().select(libro.getAutor());
+            cmbCategoria.getSelectionModel().select(libro.getCategoria());
+
+            if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
+                cargarImagen(libro.getPortada());
+            }
+        }
     }
 
     @FXML
     public void initialize() {
-        // Asignar manejadores de eventos a los botones
         btnGuardar.setOnAction(event -> guardarLibro());
         btnCancelar.setOnAction(event -> cerrarModal());
         btnCargarUrl.setOnAction(event -> cargarImagenDesdeUrl());
 
-        // Asignar acciones a los nuevos botones de agregar
         btnAgregarAutor.setOnAction(event -> handleAddAutor());
         btnAgregarEditorial.setOnAction(event -> handleAddEditorial());
         btnAgregarCategoria.setOnAction(event -> handleAddCategoria());
 
-        // Cargar datos iniciales en los ComboBox al iniciar el controlador
         cargarAutores();
         cargarEditoriales();
         cargarCategorias();
     }
 
-    /**
-     * Carga la imagen desde la URL ingresada en txtUrlPortada y la muestra en el ImageView.
-     * Solo carga y visualiza la imagen, no la convierte a bytes.
-     */
     @FXML
     private void cargarImagenDesdeUrl() {
         String imageUrlString = txtUrlPortada.getText();
@@ -79,85 +86,66 @@ public class LibroFormController {
             mostrarAlerta(Alert.AlertType.WARNING, "URL Vacía", "Por favor, ingresa una URL de imagen válida.");
             return;
         }
+        cargarImagen(imageUrlString);
+    }
 
+    private void cargarImagen(String imageUrlString) {
         try {
-            // Cargar la imagen desde la URL.
-            // El segundo parámetro 'true' permite la carga en segundo plano.
-            // Usamos el constructor que acepta una URL para evitar errores con cadenas mal formadas
             URL url = new URL(imageUrlString);
             Image image = new Image(url.toExternalForm(), true);
 
-            // Listener para monitorear el progreso de la carga de la imagen
             image.progressProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue.doubleValue() == 1.0) { // Cuando la carga está completa
+                if (newValue.doubleValue() == 1.0) {
                     if (image.isError()) {
-                        // Si hubo un error al cargar la imagen
                         mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "No se pudo cargar la imagen", "La URL proporcionada es inválida o el archivo no es una imagen.");
-                        imageView.setImage(null); // Limpiar el ImageView
+                        imageView.setImage(null);
                     } else {
-                        // Si la imagen se cargó correctamente
                         imageView.setImage(image);
                     }
                 }
             });
 
         } catch (MalformedURLException e) {
-            // Captura si la URL no está bien formada
             mostrarAlerta(Alert.AlertType.ERROR, "URL Inválida", "La URL proporcionada no es un formato válido.");
             imageView.setImage(null);
             e.printStackTrace();
         } catch (Exception e) {
-            // Captura cualquier otra excepción durante el intento de cargar la imagen
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "Ocurrió un error inesperado al cargar la imagen. Verifique la URL.");
             e.printStackTrace();
             imageView.setImage(null);
         }
     }
 
-
-    /**
-     * Carga la lista de autores desde la base de datos y los agrega al ComboBox cmbAutor.
-     */
     private void cargarAutores() {
         try {
-            cmbAutor.getItems().clear(); // Limpiar elementos existentes antes de cargar nuevos
-            cmbAutor.getItems().addAll(autorDao.findAll()); // Añadir todos los autores encontrados
+            cmbAutor.getItems().clear();
+            cmbAutor.getItems().addAll(autorDao.findAll());
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "Error al cargar autores.", "Hubo un problema al obtener la lista de autores desde la base de datos: " + e.getMessage());
         }
     }
 
-    /**
-     * Carga la lista de editoriales desde la base de datos y los agrega al ComboBox cmbEditorial.
-     */
     private void cargarEditoriales() {
         try {
-            cmbEditorial.getItems().clear(); // Limpiar elementos existentes
-            cmbEditorial.getItems().addAll(editorialDao.findAll()); // Añadir todas las editoriales
+            cmbEditorial.getItems().clear();
+            cmbEditorial.getItems().addAll(editorialDao.findAll());
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "Error al cargar editoriales.", "Hubo un problema al obtener la lista de editoriales desde la base de datos: " + e.getMessage());
         }
     }
 
-    /**
-     * Carga la lista de categorías desde la base de datos y los agrega al ComboBox cmbCategoria.
-     */
     private void cargarCategorias() {
         try {
-            cmbCategoria.getItems().clear(); // Limpiar elementos existentes
-            cmbCategoria.getItems().addAll(categoriaDao.findAll()); // Añadir todas las categorías
+            cmbCategoria.getItems().clear();
+            cmbCategoria.getItems().addAll(categoriaDao.findAll());
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Carga", "Error al cargar categorías.", "Hubo un problema al obtener la lista de categorías desde la base de datos: " + e.getMessage());
         }
     }
 
-    /**
-     * Abre un cuadro de diálogo para que el usuario ingrese el nombre de un nuevo autor.
-     * Si el nombre es válido, intenta crear el autor en la base de datos y recarga el ComboBox.
-     */
     @FXML
     private void handleAddAutor() {
         TextInputDialog dialog = new TextInputDialog();
@@ -165,20 +153,15 @@ public class LibroFormController {
         dialog.setHeaderText("Ingresa el nombre completo del nuevo autor:");
         dialog.setContentText("Nombre:");
 
-        Optional<String> result = dialog.showAndWait(); // Espera la entrada del usuario
-        result.ifPresent(nombreCompleto -> { // Si el usuario ingresó algo y presionó OK
-            if (!nombreCompleto.trim().isEmpty()) { // Validar que el nombre no esté vacío
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(nombreCompleto -> {
+            if (!nombreCompleto.trim().isEmpty()) {
                 try {
                     Autor nuevoAutor = new Autor(0, nombreCompleto.trim());
-                    // Intentar crear el autor en la base de datos
-                    if (autorDao.create(nuevoAutor)) { // Se espera que create devuelva boolean
-                        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Autor agregado correctamente.");
-                        cargarAutores(); // Recargar el ComboBox para mostrar el nuevo autor
-                        // Seleccionar el nuevo autor en el ComboBox si fue agregado exitosamente
-                        cmbAutor.getSelectionModel().select(nuevoAutor);
-                    } else {
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar autor", "No se pudo agregar el autor a la base de datos.");
-                    }
+                    autorDao.create(nuevoAutor);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Autor agregado correctamente.");
+                    cargarAutores();
+                    cmbAutor.getSelectionModel().select(nuevoAutor);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar autor", "Hubo un problema al guardar el autor en la base de datos: " + e.getMessage());
@@ -189,10 +172,6 @@ public class LibroFormController {
         });
     }
 
-    /**
-     * Abre un cuadro de diálogo para que el usuario ingrese el nombre de una nueva editorial.
-     * Si el nombre es válido, intenta crear la editorial en la base de datos y recarga el ComboBox.
-     */
     @FXML
     private void handleAddEditorial() {
         TextInputDialog dialog = new TextInputDialog();
@@ -205,13 +184,10 @@ public class LibroFormController {
             if (!nombre.trim().isEmpty()) {
                 try {
                     Editorial nuevaEditorial = new Editorial(0, nombre.trim());
-                    if (editorialDao.create(nuevaEditorial)) { // Se espera que create devuelva boolean
-                        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Editorial agregada correctamente.");
-                        cargarEditoriales(); // Recargar el ComboBox
-                        cmbEditorial.getSelectionModel().select(nuevaEditorial);
-                    } else {
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar editorial", "No se pudo agregar la editorial a la base de datos.");
-                    }
+                    editorialDao.create(nuevaEditorial);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Editorial agregada correctamente.");
+                    cargarEditoriales();
+                    cmbEditorial.getSelectionModel().select(nuevaEditorial);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar editorial", "Hubo un problema al guardar la editorial en la base de datos: " + e.getMessage());
@@ -222,10 +198,6 @@ public class LibroFormController {
         });
     }
 
-    /**
-     * Abre un cuadro de diálogo para que el usuario ingrese el nombre de una nueva categoría.
-     * Si el nombre es válido, intenta crear la categoría en la base de datos y recarga el ComboBox.
-     */
     @FXML
     private void handleAddCategoria() {
         TextInputDialog dialog = new TextInputDialog();
@@ -238,13 +210,10 @@ public class LibroFormController {
             if (!nombre.trim().isEmpty()) {
                 try {
                     Categoria nuevaCategoria = new Categoria(0, nombre.trim());
-                    if (categoriaDao.create(nuevaCategoria)) { // Se espera que create devuelva boolean
-                        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Categoría agregada correctamente.");
-                        cargarCategorias(); // Recargar el ComboBox
-                        cmbCategoria.getSelectionModel().select(nuevaCategoria);
-                    } else {
-                        mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar categoría", "No se pudo agregar la categoría a la base de datos.");
-                    }
+                    categoriaDao.create(nuevaCategoria);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Categoría agregada correctamente.");
+                    cargarCategorias();
+                    cmbCategoria.getSelectionModel().select(nuevaCategoria);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mostrarAlerta(Alert.AlertType.ERROR, "Error al agregar categoría", "Hubo un problema al guardar la categoría en la base de datos: " + e.getMessage());
@@ -257,63 +226,81 @@ public class LibroFormController {
 
     @FXML
     private void guardarLibro() {
-        // Validar que todos los campos obligatorios estén llenos
         if (txtIsbn.getText().trim().isEmpty() ||
                 txtTitulo.getText().trim().isEmpty() ||
                 cmbAutor.getSelectionModel().isEmpty() ||
                 cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
                 cmbCategoria.getSelectionModel().isEmpty() ||
-                txtAnioPublicacion.getText().trim().isEmpty() ||
-                txtEstado.getText().trim().isEmpty() ||
-                txtUrlPortada.getText().trim().isEmpty()) { // Validar que el campo de URL no esté vacío
+                txtAnioPublicacion.getText().trim().isEmpty()) {
 
-            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos del formulario y asegúrate de ingresar una URL de portada.");
-            return;
-        }
-
-        // Validación específica para el campo Estado
-        String estadoInput = txtEstado.getText().trim();
-        if (!VALOR_ACTIVO.equalsIgnoreCase(estadoInput) && !VALOR_INACTIVO.equalsIgnoreCase(estadoInput)) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Estado Inválido", "El estado del libro debe ser '" + VALOR_ACTIVO + "' o '" + VALOR_INACTIVO + "'.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos obligatorios del formulario.");
             return;
         }
 
         try {
-            Libro nuevoLibro = new Libro();
-            nuevoLibro.setIsbn(txtIsbn.getText().trim());
-            nuevoLibro.setTitulo(txtTitulo.getText().trim());
-            nuevoLibro.setAutor(cmbAutor.getValue());
-            nuevoLibro.setEditorial(cmbEditorial.getValue());
-            nuevoLibro.setResumen(txtSinopsis.getText().trim());
-            nuevoLibro.setCategoria(cmbCategoria.getValue());
-            nuevoLibro.setAnioPublicacion(Integer.parseInt(txtAnioPublicacion.getText().trim()));
-            nuevoLibro.setEstado(estadoInput.toUpperCase());
-            nuevoLibro.setPortada(txtUrlPortada.getText().trim()); // Asignar la URL directamente
+            // --- NUEVA VALIDACIÓN: AÑO DE PUBLICACIÓN NO FUTURO ---
+            int anioPublicacion = Integer.parseInt(txtAnioPublicacion.getText().trim());
+            int anioActual = LocalDate.now().getYear();
 
-            // Intentar guardar el libro en la base de datos
-            libroDao.create(nuevoLibro);
+            if (anioPublicacion > anioActual) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Año Inválido",
+                        "El año de publicación no puede ser un año futuro. Por favor, revisa el dato.");
+                return; // Detiene la ejecución si la validación falla
+            }
+            // --- FIN DE LA NUEVA VALIDACIÓN ---
 
-            agregado = true;
-            mostrarAlerta(Alert.AlertType.INFORMATION, "¡Libro registrado exitosamente!", "El libro ha sido añadido a la biblioteca.");
+            Libro libroExistente = libroDao.findByIsbn(txtIsbn.getText().trim());
+            if (libroExistente != null && (libroEditado == null || libroExistente.getId() != libroEditado.getId())) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Error de Duplicidad",
+                        "El libro con el ISBN '" + txtIsbn.getText().trim() + "' ya existe en la base de datos.");
+                return;
+            }
+
+            Libro libro;
+            if (libroEditado != null) {
+                libro = libroEditado;
+            } else {
+                libro = new Libro();
+            }
+
+            libro.setIsbn(txtIsbn.getText().trim());
+            libro.setTitulo(txtTitulo.getText().trim());
+            libro.setAutor(cmbAutor.getValue());
+            libro.setEditorial(cmbEditorial.getValue());
+            libro.setResumen(txtSinopsis.getText().trim());
+            libro.setCategoria(cmbCategoria.getValue());
+            libro.setAnioPublicacion(anioPublicacion); // Usamos la variable ya parseada
+            libro.setPortada(txtUrlPortada.getText().trim());
+
+            // Asignar el estado por defecto "ACTIVO" al crear un nuevo libro
+            if (libroEditado == null) {
+                libro.setEstado("ACTIVO");
+            }
+
+            if (libroEditado != null) {
+                libroDao.update(libro);
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
+            } else {
+                libroDao.create(libro);
+                agregado = true;
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro registrado correctamente.");
+            }
+
             cerrarModal();
 
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Año de Publicación Inválido", "El año de publicación debe ser un número válido (ej. 2023).");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de SQL", "Error al registrar el libro.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al registrar el libro.", e.getMessage());
         }
     }
 
-    // --- Métodos sobrecargados para mostrar alertas ---
 
-    /**
-     * Muestra una ventana de alerta con un tipo y un mensaje.
-     * El encabezado será nulo.
-     * @param type Tipo de alerta (INFORMATION, WARNING, ERROR, etc.)
-     * @param message Contenido del cuerpo de la alerta.
-     */
     private void mostrarAlerta(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
         alert.setHeaderText(null);
@@ -321,28 +308,14 @@ public class LibroFormController {
         alert.showAndWait();
     }
 
-    /**
-     * Muestra una ventana de alerta con un tipo, título y contenido.
-     * El encabezado será nulo.
-     * @param type Tipo de alerta.
-     * @param title Título de la ventana de alerta.
-     * @param content Contenido del cuerpo de la alerta.
-     */
     private void mostrarAlerta(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
-        alert.setHeaderText(null); // El encabezado es nulo en esta versión
+        alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
     }
 
-    /**
-     * Muestra una ventana de alerta con un tipo, título, encabezado y contenido.
-     * @param type Tipo de alerta.
-     * @param title Título de la ventana de alerta.
-     * @param header Encabezado de la alerta.
-     * @param content Contenido del cuerpo de la alerta.
-     */
     private void mostrarAlerta(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -353,8 +326,7 @@ public class LibroFormController {
 
     @FXML
     private void cerrarModal() {
-        Stage stage = (Stage) txtTitulo.getScene().getWindow();
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
 }
-/*Eliminar el estado del libro en el form*/
