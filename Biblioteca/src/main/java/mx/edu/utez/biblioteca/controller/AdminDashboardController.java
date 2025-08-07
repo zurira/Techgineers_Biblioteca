@@ -176,10 +176,11 @@ public class AdminDashboardController {
             };
         });
 
-        // Columna de Acciones (Editar y cambiar estado)
+        // Columna de Acciones (Editar, ver y cambiar estado)
         colAcciones.setCellFactory(param -> new TableCell<Libro, Void>() {
             private final Button editButton = new Button();
             private final Button changeStatusButton = new Button();
+            private final Button viewLibroButton = new Button();
 
             {
                 // Botón para editar
@@ -188,6 +189,13 @@ public class AdminDashboardController {
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
                 editButton.setTooltip(new Tooltip("Editar libro"));
+
+                // Botón para ver información
+                FontIcon viewIcon = new FontIcon("fa-eye");
+                viewIcon.getStyleClass().add("action-icon");
+                viewLibroButton.setGraphic(viewIcon);
+                viewLibroButton.getStyleClass().add("action-button");
+                viewLibroButton.setTooltip(new Tooltip("Ver información del libro"));
 
                 // Botón para cambiar el estado (el "switch")
                 changeStatusButton.getStyleClass().add("action-button");
@@ -217,9 +225,11 @@ public class AdminDashboardController {
 
                     // Asigna las acciones a los botones
                     editButton.setOnAction(event -> onEditLibro(libro));
+                    viewLibroButton.setOnAction(event -> onViewLibro(libro));
                     changeStatusButton.setOnAction(event -> onChangeStatusLibro(libro));
 
-                    HBox buttons = new HBox(5, editButton, changeStatusButton);
+                    // Se crea el HBox con el orden de los botones: Editar, Ver, Cambiar estado
+                    HBox buttons = new HBox(5, editButton, viewLibroButton, changeStatusButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -302,6 +312,16 @@ public class AdminDashboardController {
         System.out.println("Editar libro: " + libro.getId());
         // Modal para implementar la lógica para abrir el formulario de edición con los datos del libro
         showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Libro", "Aquí se abrirá la ventana para editar el libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + (VALOR_ACTIVO.equals(libro.getEstado()) ? "Activo" : "Inactivo"));
+    }
+
+    /**
+     * @param libro el libro cuyos detalles se verán.
+     * Método para ver la información detallada del libro.
+     * Por ahora, solo muestra un mensaje temporal.
+     */
+    private void onViewLibro(Libro libro) {
+        System.out.println("Ver libro: " + libro.getId());
+        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Ver Detalles del Libro", "Aquí se abrirá el modal para ver los detalles del libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + (VALOR_ACTIVO.equals(libro.getEstado()) ? "Activo" : "Inactivo"));
     }
 
     // Método para cambiar el estado del libro
