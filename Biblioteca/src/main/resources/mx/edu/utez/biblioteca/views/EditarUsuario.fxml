@@ -26,7 +26,7 @@
     </VBox>
 
     <!-- Título del modal -->
-    <Label layoutX="30" layoutY="20" text="Editar información del administrador"
+    <Label layoutX="30" layoutY="20" text="Editar información del usuario"
            style="-fx-font-size: 22px; -fx-font-weight: bold;" styleClass="titulo"/>
 
     <!-- Campos de texto -->
