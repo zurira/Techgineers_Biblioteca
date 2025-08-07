@@ -306,12 +306,31 @@ public class AdminDashboardController {
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar libro.");
         }
     }
-    // Método para editar libro
+    // implementando el método para editar libro
 
     private void onEditLibro(Libro libro) {
-        System.out.println("Editar libro: " + libro.getId());
-        // Modal para implementar la lógica para abrir el formulario de edición con los datos del libro
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Libro", "Aquí se abrirá la ventana para editar el libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + (VALOR_ACTIVO.equals(libro.getEstado()) ? "Activo" : "Inactivo"));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editarLibro.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditarLibroController controller = fxmlLoader.getController();
+            controller.setLibro(libro);
+
+            // Creamos y mostramos la ventana modal
+            Stage stage = new Stage();
+            stage.setTitle("Editar Bibliotecario");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+
+            // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
+            stage.showAndWait();
+
+            cargarLibros();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar libro");
+        }
     }
 
     /**
