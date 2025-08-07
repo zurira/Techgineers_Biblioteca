@@ -288,7 +288,7 @@ public class AdminDashboardController {
             stage.showAndWait();
 
             // Si se agregó un libro, recargar la tabla
-            if (modalController.seAgregoLibro()) {
+            if (modalController.isAgregado()) {
                 cargarLibros();
             }
         } catch (IOException e) {
