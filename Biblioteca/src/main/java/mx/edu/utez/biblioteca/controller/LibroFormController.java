@@ -70,6 +70,10 @@ public class LibroFormController {
         btnCancelar.setOnAction(event -> cerrarModal());
         btnCargarUrl.setOnAction(event -> cargarImagenDesdeUrl());
 
+        // Se agrega el Tooltip para el botón de cargar imagen
+        Tooltip cargarImagenTooltip = new Tooltip("Da click para cargar la imagen del libro");
+        Tooltip.install(btnCargarUrl, cargarImagenTooltip);
+
         btnAgregarAutor.setOnAction(event -> handleAddAutor());
         btnAgregarEditorial.setOnAction(event -> handleAddEditorial());
         btnAgregarCategoria.setOnAction(event -> handleAddCategoria());

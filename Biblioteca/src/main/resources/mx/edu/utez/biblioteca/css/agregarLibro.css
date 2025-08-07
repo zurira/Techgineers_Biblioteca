@@ -89,3 +89,8 @@
 .action-icon {
     -fx-fill: #7f8c8d;
 }
+.button-hover:hover {
+    -fx-background-color: #5cb85c; /* Cambia el color de fondo al pasar el mouse, un tono verde */
+    -fx-text-fill: white; /* Cambia el color del texto a blanco */
+    -fx-cursor: hand; /* Cambia el cursor a una mano */
+}

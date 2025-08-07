@@ -9,6 +9,8 @@
 <?import java.net.URL?>
 
 <AnchorPane prefHeight="600.0" prefWidth="920.0" style="-fx-background-color: #F1EFEF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController">
+    <stylesheets>
+    </stylesheets>
     <VBox layoutX="20" layoutY="20" prefWidth="860" spacing="10">
         <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Agregar Libro" />
         <Label style="-fx-font-size: 14px;" text="Ingresa la información correctamente" />
@@ -18,7 +20,7 @@
             <VBox spacing="10">
                 <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true" />
                 <TextField fx:id="txtUrlPortada" promptText="URL de la portada" prefWidth="150" style="-fx-background-color: #ffffff; -fx-border-color: #ccc; -fx-border-radius: 5px; -fx-padding: 5px;" />
-                <Button fx:id="btnCargarUrl" mnemonicParsing="false" onAction="#cargarImagenDesdeUrl" prefWidth="150" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cargar desde URL" />
+                <Button fx:id="btnCargarUrl" mnemonicParsing="false" onAction="#cargarImagenDesdeUrl" prefWidth="150" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Imagen desde URL"  />
             </VBox>
 
             <!-- Campos del formulario -->
@@ -38,7 +40,7 @@
                 <Label text="Autor:*" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="3">
                     <ComboBox fx:id="cmbAutor" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarAutor" mnemonicParsing="false" onAction="#handleAddAutor" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;">
+                    <Button fx:id="btnAgregarAutor" mnemonicParsing="false" onAction="#handleAddAutor" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
                         <graphic>
                             <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
                         </graphic>
@@ -48,7 +50,7 @@
                 <Label text="Editorial:*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <ComboBox fx:id="cmbEditorial" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarEditorial" mnemonicParsing="false" onAction="#handleAddEditorial" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;">
+                    <Button fx:id="btnAgregarEditorial" mnemonicParsing="false" onAction="#handleAddEditorial" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
                         <graphic>
                             <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
                         </graphic>
@@ -58,7 +60,7 @@
                 <Label text="Categoría:*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="3">
                     <ComboBox fx:id="cmbCategoria" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarCategoria" mnemonicParsing="false" onAction="#handleAddCategoria" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;">
+                    <Button fx:id="btnAgregarCategoria" mnemonicParsing="false" onAction="#handleAddCategoria" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
                         <graphic>
                             <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
                         </graphic>
@@ -73,8 +75,8 @@
 
         <!-- Botones -->
         <HBox alignment="CENTER_RIGHT" spacing="20">
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cerrarModal" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cancelar" />
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarLibro" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cerrarModal" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cancelar" styleClass="button-hover" />
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarLibro" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" styleClass="button-hover" />
         </HBox>
     </VBox>
 </AnchorPane>
