@@ -28,7 +28,7 @@ public class LibroDaoImpl implements ILibro {
         libro.setResumen(rs.getString("SINOPSIS"));
         libro.setAnioPublicacion(rs.getInt("ANIO_PUBLICACION"));
         libro.setPortada(rs.getString("PORTADA"));
-        libro.setEstado(rs.getString("ESTADO"));
+        libro.setEstado(rs.getString("ESTADO")); // Restaurado
 
         int idEditorial = rs.getInt("EDITORIAL_ID");
         if (!rs.wasNull()) {
@@ -59,7 +59,8 @@ public class LibroDaoImpl implements ILibro {
                 "FROM LIBRO l " +
                 "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID " +
                 "LEFT JOIN AUTOR a ON l.ID_AUTOR = a.ID " +
-                "LEFT JOIN CATEGORIA c ON l.ID_CATEGORIA = c.ID";
+                "LEFT JOIN CATEGORIA c ON l.ID_CATEGORIA = c.ID " +
+                "ORDER BY l.ID ASC"; // <<-- Se agregó la cláusula para ordenar por ID
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query);
@@ -106,24 +107,18 @@ public class LibroDaoImpl implements ILibro {
         return libro;
     }
 
-    /**
-     * Nuevo método para buscar un libro por su ISBN.
-     * @param isbn El ISBN del libro a buscar.
-     * @return El objeto Libro si se encuentra, o null si no.
-     * @throws Exception Si ocurre un error de SQL.
-     */
     @Override
     public Libro findByIsbn(String isbn) throws Exception {
         Libro libro = null;
         String query = "SELECT " +
-                "l.ID AS ID, l.TITULO, l.ISBN, l.SINOPSIS, l.ANIO_PUBLICACION, l.PORTADA, l.ESTADO, " +
-                "e.ID AS ID, e.NOMBRE AS EDITORIAL_NOMBRE, " +
-                "a.ID AS ID, a.NOMBRE_COMPLETO AS AUTOR_NOMBRE, " +
-                "c.ID AS ID, c.NOMBRE AS CATEGORIA_NOMBRE " +
+                "l.ID AS LIBRO_ID, l.TITULO, l.ISBN, l.SINOPSIS, l.ANIO_PUBLICACION, l.PORTADA, l.ESTADO, " +
+                "e.ID AS EDITORIAL_ID, e.NOMBRE AS EDITORIAL_NOMBRE, " +
+                "a.ID AS AUTOR_ID, a.NOMBRE_COMPLETO AS AUTOR_NOMBRE, " +
+                "c.ID AS CATEGORIA_ID, c.NOMBRE AS CATEGORIA_NOMBRE " +
                 "FROM LIBRO l " +
-                "LEFT JOIN EDITORIAL e ON l.ID = e.ID " +
-                "LEFT JOIN AUTOR a ON l.ID = a.ID " +
-                "LEFT JOIN CATEGORIA c ON l.ID = c.ID " +
+                "LEFT JOIN EDITORIAL e ON l.ID_EDITORIAL = e.ID " +
+                "LEFT JOIN AUTOR a ON l.ID_AUTOR = a.ID " +
+                "LEFT JOIN CATEGORIA c ON l.ID_CATEGORIA = c.ID " +
                 "WHERE l.ISBN = ?";
 
         try (Connection con = DBConnection.getConnection();
@@ -141,10 +136,9 @@ public class LibroDaoImpl implements ILibro {
         return libro;
     }
 
-
     @Override
     public void create(Libro libro) throws Exception {
-        String query = "INSERT INTO LIBRO (TITULO, ISBN, SINOPSIS, ANIO_PUBLICACION, PORTADA, ID_EDITORIAL, ID_AUTOR, ID_CATEGORIA, ESTADO) " +
+        String query = "INSERT INTO LIBRO (TITULO, ISBN, SINOPSIS, ANIO_PUBLICACION, PORTADA, ESTADO, ID_EDITORIAL, ID_AUTOR, ID_CATEGORIA) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -153,18 +147,15 @@ public class LibroDaoImpl implements ILibro {
             pstmt.setString(3, libro.getResumen());
             pstmt.setInt(4, libro.getAnioPublicacion());
 
-            // Manejo de portada: si es null, se guarda como NULL en la BD
             if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
                 pstmt.setString(5, libro.getPortada());
             } else {
-                pstmt.setNull(5, Types.VARCHAR); // O el tipo SQL adecuado para tu columna
+                pstmt.setNull(5, Types.VARCHAR);
             }
-
-            // Manejo de IDs de objetos relacionados (Autor, Editorial, Categoria)
-            pstmt.setObject(6, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
-            pstmt.setObject(7, libro.getAutor() != null ? libro.getAutor().getId() : null);
-            pstmt.setObject(8, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
-            pstmt.setString(9, libro.getEstado());
+            pstmt.setString(6, libro.getEstado()); // Restaurado
+            pstmt.setObject(7, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
+            pstmt.setObject(8, libro.getAutor() != null ? libro.getAutor().getId() : null);
+            pstmt.setObject(9, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error al crear libro: " + e.getMessage());
@@ -175,7 +166,7 @@ public class LibroDaoImpl implements ILibro {
     @Override
     public void update(Libro libro) throws Exception {
         String query = "UPDATE LIBRO SET TITULO = ?, ISBN = ?, SINOPSIS = ?, ANIO_PUBLICACION = ?, " +
-                "PORTADA = ?, ID_EDITORIAL = ?, ID_AUTOR = ?, ID_CATEGORIA = ?, ESTADO = ? WHERE ID = ?";
+                "PORTADA = ?, ESTADO = ?, ID_EDITORIAL = ?, ID_AUTOR = ?, ID_CATEGORIA = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, libro.getTitulo());
@@ -183,17 +174,15 @@ public class LibroDaoImpl implements ILibro {
             pstmt.setString(3, libro.getResumen());
             pstmt.setInt(4, libro.getAnioPublicacion());
 
-            // Manejo de portada en update
             if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
                 pstmt.setString(5, libro.getPortada());
             } else {
-                pstmt.setNull(5, Types.VARCHAR); // O el tipo SQL adecuado
+                pstmt.setNull(5, Types.VARCHAR);
             }
-
-            pstmt.setObject(6, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
-            pstmt.setObject(7, libro.getAutor() != null ? libro.getAutor().getId() : null);
-            pstmt.setObject(8, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
-            pstmt.setString(9, libro.getEstado());
+            pstmt.setString(6, libro.getEstado()); // Restaurado
+            pstmt.setObject(7, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
+            pstmt.setObject(8, libro.getAutor() != null ? libro.getAutor().getId() : null);
+            pstmt.setObject(9, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
             pstmt.setInt(10, libro.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -249,15 +238,15 @@ public class LibroDaoImpl implements ILibro {
     }
 
     @Override
-    public boolean updateStatus(int idLibro, String estado) throws Exception {
+    public void updateStatus(int id, String estado) throws Exception {
         String query = "UPDATE LIBRO SET ESTADO = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, estado);
-            pstmt.setInt(2, idLibro);
-            return pstmt.executeUpdate() > 0;
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error al actualizar estado del libro: " + e.getMessage());
+            System.err.println("Error al actualizar el estado del libro: " + e.getMessage());
             throw e;
         }
     }
