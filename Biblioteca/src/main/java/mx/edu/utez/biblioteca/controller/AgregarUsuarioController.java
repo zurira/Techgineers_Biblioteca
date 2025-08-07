@@ -56,7 +56,9 @@ public class AgregarUsuarioController {
     @FXML
     private void guardar() {
         if (txtNombre.getText().isEmpty() || dpFechaNacimiento.getValue() == null ||
-                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty() ||
+            txtDireccion.getText().isEmpty())
+        {
             mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
             return;
         }
