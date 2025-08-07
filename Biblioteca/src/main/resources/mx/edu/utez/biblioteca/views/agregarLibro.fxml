@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
 
 <AnchorPane prefHeight="600.0" prefWidth="920.0" style="-fx-background-color: #F1EFEF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController">
     <VBox layoutX="20" layoutY="20" prefWidth="860" spacing="10">
@@ -63,9 +64,6 @@
                         </graphic>
                     </Button>
                 </HBox>
-
-                <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5" />
             </GridPane>
         </HBox>
 
