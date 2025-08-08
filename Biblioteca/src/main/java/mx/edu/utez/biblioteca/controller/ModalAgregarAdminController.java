@@ -84,6 +84,7 @@ public class ModalAgregarAdminController {
         btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
     }
 
+    //Agrego este metodo para el ojo
     private void togglePasswordVisibility() {
         mostrando = !mostrando;
 
