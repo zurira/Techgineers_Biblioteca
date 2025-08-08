@@ -1,6 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -20,19 +19,12 @@ import java.sql.SQLException;
 
 public class ModalAgregarAdminController {
 
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCorreo;
-    @FXML private TextField txtTelefono;
-    @FXML private TextField txtUsuario;
+    @FXML private TextField txtNombre, txtCorreo, txtTelefono, txtUsuario, txtRol;
     @FXML private PasswordField txtContrasena;
     @FXML private TextField txtContrasenaVisible;
     @FXML private Button btnTogglePassword;
-    @FXML private TextField txtRol;
-    @FXML private ComboBox<String> estadoComboBox; // CAMBIO: reemplaza txtEstado
     @FXML private TextArea txtDireccion;
-    @FXML private Button btnGuardar;
-    @FXML private Button btnCancelar;
-    @FXML private Button btnSeleccionarImagen;
+    @FXML private Button btnGuardar, btnCancelar, btnSeleccionarImagen;
     @FXML private ImageView imageView;
 
     private File imagenSeleccionada;
@@ -55,15 +47,19 @@ public class ModalAgregarAdminController {
 
         txtContrasena.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!mostrando) txtContrasenaVisible.setText(newVal);
-            txtContrasena.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+            actualizarEstiloCampo(txtContrasena, newVal);
         });
 
         txtContrasenaVisible.textProperty().addListener((obs, oldVal, newVal) -> {
             if (mostrando) txtContrasena.setText(newVal);
-            txtContrasenaVisible.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+            actualizarEstiloCampo(txtContrasenaVisible, newVal);
         });
 
         btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
+    }
+
+    private void actualizarEstiloCampo(TextField campo, String valor) {
+        campo.setStyle(esContrasenaSegura(valor) ? "-fx-border-color: green;" : "-fx-border-color: red;");
     }
 
     private void togglePasswordVisibility() {
@@ -72,6 +68,7 @@ public class ModalAgregarAdminController {
         txtContrasenaVisible.setManaged(mostrando);
         txtContrasena.setVisible(!mostrando);
         txtContrasena.setManaged(!mostrando);
+
         FontIcon icon = new FontIcon(mostrando ? "fa-eye-slash" : "fa-eye");
         icon.setIconSize(16);
         btnTogglePassword.setGraphic(icon);
@@ -86,17 +83,13 @@ public class ModalAgregarAdminController {
 
         imagenSeleccionada = fileChooser.showOpenDialog(null);
         if (imagenSeleccionada != null) {
-            Image imagen = new Image(imagenSeleccionada.toURI().toString());
-            imageView.setImage(imagen);
+            imageView.setImage(new Image(imagenSeleccionada.toURI().toString()));
         }
     }
 
     private void guardarAdministrador() {
         if (!camposValidos()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Campos incompletos");
-            alert.setContentText("Por favor, llena todos los campos y selecciona una imagen antes de continuar.");
-            alert.showAndWait();
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, llena todos los campos y selecciona una imagen antes de continuar.");
             return;
         }
 
@@ -105,23 +98,11 @@ public class ModalAgregarAdminController {
         String correo = txtCorreo.getText().trim();
         String telefono = txtTelefono.getText().trim();
         String contrasena = txtContrasena.getText();
-
-        // Este cambio modifique : obtener estado desde ComboBox
-        String estadoSeleccionado = estadoComboBox.getValue();
-        if (estadoSeleccionado == null || estadoSeleccionado.isEmpty()) {
-            estadoComboBox.setStyle("-fx-border-color: red;");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Estado no seleccionado");
-            alert.setContentText("Por favor, selecciona el estado del administrador.");
-            alert.showAndWait();
-            return;
-        } else {
-            estadoComboBox.setStyle(null);
-        }
-        String estado = estadoSeleccionado.equalsIgnoreCase("Activo") ? "S" : "N";
-
         String direccion = txtDireccion.getText().trim();
         int idRol = obtenerIdRolAdministrador();
+
+        // Estado fijo como "Activo"
+        String estado = "S";
 
         InputStream fotoStream = null;
         try {
@@ -138,31 +119,22 @@ public class ModalAgregarAdminController {
 
         if (exito) {
             agregado = true;
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("¡Administrador registrado exitosamente!");
-            alert.showAndWait();
+            mostrarAlerta(Alert.AlertType.INFORMATION, null, "¡Administrador registrado exitosamente!");
             cerrarModal();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error al registrar");
-            alert.setContentText("Ocurrió un problema al guardar el administrador.");
-            alert.showAndWait();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar", "Ocurrió un problema al guardar el administrador.");
         }
     }
 
     private boolean camposValidos() {
-        if (txtNombre.getText().trim().isEmpty()) return false;
-        if (txtCorreo.getText().trim().isEmpty()) return false;
-        if (txtTelefono.getText().trim().isEmpty()) return false;
-        if (txtUsuario.getText().trim().isEmpty()) return false;
-        if (txtContrasena.getText().trim().isEmpty()) return false;
-        if (txtRol.getText().trim().isEmpty()) return false;
-        if (estadoComboBox.getValue() == null || estadoComboBox.getValue().trim().isEmpty()) return false; // CAMBIO
-        if (txtDireccion.getText().trim().isEmpty()) return false;
-        if (imagenSeleccionada == null) return false;
-
-        return true;
+        return !txtNombre.getText().trim().isEmpty()
+                && !txtCorreo.getText().trim().isEmpty()
+                && !txtTelefono.getText().trim().isEmpty()
+                && !txtUsuario.getText().trim().isEmpty()
+                && !txtContrasena.getText().trim().isEmpty()
+                && !txtRol.getText().trim().isEmpty()
+                && !txtDireccion.getText().trim().isEmpty()
+                && imagenSeleccionada != null;
     }
 
     private void cerrarModal() {
@@ -174,13 +146,18 @@ public class ModalAgregarAdminController {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("ID");
-            }
+            if (rs.next()) return rs.getInt("ID");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 1;
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
+        Alert alert = new Alert(tipo);
+        alert.setHeaderText(titulo);
+        alert.setContentText(contenido);
+        alert.showAndWait();
     }
 
     private boolean esContrasenaSegura(String contrasena) {
@@ -193,5 +170,4 @@ public class ModalAgregarAdminController {
 
         return tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial;
     }
-
 }
