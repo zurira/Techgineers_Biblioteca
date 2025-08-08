@@ -123,4 +123,23 @@ public class CategoriaDaoImpl implements ICategoria {
             throw e;
         }
     }
+
+    @Override
+    public List<String> obtenerNombresCategorias() {
+        List<String> categorias = new ArrayList<>();
+        String sql = "SELECT NOMBRE FROM CATEGORIA ORDER BY NOMBRE";
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                categorias.add(rs.getString("NOMBRE"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
+}
 }

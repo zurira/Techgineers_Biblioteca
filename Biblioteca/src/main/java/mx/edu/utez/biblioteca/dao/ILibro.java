@@ -11,6 +11,7 @@ public interface ILibro {
     void update(Libro libro) throws Exception;
     void delete(int id) throws Exception;
     List<Libro> search(String searchTerm) throws Exception;
+    public List<Libro> obtenerLibros();
 
     Libro findByIsbn(String isbn) throws Exception;
 

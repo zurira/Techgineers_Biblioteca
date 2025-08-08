@@ -141,6 +141,12 @@
     -fx-background-color: #726262;
 }
 
+.btnlogout {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
 .LabelTarifa{
     -fx-font-size: 14px;
     -fx-border-radius: 5px;

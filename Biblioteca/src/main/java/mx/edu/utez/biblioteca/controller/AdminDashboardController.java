@@ -376,9 +376,36 @@ public class AdminDashboardController {
     // Método para el cierre de sesión
     @FXML
     private void onLogOut() {
-        System.out.println("Cerrar sesión");
-        // Modal para implementar la lógica para cerrar la sesión
-        showAlert(Alert.AlertType.INFORMATION, "Cerrar Sesión", "Funcionalidad de Cierre de Sesión", "Aquí se implementará la lógica para cerrar la sesión y regresar a la pantalla de inicio de sesión.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalCerrarSesion.fxml"));
+            Parent modalRoot = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("¿Cerrar sesión?");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+
+            if (ModalCerrarSesionController.cerrarSesionConfirmado) {
+                Stage currentStage = (Stage) btnLogOut.getScene().getWindow();
+                currentStage.close();
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
+                Parent loginRoot = loginLoader.load();
+
+                Stage newStage = new Stage();
+                newStage.setTitle("Inicio de sesión");
+                newStage.setScene(new Scene(loginRoot));
+                newStage.setMaximized(true);
+                newStage.show();
+            }
+
+            ModalCerrarSesionController.cerrarSesionConfirmado = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Método sobrecargado para mostrar alertas con 3 argumentos

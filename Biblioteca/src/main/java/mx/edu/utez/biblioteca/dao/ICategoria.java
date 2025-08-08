@@ -10,4 +10,5 @@ public interface ICategoria {
     boolean create(Categoria categoria) throws Exception;
     void update(Categoria categoria) throws Exception;
     void delete(int id) throws Exception;
+    public List<String> obtenerNombresCategorias();
 }
