@@ -1,0 +1,35 @@
+/* Estilo general para todos los TextField y ComboBox */
+.text-field, .combo-box, .text-area {
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+    -fx-pref-height: 250px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ccc;
+    -fx-padding: 5 10 5 10;
+}
+
+/* Estilo para el TextArea (dirección) */
+.text-area {
+    -fx-pref-height: 60px;
+}
+
+/* Contenedor del campo de contraseña con ícono */
+.password-container {
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 5;
+}
+
+/* Estilo para el PasswordField */
+.password-field {
+    -fx-pref-width: 250px; /* un poco menos para dejar espacio al ícono */
+    -fx-pref-height: 30px;
+}
+
+/* Estilo para el ícono del ojo */
+.eye-icon {
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+    -fx-translate-y: 1; /* ajuste vertical fino */
+}

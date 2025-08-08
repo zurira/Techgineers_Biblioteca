@@ -1,0 +1,153 @@
+package mx.edu.utez.biblioteca.controller;
+
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
+import mx.edu.utez.biblioteca.model.Bibliotecario;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditarBibliotecarioController implements Initializable {
+
+    @FXML
+    private TextField txtNombre, txtCorreo, txtTelefono, txtUsuario;
+    @FXML
+    private PasswordField txtPassword;
+    @FXML
+    private TextField txtPasswordVisible;
+    @FXML
+    private Button togglePasswordBtn;
+    @FXML
+    private ComboBox<String> comboEstado;
+    @FXML
+    private TextArea txtDireccion;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Button btnSeleccionarImagen;
+    @FXML
+    private Button btnGuardar, btnCancelar;
+
+    private Bibliotecario bibliotecarioActual;
+    private Bibliotecario bibliotecario;
+    private byte[] nuevaFoto;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
+    }
+
+    private void cargarDatos() {
+        txtNombre.setText(bibliotecarioActual.getNombre());
+        txtCorreo.setText(bibliotecarioActual.getCorreo());
+        txtTelefono.setText(bibliotecarioActual.getTelefono());
+        txtUsuario.setText(bibliotecarioActual.getUsername());
+        txtPassword.setText(bibliotecarioActual.getPassword());
+        txtDireccion.setText(bibliotecarioActual.getDireccion());
+        comboEstado.setValue(bibliotecarioActual.getEstado());
+
+        if (bibliotecarioActual.getFoto() != null) {
+            Image img = new Image(new java.io.ByteArrayInputStream(bibliotecarioActual.getFoto()));
+            imageView.setImage(img);
+        }
+    }
+
+    public void setBibliotecario(Bibliotecario bibliotecario) {
+        this.bibliotecarioActual = bibliotecario;
+        cargarDatos();
+    }
+
+    @FXML
+    private void togglePasswordVisibility() {
+        boolean visible = txtPasswordVisible.isVisible();
+        if (visible) {
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtPassword.setVisible(true);
+            txtPassword.setManaged(true);
+        } else {
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPassword.setVisible(false);
+            txtPassword.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+        }
+    }
+
+    @FXML
+    private void onSeleccionarImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar imagen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+        File file = fileChooser.showOpenDialog(btnSeleccionarImagen.getScene().getWindow());
+        if (file != null) {
+            try (FileInputStream fis = new FileInputStream(file)) {
+                nuevaFoto = fis.readAllBytes();
+                imageView.setImage(new Image(new java.io.ByteArrayInputStream(nuevaFoto)));
+            } catch (IOException e) {
+                mostrarAlerta("Error", "No se pudo cargar la imagen.");
+            }
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void onGuardar() {
+        try {
+            bibliotecarioActual.setNombre(txtNombre.getText());
+            bibliotecarioActual.setCorreo(txtCorreo.getText());
+            bibliotecarioActual.setTelefono(txtTelefono.getText());
+            bibliotecarioActual.setUsername(txtUsuario.getText());
+            bibliotecarioActual.setDireccion(txtDireccion.getText());
+            bibliotecarioActual.setEstado(comboEstado.getValue());
+
+            String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
+            if (!nuevaPass.isEmpty()) {
+                bibliotecarioActual.setPassword(nuevaPass); // Hashea si es necesario
+            }
+
+            if (nuevaFoto != null) {
+                bibliotecarioActual.setFoto(nuevaFoto);
+            }
+
+            BibliotecarioDaoImpl dao = new BibliotecarioDaoImpl();
+            boolean actualizado = dao.update(bibliotecarioActual);
+
+            if (actualizado) {
+                mostrarAlerta("Éxito", "Bibliotecario actualizado correctamente.");
+                // Cerrar ventana o refrescar vista
+            } else {
+                mostrarAlerta("Error", "No se pudo actualizar el bibliotecario.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "Ocurrió un error al actualizar.");
+        }
+    }
+
+    @FXML
+    private void onCancelar() {
+        // Cierra la ventana actual
+        btnCancelar.getScene().getWindow().hide();
+    }
+
+}

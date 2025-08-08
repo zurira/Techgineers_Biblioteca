@@ -80,7 +80,7 @@ public class UsuarioDaoImpl implements IUsuario {
         String query = "INSERT INTO USUARIO_SISTEMA (NOMBRE, CORREO, TELEFONO, USERNAME, PASSWORD, FOTO, ID_ROL, ESTADO, DIRECCION) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getCorreo());
             ps.setString(3, usuario.getTelefono());
@@ -197,21 +197,4 @@ public class UsuarioDaoImpl implements IUsuario {
             throw new RuntimeException(e);
         }
     }
-    //Agrego esto nuevo
-    public boolean actualizarEstado(int idUsuario, String nuevoEstado) {
-        String query = "UPDATE USUARIO_SISTEMA SET ESTADO = ? WHERE ID = ?";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setString(1, nuevoEstado); // "S" o "N"
-            ps.setInt(2, idUsuario);
-
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Error al actualizar estado: " + e.getMessage());
-            return false;
-        }
-    }
 }
-
-
