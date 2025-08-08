@@ -1,6 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -21,7 +20,6 @@ public class EditAdminController {
     @FXML private PasswordField pfContrasena;
     @FXML private TextField tfContrasenaVisible;
     @FXML private Button btnTogglePassword;
-    @FXML private ComboBox<String> cbEstado;
     @FXML private ImageView imageView;
 
     private File imagenSeleccionada;
@@ -38,7 +36,6 @@ public class EditAdminController {
         pfContrasena.setText(usuario.getPassword());
         tfContrasenaVisible.setText(usuario.getPassword());
         tfRol.setText(usuario.getRol().getNombre());
-        cbEstado.setValue(usuario.getEstado().equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         tfDireccion.setText(usuario.getDireccion());
 
         if (usuario.getFoto() != null) {
@@ -47,7 +44,6 @@ public class EditAdminController {
         }
     }
 
-    //Modifique esto para establecer la contraseña que sea de 12 caracteres
     @FXML
     public void initialize() {
         Tooltip tooltip = new Tooltip("La contraseña debe tener al menos:\n• 12 caracteres\n• Una mayúscula\n• Una minúscula\n• Un número\n• Un carácter especial");
@@ -58,20 +54,23 @@ public class EditAdminController {
             if (!mostrando) {
                 tfContrasenaVisible.setText(newVal);
             }
-            pfContrasena.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+            actualizarEstiloCampo(pfContrasena, newVal);
         });
 
         tfContrasenaVisible.textProperty().addListener((obs, oldVal, newVal) -> {
             if (mostrando) {
                 pfContrasena.setText(newVal);
             }
-            tfContrasenaVisible.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+            actualizarEstiloCampo(tfContrasenaVisible, newVal);
         });
 
         btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
     }
 
-    //Modifique esto para el ojo de la contraseña
+    private void actualizarEstiloCampo(TextField campo, String valor) {
+        campo.setStyle(esContrasenaSegura(valor) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+    }
+
     private void togglePasswordVisibility() {
         mostrando = !mostrando;
 
@@ -90,49 +89,26 @@ public class EditAdminController {
     void onSeleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar imagen");
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             imagenSeleccionada = file;
-            Image img = new Image(file.toURI().toString());
-            imageView.setImage(img);
+            imageView.setImage(new Image(file.toURI().toString()));
         }
     }
 
     @FXML
     void onGuardar() {
-        if (tfNombre.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfUsuario.getText().isEmpty()
-                || pfContrasena.getText().isEmpty() || tfRol.getText().isEmpty() || cbEstado.getValue() == null) {
+        if (camposObligatoriosIncompletos()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor llena todos los campos obligatorios.");
             return;
         }
 
         try {
-            Usuario usuarioEditado = new Usuario();
-            usuarioEditado.setId(usuarioActual.getId());
-            usuarioEditado.setNombre(tfNombre.getText());
-            usuarioEditado.setCorreo(tfCorreo.getText());
-            usuarioEditado.setTelefono(tfTelefono.getText());
-            usuarioEditado.setUsername(tfUsuario.getText());
-            usuarioEditado.setPassword(pfContrasena.getText());
-            usuarioEditado.setDireccion(tfDireccion.getText());
-            usuarioEditado.setEstado(cbEstado.getValue().equalsIgnoreCase("Activo") ? "S" : "N");
-
-            Rol rol = new Rol();
-            rol.setId(usuarioActual.getRol().getId());
-            rol.setNombre(tfRol.getText());
-            usuarioEditado.setRol(rol);
-
-            if (imagenSeleccionada != null) {
-                usuarioEditado.setFoto(Files.readAllBytes(imagenSeleccionada.toPath()));
-            } else {
-                usuarioEditado.setFoto(usuarioActual.getFoto());
-            }
-
-            UsuarioDaoImpl dao = new UsuarioDaoImpl();
-            dao.update(usuarioEditado);
+            Usuario usuarioEditado = construirUsuarioEditado();
+            new UsuarioDaoImpl().update(usuarioEditado);
 
             mostrarAlerta(Alert.AlertType.INFORMATION, "Actualizado", "Datos actualizados correctamente.");
             tfNombre.getScene().getWindow().hide();
@@ -141,6 +117,34 @@ public class EditAdminController {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error: " + e.getMessage());
         }
+    }
+
+    private boolean camposObligatoriosIncompletos() {
+        return tfNombre.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfUsuario.getText().isEmpty()
+                || pfContrasena.getText().isEmpty() || tfRol.getText().isEmpty();
+    }
+
+    private Usuario construirUsuarioEditado() throws Exception {
+        Usuario usuarioEditado = new Usuario();
+        usuarioEditado.setId(usuarioActual.getId());
+        usuarioEditado.setNombre(tfNombre.getText());
+        usuarioEditado.setCorreo(tfCorreo.getText());
+        usuarioEditado.setTelefono(tfTelefono.getText());
+        usuarioEditado.setUsername(tfUsuario.getText());
+        usuarioEditado.setPassword(pfContrasena.getText());
+        usuarioEditado.setDireccion(tfDireccion.getText());
+        usuarioEditado.setEstado(usuarioActual.getEstado()); // Se conserva el estado original
+
+        Rol rol = new Rol();
+        rol.setId(usuarioActual.getRol().getId());
+        rol.setNombre(tfRol.getText());
+        usuarioEditado.setRol(rol);
+
+        usuarioEditado.setFoto(imagenSeleccionada != null
+                ? Files.readAllBytes(imagenSeleccionada.toPath())
+                : usuarioActual.getFoto());
+
+        return usuarioEditado;
     }
 
     @FXML
@@ -156,7 +160,6 @@ public class EditAdminController {
         alerta.showAndWait();
     }
 
-    //Coloco este metodo para establecer la condicion de la contraseña
     private boolean esContrasenaSegura(String contrasena) {
         if (contrasena == null || contrasena.length() < 12) return false;
 
