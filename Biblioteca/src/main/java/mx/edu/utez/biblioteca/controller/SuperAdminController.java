@@ -32,10 +32,14 @@ public class SuperAdminController {
     @FXML
     private Label lblSinResultados;
 
+
     private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+
+
+
         configurarColumnas();
         cargarAdministradores();
 
@@ -108,31 +112,16 @@ public class SuperAdminController {
             return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         });
 
-
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
             private final Button viewButton = new Button();
+            private final Button switchButton = new Button();
 
             {
-                FontIcon editIcon = new FontIcon("fa-pencil");
-                FontIcon viewIcon = new FontIcon("fa-eye");
-
-                editButton.setGraphic(editIcon);
-                viewButton.setGraphic(viewIcon);
-
                 editButton.getStyleClass().add("action-button");
                 viewButton.getStyleClass().add("action-button");
-
-                editButton.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    onEditAdmin(usuario);
-                });
-
-                viewButton.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    onViewAdmin(usuario);
-                });
+                switchButton.getStyleClass().add("action-button");
             }
 
             @Override
@@ -141,13 +130,42 @@ public class SuperAdminController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, viewButton, editButton);
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+
+                    // Ícono del lápiz
+                    FontIcon editIcon = new FontIcon("fa-pencil");
+                    editIcon.getStyleClass().add("action-icon");
+                    editButton.setGraphic(editIcon);
+
+                    // Ícono del ojo centrado
+                    FontIcon viewIcon = new FontIcon("fa-eye");
+                    viewIcon.getStyleClass().add("action-icon");
+                    viewButton.getStyleClass().setAll("action-button", "eye-button");
+                    viewButton.setGraphic(viewIcon);
+
+                    // Ícono del switch
+                    FontIcon switchIcon;
+                    if ("S".equalsIgnoreCase(usuario.getEstado())) {
+                        switchIcon = new FontIcon("fa-toggle-on");
+                        switchButton.setTooltip(new Tooltip("Desactivar"));
+                    } else {
+                        switchIcon = new FontIcon("fa-toggle-off");
+                        switchButton.setTooltip(new Tooltip("Activar"));
+                    }
+                    switchIcon.getStyleClass().add("action-icon");
+                    switchButton.setGraphic(switchIcon);
+
+                    // Eventos funcionales
+                    editButton.setOnAction(event -> onEditAdmin(usuario));
+                    viewButton.setOnAction(event -> onViewAdmin(usuario));
+                    switchButton.setOnAction(event -> onToggleEstado(usuario));
+
+                    HBox buttons = new HBox(5, editButton, viewButton, switchButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
             }
         });
-
 
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
@@ -253,5 +271,25 @@ public class SuperAdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void onToggleEstado(Usuario usuario) {
+        try {
+            String nuevoEstado = "S".equalsIgnoreCase(usuario.getEstado()) ? "N" : "S";
+            usuario.setEstado(nuevoEstado);
+            new UsuarioDaoImpl().update(usuario);
+            cargarAdministradores();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cambiar el estado del administrador.");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
