@@ -13,6 +13,26 @@ import javafx.collections.ObservableList;
 
 public class EjemplarDaoImpl {
 
+    public boolean insertarEjemplar(Ejemplar ejemplar, int idLibro) {
+        String sql = "INSERT INTO EJEMPLAR (ID_LIBRO, CODIGO_LOCAL, SOLO_CONSULTA, DISPONIBLE, UBICACION) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setInt(1, idLibro);
+            pst.setString(2, ejemplar.getCodigo());
+            pst.setString(3, "N"); // No solo consulta
+            pst.setString(4, "S"); // Disponible
+            pst.setString(5, ejemplar.getUbicacion());
+
+            return pst.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /**
      * Busca ejemplares disponibles que coincidan con un filtro de texto.
      * El filtro puede aplicarse sobre el título o el código local.
