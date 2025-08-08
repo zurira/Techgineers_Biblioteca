@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -35,14 +36,16 @@
                     </StackPane>
                     <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
                         <children>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item-active">
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-item-active">
                                 <children>
-                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Bibliotecarios" />
+                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Bibliotecarios" />
                                 </children>
                             </HBox>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-item">
                                 <children>
-                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Libros" />
+                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Libros" />
                                 </children>
                             </HBox>
                         </children>
@@ -97,16 +100,14 @@
                             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
                                 <children>
                                     <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
-                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar bibliotecario" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar bibliotecario" styleClass="search-field" />
                                 </children>
                             </HBox>
+                            <Region HBox.hgrow="ALWAYS" />
                             <Button fx:id="btnAddBibliotecario" mnemonicParsing="false" onAction="#onAddBibliotecario" prefHeight="40.0" styleClass="add-button" text="Agregar bibliotecario">
                                 <graphic>
                                     <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
                                 </graphic>
-                                <HBox.margin>
-                                    <Insets left="20.0" />
-                                </HBox.margin>
                             </Button>
                         </children>
                     </HBox>
@@ -115,27 +116,27 @@
                             <Insets left="20.0" top="20.0" />
                         </VBox.margin>
                     </Label>
-
-                    <StackPane VBox.vgrow="ALWAYS" alignment="CENTER">
+                    <AnchorPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                         <children>
-                            <TableView fx:id="tableViewBibliotecarios" prefHeight="450.0" prefWidth="800.0">
-                                <columns>
-                                    <TableColumn fx:id="colNo" prefWidth="50.0" text="No." />
-                                    <TableColumn fx:id="colNombre" prefWidth="180.0" text="Nombre completo" />
-                                    <TableColumn fx:id="colCorreo" prefWidth="150.0" text="Correo" />
-                                    <TableColumn fx:id="colTelefono" prefWidth="100.0" text="Teléfono" />
-                                    <TableColumn fx:id="colUsername" prefWidth="100.0" text="Usuario" />
-                                    <TableColumn fx:id="colRol" prefWidth="100.0" text="Rol" />
-                                    <TableColumn fx:id="colEstado" prefWidth="80.0" text="Estado" />
-                                    <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" />
-                                </columns>
-                                <VBox.margin>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                </VBox.margin>
-                            </TableView>
-                            <ProgressIndicator fx:id="progressIndicator" prefHeight="50.0" prefWidth="50.0" visible="false" />
+                            <StackPane AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                                <children>
+                                    <TableView fx:id="tableViewBibliotecarios" prefHeight="450.0" prefWidth="800.0">
+                                        <columns>
+                                            <TableColumn fx:id="colNo" prefWidth="50.0" text="No." />
+                                            <TableColumn fx:id="colNombre" prefWidth="180.0" text="Nombre completo" />
+                                            <TableColumn fx:id="colCorreo" prefWidth="150.0" text="Correo" />
+                                            <TableColumn fx:id="colTelefono" prefWidth="100.0" text="Teléfono" />
+                                            <TableColumn fx:id="colUsername" prefWidth="100.0" text="Usuario" />
+                                            <TableColumn fx:id="colRol" prefWidth="100.0" text="Rol" />
+                                            <TableColumn fx:id="colEstado" prefWidth="80.0" text="Estado" />
+                                            <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" id="acciones-column" />
+                                        </columns>
+                                    </TableView>
+                                    <ProgressIndicator fx:id="progressIndicator" prefHeight="50.0" prefWidth="50.0" visible="false" />
+                                </children>
+                            </StackPane>
                         </children>
-                    </StackPane>
+                    </AnchorPane>
                     <Label fx:id="lblSinResultados"
                            text="No se encontraron resultados"
                            visible="false"
