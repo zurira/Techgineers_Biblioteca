@@ -6,8 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TextArea?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.ModalAgregarAdminController"
@@ -75,22 +73,6 @@
                 <!-- Campo Rol -->
                 <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
                 <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-
-                <!-- Fila 3 -->
-                <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <ComboBox fx:id="estadoComboBox"
-                          GridPane.columnIndex="0"
-                          GridPane.rowIndex="5"
-                          prefWidth="200"
-                          promptText="Selecciona estado"
-                          style="-fx-background-color: white; -fx-border-color: #C9C1BD; -fx-border-radius: 4;">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Activo"/>
-                            <String fx:value="Inactivo"/>
-                        </FXCollections>
-                    </items>
-                </ComboBox>
             </GridPane>
         </HBox>
 
