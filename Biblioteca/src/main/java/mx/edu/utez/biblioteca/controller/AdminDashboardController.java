@@ -225,6 +225,7 @@ public class AdminDashboardController {
 
                     // Asigna las acciones a los botones
                     editButton.setOnAction(event -> onEditLibro(libro));
+                    // Aquí se enlaza el botón "ver" con el nuevo método
                     viewLibroButton.setOnAction(event -> onViewLibro(libro));
                     changeStatusButton.setOnAction(event -> onChangeStatusLibro(libro));
 
@@ -336,11 +337,26 @@ public class AdminDashboardController {
     /**
      * @param libro el libro cuyos detalles se verán.
      * Método para ver la información detallada del libro.
-     * Por ahora, solo muestra un mensaje temporal.
      */
     private void onViewLibro(Libro libro) {
-        System.out.println("Ver libro: " + libro.getId());
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Ver Detalles del Libro", "Aquí se abrirá el modal para ver los detalles del libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + (VALOR_ACTIVO.equals(libro.getEstado()) ? "Activo" : "Inactivo"));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerLibro.fxml"));
+            Parent root = fxmlLoader.load();
+
+            VerLibroController controller = fxmlLoader.getController();
+            controller.setLibro(libro);
+
+            Stage stage = new Stage();
+            stage.setTitle("Ver Libro");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de ver libro.");
+        }
     }
 
     // Método para cambiar el estado del libro
