@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -88,7 +89,6 @@ public class SuperAdminController {
             }
         });
 
-
         TableColumn<Usuario, String> colNombre = new TableColumn<>("Nombre completo");
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
@@ -107,15 +107,26 @@ public class SuperAdminController {
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
+            private final Button viewButton = new Button();
 
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
+                FontIcon viewIcon = new FontIcon("fa-eye");
+
                 editButton.setGraphic(editIcon);
+                viewButton.setGraphic(viewIcon);
+
                 editButton.getStyleClass().add("action-button");
+                viewButton.getStyleClass().add("action-button");
 
                 editButton.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
                     onEditAdmin(usuario);
+                });
+
+                viewButton.setOnAction(event -> {
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+                    onViewAdmin(usuario);
                 });
             }
 
@@ -125,7 +136,7 @@ public class SuperAdminController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton);
+                    HBox buttons = new HBox(5, viewButton, editButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -218,5 +229,25 @@ public class SuperAdminController {
 
     private void onDeleteAdmin(Usuario usuario) {
         // Eliminación desactivada por decisión de Tania
+    }
+
+    // NUEVO MÉTODO PARA VER ADMINISTRADOR
+    private void onViewAdmin(Usuario usuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalVerAdmin.fxml"));
+            Parent root = loader.load();
+
+            ModalVerAdminController controller = loader.getController();
+            controller.setUsuario(usuario);
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Detalles del administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
