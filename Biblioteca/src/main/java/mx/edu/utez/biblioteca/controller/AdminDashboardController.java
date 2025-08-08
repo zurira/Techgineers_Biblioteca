@@ -64,6 +64,9 @@ public class AdminDashboardController {
     private TableColumn<Libro, Void> colAcciones;
 
     @FXML
+    private TableColumn<Libro, Void> colEstado; // Se agrega la columna de estado para mayor claridad
+
+    @FXML
     private Label lblSinResultados;
 
     private LibroDaoImpl libroDao;
@@ -111,10 +114,11 @@ public class AdminDashboardController {
 
         colAnioPublicacion.setCellValueFactory(new PropertyValueFactory<>("anioPublicacion"));
 
-        // Columna de Acciones (Editar y estado del libro)
+        // Columna de Acciones (Editar, Ver y estado del libro)
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Libro, Void>() {
             private final Button editButton = new Button();
+            private final Button viewButton = new Button(); // Nuevo botón para ver
             private final Label statusLabel = new Label(); // Usamos un Label en lugar de CheckBox
 
             {
@@ -129,6 +133,19 @@ public class AdminDashboardController {
                     Libro libro = getTableView().getItems().get(getIndex());
                     onEditLibro(libro);
                 });
+
+                // Botón para ver (Nuevo)
+                FontIcon viewIcon = new FontIcon("fa-eye"); // Se usa el icono de ojo
+                viewIcon.getStyleClass().add("action-icon");
+                viewButton.setGraphic(viewIcon);
+                viewButton.getStyleClass().add("action-button");
+                viewButton.setTooltip(new Tooltip("Ver detalles del libro"));
+
+                viewButton.setOnAction(event -> {
+                    Libro libro = getTableView().getItems().get(getIndex());
+                    onViewLibro(libro);
+                });
+
 
                 // Configuración del Label de estado del libro
                 statusLabel.getStyleClass().add("status-label");
@@ -157,7 +174,8 @@ public class AdminDashboardController {
                         statusLabel.getStyleClass().add("status-inactive");
                     }
 
-                    HBox buttons = new HBox(5, editButton, statusLabel); // Contiene el botón de edición y el Label
+                    // Se cambia el orden para que el botón de ver esté entre el de editar y el estado
+                    HBox buttons = new HBox(5, editButton, viewButton, statusLabel);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -221,6 +239,13 @@ public class AdminDashboardController {
         // Modal para implementar la lógica para abrir el formulario de edición con los datos del libro
         showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Editar Libro", "Aquí se abrirá la ventana para editar el libro con ID: " + libro.getId() + " - " + libro.getTitulo() + "\nEstado actual: " + ("A".equals(libro.getEstado()) ? "Activo" : "Inactivo"));
 
+    }
+
+    // Método para ver los detalles de un libro (Nuevo)
+    private void onViewLibro(Libro libro) {
+        System.out.println("Ver libro: " + libro.getId());
+        // Modal para implementar la lógica para abrir la ventana de visualización de los datos del libro
+        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad", "Ver Libro", "Aquí se abrirá la ventana para ver los detalles del libro con ID: " + libro.getId() + " - " + libro.getTitulo());
     }
 
     // Método para el cierre de sesión
