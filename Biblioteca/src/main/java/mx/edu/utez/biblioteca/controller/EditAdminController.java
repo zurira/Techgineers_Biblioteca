@@ -47,6 +47,7 @@ public class EditAdminController {
         }
     }
 
+    //Modifique esto para establecer la contraseña que sea de 12 caracteres
     @FXML
     public void initialize() {
         Tooltip tooltip = new Tooltip("La contraseña debe tener al menos:\n• 12 caracteres\n• Una mayúscula\n• Una minúscula\n• Un número\n• Un carácter especial");
@@ -70,6 +71,7 @@ public class EditAdminController {
         btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
     }
 
+    //Modifique esto para el ojo de la contraseña
     private void togglePasswordVisibility() {
         mostrando = !mostrando;
 
