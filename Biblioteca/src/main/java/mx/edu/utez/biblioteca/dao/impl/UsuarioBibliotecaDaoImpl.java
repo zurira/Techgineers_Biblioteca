@@ -76,9 +76,6 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
 
     @Override
     public void create(UsuarioBiblioteca usuario) throws Exception {
-        // Tu método create original, NO incluye fotografía.
-        // Si la fotografía siempre se inserta al crear, aquí tendrías que pasarla o llamar a otro método.
-        // Por simplicidad para este ejemplo, asumo que la foto se actualizará después o en otro método.
         String query = "INSERT INTO USUARIO_BIBLIOTECA (NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -98,7 +95,6 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
         }
     }
 
-    // Método para crear un usuario incluyendo la fotografía (SOBRECARGA)
     public void create(UsuarioBiblioteca usuario, File fotoFile) throws Exception {
         String query = "INSERT INTO USUARIO_BIBLIOTECA (NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO, FOTOGRAFIA) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
@@ -132,9 +128,6 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
 
     @Override
     public void update(UsuarioBiblioteca usuario) throws Exception {
-        // Tu método update original, NO incluye fotografía.
-        // Esto significa que si se llama a este método, el campo FOTOGRAFIA no se actualizará.
-        // Si necesitas actualizar la foto, usarías el método update(UsuarioBiblioteca, File).
         String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -149,9 +142,7 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
         }
     }
 
-    // Método para actualizar un usuario incluyendo la fotografía (SOBRECARGA)
     public void update(UsuarioBiblioteca usuario, File fotoFile) throws Exception {
-        // Este método actualizará la fotografía. Si fotoFile es null, la pondrá a NULL en la DB.
         String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ?, FOTOGRAFIA = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -207,7 +198,6 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
         return usuarios;
     }
 
-    // NUEVO MÉTODO PARA OBTENER LA FOTOGRAFÍA (Necesario para VerUsuarioController)
     public byte[] getFotografiaById(int idUsuario) throws Exception {
         String query = "SELECT FOTOGRAFIA FROM USUARIO_BIBLIOTECA WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
