@@ -106,7 +106,7 @@ public class ModalAgregarAdminController {
         String telefono = txtTelefono.getText().trim();
         String contrasena = txtContrasena.getText();
 
-        // CAMBIO: obtener estado desde ComboBox
+        // Este cambio modifique : obtener estado desde ComboBox
         String estadoSeleccionado = estadoComboBox.getValue();
         if (estadoSeleccionado == null || estadoSeleccionado.isEmpty()) {
             estadoComboBox.setStyle("-fx-border-color: red;");
