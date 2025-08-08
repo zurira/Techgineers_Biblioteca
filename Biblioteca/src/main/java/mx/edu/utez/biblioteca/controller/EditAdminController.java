@@ -1,13 +1,15 @@
 package mx.edu.utez.biblioteca.controller;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import mx.edu.utez.biblioteca.model.Rol;
 import mx.edu.utez.biblioteca.model.Usuario;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -17,11 +19,14 @@ public class EditAdminController {
 
     @FXML private TextField tfNombre, tfCorreo, tfTelefono, tfUsuario, tfRol, tfDireccion;
     @FXML private PasswordField pfContrasena;
+    @FXML private TextField tfContrasenaVisible;
+    @FXML private Button btnTogglePassword;
     @FXML private ComboBox<String> cbEstado;
     @FXML private ImageView imageView;
 
     private File imagenSeleccionada;
     private Usuario usuarioActual;
+    private boolean mostrando = false;
 
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
@@ -31,6 +36,7 @@ public class EditAdminController {
         tfTelefono.setText(usuario.getTelefono());
         tfUsuario.setText(usuario.getUsername());
         pfContrasena.setText(usuario.getPassword());
+        tfContrasenaVisible.setText(usuario.getPassword());
         tfRol.setText(usuario.getRol().getNombre());
         cbEstado.setValue(usuario.getEstado().equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         tfDireccion.setText(usuario.getDireccion());
@@ -39,6 +45,43 @@ public class EditAdminController {
             Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
             imageView.setImage(img);
         }
+    }
+
+    @FXML
+    public void initialize() {
+        Tooltip tooltip = new Tooltip("La contraseña debe tener al menos:\n• 12 caracteres\n• Una mayúscula\n• Una minúscula\n• Un número\n• Un carácter especial");
+        Tooltip.install(pfContrasena, tooltip);
+        Tooltip.install(tfContrasenaVisible, tooltip);
+
+        pfContrasena.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!mostrando) {
+                tfContrasenaVisible.setText(newVal);
+            }
+            pfContrasena.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+        });
+
+        tfContrasenaVisible.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (mostrando) {
+                pfContrasena.setText(newVal);
+            }
+            tfContrasenaVisible.setStyle(esContrasenaSegura(newVal) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+        });
+
+        btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
+    }
+
+    private void togglePasswordVisibility() {
+        mostrando = !mostrando;
+
+        tfContrasenaVisible.setVisible(mostrando);
+        tfContrasenaVisible.setManaged(mostrando);
+
+        pfContrasena.setVisible(!mostrando);
+        pfContrasena.setManaged(!mostrando);
+
+        FontIcon icon = new FontIcon(mostrando ? "fa-eye-slash" : "fa-eye");
+        icon.setIconSize(16);
+        btnTogglePassword.setGraphic(icon);
     }
 
     @FXML
@@ -56,7 +99,6 @@ public class EditAdminController {
         }
     }
 
-    //ESTO AGREGUE/MODIFIQUE
     @FXML
     void onGuardar() {
         if (tfNombre.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfUsuario.getText().isEmpty()
@@ -110,5 +152,16 @@ public class EditAdminController {
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    private boolean esContrasenaSegura(String contrasena) {
+        if (contrasena == null || contrasena.length() < 12) return false;
+
+        boolean tieneMayuscula = contrasena.matches(".*[A-Z].*");
+        boolean tieneMinuscula = contrasena.matches(".*[a-z].*");
+        boolean tieneNumero = contrasena.matches(".*\\d.*");
+        boolean tieneEspecial = contrasena.matches(".*[!@#$%^&*()_+\\-={}\\[\\]:;\"'<>,.?/\\\\|].*");
+
+        return tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial;
     }
 }
