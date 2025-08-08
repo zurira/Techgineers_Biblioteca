@@ -6,7 +6,7 @@
 /* Estilo para los títulos y etiquetas */
 .label {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-text-fill: #5C504A;
+    -fx-text-fill: black;
 }
 
 .label.h1 {
