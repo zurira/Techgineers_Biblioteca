@@ -148,7 +148,7 @@ public class AdminBiblioController {
                 editButton.getStyleClass().add("action-button");
                 editButton.setTooltip(new Tooltip("Editar bibliotecario"));
 
-                buttons.setAlignment(Pos.CENTER);
+                buttons.setAlignment(Pos.CENTER_LEFT);
                 buttons.getChildren().addAll(viewButton, editButton, changeStatusButton);
             }
 
