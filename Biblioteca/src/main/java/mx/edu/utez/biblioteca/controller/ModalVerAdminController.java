@@ -38,7 +38,7 @@ public class ModalVerAdminController {
                 Image image = new Image(new ByteArrayInputStream(usuario.getFoto()));
                 imgFoto.setImage(image);
             } else {
-                imgFoto.setImage(null); // O puedes poner una imagen por defecto si quieres
+                imgFoto.setImage(null); // O o se puede poner una imagen por defecto
             }
         }
 
