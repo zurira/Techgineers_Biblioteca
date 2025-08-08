@@ -60,7 +60,7 @@
                     </Button>
                 </HBox>
 
-                <!-- Campo Rol -->
+                <!-- Modifique esto Campo Rol -->
                 <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
                 <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
