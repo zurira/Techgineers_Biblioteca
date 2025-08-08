@@ -55,6 +55,10 @@
     <Label fx:id="lblDireccion" layoutX="30" layoutY="305" prefWidth="860" wrapText="true"
            style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 5;"/>
 
-
+    <!-- Botón cerrar -->
+    <HBox layoutX="800" layoutY="500" spacing="10">
+        <Button text="Cerrar" onAction="#cerrarVentana"
+                style="-fx-background-color: #A38F85; -fx-text-fill: white;"/>
+    </HBox>
 
 </AnchorPane>
