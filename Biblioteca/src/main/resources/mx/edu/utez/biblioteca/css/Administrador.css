@@ -1,12 +1,12 @@
 /* El diseño general de la vista de Administrador*/
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
 }
 
 /* Barra lateral */
 .sidebar {
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -32,7 +32,7 @@
 }
 
 .sidebar-item-active {
-    -fx-background-color: #d1ccc1; /*Más oscuro si el objeto esta seleccionado */
+    -fx-background-color: #d1ccc1; /*Se torna más oscuro si el objeto esta seleccionado */
     -fx-padding: 10px 0 10px 20px;
     -fx-alignment: center-left;
     -fx-cursor: hand;
@@ -42,7 +42,7 @@
 .sidebar-icon {
     -fx-fill: #555555;
     -fx-font-size: 2em;
-    -fx-padding: 0 10px 0 0;
+    -fx-padding: 0 50px 0 0;
 }
 
 .sidebar-label {
@@ -107,7 +107,7 @@
 
 /* Diseño para el botón de agregar */
 .add-button {
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: #A38F85;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -118,7 +118,7 @@
 }
 
 .add-button:hover {
-    -fx-background-color: #A38F85;
+    -fx-background-color: #726262;
 }
 
 .add-icon {
@@ -133,45 +133,58 @@
     -fx-padding: 10px 0;
 }
 
-/* Diseño para la tabla de los libros */
+/* Estilos generales de la tabla */
 .table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Encabezado */
 .table-view .column-header-background {
     -fx-border-color: #dee2e6; /* Borde inferior */
     -fx-border-width: 0 0 1px 0;
     -fx-border-radius: 8px 8px 0 0;
 }
-
-.table-view .column-header .label {
-    -fx-font-weight: bold;
-    -fx-text-fill: #495057;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 12px 10px;;
+.table-view .column-header-background,
+.table-view .column-header,
+.table-view .filler,
+.table-view .table-header-row {
+    -fx-background-color:#cdc2bd ;
 }
 
+/*#EDE9E3*/
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #443933;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 10px;
+}
+
+/* Celdas de la tabla */
 .table-view .table-cell {
     -fx-font-size: 12px;
     -fx-text-fill: #495057; /* <-- Color */
     -fx-font-weight: 600; /* <-- Grosor */
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 15px 10px;
-    -fx-border-color: #e9ecef;
+    -fx-border-color: #cdc2bd;
     -fx-border-width: 0 0 1px 0;
 }
 
+/* Filas alternas: una con color, la otra sin color */
 .table-row-cell:odd {
     -fx-background-color: #f8f9fa;
 }
 
 .table-row-cell:even {
     -fx-background-color: #ffffff;
+}
+
+/* Estado de la fila seleccionada y al pasar el ratón */
+.table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-cursor: hand;
 }
 
 .table-row-cell:selected {
@@ -267,7 +280,7 @@
     -fx-fill: #CDC6C3; /* Cambia el color del icono al pasar el ratón */
 }
 
-/* Estilos para el label del estado de los libros */
+/* Estilos para el label del estado de los Bibliotecarios */
 .status-label {
     -fx-background-radius: 10px;
     -fx-border-radius: 5px;
@@ -278,11 +291,11 @@
 }
 
 .status-active {
-    -fx-background-color: #4CAF50; /* Verde(activo) */
-    -fx-text-fill: white;
+    -fx-background-color: #DCFCE7; /* Verde(activo) */
+    -fx-text-fill: #4CAF50;
 }
 
 .status-inactive {
-    -fx-background-color: #f44336; /* Rojo(inactivo) */
-    -fx-text-fill: white;
+    -fx-background-color: #FEE2E2; /* Rojo(inactivo) */
+    -fx-text-fill: #B34F4F;
 }

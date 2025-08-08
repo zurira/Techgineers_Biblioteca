@@ -34,14 +34,16 @@
                     </StackPane>
                     <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
                         <children>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item">
+                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="sidebar-item">
                                 <children>
-                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Bibliotecarios" />
+                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Bibliotecarios" />
                                 </children>
                             </HBox>
-                            <HBox alignment="CENTER_LEFT" styleClass="sidebar-item-active">
+                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="sidebar-item-active">
                                 <children>
-                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" /> <Label styleClass="sidebar-label" text="Libros" />
+                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon" />
+                                    <Label styleClass="sidebar-label" text="Libros" />
                                 </children>
                             </HBox>
                         </children>
@@ -98,10 +100,10 @@
                             <Insets left="20.0" right="20.0" top="20.0" />
                         </VBox.margin>
                         <children>
-                            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
+                            <HBox alignment="CENTER_LEFT" prefHeight="40.0" styleClass="search-bar">
                                 <children>
                                     <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
-                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="400.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
                                 </children>
                             </HBox>
                             <Button fx:id="btnAddLibro" mnemonicParsing="false" onAction="#onAddLibro" prefHeight="40.0" styleClass="add-button" text="Agregar libro">
