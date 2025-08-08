@@ -70,7 +70,7 @@ public class AgregarUsuarioController {
             usuario.setCorreo(txtCorreo.getText());
             usuario.setTelefono(txtTelefono.getText());
             usuario.setDireccion(txtDireccion.getText());
-            usuario.setEstado("S");
+            usuario.setEstado("Activo");
 
             if (usuarioExistente == null) {
                 // Nuevo usuario
