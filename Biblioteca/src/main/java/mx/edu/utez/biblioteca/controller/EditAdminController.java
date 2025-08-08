@@ -156,6 +156,7 @@ public class EditAdminController {
         alerta.showAndWait();
     }
 
+    //Coloco este metodo para establecer la condicion de la contraseña
     private boolean esContrasenaSegura(String contrasena) {
         if (contrasena == null || contrasena.length() < 12) return false;
 
