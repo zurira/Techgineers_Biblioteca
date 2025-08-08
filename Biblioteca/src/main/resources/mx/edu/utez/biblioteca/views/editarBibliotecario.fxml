@@ -23,7 +23,7 @@
         <HBox spacing="20">
             <!-- Este es para la Imagen y botón -->
             <VBox spacing="10">
-                <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" />
+                <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" preserveRatio="true"/>
                 <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
                         style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
                         prefWidth="150" onAction="#onSeleccionarImagen"/>
@@ -75,8 +75,6 @@
 
             </GridPane>
         </HBox>
-
-
 
         <!-- Este es el campo de Direccion -->
         <Label text="Dirección:"/>
