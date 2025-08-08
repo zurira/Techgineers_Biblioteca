@@ -56,7 +56,9 @@ public class AgregarUsuarioController {
     @FXML
     private void guardar() {
         if (txtNombre.getText().isEmpty() || dpFechaNacimiento.getValue() == null ||
-                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty() ||
+            txtDireccion.getText().isEmpty())
+        {
             mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
             return;
         }
@@ -68,7 +70,7 @@ public class AgregarUsuarioController {
             usuario.setCorreo(txtCorreo.getText());
             usuario.setTelefono(txtTelefono.getText());
             usuario.setDireccion(txtDireccion.getText());
-            usuario.setEstado("S"); // Puede hacerse dinámico si decides usar un ComboBox
+            usuario.setEstado("Activo");
 
             if (usuarioExistente == null) {
                 // Nuevo usuario
@@ -91,7 +93,7 @@ public class AgregarUsuarioController {
     }
 
     @FXML
-    public void cancelar(ActionEvent event) {
+    public void cancelar(ActionEvent e) {
         cerrarVentana();
     }
 
