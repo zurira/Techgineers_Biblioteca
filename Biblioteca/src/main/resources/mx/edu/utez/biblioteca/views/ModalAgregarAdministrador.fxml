@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TextArea?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.ModalAgregarAdminController"
@@ -48,25 +50,47 @@
                 <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
                 <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <HBox spacing="5" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <StackPane>
-                        <PasswordField fx:id="txtContrasena" prefWidth="180"/>
-                        <TextField fx:id="txtContrasenaVisible" prefWidth="180" visible="false" managed="false"/>
-                    </StackPane>
-                    <Button fx:id="btnTogglePassword" style="-fx-background-color: transparent;">
+                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="180">
+                    <!-- Campo de contraseña oculta -->
+                    <PasswordField fx:id="txtContrasena" prefWidth="180" style="-fx-padding: 0 30 0 5;"/>
+
+                    <!-- Campo de contraseña visible -->
+                    <TextField fx:id="txtContrasenaVisible" prefWidth="180" visible="false" managed="false"
+                               style="-fx-padding: 0 30 0 5;"/>
+
+                    <!-- Botón del ojo dentro del campo -->
+                    <Button fx:id="btnTogglePassword"
+                            style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            alignment="CENTER_RIGHT"
+                            maxHeight="20"
+                            prefWidth="30"
+                            StackPane.alignment="CENTER_RIGHT"
+                            translateX="-5">
                         <graphic>
                             <FontIcon iconLiteral="fa-eye" iconSize="16"/>
                         </graphic>
                     </Button>
-                </HBox>
+                </StackPane>
 
-                <!-- Modifique esto Campo Rol -->
+                <!-- Campo Rol -->
                 <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
                 <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
                 <!-- Fila 3 -->
                 <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <ComboBox fx:id="estadoComboBox"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="5"
+                          prefWidth="200"
+                          promptText="Selecciona estado"
+                          style="-fx-background-color: white; -fx-border-color: #C9C1BD; -fx-border-radius: 4;">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Activo"/>
+                            <String fx:value="Inactivo"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
             </GridPane>
         </HBox>
 

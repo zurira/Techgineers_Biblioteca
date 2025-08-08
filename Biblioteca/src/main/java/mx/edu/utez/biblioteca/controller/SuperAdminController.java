@@ -1,6 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -22,11 +21,16 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.List;
 
 public class SuperAdminController {
-    @FXML private TableView<Usuario> adminTable;
-    @FXML private TextField searchField;
-    @FXML private Button addButton;
-    @FXML private Button logoutButton;
-    @FXML private Label lblSinResultados;
+    @FXML
+    private TableView<Usuario> adminTable;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Label lblSinResultados;
 
     private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
@@ -110,6 +114,7 @@ public class SuperAdminController {
             return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         });
 
+
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
@@ -148,6 +153,7 @@ public class SuperAdminController {
                 }
             }
         });
+
 
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
@@ -188,7 +194,6 @@ public class SuperAdminController {
         lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
-    //MODIFIQUE ESO
     private void onEditAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
@@ -237,7 +242,6 @@ public class SuperAdminController {
         // Eliminación desactivada por decisión de Tania
     }
 
-    // NUEVO MÉTODO PARA VER ADMINISTRADOR
     private void onViewAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalVerAdmin.fxml"));
