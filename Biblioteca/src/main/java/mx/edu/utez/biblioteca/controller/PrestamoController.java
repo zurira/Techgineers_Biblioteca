@@ -79,6 +79,7 @@ public class PrestamoController {
 
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
+    private ObservableList<Prestamo> listaPrestamosOriginal;
     private double tarifaMultaActual;
 
     @FXML
@@ -109,7 +110,6 @@ public class PrestamoController {
     }
 
     private void configurarColumnasTabla() {
-
         colNo.setCellFactory(column -> new TableCell<Prestamo, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -136,7 +136,6 @@ public class PrestamoController {
         colFechaLimite.setCellValueFactory(new PropertyValueFactory<>("fechaLimite"));
         colFechaReal.setCellValueFactory(new PropertyValueFactory<>("fechaReal"));
 
-        // Bloque de código para la columna 'Estado'
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         colEstado.setCellFactory(column -> {
             return new TableCell<Prestamo, String>() {
@@ -180,7 +179,6 @@ public class PrestamoController {
             e.printStackTrace();
         }
 
-// ⬇️ Definición de columna 'colMulta'
         colMulta.setCellValueFactory(cellData -> {
             Prestamo p = cellData.getValue();
             double multa = p.calcularMulta(tarifaMultaActual);
@@ -210,7 +208,6 @@ public class PrestamoController {
                     Prestamo prestamo = getTableView().getItems().get(getIndex());
                     onViewPrestamo(prestamo);
                 });
-
             }
 
             @Override
@@ -229,14 +226,17 @@ public class PrestamoController {
 
     private void cargarPrestamos() {
         try {
-            listaPrestamos = FXCollections.observableArrayList(prestamoDao.findAll());
+            listaPrestamosOriginal = FXCollections.observableArrayList(prestamoDao.findAll());
             LocalDate hoy = LocalDate.now();
-            for (Prestamo p : listaPrestamos) {
+            for (Prestamo p : listaPrestamosOriginal) {
                 double tarifa = tarifaMultaActual;
                 String nuevoEstado = p.calcularEstado(hoy, tarifa);
-                p.setEstado(nuevoEstado); // ← Esto actualiza visualmente en la tabla
+                p.setEstado(nuevoEstado);
             }
+
+            listaPrestamos = FXCollections.observableArrayList(listaPrestamosOriginal);
             tableViewPrestamos.setItems(listaPrestamos);
+            tableViewPrestamos.refresh();
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -249,15 +249,16 @@ public class PrestamoController {
 
     private void filtrarPrestamos(String filtro) {
         if (filtro == null || filtro.trim().isEmpty()) {
-            tableViewPrestamos.setItems(listaPrestamos);
+            tableViewPrestamos.setItems(listaPrestamosOriginal);
             lblSinResultados.setVisible(false);
+            tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
             return;
         }
 
         String filtroLower = filtro.toLowerCase();
         ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
 
-        for (Prestamo p : listaPrestamos) {
+        for (Prestamo p : listaPrestamosOriginal) {
             String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
             String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
             String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
@@ -269,6 +270,7 @@ public class PrestamoController {
 
         tableViewPrestamos.setItems(prestamosFiltrados);
         lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
+        tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
     }
 
     @FXML
@@ -392,7 +394,7 @@ public class PrestamoController {
                 Stage newStage = new Stage();
                 newStage.setTitle("Inicio de sesión");
                 newStage.setScene(new Scene(loginRoot));
-                newStage.setMaximized(true); //
+                newStage.setMaximized(true);
                 newStage.show();
             }
 
@@ -414,19 +416,18 @@ public class PrestamoController {
             }
 
             ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
-            configDao.actualizarTarifaMulta(nuevaTarifa);     // guardar en BD
-            tarifaMultaActual = nuevaTarifa;                  // actualizar variable local
+            configDao.actualizarTarifaMulta(nuevaTarifa);
+            tarifaMultaActual = nuevaTarifa;
 
-            // ⚙️ Recalcular multas y estados en cada préstamo
             LocalDate hoy = LocalDate.now();
             for (Prestamo p : listaPrestamos) {
                 double multa = p.calcularMulta(tarifaMultaActual);
-                p.setMulta(multa);  // si tienes una propiedad para mostrar
+                p.setMulta(multa);
                 String nuevoEstado = p.calcularEstado(hoy, tarifaMultaActual);
                 p.setEstado(nuevoEstado);
             }
 
-            tableViewPrestamos.refresh(); // 🔄 refresca visualmente celdas
+            tableViewPrestamos.refresh();
 
             mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
 
