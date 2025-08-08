@@ -18,6 +18,10 @@
                    style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);"/>
     </VBox>
 
+    <!-- Título del modal -->
+    <Label layoutX="30" layoutY="20" text="Información del administrador"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
 
 
 </AnchorPane>
