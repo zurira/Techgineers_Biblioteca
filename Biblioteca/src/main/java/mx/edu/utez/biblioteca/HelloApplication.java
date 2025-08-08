@@ -14,11 +14,13 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
-        Scene scene = new Scene(root, 900, 500);
+        Scene scene = new Scene(root);
 
         stage.setTitle("Biblioteca");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
+
     }
 
     //Agrego
