@@ -59,7 +59,7 @@ public class ModalAgregarAdminController {
                 txtContrasenaVisible.setText(newVal);
             }
 
-            // Agrego esto de cambio de color
+            // Agrego esto de cambio de color visual si es correcta o no la contraseña
             if (esContrasenaSegura(newVal)) {
                 txtContrasena.setStyle("-fx-border-color: green;");
             } else {
