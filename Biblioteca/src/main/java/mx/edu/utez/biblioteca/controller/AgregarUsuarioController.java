@@ -3,6 +3,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -52,6 +53,14 @@ public class AgregarUsuarioController {
         if (selected != null) {
             archivoFoto = selected;
             btnSeleccionarImagen.setText(selected.getName());
+
+            try {
+                Image image = new Image(selected.toURI().toString());
+
+                imgFotoPerfil.setImage(image);
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen: " + e.getMessage());
+            }
         }
     }
 
