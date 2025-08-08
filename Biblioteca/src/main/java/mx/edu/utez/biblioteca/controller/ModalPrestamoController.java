@@ -20,6 +20,7 @@ import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -121,7 +122,7 @@ public class ModalPrestamoController implements Initializable {
         UsuarioBiblioteca usuarioSeleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
 
         if (usuarioSeleccionado == null) {
-            mostrarAlerta("Por favor, selecciona un usuario");
+            mostrarAlerta("Por favor, selecciona un usuario.");
             return;
         }
 
@@ -130,15 +131,42 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
+        LocalDate hoy = LocalDate.now();
+        LocalDate fechaPrestamo = dpFechaPrestamo.getValue();
+        LocalDate fechaLimite = dpFechaLimite.getValue();
+        LocalDate fechaDevolucion = dpFechaDevolucion.getValue();
+
+        // Validaciones contra el día actual
+        if (fechaPrestamo.isBefore(hoy)) {
+            mostrarAlerta("La fecha de préstamo no puede ser anterior al día actual.");
+            return;
+        }
+
+        if (fechaPrestamo.isAfter(hoy)) {
+            mostrarAlerta("La fecha de préstamo no puede ser posterior al día actual.");
+            return;
+        }
+
+        if (fechaLimite.isBefore(hoy)) {
+            mostrarAlerta("La fecha límite no puede ser anterior al día actual.");
+            return;
+        }
+
+        if (fechaLimite.isBefore(fechaPrestamo)) {
             mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
             return;
         }
 
-        if (dpFechaDevolucion.getValue() != null &&
-                dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
-            mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
-            return;
+        if (fechaDevolucion != null) {
+            if (fechaDevolucion.isBefore(hoy)) {
+                mostrarAlerta("La fecha de devolución no puede ser anterior al día actual.");
+                return;
+            }
+
+            if (fechaDevolucion.isBefore(fechaPrestamo)) {
+                mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
+                return;
+            }
         }
 
         List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
@@ -152,9 +180,9 @@ public class ModalPrestamoController implements Initializable {
 
         Prestamo prestamo = new Prestamo();
         prestamo.setUsuario(usuarioSeleccionado);
-        prestamo.setFechaPrestamo(dpFechaPrestamo.getValue());
-        prestamo.setFechaLimite(dpFechaLimite.getValue());
-        prestamo.setFechaReal(dpFechaDevolucion.getValue());
+        prestamo.setFechaPrestamo(fechaPrestamo);
+        prestamo.setFechaLimite(fechaLimite);
+        prestamo.setFechaReal(fechaDevolucion);
         prestamo.setEstado(cbEstado.getValue());
 
         try {
@@ -189,6 +217,8 @@ public class ModalPrestamoController implements Initializable {
             e.printStackTrace();
             mostrarAlerta("Ocurrió un error inesperado al registrar el préstamo.");
         }
+
+        limpiarFormulario();
     }
 
 
