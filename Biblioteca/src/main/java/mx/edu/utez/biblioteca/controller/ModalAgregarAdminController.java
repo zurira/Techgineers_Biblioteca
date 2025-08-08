@@ -159,6 +159,7 @@ public class ModalAgregarAdminController {
         }
     }
 
+    //Agregue este metodo para validar los campos
     private boolean camposValidos() {
         if (txtNombre.getText().trim().isEmpty()) return false;
         if (txtCorreo.getText().trim().isEmpty()) return false;
