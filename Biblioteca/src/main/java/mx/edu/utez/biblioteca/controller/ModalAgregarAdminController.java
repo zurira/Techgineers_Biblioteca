@@ -192,6 +192,7 @@ public class ModalAgregarAdminController {
         return 1;
     }
 
+    //Agregue este metodo para la contraseña segura
     private boolean esContrasenaSegura(String contrasena) {
         if (contrasena == null || contrasena.length() < 12) return false;
 
