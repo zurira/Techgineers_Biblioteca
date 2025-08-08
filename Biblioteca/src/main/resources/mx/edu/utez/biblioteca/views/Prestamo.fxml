@@ -38,7 +38,7 @@
 
                             <Button onAction="#irUsuarios" styleClass="sidebar-item" prefWidth="250.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon"/>
                                         <Label styleClass="sidebar-label" text="Usuarios"/>
                                     </HBox>
@@ -47,7 +47,7 @@
 
                             <Button  styleClass="sidebar-item-active" prefWidth="250.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
                                         <Label styleClass="sidebar-label" text="Préstamos"/>
                                     </HBox>
@@ -56,7 +56,7 @@
 
                             <Button onAction="#irEstadisticas" styleClass="sidebar-item" prefWidth="250.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
                                         <Label styleClass="sidebar-label" text="Estadísticas"/>
                                     </HBox>

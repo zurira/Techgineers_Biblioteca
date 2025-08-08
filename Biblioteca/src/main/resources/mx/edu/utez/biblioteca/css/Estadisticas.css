@@ -1,12 +1,12 @@
 /* Estilo general */
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
 }
 
 /* Barra lateral */
 .sidebar {
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -159,7 +159,7 @@
 
 /* Estilos para las secciones de estadísticas*/
 .statistics-section {
-    -fx-background-color: #e7d8c9;
+    -fx-background-color: #c4b7b1;
     -fx-padding: 20;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
