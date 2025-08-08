@@ -10,8 +10,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.collections.FXCollections?>
-
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.EditAdminController"
             prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;">
 
@@ -40,7 +41,15 @@
     <TextField fx:id="tfUsuario" layoutX="250" layoutY="160" prefWidth="200"/>
 
     <Label layoutX="470" layoutY="135" text="Contraseña:*"/>
-    <PasswordField fx:id="pfContrasena" layoutX="470" layoutY="160" prefWidth="200"/>
+    <HBox layoutX="470" layoutY="160" spacing="5">
+        <PasswordField fx:id="pfContrasena" promptText="Contraseña" prefWidth="160"/>
+        <TextField fx:id="tfContrasenaVisible" promptText="Contraseña" prefWidth="160" visible="false" managed="false"/>
+        <Button fx:id="btnTogglePassword" prefWidth="30" style="-fx-background-color: transparent; -fx-padding: 0;">
+            <graphic>
+                <FontIcon iconLiteral="fa-eye" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
 
     <Label layoutX="690" layoutY="135" text="Rol:*"/>
     <TextField fx:id="tfRol" layoutX="690" layoutY="160" prefWidth="200" editable="false"/>
