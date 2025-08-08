@@ -3,6 +3,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
@@ -19,7 +21,6 @@ import java.util.Comparator;
 import java.util.Optional;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-//vista Administrador bibliotecario
 public class AdminBiblioController {
 
     @FXML
@@ -48,6 +49,8 @@ public class AdminBiblioController {
     private TableColumn<Bibliotecario, Void> colAcciones;
     @FXML
     private Label lblSinResultados;
+    @FXML
+    private ProgressIndicator progressIndicator; // Nuevo fx:id para el indicador de carga
 
     private BibliotecarioDaoImpl bibliotecarioDao;
     private ObservableList<Bibliotecario> listaBibliotecarios;
@@ -69,28 +72,23 @@ public class AdminBiblioController {
     }
 
     private void configurarColumnasTabla() {
-        // Columna "No." - Ayuda para que los usuarios se visualicen conforme vayan siedo registrados
-        colNo.setCellFactory(column -> {
-            return new TableCell<Bibliotecario, Void>() {
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        setText(String.valueOf(getIndex() + 1));
-                    }
+        colNo.setCellFactory(column -> new TableCell<Bibliotecario, Void>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
                 }
-            };
+            }
         });
 
-        // Columnas de datos del bibliotecario
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        // Columna de Rol - Muestra el nombre del rol
         colRol.setCellValueFactory(cellData -> {
             if (cellData.getValue().getRol() != null) {
                 return new SimpleStringProperty(cellData.getValue().getRol().getNombre());
@@ -99,7 +97,6 @@ public class AdminBiblioController {
             }
         });
 
-        // Columna de Estado - Muestra "Activo" o "Inactivo" con estilos
         colEstado.setCellValueFactory(cellData -> {
             if ("S".equals(cellData.getValue().getEstado())) {
                 return new SimpleStringProperty("Activo");
@@ -107,41 +104,44 @@ public class AdminBiblioController {
                 return new SimpleStringProperty("Inactivo");
             }
         });
-        colEstado.setCellFactory(column -> {
-            return new TableCell<Bibliotecario, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setGraphic(null);
-                        setText(null);
+        colEstado.setCellFactory(column -> new TableCell<Bibliotecario, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    Label label = new Label(item);
+                    label.setAlignment(Pos.CENTER);
+                    label.getStyleClass().add("status-label");
+
+                    if ("Activo".equals(item)) {
+                        label.getStyleClass().add("status-active");
                     } else {
-                        Label label = new Label(item);
-                        label.setAlignment(Pos.CENTER);
-                        label.getStyleClass().add("status-label");
-
-                        if ("Activo".equals(item)) {
-                            label.getStyleClass().add("status-active");
-                        } else {
-                            label.getStyleClass().add("status-inactive");
-                        }
-
-                        this.setAlignment(Pos.CENTER);
-                        setGraphic(label);
-                        setText(null);
+                        label.getStyleClass().add("status-inactive");
                     }
+
+                    this.setAlignment(Pos.CENTER);
+                    setGraphic(label);
+                    setText(null);
                 }
-            };
+            }
         });
 
-        // Columna de Acciones - Con botones e iconos dinámicos
         colAcciones.setCellFactory(param -> new TableCell<Bibliotecario, Void>() {
             private final HBox buttons = new HBox(5);
             private final Button editButton = new Button();
             private final Button changeStatusButton = new Button();
+            private final Button viewButton = new Button();
 
             {
-                // Configuración inicial de los botones
+                FontIcon viewIcon = new FontIcon("fa-eye");
+                viewIcon.getStyleClass().add("action-icon");
+                viewButton.setGraphic(viewIcon);
+                viewButton.getStyleClass().add("action-button");
+                viewButton.setTooltip(new Tooltip("Ver detalles"));
+
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
                 editButton.setGraphic(editIcon);
@@ -149,7 +149,7 @@ public class AdminBiblioController {
                 editButton.setTooltip(new Tooltip("Editar bibliotecario"));
 
                 buttons.setAlignment(Pos.CENTER);
-                buttons.getChildren().addAll(editButton, changeStatusButton);
+                buttons.getChildren().addAll(viewButton, editButton, changeStatusButton);
             }
 
             @Override
@@ -160,7 +160,6 @@ public class AdminBiblioController {
                 } else {
                     Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
 
-                    // Configura el botón de cambio de estado dinámicamente facilita el entendimiento del botón
                     FontIcon statusIcon;
                     if ("S".equals(bibliotecario.getEstado())) {
                         statusIcon = new FontIcon("fa-toggle-on");
@@ -173,7 +172,7 @@ public class AdminBiblioController {
                     changeStatusButton.setGraphic(statusIcon);
                     changeStatusButton.getStyleClass().add("action-button");
 
-                    // Asigna las acciones a los botones
+                    viewButton.setOnAction(event -> onViewBibliotecario(bibliotecario));
                     editButton.setOnAction(event -> onEditBibliotecario(bibliotecario));
                     changeStatusButton.setOnAction(event -> onChangeStatus(bibliotecario));
 
@@ -186,7 +185,6 @@ public class AdminBiblioController {
     private void cargarBibliotecarios() {
         try {
             listaBibliotecarios = FXCollections.observableArrayList(bibliotecarioDao.findAll());
-            // Se ordena la lista por el ID de forma ascendente
             listaBibliotecarios.sort(Comparator.comparing(Bibliotecario::getId));
             tableViewBibliotecarios.setItems(listaBibliotecarios);
             lblSinResultados.setVisible(listaBibliotecarios.isEmpty());
@@ -206,7 +204,6 @@ public class AdminBiblioController {
         }
 
         String filtroLower = filtro.toLowerCase();
-
         ObservableList<Bibliotecario> bibliotecariosFiltrados = FXCollections.observableArrayList();
 
         for (Bibliotecario bibliotecario : listaBibliotecarios) {
@@ -231,24 +228,17 @@ public class AdminBiblioController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AgregarBibliotecario.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtenemos una referencia al controlador del modal
             ModalAgregarBibliotecarioController modalController = fxmlLoader.getController();
 
-            // Creamos y mostramos la ventana modal
             Stage stage = new Stage();
             stage.setTitle("Agregar Bibliotecario");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
-
-            // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
             stage.showAndWait();
 
-            // Después de que el modal se cierra, verificamos si se agregó un nuevo usuario,
             if (modalController.seAgregoUsuario()) {
-                // Si se agregó, recargamos los datos de la tabla
                 cargarBibliotecarios();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar bibliotecario.");
@@ -263,21 +253,72 @@ public class AdminBiblioController {
             EditarBibliotecarioController controller = fxmlLoader.getController();
             controller.setBibliotecario(bibliotecario);
 
-            // Creamos y mostramos la ventana modal
             Stage stage = new Stage();
             stage.setTitle("Editar Bibliotecario");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
-
-            // Usamos showAndWait() para bloquear la ventana principal hasta que el modal se cierre
             stage.showAndWait();
 
             cargarBibliotecarios();
-
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir el formulario.", "Hubo un error al intentar cargar la vista de agregar bibliotecario.");
         }
+    }
+
+    private void onViewBibliotecario(Bibliotecario bibliotecarioSeleccionado) {
+        // Muestra el indicador de carga y deshabilita la tabla para evitar interacción
+        progressIndicator.setVisible(true);
+        tableViewBibliotecarios.setDisable(true);
+
+        Task<Bibliotecario> loadBibliotecarioTask = new Task<Bibliotecario>() {
+            @Override
+            protected Bibliotecario call() throws Exception {
+                // Tarea que se ejecuta en segundo plano para cargar los datos completos
+                return bibliotecarioDao.findById(bibliotecarioSeleccionado.getId());
+            }
+        };
+
+        loadBibliotecarioTask.setOnSucceeded(event -> {
+            // Se ejecuta en el hilo principal de la UI cuando la tarea termina con éxito
+            progressIndicator.setVisible(false);
+            tableViewBibliotecarios.setDisable(false);
+
+            Bibliotecario bibliotecarioConFoto = loadBibliotecarioTask.getValue();
+
+            if (bibliotecarioConFoto == null) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Bibliotecario no encontrado", "No se pudo encontrar la información completa del bibliotecario.");
+                return;
+            }
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerBibliotecario.fxml"));
+                Parent root = fxmlLoader.load();
+                VerBibliotecarioController controller = fxmlLoader.getController();
+                controller.setBibliotecario(bibliotecarioConFoto);
+
+                Stage stage = new Stage();
+                stage.setTitle("Detalles del Bibliotecario");
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudo abrir la vista de detalles.", "Hubo un error al intentar cargar la vista del bibliotecario.");
+            }
+        });
+
+        loadBibliotecarioTask.setOnFailed(event -> {
+            // Se ejecuta en el hilo principal de la UI si la tarea falla
+            progressIndicator.setVisible(false);
+            tableViewBibliotecarios.setDisable(false);
+            Throwable e = loadBibliotecarioTask.getException();
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error de Datos", "No se pudo obtener el bibliotecario", "Hubo un error al intentar cargar los datos del bibliotecario: " + e.getMessage());
+        });
+
+        // Iniciar la tarea en un nuevo hilo
+        new Thread(loadBibliotecarioTask).start();
     }
 
     private void onChangeStatus(Bibliotecario bibliotecario) {
@@ -294,7 +335,7 @@ public class AdminBiblioController {
             try {
                 if (bibliotecarioDao.updateStatus(bibliotecario.getId(), nuevoEstado)) {
                     showAlert(Alert.AlertType.INFORMATION, "Éxito", "Estado actualizado", "El estado del bibliotecario se ha actualizado correctamente.");
-                    cargarBibliotecarios(); // Recargar la tabla
+                    cargarBibliotecarios();
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Error", "No se pudo actualizar el estado", "Hubo un problema al intentar actualizar el estado del bibliotecario.");
                 }
@@ -319,4 +360,3 @@ public class AdminBiblioController {
         alert.showAndWait();
     }
 }
-
