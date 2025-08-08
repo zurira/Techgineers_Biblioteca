@@ -1,0 +1,96 @@
+/* Estilos generales del panel de fondo */
+.background-pane {
+    -fx-background-color: #f4f7f6;
+    -fx-padding: 20px;
+}
+
+/* Estilo del encabezado */
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* Estilo del campo de búsqueda */
+.search-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-padding: 8px 10px;
+}
+.search-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ecf0f1;
+}
+
+/* Estilo del botón de agregar */
+.add-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+}
+.add-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Estilos de la tabla */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+}
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 5px 5px 0 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #ecf0f1;
+}
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: #ffffff;
+}
+
+/* Estilos de las etiquetas de estado */
+.status-label {
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 20px;
+}
+.status-active {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #ffffff;
+}
+.status-inactive {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: #ffffff;
+}
+
+/* Estilos de los botones de acción */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+.action-button:hover {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5px;
+}
+.action-icon {
+    -fx-fill: #7f8c8d;
+}
+.button-hover:hover {
+    -fx-background-color: #5cb85c; /* Cambia el color de fondo al pasar el mouse, un tono verde */
+    -fx-text-fill: white; /* Cambia el color del texto a blanco */
+    -fx-cursor: hand; /* Cambia el cursor a una mano */
+}

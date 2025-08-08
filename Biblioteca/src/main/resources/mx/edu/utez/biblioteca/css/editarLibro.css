@@ -1,0 +1,88 @@
+/* Estilo del contenedor principal */
+.anchor-pane {
+    -fx-background-color: #F1EFEF;
+}
+
+/* Estilo para los títulos y etiquetas */
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: black;
+}
+
+.label.h1 {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Estilo para los campos de texto y área de texto */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-prompt-text-fill: #A38F85;
+}
+
+.text-area {
+    -fx-min-height: 80px;
+    -fx-wrap-text: true;
+}
+
+/* Estilo para los ComboBox */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 8px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Estilo del botón de "Guardar" */
+#btnGuardar {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+#btnGuardar:hover {
+    -fx-background-color: #8D7A70;
+}
+
+/* Estilo del botón de "Cancelar" */
+#btnCancelar {
+    -fx-background-color: #E2DAD6;
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+#btnCancelar:hover {
+    -fx-background-color: #CFC5BE;
+}
+
+/* Estilo para el botón de cargar URL (icon-button) */
+.icon-button {
+    -fx-background-color: #E2DAD6;
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.icon-button:hover {
+    -fx-background-color: #CFC5BE;
+}

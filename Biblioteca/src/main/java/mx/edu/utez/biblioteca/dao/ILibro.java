@@ -1,10 +1,19 @@
 package mx.edu.utez.biblioteca.dao;
 
 import mx.edu.utez.biblioteca.model.Libro;
-
 import java.util.List;
 
+
 public interface ILibro {
-    public List<Libro> obtenerLibros();
-    public List<Libro> obtenerLibrosPorFiltro(String filtro, String categoria);
+    List<Libro> findAll() throws Exception;
+    Libro findById(int id) throws Exception;
+    void create(Libro libro) throws Exception;
+    void update(Libro libro) throws Exception;
+    void delete(int id) throws Exception;
+    List<Libro> search(String searchTerm) throws Exception;
+
+    Libro findByIsbn(String isbn) throws Exception;
+
+    // Método para actualizar el estado del libro
+    void updateStatus(int id, String estado) throws Exception;
 }

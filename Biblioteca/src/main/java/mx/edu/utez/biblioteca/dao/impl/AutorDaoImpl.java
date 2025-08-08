@@ -1,7 +1,7 @@
 package mx.edu.utez.biblioteca.dao.impl;
 
-import mx.edu.utez.biblioteca.dao.ICategoria;
-import mx.edu.utez.biblioteca.model.Categoria;
+import mx.edu.utez.biblioteca.dao.IAutor;
+import mx.edu.utez.biblioteca.model.Autor;
 import mx.edu.utez.biblioteca.config.DBConnection;
 
 import java.sql.Connection;
@@ -12,114 +12,114 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaDaoImpl implements ICategoria {
+public class AutorDaoImpl implements IAutor {
 
     @Override
-    public List<Categoria> findAll() throws Exception {
-        List<Categoria> categorias = new ArrayList<>();
-        String query = "SELECT ID, NOMBRE FROM CATEGORIA";
+    public List<Autor> findAll() throws Exception {
+        List<Autor> autores = new ArrayList<>();
+        String query = "SELECT ID, NOMBRE_COMPLETO FROM AUTOR";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
-                categorias.add(new Categoria(rs.getInt("ID"), rs.getString("NOMBRE")));
+                autores.add(new Autor(rs.getInt("ID"), rs.getString("NOMBRE_COMPLETO")));
             }
         } catch (SQLException e) {
-            System.err.println("Error al buscar todas las categorías: " + e.getMessage());
+            System.err.println("Error al buscar todos los autores: " + e.getMessage());
             throw e;
         }
-        return categorias;
+        return autores;
     }
 
     @Override
-    public Categoria findById(int id) throws Exception {
-        Categoria categoria = null;
-        String query = "SELECT ID, NOMBRE FROM CATEGORIA WHERE ID = ?";
+    public Autor findById(int id) throws Exception {
+        Autor autor = null;
+        String query = "SELECT ID, NOMBRE_COMPLETO FROM AUTOR WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    categoria = new Categoria(rs.getInt("ID"), rs.getString("NOMBRE"));
+                    autor = new Autor(rs.getInt("ID"), rs.getString("NOMBRE_COMPLETO"));
                 }
             } catch (SQLException e) {
-                System.err.println("Error al buscar categoría por ID: " + e.getMessage());
+                System.err.println("Error al buscar autor por ID: " + e.getMessage());
                 throw e;
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión o preparación de la consulta para categoría por ID: " + e.getMessage());
+            System.err.println("Error de conexión o preparación de la consulta para autor por ID: " + e.getMessage());
             throw e;
         }
-        return categoria;
+        return autor;
     }
 
     @Override
-    public Categoria findByName(String name) throws Exception {
-        Categoria categoria = null;
+    public Autor findByName(String name) throws Exception {
+        Autor autor = null;
         // Usar UPPER para hacer la búsqueda insensible a mayúsculas/minúsculas
-        String query = "SELECT ID, NOMBRE FROM CATEGORIA WHERE UPPER(NOMBRE) = UPPER(?)";
+        String query = "SELECT ID, NOMBRE_COMPLETO FROM AUTOR WHERE UPPER(NOMBRE_COMPLETO) = UPPER(?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, name);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    categoria = new Categoria(rs.getInt("ID"), rs.getString("NOMBRE"));
+                    autor = new Autor(rs.getInt("ID"), rs.getString("NOMBRE_COMPLETO"));
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error al buscar categoría por nombre: " + e.getMessage());
+            System.err.println("Error al buscar autor por nombre: " + e.getMessage());
             throw e;
         }
-        return categoria;
+        return autor;
     }
 
     @Override
-    public boolean create(Categoria categoria) throws Exception {
+    public boolean create(Autor autor) throws Exception {
         // Usar Statement.RETURN_GENERATED_KEYS para columnas IDENTITY
-        String query = "INSERT INTO CATEGORIA (NOMBRE) VALUES (?)";
+        String query = "INSERT INTO AUTOR (NOMBRE_COMPLETO) VALUES (?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, categoria.getNombre());
+            pstmt.setString(1, autor.getNombreCompleto());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        //categoria.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
-                        return true;
+                        //autor.setId(rs.getInt(1)); // Debería funcionar para IDENTITY columns
+                   return true;
                     }
                 }
                 return true;
             }
             return false;
         } catch (SQLException e) {
-            System.err.println("Error al crear categoría: " + e.getMessage());
+            System.err.println("Error al crear autor: " + e.getMessage());
             throw e;
         }
     }
 
     @Override
-    public void update(Categoria categoria) throws Exception {
-        String query = "UPDATE CATEGORIA SET NOMBRE = ? WHERE ID = ?";
+    public void update(Autor autor) throws Exception {
+        String query = "UPDATE AUTOR SET NOMBRE_COMPLETO = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, categoria.getNombre());
-            pstmt.setInt(2, categoria.getId());
+            pstmt.setString(1, autor.getNombreCompleto());
+            pstmt.setInt(2, autor.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error al actualizar categoría: " + e.getMessage());
+            System.err.println("Error al actualizar autor: " + e.getMessage());
             throw e;
         }
     }
 
     @Override
     public void delete(int id) throws Exception {
-        String query = "DELETE FROM CATEGORIA WHERE ID = ?";
+        String query = "DELETE FROM AUTOR WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error al eliminar categoría: " + e.getMessage());
+            System.err.println("Error al eliminar autor: " + e.getMessage());
             throw e;
         }
     }
