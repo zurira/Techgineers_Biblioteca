@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-
+    //Agrego
     public static void main(String[] args) {
         launch();
     }
