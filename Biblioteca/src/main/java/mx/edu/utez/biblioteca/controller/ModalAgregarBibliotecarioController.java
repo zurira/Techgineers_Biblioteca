@@ -26,7 +26,8 @@ public class ModalAgregarBibliotecarioController {
     @FXML private TextField txtTelefono;
     @FXML private PasswordField txtContrasena;
     @FXML private TextArea txtDireccion;
-    @FXML private TextField txtEstado;
+
+    // Se eliminaron las variables FXML para los campos de estado y rol
 
     // Variable para almacenar el archivo de la imagen seleccionada
     private File imagenSeleccionada;
@@ -88,28 +89,37 @@ public class ModalAgregarBibliotecarioController {
 
     @FXML
     private void guardarBibliotecario() {
-        // Validación de campos
+        String correo = txtCorreo.getText().trim();
+
+        // Validación de campos incompletos
+        // Se eliminó la validación para txtEstado.
         if (txtNombre.getText().trim().isEmpty() ||
                 txtUsuario.getText().trim().isEmpty() ||
-                txtCorreo.getText().trim().isEmpty() ||
+                correo.isEmpty() ||
                 txtTelefono.getText().trim().isEmpty() ||
                 txtContrasena.getText().trim().isEmpty() ||
                 txtDireccion.getText().trim().isEmpty() ||
-                txtEstado.getText().trim().isEmpty() ||
                 imagenSeleccionada == null) {
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos del formulario, incluyendo la selección de una foto.");
-            return; // En caso de que no se llenen todos los campos detiene la ejecución si hay campos vacíos
+            return;
         }
+
+        // --- VALIDACIÓN DE CORREO ---
+        if (!correo.endsWith("@bibliotecario.com")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Correo Inválido", "El correo electrónico debe terminar en '@bibliotecariocom'.");
+            return;
+        }
+        // --- FIN DE LA VALIDACIÓN ---
 
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
-        String correo = txtCorreo.getText().trim();
         String telefono = txtTelefono.getText().trim();
         String contrasena = txtContrasena.getText();
-        String estado = txtEstado.getText().trim().equalsIgnoreCase("activo") ? "S" : "N";
         String direccion = txtDireccion.getText().trim();
 
+        // El estado y el rol se asignan por defecto
+        String estado = "S"; // El estado por defecto es "activo"
         int idRol = obtenerIdRolBibliotecario();
 
         if (idRol == -1) {
@@ -123,9 +133,8 @@ public class ModalAgregarBibliotecarioController {
                 fotoBytes = Files.readAllBytes(imagenSeleccionada.toPath());
         } catch (IOException e) {
             e.printStackTrace();
-            // Mostrar una alerta si hay un error al leer el archivo
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al procesar la imagen", "Ocurrió un error al intentar leer el archivo de la imagen.");
-            return; // Detener el guardado si hay un problema con la imagen
+            return;
         }
 
         Usuario nuevo = new Usuario();
@@ -134,13 +143,13 @@ public class ModalAgregarBibliotecarioController {
         nuevo.setCorreo(correo);
         nuevo.setTelefono(telefono);
         nuevo.setPassword(contrasena);
-        nuevo.setEstado(estado);
+        nuevo.setEstado(estado); // Se asigna el estado por defecto
         nuevo.setDireccion(direccion);
         nuevo.setFoto(fotoBytes);
 
         Rol rol = new Rol();
         rol.setId(idRol);
-        nuevo.setRol(rol);
+        nuevo.setRol(rol); // Se asigna el rol por defecto
 
         try {
             new UsuarioDaoImpl().create(nuevo);

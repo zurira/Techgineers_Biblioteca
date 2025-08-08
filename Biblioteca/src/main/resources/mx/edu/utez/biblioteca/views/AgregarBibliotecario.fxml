@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
@@ -52,17 +51,10 @@
                 <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <PasswordField fx:id="txtContrasena" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-
-
-                <!--  Esta es Fila 3 -->
-                <Label text="Estado:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <TextField fx:id="txtEstado" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <!-- Se eliminó el campo de Rol -->
+                <!-- Se eliminó el campo de Estado -->
             </GridPane>
         </HBox>
-
-
 
         <!-- Este es el campo de Direccion -->
         <Label text="Dirección:"/>
