@@ -3,6 +3,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
@@ -19,6 +20,7 @@ public class AgregarUsuarioController {
     @FXML private DatePicker dpFechaNacimiento;
     @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;
+    @FXML private ImageView imgFotoPerfil;
 
     private File archivoFoto;
     private UsuarioBiblioteca usuarioExistente;
@@ -61,6 +63,10 @@ public class AgregarUsuarioController {
         {
             mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
             return;
+        }
+        if (this.archivoFoto == null) {
+            System.out.println("Error: La foto es obligatoria.");
+            return; // Esto detiene la ejecución del método.
         }
 
         try {
