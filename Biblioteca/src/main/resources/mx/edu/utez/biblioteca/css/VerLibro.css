@@ -1,0 +1,57 @@
+/* Estilo del contenedor principal */
+.anchor-pane {
+    -fx-background-color: #F1EFEF;
+    -fx-padding: 20px;
+}
+
+/* Estilo para los títulos y etiquetas */
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #5C504A;
+}
+
+.label.h1 {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Estilo para los campos de texto, que en este caso no son editables */
+.text-field {
+    -fx-background-color: #E2DAD6;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #5C504A; /* Color del texto para que se vea bien en el fondo gris */
+}
+
+/* Estilo para el área de texto */
+.text-area {
+    -fx-background-color: #E2DAD6;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #5C504A;
+    -fx-min-height: 80px;
+    -fx-wrap-text: true;
+}
+
+/* Estilo para el botón de "Cerrar" */
+.button {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #8D7A70;
+}
