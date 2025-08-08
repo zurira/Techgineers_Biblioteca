@@ -1,5 +1,4 @@
 package mx.edu.utez.biblioteca.model;
-import java.util.List;
 
 public class Libro {
     private int id;
@@ -8,35 +7,28 @@ public class Libro {
     private String resumen;
     private int anioPublicacion;
     private String portada;
-    private Autor autor;
+    private String estado; // Restaurado
     private Editorial editorial;
+    private Autor autor;
     private Categoria categoria;
-    private String estado;
-    private List<Autor> autores;
 
-    public Libro() {
-    }
+    // Constructores
+    public Libro() { }
 
-    public Libro(int id, String titulo, String resumen, int anioPublicacion, String urlPortada,
-                 Autor autor, Editorial editorial, String estado) {
+    public Libro(int id, String titulo, String isbn, String resumen, int anioPublicacion, String portada, String estado, Editorial editorial, Autor autor, Categoria categoria) {
         this.id = id;
         this.titulo = titulo;
+        this.isbn = isbn;
         this.resumen = resumen;
         this.anioPublicacion = anioPublicacion;
         this.portada = portada;
-        this.autor = autor;
+        this.estado = estado;
         this.editorial = editorial;
-        this.estado = estado;
+        this.autor = autor;
+        this.categoria = categoria;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -85,12 +77,12 @@ public class Libro {
         this.portada = portada;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Editorial getEditorial() {
@@ -101,6 +93,14 @@ public class Libro {
         this.editorial = editorial;
     }
 
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -109,25 +109,21 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public List<Autor> getAutores() {
-        return autores;
+    // Métodos para facilitar la visualización en la tabla (si se usan)
+    public String getEditorialNombre() {
+        return editorial != null ? editorial.getNombre() : "N/A";
     }
 
-    public void setAutores(List<Autor> autores) {
-        this.autores = autores;
+    public String getAutorNombre() {
+        return autor != null ? autor.getNombreCompleto() : "N/A";
+    }
+
+    public String getCategoriaNombre() {
+        return categoria != null ? categoria.getNombre() : "N/A";
     }
 
     @Override
     public String toString() {
-        return "Libro{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", resumen='" + resumen + '\'' +
-                ", anioPublicacion=" + anioPublicacion +
-                ", portada='" + portada + '\'' +
-                ", Editorial=" + editorial +
-                ", estado='" + estado + '\'' +
-                '}';
+        return titulo;
     }
 }

@@ -1,4 +1,4 @@
-/* General*/
+/* El diseño general de la vista de Administrador*/
 .root {
     -fx-font-family: "Arial", sans-serif;
     -fx-background-color: #ffffff;
@@ -121,44 +121,6 @@
     -fx-background-color: #726262;
 }
 
-/* Estilos para el ícono de actualización */
-.update-icon {
-    -fx-fill: #ffffff; /* El ícono será blanco */
-    -fx-font-size: 22px;
-}
-
-/* Estilos para el botón que contiene el ícono */
-.icon-button {
-    -fx-background-color: #A38F85;
-    -fx-border-color: #A38F85;
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
-}
-
-/* Estilo al pasar el mouse por encima del botón */
-.icon-button:hover {
-    -fx-background-color: #726262;
-}
-
-.btnlogout {
-    -fx-background-color: transparent;
-    -fx-padding: 5px;
-    -fx-cursor: hand;
-}
-
-.LabelTarifa{
-    -fx-font-size: 14px;
-    -fx-border-radius: 5px;
-    -fx-border-color: #A38F85;
-}
-
-.tarifa-label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #5C504A;
-    -fx-font-weight: bold;
-}
-
 .add-icon {
     -fx-fill: white;
 }
@@ -190,6 +152,7 @@
 .table-view .table-header-row {
     -fx-background-color:#cdc2bd ;
 }
+
 /*#EDE9E3*/
 .table-view .column-header .label {
     -fx-font-weight: bold;
@@ -242,7 +205,7 @@
 }
 
 .action-icon:hover {
-    -fx-fill: #007bff;
+    -fx-fill: #007bff; /* Azul on hover */
 }
 
 /* Scrollbar */
@@ -317,6 +280,7 @@
     -fx-fill: #CDC6C3; /* Cambia el color del icono al pasar el ratón */
 }
 
+/* Estilos para el label del estado de los Bibliotecarios */
 .status-label {
     -fx-background-radius: 10px;
     -fx-border-radius: 5px;
@@ -325,17 +289,13 @@
     -fx-alignment: center;
     -fx-padding: 3px 8px; /* Ajusta el padding para que se vea como un botón pequeño */
 }
-.status-activo {
-    -fx-background-color: #DCFCE7;
+
+.status-active {
+    -fx-background-color: #DCFCE7; /* Verde(activo) */
     -fx-text-fill: #4CAF50;
 }
 
-.status-retrasado {
-    -fx-background-color: #FEE2E2;
+.status-inactive {
+    -fx-background-color: #FEE2E2; /* Rojo(inactivo) */
     -fx-text-fill: #B34F4F;
-}
-
-.status-finalizado {
-    -fx-background-color: #eddea4;
-    -fx-text-fill: #e36414;
 }

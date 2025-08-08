@@ -17,6 +17,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mx.edu.utez.biblioteca.config.DBConnection;
+import mx.edu.utez.biblioteca.dao.impl.ConfiguracionDaoImpl;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -27,6 +29,8 @@ import mx.edu.utez.biblioteca.model.Libro;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -68,9 +72,15 @@ public class PrestamoController {
     @FXML
     private Label lblSinResultados;
     @FXML private Button btnlogout;
+    @FXML
+    private TableColumn<Prestamo, String> colMulta;
+    @FXML
+    private TextField txtTarifaMulta;
 
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
+    private ObservableList<Prestamo> listaPrestamosOriginal;
+    private double tarifaMultaActual;
 
     @FXML
     public void initialize() {
@@ -89,10 +99,17 @@ public class PrestamoController {
             tv.refresh();
             return sorted;
         });
+
+        try {
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            double tarifaActual = configDao.obtenerTarifaMulta();
+            txtTarifaMulta.setText(String.valueOf(tarifaActual));
+        } catch (SQLException e) {
+            mostrarAlerta("Error al cargar la tarifa actual: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void configurarColumnasTabla() {
-
         colNo.setCellFactory(column -> new TableCell<Prestamo, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -119,7 +136,6 @@ public class PrestamoController {
         colFechaLimite.setCellValueFactory(new PropertyValueFactory<>("fechaLimite"));
         colFechaReal.setCellValueFactory(new PropertyValueFactory<>("fechaReal"));
 
-        // Bloque de código para la columna 'Estado'
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         colEstado.setCellFactory(column -> {
             return new TableCell<Prestamo, String>() {
@@ -155,7 +171,19 @@ public class PrestamoController {
                 }
             };
         });
+        try {
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            tarifaMultaActual = configDao.obtenerTarifaMulta();
+        } catch (SQLException e) {
+            tarifaMultaActual = 0.0;
+            e.printStackTrace();
+        }
 
+        colMulta.setCellValueFactory(cellData -> {
+            Prestamo p = cellData.getValue();
+            double multa = p.calcularMulta(tarifaMultaActual);
+            return new SimpleStringProperty(String.format("$%.2f", multa));
+        });
         colAcciones.setCellValueFactory(param -> null);
         colAcciones.setCellFactory(param -> new TableCell<Prestamo, Void>() {
             private final Button editButton = new Button();
@@ -198,8 +226,17 @@ public class PrestamoController {
 
     private void cargarPrestamos() {
         try {
-            listaPrestamos = FXCollections.observableArrayList(prestamoDao.findAll());
+            listaPrestamosOriginal = FXCollections.observableArrayList(prestamoDao.findAll());
+            LocalDate hoy = LocalDate.now();
+            for (Prestamo p : listaPrestamosOriginal) {
+                double tarifa = tarifaMultaActual;
+                String nuevoEstado = p.calcularEstado(hoy, tarifa);
+                p.setEstado(nuevoEstado);
+            }
+
+            listaPrestamos = FXCollections.observableArrayList(listaPrestamosOriginal);
             tableViewPrestamos.setItems(listaPrestamos);
+            tableViewPrestamos.refresh();
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -212,15 +249,16 @@ public class PrestamoController {
 
     private void filtrarPrestamos(String filtro) {
         if (filtro == null || filtro.trim().isEmpty()) {
-            tableViewPrestamos.setItems(listaPrestamos);
+            tableViewPrestamos.setItems(listaPrestamosOriginal);
             lblSinResultados.setVisible(false);
+            tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
             return;
         }
 
         String filtroLower = filtro.toLowerCase();
         ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
 
-        for (Prestamo p : listaPrestamos) {
+        for (Prestamo p : listaPrestamosOriginal) {
             String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
             String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
             String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
@@ -232,6 +270,7 @@ public class PrestamoController {
 
         tableViewPrestamos.setItems(prestamosFiltrados);
         lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
+        tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
     }
 
     @FXML
@@ -355,7 +394,7 @@ public class PrestamoController {
                 Stage newStage = new Stage();
                 newStage.setTitle("Inicio de sesión");
                 newStage.setScene(new Scene(loginRoot));
-                newStage.setMaximized(true); //
+                newStage.setMaximized(true);
                 newStage.show();
             }
 
@@ -364,5 +403,46 @@ public class PrestamoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void actualizarTarifaMulta() {
+        try {
+            String textoTarifa = txtTarifaMulta.getText();
+            double nuevaTarifa = Double.parseDouble(textoTarifa);
+            if (nuevaTarifa < 0) {
+                mostrarAlerta("La tarifa no puede ser negativa.", Alert.AlertType.WARNING);
+                return;
+            }
+
+            ConfiguracionDaoImpl configDao = new ConfiguracionDaoImpl();
+            configDao.actualizarTarifaMulta(nuevaTarifa);
+            tarifaMultaActual = nuevaTarifa;
+
+            LocalDate hoy = LocalDate.now();
+            for (Prestamo p : listaPrestamos) {
+                double multa = p.calcularMulta(tarifaMultaActual);
+                p.setMulta(multa);
+                String nuevoEstado = p.calcularEstado(hoy, tarifaMultaActual);
+                p.setEstado(nuevoEstado);
+            }
+
+            tableViewPrestamos.refresh();
+
+            mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Por favor ingresa un número válido.", Alert.AlertType.ERROR);
+        } catch (SQLException e) {
+            mostrarAlerta("Error al guardar la tarifa: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

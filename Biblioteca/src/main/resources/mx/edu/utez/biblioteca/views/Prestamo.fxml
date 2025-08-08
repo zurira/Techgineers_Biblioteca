@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -106,27 +107,46 @@
                             <Insets right="20.0" />
                         </padding>
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+
+                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
                         <VBox.margin>
                             <Insets left="20.0" right="20.0" top="20.0" />
                         </VBox.margin>
                         <children>
+                            <!-- Barra de búsqueda -->
                             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
                                 <children>
                                     <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
-                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
                                 </children>
                             </HBox>
+
+                            <!-- Botón agregar préstamo -->
                             <Button fx:id="btnAddPrestamo" mnemonicParsing="false" onAction="#onAddPrestamo" prefHeight="40.0" styleClass="add-button" text="Agregar préstamo">
                                 <graphic>
                                     <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
                                 </graphic>
-                                <HBox.margin>
-                                    <Insets left="20.0" />
-                                </HBox.margin>
                             </Button>
+
+                            <HBox HBox.hgrow="ALWAYS" />
+
+                            <!-- Campo de tarifa y botón actualizar -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" prefHeight="40.0">
+                                <Label text="Tarifa por día de multa:" styleClass="tarifa-label"/>
+                                <TextField fx:id="txtTarifaMulta" promptText="Ej: 5.0" prefHeight="40.0" prefWidth="80.0" styleClass="LabelTarifa"/>
+                                <Button fx:id="btnActualizarTarifa" onAction="#actualizarTarifaMulta" styleClass="icon-button" prefHeight="40.0" prefWidth="40.0">
+                                    <graphic>
+                                        <FontIcon iconLiteral="fa-refresh" iconSize="19" styleClass="update-icon" />
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Actualizar tarifa" />
+                                    </tooltip>
+                                </Button>
+                            </HBox>
                         </children>
                     </HBox>
+
+
                     <Label styleClass="section-title" text="Información de préstamos">
                         <VBox.margin>
                             <Insets left="20.0" top="20.0" />
@@ -140,6 +160,7 @@
                             <TableColumn fx:id="colFechaPrestamo" prefWidth="120.0" text="Fecha préstamo" />
                             <TableColumn fx:id="colFechaLimite" prefWidth="120.0" text="Fecha límite" />
                             <TableColumn fx:id="colFechaReal" prefWidth="120.0" text="Fecha real" />
+                            <TableColumn fx:id="colMulta" prefWidth="100.0" text="Multa actual" />
                             <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
                             <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" />
                         </columns>

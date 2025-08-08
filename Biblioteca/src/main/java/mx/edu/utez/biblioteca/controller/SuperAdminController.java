@@ -21,11 +21,16 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.List;
 
 public class SuperAdminController {
-    @FXML private TableView<Usuario> adminTable;
-    @FXML private TextField searchField;
-    @FXML private Button addButton;
-    @FXML private Button logoutButton;
-    @FXML private Label lblSinResultados;
+    @FXML
+    private TableView<Usuario> adminTable;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Label lblSinResultados;
 
     private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
@@ -94,7 +99,6 @@ public class SuperAdminController {
             }
         });
 
-
         TableColumn<Usuario, String> colNombre = new TableColumn<>("Nombre completo");
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
@@ -110,18 +114,30 @@ public class SuperAdminController {
             return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
         });
 
+
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
+            private final Button viewButton = new Button();
 
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
+                FontIcon viewIcon = new FontIcon("fa-eye");
+
                 editButton.setGraphic(editIcon);
+                viewButton.setGraphic(viewIcon);
+
                 editButton.getStyleClass().add("action-button");
+                viewButton.getStyleClass().add("action-button");
 
                 editButton.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
                     onEditAdmin(usuario);
+                });
+
+                viewButton.setOnAction(event -> {
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+                    onViewAdmin(usuario);
                 });
             }
 
@@ -131,12 +147,13 @@ public class SuperAdminController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton);
+                    HBox buttons = new HBox(5, viewButton, editButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
             }
         });
+
 
         adminTable.getColumns().setAll(colId, colNombre, colUsuario, colCorreo, colEstado, colAcciones);
     }
@@ -177,7 +194,6 @@ public class SuperAdminController {
         lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
-    //MODIFIQUE ESO
     private void onEditAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
@@ -224,5 +240,24 @@ public class SuperAdminController {
 
     private void onDeleteAdmin(Usuario usuario) {
         // Eliminación desactivada por decisión de Tania
+    }
+
+    private void onViewAdmin(Usuario usuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalVerAdmin.fxml"));
+            Parent root = loader.load();
+
+            ModalVerAdminController controller = loader.getController();
+            controller.setUsuario(usuario);
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Detalles del administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -60,7 +60,7 @@ public class UsuarioController {
                         break;
                     case "ADMINISTRADOR":
                         System.out.println("Cargando vista de administrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/admin.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AdminDashboard.fxml"));
                         break;
                     case "BIBLIOTECARIO":
                         System.out.println("Cargando vista de bibliotecario");

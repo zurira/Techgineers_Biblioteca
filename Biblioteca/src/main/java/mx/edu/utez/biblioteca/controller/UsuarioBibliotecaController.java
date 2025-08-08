@@ -308,6 +308,9 @@ public class UsuarioBibliotecaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/VerUsuario.fxml"));
             Parent root = loader.load();
 
+            VerUsuarioController controller = loader.getController();
+            controller.cargarUsuario(usuario);
+
             Stage stage = new Stage();
             stage.setTitle("Verr Usuario");
             stage.setScene(new Scene(root));
