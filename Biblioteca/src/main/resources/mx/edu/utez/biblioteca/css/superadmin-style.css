@@ -316,3 +316,22 @@
     -fx-translate-x: 0;
     -fx-translate-y: 0;
 }
+
+.status-label {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-alignment: center;
+    -fx-padding: 3px 8px;
+}
+
+.status-active {
+    -fx-background-color: #DCFCE7;
+    -fx-text-fill: #4CAF50;
+}
+
+.status-inactive {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #B34F4F;
+}
