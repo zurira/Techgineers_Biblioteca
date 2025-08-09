@@ -93,16 +93,22 @@ public class ModalAgregarAdminController {
             return;
         }
 
+        String correo = txtCorreo.getText().trim();
+
+        //  Validación de dominio
+        if (!correo.endsWith("@administrador.com")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "Solo se permiten correos que terminen con '@administrador.com'.");
+            return;
+        }
+
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
-        String correo = txtCorreo.getText().trim();
         String telefono = txtTelefono.getText().trim();
         String contrasena = txtContrasena.getText();
         String direccion = txtDireccion.getText().trim();
         int idRol = obtenerIdRolAdministrador();
 
-        // Estado fijo como "Activo"
-        String estado = "S";
+        String estado = "S"; // Estado fijo como "Activo"
 
         InputStream fotoStream = null;
         try {
