@@ -305,7 +305,7 @@ public class SuperAdminController {
             e.printStackTrace();
         }
     }
-
+    //Modifique eso
     private void onToggleEstado(Usuario usuario) {
         try {
             String nuevoEstado = "S".equalsIgnoreCase(usuario.getEstado()) ? "N" : "S";
