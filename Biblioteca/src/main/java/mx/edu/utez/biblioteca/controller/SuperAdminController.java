@@ -122,7 +122,7 @@ public class SuperAdminController {
             return new SimpleStringProperty(textoEstado);
         });
 
-// 2. Aplicar estilos visuales
+// 2. Aplique estilos visuales
         colEstado.setCellFactory(column -> new TableCell<Usuario, String>() {
             private final Label estadoLabel = new Label();
 
