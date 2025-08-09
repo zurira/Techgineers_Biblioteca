@@ -32,15 +32,21 @@ public class SuperAdminController {
     @FXML
     private Label lblSinResultados;
 
-
     private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-
-
-
         configurarColumnas();
+
+        //  Distribución proporcional de columnas
+        adminTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        adminTable.getColumns().get(0).setMaxWidth(1f * Integer.MAX_VALUE * 5);   // No.
+        adminTable.getColumns().get(1).setMaxWidth(1f * Integer.MAX_VALUE * 20);  // Nombre completo
+        adminTable.getColumns().get(2).setMaxWidth(1f * Integer.MAX_VALUE * 15);  // Usuario
+        adminTable.getColumns().get(3).setMaxWidth(1f * Integer.MAX_VALUE * 25);  // Correo
+        adminTable.getColumns().get(4).setMaxWidth(1f * Integer.MAX_VALUE * 10);  // Estado
+        adminTable.getColumns().get(5).setMaxWidth(1f * Integer.MAX_VALUE * 25);  // Acciones
+
         cargarAdministradores();
 
         searchField.textProperty().addListener((obs, oldValue, newValue) -> filtrarAdmin(newValue));
@@ -84,6 +90,7 @@ public class SuperAdminController {
     }
 
     private void configurarColumnas() {
+        // Columna de índice
         TableColumn<Usuario, Void> colId = new TableColumn<>("No.");
         colId.setCellFactory(column -> new TableCell<Usuario, Void>() {
             @Override
@@ -107,10 +114,40 @@ public class SuperAdminController {
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
         TableColumn<Usuario, String> colEstado = new TableColumn<>("Estado");
+
+// 1. Convertir "S"/"N" a "Activo"/"Inactivo"
         colEstado.setCellValueFactory(cellData -> {
-            String estado = cellData.getValue().getEstado();
-            return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
+            String estado = cellData.getValue().getEstado(); // ← Aquí obtienes "S" o "N"
+            String textoEstado = estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo";
+            return new SimpleStringProperty(textoEstado);
         });
+
+// 2. Aplicar estilos visuales
+        colEstado.setCellFactory(column -> new TableCell<Usuario, String>() {
+            private final Label estadoLabel = new Label();
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    estadoLabel.setText(item);
+                    estadoLabel.getStyleClass().setAll("status-label");
+
+                    if (item.equalsIgnoreCase("Activo")) {
+                        estadoLabel.getStyleClass().add("status-active");
+                    } else {
+                        estadoLabel.getStyleClass().add("status-inactive");
+                    }
+
+                    setGraphic(estadoLabel);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+
+
 
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
@@ -132,18 +169,15 @@ public class SuperAdminController {
                 } else {
                     Usuario usuario = getTableView().getItems().get(getIndex());
 
-                    // Ícono del lápiz
                     FontIcon editIcon = new FontIcon("fa-pencil");
                     editIcon.getStyleClass().add("action-icon");
                     editButton.setGraphic(editIcon);
 
-                    // Ícono del ojo centrado
                     FontIcon viewIcon = new FontIcon("fa-eye");
                     viewIcon.getStyleClass().add("action-icon");
                     viewButton.getStyleClass().setAll("action-button", "eye-button");
                     viewButton.setGraphic(viewIcon);
 
-                    // Ícono del switch
                     FontIcon switchIcon;
                     if ("S".equalsIgnoreCase(usuario.getEstado())) {
                         switchIcon = new FontIcon("fa-toggle-on");
@@ -155,7 +189,6 @@ public class SuperAdminController {
                     switchIcon.getStyleClass().add("action-icon");
                     switchButton.setGraphic(switchIcon);
 
-                    // Eventos funcionales
                     editButton.setOnAction(event -> onEditAdmin(usuario));
                     viewButton.setOnAction(event -> onViewAdmin(usuario));
                     switchButton.setOnAction(event -> onToggleEstado(usuario));
