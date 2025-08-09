@@ -115,7 +115,7 @@ public class SuperAdminController {
 
         TableColumn<Usuario, String> colEstado = new TableColumn<>("Estado");
 
-// 1. Convertir "S"/"N" a "Activo"/"Inactivo"
+// 1. Agregue esto convertir "S"/"N" a "Activo"/"Inactivo"
         colEstado.setCellValueFactory(cellData -> {
             String estado = cellData.getValue().getEstado(); // ← Aquí obtienes "S" o "N"
             String textoEstado = estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo";
