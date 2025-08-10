@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Comparator;
 
 public class PrestamoController {
 
@@ -71,7 +72,8 @@ public class PrestamoController {
 
     @FXML
     private Label lblSinResultados;
-    @FXML private Button btnlogout;
+    @FXML
+    private Button btnlogout;
     @FXML
     private TableColumn<Prestamo, String> colMulta;
     @FXML
@@ -227,6 +229,9 @@ public class PrestamoController {
     private void cargarPrestamos() {
         try {
             listaPrestamosOriginal = FXCollections.observableArrayList(prestamoDao.findAll());
+            // Ordenar la lista por ID de forma descendente para que los más nuevos aparezcan primero.
+            listaPrestamosOriginal.sort(Comparator.comparing(Prestamo::getId).reversed());
+
             LocalDate hoy = LocalDate.now();
             for (Prestamo p : listaPrestamosOriginal) {
                 double tarifa = tarifaMultaActual;
@@ -251,7 +256,7 @@ public class PrestamoController {
         if (filtro == null || filtro.trim().isEmpty()) {
             tableViewPrestamos.setItems(listaPrestamosOriginal);
             lblSinResultados.setVisible(false);
-            tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
+            tableViewPrestamos.refresh();
             return;
         }
 
@@ -270,7 +275,7 @@ public class PrestamoController {
 
         tableViewPrestamos.setItems(prestamosFiltrados);
         lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
-        tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
+        tableViewPrestamos.refresh();
     }
 
     @FXML
