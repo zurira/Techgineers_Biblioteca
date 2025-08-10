@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Ejemplar {
     private int idEjemplar;
+    private int idLibro;
     private String codigo;
     private String titulo;
     private String estado;
@@ -28,6 +29,14 @@ public class Ejemplar {
 
     public void setIdEjemplar(int idEjemplar) {
         this.idEjemplar = idEjemplar;
+    }
+
+    public int getIdLibro() {
+        return idLibro;
+    }
+
+    public void setIdLibro(int idLibro) {
+        this.idLibro = idLibro;
     }
 
     public String getCodigo() {

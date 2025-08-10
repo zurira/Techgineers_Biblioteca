@@ -4,6 +4,9 @@ import mx.edu.utez.biblioteca.config.DBConnection;
 import mx.edu.utez.biblioteca.model.Ejemplar;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,33 +14,33 @@ import javafx.collections.ObservableList;
 
 public class EjemplarDaoImpl {
 
-    public boolean insertarEjemplar(Ejemplar ejemplar, int idLibro) {
-        if (existeCodigo(ejemplar.getCodigo())) {
-            System.err.println("Código ya existente: " + ejemplar.getCodigo());
-            return false;
+    public List<Ejemplar> findByLibro(int idLibro) throws SQLException {
+        List<Ejemplar> ejemplares = new ArrayList<>();
+        String sql = "SELECT ID_EJEMPLAR, ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION FROM EJEMPLAR WHERE ID_LIBRO = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idLibro);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ejemplar ejemplar = new Ejemplar();
+                    ejemplar.setIdEjemplar(rs.getInt("ID_EJEMPLAR"));
+                    // Ahora se asigna el ID del libro al objeto ejemplar que se está creando
+                    ejemplar.setIdLibro(rs.getInt("ID_LIBRO"));
+                    ejemplar.setCodigo(rs.getString("CODIGO_LOCAL"));
+                    ejemplar.setEstado(rs.getString("ESTADO"));
+                    ejemplar.setUbicacion(rs.getString("UBICACION"));
+                    ejemplares.add(ejemplar);
+                }
+            }
         }
-
-        String sql = "INSERT INTO EJEMPLAR (ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION) " +
-                "VALUES (?, ?, ?, ?)";
-
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, idLibro);
-            pst.setString(2, ejemplar.getCodigo());
-            pst.setString(3, ejemplar.getEstado()); // Usar el nuevo getter para el estado
-            pst.setString(4, ejemplar.getUbicacion());
-
-            return pst.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return ejemplares;
     }
 
     public boolean insertarVariosEjemplares(int idLibro, int cantidad, String ubicacion) {
-        String sql = "INSERT INTO ejemplar (ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO EJEMPLAR (ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -91,9 +94,6 @@ public class EjemplarDaoImpl {
         return 0;
     }
 
-    private String generarCodigoEjemplar(int idLibro, int numero) {
-        return String.format("LIB%04d-%03d", idLibro, numero);
-    }
 
     public boolean existeCodigo(String codigo) {
         String sql = "SELECT COUNT(*) FROM EJEMPLAR WHERE CODIGO_LOCAL = ?";
@@ -158,18 +158,4 @@ public class EjemplarDaoImpl {
         }
     }
 
-    public int contarEjemplaresPorLibro(int idLibro) {
-        String sql = "SELECT COUNT(*) FROM EJEMPLAR WHERE ID_LIBRO = ?";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setInt(1, idLibro);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 }
