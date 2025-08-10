@@ -49,24 +49,45 @@ public class EditarUsuarioController {
         cargarFotografia(usuario.getFotografia());
     }
 
+    // Método para cargar la fotografía desde los bytes y manejar errores
     private void cargarFotografia(byte[] fotoBytes) {
+        Image imageToLoad = null; // Variable temporal para la imagen
+
         if (fotoBytes != null && fotoBytes.length > 0) {
             try {
-                Image image = new Image(new ByteArrayInputStream(fotoBytes));
-                imgFotoPerfil.setImage(image);
-                this.fotografiaBytes = fotoBytes; // Guardar los bytes de la foto original
+                // Intenta crear la imagen desde los bytes del usuario
+                imageToLoad = new Image(new ByteArrayInputStream(fotoBytes));
+                // Opcional: imprimir para depuración
+                System.out.println("Fotografía de usuario cargada correctamente.");
             } catch (Exception e) {
+                // Si hay un error, lo imprime y la variable imageToLoad se queda en null
                 e.printStackTrace();
-                imgFotoPerfil.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
+                System.err.println("Error al convertir la fotografía del usuario. Se usará una imagen por defecto.");
             }
+        }
+
+        // Si imageToLoad es null (porque no había foto o hubo un error), carga el placeholder.
+        if (imageToLoad != null) {
+            imgFotoPerfil.setImage(imageToLoad);
+            this.fotografiaBytes = fotoBytes;
         } else {
-            imgFotoPerfil.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
+            try {
+                // Intenta cargar la imagen por defecto
+                Image defaultImage = new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png"));
+                imgFotoPerfil.setImage(defaultImage);
+                this.fotografiaBytes = null; // Reinicia el campo de bytes
+                System.out.println("Imagen por defecto cargada.");
+            } catch (Exception e) {
+                // Si la imagen por defecto también falla, lo imprime y no pone ninguna imagen
+                System.err.println("Error fatal: No se pudo cargar la imagen por defecto. " + e.getMessage());
+                imgFotoPerfil.setImage(null);
+                this.fotografiaBytes = null;
+            }
         }
     }
 
     @FXML
     private void onGuardar() {
-        // ... (Tu código de validación, sin cambios) ...
         if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty() ||
                 txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             mostrarAlerta("Campos obligatorios", "Todos los campos son requeridos.");
