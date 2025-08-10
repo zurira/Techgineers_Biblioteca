@@ -29,14 +29,18 @@ public class EditarLibroController implements Initializable {
     @FXML private Button btnCargarUrl;
     @FXML private Button btnGuardar;
     @FXML private Button btnCancelar;
+    @FXML private Spinner<Integer> spinnerCantidadEjemplares;
+    @FXML private TextField txtUbicacion;
 
     // Instancias de los DAOs
     private LibroDaoImpl libroDao = new LibroDaoImpl();
     private AutorDaoImpl autorDao = new AutorDaoImpl();
     private EditorialDaoImpl editorialDao = new EditorialDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
     private Libro libroActual;
+    private Ejemplar ejemplarActual;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -179,7 +183,9 @@ public class EditarLibroController implements Initializable {
                 cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
                 cmbCategoria.getSelectionModel().isEmpty() ||
-                txtAnioPublicacion.getText().trim().isEmpty()) {
+                txtAnioPublicacion.getText().trim().isEmpty() ||
+                txtUrlPortada.getText().trim().isEmpty() ||
+                txtUbicacion.getText().trim().isEmpty()){
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos obligatorios del formulario.");
             return;
@@ -204,6 +210,7 @@ public class EditarLibroController implements Initializable {
             libroActual.setCategoria(cmbCategoria.getValue());
             libroActual.setAnioPublicacion(anioPublicacion);
             libroActual.setPortada(txtUrlPortada.getText().trim());
+            ejemplarActual.setUbicacion(txtUbicacion.getText().trim());
             // El estado ya no se actualiza desde el formulario.
 
             libroDao.update(libroActual);
@@ -221,6 +228,7 @@ public class EditarLibroController implements Initializable {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al actualizar el libro.", e.getMessage());
         }
     }
+
 
     @FXML
     private void onCancelar() {

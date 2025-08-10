@@ -62,9 +62,17 @@
                     <Label text="Año de Publicación:*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <TextField fx:id="txtAnioPublicacion" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
+                    <Label text="Ubicación:*" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <TextField fx:id="txtUbicacion" promptText="Ubicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+
+                    <!-- Cantidad de ejemplares -->
+                    <Label text="Cantidad de ejemplares:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Spinner fx:id="spinnerCantidadEjemplares" min="1" max="50" initialValue="1" styleClass="spinner" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+
                     <!-- Campo de Sinopsis -->
-                    <Label text="Sinopsis:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                    <TextArea fx:id="txtSinopsis" prefHeight="80.0" wrapText="true" styleClass="text-area" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="7" VBox.vgrow="ALWAYS" />
+                    <Label text="Sinopsis:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <TextArea fx:id="txtSinopsis" prefHeight="80.0" wrapText="true" styleClass="text-area" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="9" VBox.vgrow="ALWAYS" />
                 </GridPane>
             </HBox>
 

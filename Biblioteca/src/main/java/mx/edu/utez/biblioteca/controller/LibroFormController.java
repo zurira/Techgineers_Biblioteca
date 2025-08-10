@@ -293,10 +293,13 @@ public class LibroFormController {
                 libroDao.create(libro); // El ID se asigna al objeto 'libro' aquí
                 int cantidadEjemplares = spinnerCantidadEjemplares.getValue();
 
-                // Insertar ejemplares si la cantidad es mayor a 0
+// Insertar ejemplares si la cantidad es mayor a 0
                 if (cantidadEjemplares > 0) {
-                    // Se asume que 'ejemplarDao' es una variable de instancia ya inicializada
-                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares, ejemplar);
+                    // Obtenemos la ubicacion como un String directamente del campo de texto
+                    String ubicacion = txtUbicacion.getText().trim();
+
+                    // Llama al método del DAO pasando el id del libro, la cantidad y la ubicacion (String)
+                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares, ubicacion);
                     if (insertExito) {
                         mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro y " + cantidadEjemplares + " ejemplares registrados correctamente.");
                     } else {
