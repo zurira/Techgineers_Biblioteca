@@ -279,18 +279,29 @@ public class LibroFormController {
             libro.setAnioPublicacion(anioPublicacion); // Usamos la variable ya parseada
             libro.setPortada(txtUrlPortada.getText().trim());
 
-            // Asignar el estado por defecto "ACTIVO" al crear un nuevo libro
+            // Manejar creación y actualización por separado
             if (libroEditado == null) {
+                // Es un libro nuevo:
                 libro.setEstado("ACTIVO");
-            }
+                libroDao.create(libro); // El ID se asigna al objeto 'libro' aquí
+                int cantidadEjemplares = spinnerCantidadEjemplares.getValue();
 
-            if (libroEditado != null) {
+                // Insertar ejemplares si la cantidad es mayor a 0
+                if (cantidadEjemplares > 0) {
+                    // Se asume que 'ejemplarDao' es una variable de instancia ya inicializada
+                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares);
+                    if (insertExito) {
+                        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro y " + cantidadEjemplares + " ejemplares registrados correctamente.");
+                    } else {
+                        mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Libro registrado, pero hubo un problema al guardar los ejemplares.");
+                    }
+                } else {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro registrado correctamente.");
+                }
+            } else {
+                // Es una edición:
                 libroDao.update(libro);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
-            } else {
-                libroDao.create(libro);
-                agregado = true;
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro registrado correctamente.");
             }
 
             cerrarModal();
