@@ -4,84 +4,81 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.TextArea?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.ModalAgregarAdminController"
-            prefWidth="920" prefHeight="520"
+            prefWidth="920" prefHeight="570"
             style="-fx-background-color: #F1EFEF;">
 
-    <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
+    <VBox spacing="15" layoutX="20" layoutY="20" prefWidth="880">
+        <!-- Título -->
         <Label text="Agregar administrador" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         <Label text="Ingresa la información correctamente" style="-fx-font-size: 14px;"/>
 
-        <HBox spacing="20">
+        <HBox spacing="30">
             <!-- Imagen y botón -->
             <VBox spacing="10">
-                <ImageView fx:id="imageView" fitWidth="150" fitHeight="150" />
+                <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, #A38F85, 8, 0.3, 0, 2);"/>
                 <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
                         style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
-                        prefWidth="150"/>
+                        prefWidth="160"/>
             </VBox>
 
-            <!-- Campos del formulario -->
-            <GridPane hgap="15" vgap="15">
+            <!-- Campos del formulario en dos columnas -->
+            <GridPane hgap="20" vgap="20" prefWidth="660">
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="33"/>
-                    <ColumnConstraints percentWidth="33"/>
-                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
                 </columnConstraints>
 
                 <!-- Fila 1 -->
                 <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                           style="-fx-pref-height: 36;"/>
 
                 <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-                <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                           style="-fx-pref-height: 36;"/>
 
                 <!-- Fila 2 -->
-                <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <Label text="Teléfono:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtTelefono" GridPane.columnIndex="0" GridPane.rowIndex="3"
+                           style="-fx-pref-height: 36;"/>
 
-                <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="180">
-                    <!-- Campo de contraseña oculta -->
-                    <PasswordField fx:id="txtContrasena" prefWidth="180" style="-fx-padding: 0 30 0 5;"/>
+                <Label text="Usuario:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtUsuario" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                           style="-fx-pref-height: 36;"/>
 
-                    <!-- Campo de contraseña visible -->
-                    <TextField fx:id="txtContrasenaVisible" prefWidth="180" visible="false" managed="false"
-                               style="-fx-padding: 0 30 0 5;"/>
-
-                    <!-- Botón del ojo dentro del campo -->
+                <!-- Fila 3 -->
+                <Label text="Contraseña:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <StackPane GridPane.columnIndex="0" GridPane.rowIndex="5">
+                    <PasswordField fx:id="txtContrasena" style="-fx-padding: 0 30 0 5; -fx-pref-height: 36;"/>
+                    <TextField fx:id="txtContrasenaVisible" visible="false" managed="false"
+                               style="-fx-padding: 0 30 0 5; -fx-pref-height: 36;"/>
                     <Button fx:id="btnTogglePassword"
                             style="-fx-background-color: transparent; -fx-cursor: hand;"
-                            alignment="CENTER_RIGHT"
-                            maxHeight="20"
-                            prefWidth="30"
-                            StackPane.alignment="CENTER_RIGHT"
-                            translateX="-5">
+                            StackPane.alignment="CENTER_RIGHT" translateX="-5">
                         <graphic>
                             <FontIcon iconLiteral="fa-eye" iconSize="16"/>
                         </graphic>
                     </Button>
                 </StackPane>
 
-                <!-- Campo Rol -->
-                <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <Label text="Rol:*" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <TextField fx:id="txtRol" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                           style="-fx-pref-height: 36;"/>
             </GridPane>
         </HBox>
 
         <!-- Dirección -->
         <Label text="Dirección:"/>
         <TextArea fx:id="txtDireccion"
-                  prefWidth="400"
+                  prefWidth="850"
                   prefHeight="80"
-                  wrapText="true"/>
+                  wrapText="true"
+                  style="-fx-background-color: white; -fx-border-color: #A38F85; -fx-border-radius: 5; -fx-pref-height: 80;"/>
 
         <!-- Botones -->
         <HBox spacing="20" alignment="CENTER_RIGHT">
