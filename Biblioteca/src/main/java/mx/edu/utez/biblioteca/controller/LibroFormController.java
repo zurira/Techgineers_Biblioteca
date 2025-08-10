@@ -24,6 +24,7 @@ public class LibroFormController {
     @FXML private ComboBox<Categoria> cmbCategoria;
     @FXML private TextField txtAnioPublicacion;
     @FXML private TextField txtUrlPortada;
+    @FXML private Spinner<Integer> spinnerCantidadEjemplares;
 
     @FXML private ImageView imageView;
     @FXML private Button btnCargarUrl;
@@ -38,6 +39,7 @@ public class LibroFormController {
     private AutorDaoImpl autorDao = new AutorDaoImpl();
     private EditorialDaoImpl editorialDao = new EditorialDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
     private Libro libroEditado;
     private boolean agregado = false;
