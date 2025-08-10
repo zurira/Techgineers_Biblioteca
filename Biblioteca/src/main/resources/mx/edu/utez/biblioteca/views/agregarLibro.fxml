@@ -66,6 +66,8 @@
                         </graphic>
                     </Button>
                 </HBox>
+                <Label text="Cantidad de ejemplares:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <Spinner fx:id="spinnerCantidadEjemplares" min="1" max="50" initialValue="1" GridPane.columnIndex="0" GridPane.rowIndex="05"/>
             </GridPane>
         </HBox>
 
