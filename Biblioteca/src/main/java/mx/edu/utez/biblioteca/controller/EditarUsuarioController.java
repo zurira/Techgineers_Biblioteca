@@ -86,6 +86,7 @@ public class EditarUsuarioController {
         }
     }
 
+
     @FXML
     private void onGuardar() {
         if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty() ||
