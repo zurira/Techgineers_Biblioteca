@@ -11,6 +11,7 @@ import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public class AgregarUsuarioController {
 
@@ -23,6 +24,7 @@ public class AgregarUsuarioController {
     @FXML private Button btnCancelar;
     @FXML private ImageView imgFotoPerfil;
 
+    private byte[] fotografiaBytes; //guardar bytes de la foto
     private File archivoFoto;
     private UsuarioBiblioteca usuarioExistente;
     private boolean guardado = false;
@@ -46,7 +48,7 @@ public class AgregarUsuarioController {
     private void seleccionarFoto() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Seleccionar Fotografía");
-        chooser.getExtensionFilters().add(
+        chooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png")
         );
         File selected = chooser.showOpenDialog(btnCancelar.getScene().getWindow());
@@ -55,6 +57,11 @@ public class AgregarUsuarioController {
             btnSeleccionarImagen.setText(selected.getName());
 
             try {
+                // Leer el archivo en un array de bytes
+                FileInputStream fis = new FileInputStream(selected);
+                this.fotografiaBytes = new byte[(int) selected.length()];
+                fis.read(this.fotografiaBytes);
+                fis.close();
                 Image image = new Image(selected.toURI().toString());
 
                 imgFotoPerfil.setImage(image);
