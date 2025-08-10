@@ -16,7 +16,7 @@ public class EjemplarDaoImpl {
 
     public List<Ejemplar> findByLibro(int idLibro) throws SQLException {
         List<Ejemplar> ejemplares = new ArrayList<>();
-        String sql = "SELECT ID_EJEMPLAR, ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION FROM EJEMPLAR WHERE ID_LIBRO = ?";
+        String sql = "SELECT ID, ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION FROM EJEMPLAR WHERE ID_LIBRO = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -26,7 +26,7 @@ public class EjemplarDaoImpl {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Ejemplar ejemplar = new Ejemplar();
-                    ejemplar.setIdEjemplar(rs.getInt("ID_EJEMPLAR"));
+                    ejemplar.setIdEjemplar(rs.getInt("ID"));
                     // Ahora se asigna el ID del libro al objeto ejemplar que se está creando
                     ejemplar.setIdLibro(rs.getInt("ID_LIBRO"));
                     ejemplar.setCodigo(rs.getString("CODIGO_LOCAL"));

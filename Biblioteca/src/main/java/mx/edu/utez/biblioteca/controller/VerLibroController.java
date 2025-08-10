@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -12,10 +13,13 @@ import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Libro;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 
-public class VerLibroController {
+public class VerLibroController implements Initializable{
 
     @FXML private ImageView imgPortada;
     @FXML private TextField txtIsbn;
@@ -32,6 +36,14 @@ public class VerLibroController {
     @FXML private TableColumn<Ejemplar, String> colEstado;
 
     private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Vincula las columnas de la tabla a los atributos del objeto Ejemplar
+        colCodigoLocal.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+    }
 
     /**
      * Este método recibe un objeto Libro y lo utiliza para popular todos los campos
@@ -53,6 +65,9 @@ public class VerLibroController {
 
             // Llenar la sinopsis con manejo de nulos
             txtSinopsis.setText(libro.getResumen() != null ? libro.getResumen() : "Sin sinopsis.");
+
+            //Se cargan los ejemplares del libro seleccionado
+            cargarEjemplares(libro.getId());
 
             // Cargar la imagen de la portada desde la URL con manejo de nulos
             String urlPortada = libro.getPortada();
