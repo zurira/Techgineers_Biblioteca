@@ -17,10 +17,10 @@
 
     <!-- Foto -->
     <VBox layoutX="30" layoutY="70">
-        <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"/>
-        <ImageView fx:id="imgFotoPerfil" fitWidth="160" fitHeight="160" preserveRatio="true"/>
+        <ImageView fx:id="imgFotoPerfil" fitWidth="200" fitHeight="200" preserveRatio="true"/>
         <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
                 onAction="#seleccionarFoto" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+
     </VBox>
 
     <!-- Título del modal -->
