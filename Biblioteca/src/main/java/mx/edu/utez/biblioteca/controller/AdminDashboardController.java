@@ -96,6 +96,7 @@ public class AdminDashboardController {
     public void initialize() {
         libroDao = new LibroDaoImpl();
         configurarColumnasTabla();
+        lblSinResultados.setVisible(false);
         tableViewLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         cargarLibros();
 

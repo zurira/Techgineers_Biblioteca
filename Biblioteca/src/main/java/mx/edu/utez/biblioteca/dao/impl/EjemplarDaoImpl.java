@@ -43,38 +43,59 @@ public class EjemplarDaoImpl {
 
     public boolean insertarVariosEjemplares(int idLibro, int cantidad, String ubicacion) {
         String sql = "INSERT INTO EJEMPLAR (ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        Connection conn = null; // Declarar la conexión fuera del try-with-resources para el rollback
+        try {
+            conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
 
             conn.setAutoCommit(false);
-
-            // Obtener el último número de ejemplar existente y empezar a partir de ahí
             int ultimoNumero = obtenerUltimoNumeroEjemplar(idLibro);
+
+            // Verifica si ya existe un ejemplar de reserva para este libro
+            boolean existeReserva = existeEjemplarReserva(idLibro);
 
             for (int i = 1; i <= cantidad; i++) {
                 int numeroNuevo = ultimoNumero + i;
-                // Genera el código local con un formato personalizado
                 String codigoLocal = String.format("LIB%04d-%d", idLibro, numeroNuevo);
 
                 ps.setInt(1, idLibro);
                 ps.setString(2, codigoLocal);
-                ps.setString(3, "DISPONIBLE"); // Se asigna el valor por defecto directamente
                 ps.setString(4, ubicacion);
+
+                // Si no hay reserva y es el primer ejemplar a insertar, lo marcamos como reserva
+                if (!existeReserva && i == 1) {
+                    ps.setString(3, "RESERVA");
+                    existeReserva = true; // Ya no insertaremos más reservas
+                } else {
+                    ps.setString(3, "DISPONIBLE");
+                }
                 ps.addBatch();
             }
 
             ps.executeBatch();
             conn.commit();
-
             System.out.println("Se insertaron exitosamente " + cantidad + " ejemplares para el libro con ID: " + idLibro);
-
             return true;
 
         } catch (SQLException e) {
             System.err.println("Error al insertar ejemplares: " + e.getMessage());
-            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             return false;
+        } finally {
+            // Asegúrate de cerrar la conexión si es necesario
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
