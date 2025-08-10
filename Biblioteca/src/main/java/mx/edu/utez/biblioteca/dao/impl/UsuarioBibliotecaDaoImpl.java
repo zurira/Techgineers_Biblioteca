@@ -155,30 +155,6 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
         }
     }
 
-    public void update(UsuarioBiblioteca usuario, File fotoFile) throws Exception {
-        String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ?, FOTOGRAFIA = ? WHERE ID = ?";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, usuario.getNombre());
-            ps.setDate(2, Date.valueOf(usuario.getFechaNacimiento()));
-            ps.setString(3, usuario.getCorreo());
-            ps.setString(4, usuario.getTelefono());
-            ps.setString(5, usuario.getDireccion());
-            ps.setString(6, usuario.getEstado());
-
-            if (fotoFile != null) {
-                try (FileInputStream fis = new FileInputStream(fotoFile)) {
-                    ps.setBinaryStream(7, fis, (int) fotoFile.length());
-                }
-            } else {
-                ps.setNull(7, Types.BLOB); // Si no se selecciona nueva foto, se pone NULL
-            }
-
-            ps.setInt(8, usuario.getId());
-            ps.executeUpdate();
-        }
-    }
-
     @Override
     public void delete(int id) throws Exception {
         String query = "DELETE FROM USUARIO_BIBLIOTECA WHERE ID = ?";
