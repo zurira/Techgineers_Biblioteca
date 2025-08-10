@@ -22,38 +22,34 @@
                 <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"
                            style="-fx-effect: dropshadow(gaussian, #A38F85, 8, 0.3, 0, 2);"/>
                 <Button text="Seleccionar archivo" fx:id="btnSeleccionarImagen"
-                        style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;"
+                        style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;"
                         prefWidth="160"/>
             </VBox>
 
-            <!-- Campos del formulario en dos columnas -->
+            <!-- Campos del formulario en 2 filas × 3 columnas -->
             <GridPane hgap="20" vgap="20" prefWidth="660">
                 <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
                     <ColumnConstraints hgrow="ALWAYS"/>
                     <ColumnConstraints hgrow="ALWAYS"/>
                 </columnConstraints>
 
                 <!-- Fila 1 -->
                 <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1"
-                           style="-fx-pref-height: 36;"/>
+                <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-pref-height: 36;"/>
 
                 <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                           style="-fx-pref-height: 36;"/>
+                <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-pref-height: 36;"/>
+
+                <Label text="Teléfono:*" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-pref-height: 36;"/>
 
                 <!-- Fila 2 -->
-                <Label text="Teléfono:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtTelefono" GridPane.columnIndex="0" GridPane.rowIndex="3"
-                           style="-fx-pref-height: 36;"/>
+                <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-pref-height: 36;"/>
 
-                <Label text="Usuario:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtUsuario" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                           style="-fx-pref-height: 36;"/>
-
-                <!-- Fila 3 -->
-                <Label text="Contraseña:*" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <StackPane GridPane.columnIndex="0" GridPane.rowIndex="5">
+                <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <PasswordField fx:id="txtContrasena" style="-fx-padding: 0 30 0 5; -fx-pref-height: 36;"/>
                     <TextField fx:id="txtContrasenaVisible" visible="false" managed="false"
                                style="-fx-padding: 0 30 0 5; -fx-pref-height: 36;"/>
@@ -66,9 +62,8 @@
                     </Button>
                 </StackPane>
 
-                <Label text="Rol:*" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                <TextField fx:id="txtRol" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                           style="-fx-pref-height: 36;"/>
+                <Label text="Rol:*" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtRol" GridPane.columnIndex="2" GridPane.rowIndex="3" style="-fx-pref-height: 36;"/>
             </GridPane>
         </HBox>
 
