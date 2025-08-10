@@ -210,14 +210,31 @@ public class EditarLibroController implements Initializable {
             libroActual.setCategoria(cmbCategoria.getValue());
             libroActual.setAnioPublicacion(anioPublicacion);
             libroActual.setPortada(txtUrlPortada.getText().trim());
-            ejemplarActual.setUbicacion(txtUbicacion.getText().trim());
             // El estado ya no se actualiza desde el formulario.
 
             libroDao.update(libroActual);
 
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
-            cerrarModal();
+            // Se verifica si se deben insertar nuevos ejemplares
+            int cantidad = spinnerCantidadEjemplares.getValue();
+            String ubicacion = txtUbicacion.getText().trim();
 
+            if (cantidad > 0) {
+                if (ubicacion.isEmpty()) {
+                    mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "La ubicación no puede estar vacía si deseas agregar ejemplares.");
+                    return;
+                }
+
+                boolean exito = ejemplarDao.insertarVariosEjemplares(libroActual.getId(), cantidad, ubicacion);
+                if (exito) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado y se agregaron " + cantidad + " ejemplares.");
+                } else {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "Libro actualizado, pero hubo un problema al agregar los ejemplares.");
+                }
+            } else {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
+            }
+
+            cerrarModal();
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Año de Publicación Inválido", "El año de publicación debe ser un número válido (ej. 2023).");
         } catch (SQLException e) {

@@ -75,14 +75,17 @@ public class EjemplarDaoImpl {
 
     private int obtenerUltimoNumeroEjemplar(int idLibro) throws SQLException {
         String sql = "SELECT MAX(TO_NUMBER(SUBSTR(CODIGO_LOCAL, INSTR(CODIGO_LOCAL, '-') + 1))) AS ULTIMO " +
-                "FROM EJEMPLAR WHERE ID_LIBRO = ?";
+                "FROM EJEMPLAR WHERE ID_LIBRO = ? " +
+                "AND INSTR(CODIGO_LOCAL, '-') > 0 AND REGEXP_LIKE(SUBSTR(CODIGO_LOCAL, INSTR(CODIGO_LOCAL, '-') + 1), '^[0-9]+$')";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idLibro);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("ULTIMO");
+             PreparedStatement ps = conn.prepareStatement(sql)) { // Se prepara la consulta
+            ps.setInt(1, idLibro); // Se asigna el ID del libro aquí
+
+            try (ResultSet rs = ps.executeQuery()) { // Se ejecuta la consulta después de asignar el ID
+                if (rs.next()) {
+                    return rs.getInt("ULTIMO");
+                }
             }
         }
         return 0;
