@@ -25,8 +25,12 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
         String telefono = rs.getString("TELEFONO");
         String direccion = rs.getString("DIRECCION");
         String estado = rs.getString("ESTADO");
+        byte[] fotografia = rs.getBytes("FOTOGRAFIA"); // <-- Se añade la foto aquí
 
-        return new UsuarioBiblioteca(id, nombre, fechaNacimiento, correo, telefono, direccion, estado);
+        UsuarioBiblioteca usuario = new UsuarioBiblioteca(id, nombre, fechaNacimiento, correo, telefono, direccion, estado);
+        usuario.setFotografia(fotografia); // <-- Se añade la foto al objeto
+        return usuario;
+
     }
 
     @Override
@@ -61,7 +65,7 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
     public UsuarioBiblioteca findById(int id) throws Exception {
         UsuarioBiblioteca usuario = null;
         // Solo para los datos básicos, la foto se obtiene con getFotografiaById()
-        String query = "SELECT ID, NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO FROM USUARIO_BIBLIOTECA WHERE ID = ?";
+        String query = "SELECT ID, NOMBRE, FECHA_NACIMIENTO, CORREO, TELEFONO, DIRECCION, ESTADO, FOTOGRAFIA FROM USUARIO_BIBLIOTECA WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
