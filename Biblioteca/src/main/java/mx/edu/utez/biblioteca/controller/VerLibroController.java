@@ -1,43 +1,37 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
+import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Libro;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class VerLibroController {
 
-    @FXML
-    private ImageView imgPortada;
+    @FXML private ImageView imgPortada;
+    @FXML private TextField txtIsbn;
+    @FXML private TextField txtTitulo;
+    @FXML private TextField txtAutor;
+    @FXML private TextField txtEditorial;
+    @FXML private TextField txtCategoria;
+    @FXML private TextField txtAnioPublicacion;
+    @FXML private TextArea txtSinopsis;
+    @FXML private Button btnCerrar;
+    @FXML private TableView<Ejemplar> tableEjemplares;
+    @FXML private TableColumn<Ejemplar, String> colCodigoLocal;
+    @FXML private TableColumn<Ejemplar, String> colUbicacion;
+    @FXML private TableColumn<Ejemplar, String> colEstado;
 
-    @FXML
-    private TextField txtIsbn;
-
-    @FXML
-    private TextField txtTitulo;
-
-    @FXML
-    private TextField txtAutor;
-
-    @FXML
-    private TextField txtEditorial;
-
-    @FXML
-    private TextField txtCategoria;
-
-    @FXML
-    private TextField txtAnioPublicacion;
-
-    @FXML
-    private TextArea txtSinopsis;
-
-    @FXML
-    private Button btnCerrar;
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
     /**
      * Este método recibe un objeto Libro y lo utiliza para popular todos los campos
@@ -70,6 +64,18 @@ public class VerLibroController {
                     System.err.println("Error al cargar la imagen de la portada: " + e.getMessage());
                 }
             }
+        }
+    }
+
+    // Método para cargar los ejemplares en la tabla
+    private void cargarEjemplares(int idLibro) {
+        try {
+            List<Ejemplar> ejemplares = ejemplarDao.findByLibro(idLibro);
+            ObservableList<Ejemplar> data = FXCollections.observableArrayList(ejemplares);
+            tableEjemplares.setItems(data);
+        } catch (SQLException e) {
+            System.err.println("Error al cargar los ejemplares: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
