@@ -431,9 +431,7 @@ public class PrestamoController {
                 String nuevoEstado = p.calcularEstado(hoy, tarifaMultaActual);
                 p.setEstado(nuevoEstado);
             }
-
             tableViewPrestamos.refresh();
-
             mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
 
         } catch (NumberFormatException e) {
