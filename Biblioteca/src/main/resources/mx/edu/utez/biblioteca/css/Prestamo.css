@@ -333,3 +333,9 @@
     -fx-background-color: #eddea4;
     -fx-text-fill: #e36414;
 }
+
+.btnlogout {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
