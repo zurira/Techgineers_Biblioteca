@@ -8,77 +8,107 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.net.URL?>
 
-<AnchorPane prefHeight="600.0" prefWidth="920.0" style="-fx-background-color: #F1EFEF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController">
-    <stylesheets>
-    </stylesheets>
-    <VBox layoutX="20" layoutY="20" prefWidth="860" spacing="10">
-        <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Agregar Libro" />
-        <Label style="-fx-font-size: 14px;" text="Ingresa la información correctamente" />
+<AnchorPane prefHeight="600.0" prefWidth="920.0"
+            style="-fx-background-color: #F1EFEF;"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.edu.utez.biblioteca.controller.LibroFormController"
+            stylesheets="@../css/agregarLibro.css">
+    <VBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" spacing="10.0">
+        <children>
+            <!-- Título y subtítulo -->
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Agregar Libro" />
+            <Label style="-fx-font-size: 14px;" text="Ingresa la información correctamente" />
 
-        <HBox spacing="20">
-            <!-- Sección de la Imagen y carga por URL -->
-            <VBox spacing="10">
-                <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true" />
-                <TextField fx:id="txtUrlPortada" promptText="URL de la portada" prefWidth="150" style="-fx-background-color: #ffffff; -fx-border-color: #ccc; -fx-border-radius: 5px; -fx-padding: 5px;" />
-                <Button fx:id="btnCargarUrl" mnemonicParsing="false" onAction="#cargarImagenDesdeUrl" prefWidth="150" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Imagen desde URL"  />
-            </VBox>
+            <!-- Contenedor principal para la imagen y el formulario -->
+            <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                <!-- Sección de la imagen y URL -->
+                <VBox prefWidth="250.0" spacing="10.0" HBox.hgrow="NEVER">
+                    <children>
+                        <Label text="Portada del libro:" />
+                        <ImageView fx:id="imageView" fitHeight="280.0" fitWidth="230.0" />
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                            <children>
+                                <TextField fx:id="txtUrlPortada" promptText="URL de la portada" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnCargarUrl" onAction="#cargarImagenDesdeUrl" styleClass="icon-button" text="Cargar" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
 
-            <!-- Campos del formulario -->
-            <GridPane hgap="15" vgap="15">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="33.0" />
-                    <ColumnConstraints percentWidth="33.0" />
-                    <ColumnConstraints percentWidth="33.0" />
-                </columnConstraints>
-                <Label text="Título:*" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="txtTitulo" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label text="ISBN:*" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <TextField fx:id="txtIsbn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label text="Año publicación:*" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                <TextField fx:id="txtAnioPublicacion" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <!-- Formulario de campos de información -->
+                <GridPane hgap="15.0" vgap="10.0" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                        <!-- Las columnas ahora tienen un ancho garantizado del 50% cada una -->
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                    </columnConstraints>
 
-                <Label text="Autor:*" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                    <ComboBox fx:id="cmbAutor" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarAutor" mnemonicParsing="false" onAction="#handleAddAutor" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
-                        <graphic>
-                            <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
-                        </graphic>
-                    </Button>
-                </HBox>
+                    <!-- Fila 1 -->
+                    <Label text="ISBN:*" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtIsbn" promptText="ISBN del libro" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                <Label text="Editorial:*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <ComboBox fx:id="cmbEditorial" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarEditorial" mnemonicParsing="false" onAction="#handleAddEditorial" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
-                        <graphic>
-                            <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
-                        </graphic>
-                    </Button>
-                </HBox>
+                    <Label text="Título:*" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtTitulo" promptText="Título del libro" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label text="Categoría:*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                    <ComboBox fx:id="cmbCategoria" prefWidth="150.0" />
-                    <Button fx:id="btnAgregarCategoria" mnemonicParsing="false" onAction="#handleAddCategoria" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
-                        <graphic>
-                            <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
-                        </graphic>
-                    </Button>
-                </HBox>
-                <Label text="Cantidad de ejemplares:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <Spinner fx:id="spinnerCantidadEjemplares" min="1" max="50" initialValue="1" GridPane.columnIndex="0" GridPane.rowIndex="05"/>
-            </GridPane>
-        </HBox>
+                    <!-- Fila 2 -->
+                    <Label text="Autor:*" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <HBox alignment="CENTER_LEFT" spacing="5" styleClass="hboxcom" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <ComboBox fx:id="cmbAutor"  promptText="Selecciona un autor" styleClass="combo-box" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="3"  HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnAgregarAutor" mnemonicParsing="false" onAction="#handleAddAutor" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
+                            <graphic>
+                                <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
+                            </graphic>
+                        </Button>
+                    </HBox>
 
-        <!-- Campo de sinopsis -->
-        <Label text="Sinopsis:" />
-        <TextArea fx:id="txtSinopsis" prefHeight="80" prefWidth="400" wrapText="true" />
 
-        <!-- Botones -->
-        <HBox alignment="CENTER_RIGHT" spacing="20">
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cerrarModal" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cancelar" styleClass="button-hover" />
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarLibro" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" styleClass="button-hover" />
-        </HBox>
+                    <Label text="Editorial:*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <HBox alignment="CENTER_LEFT" spacing="5" styleClass="hboxcom" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <ComboBox fx:id="cmbEditorial"  promptText="Selecciona una editorial" styleClass="combo-box" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3"  HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnAgregarEditorial" mnemonicParsing="false" onAction="#handleAddEditorial" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
+                            <graphic>
+                                <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
+                            </graphic>
+                        </Button>
+                    </HBox>
+
+
+                    <!-- Fila 3 -->
+                    <Label text="Categoría:*" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <HBox alignment="CENTER_LEFT" spacing="5" styleClass="hboxcom" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                        <ComboBox fx:id="cmbCategoria" promptText="Selecciona una categoría" styleClass="combo-box" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="5"  HBox.hgrow="ALWAYS" />
+                        <Button  fx:id="btnAgregarCategoria" mnemonicParsing="false" onAction="#handleAddCategoria" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-min-width: 30px; -fx-min-height: 30px; -fx-max-width: 30px; -fx-max-height: 30px; -fx-padding: 0;" styleClass="icon-button-hover">
+                            <graphic>
+                                <FontIcon iconLiteral="fa-plus" iconColor="white" iconSize="14" />
+                            </graphic>
+                        </Button>
+                    </HBox>
+
+                    <Label text="Año de Publicación:*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <TextField fx:id="txtAnioPublicacion" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                    <Label text="Ubicación:*" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <TextField fx:id="txtUbicación" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+
+                    <!-- Cantidad de ejemplares -->
+                    <Label text="Cantidad de ejemplares:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Spinner fx:id="spinnerCantidadEjemplares" min="1" max="50" initialValue="1" styleClass="spinner" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+
+                    <!-- Campo de Sinopsis -->
+                    <Label text="Sinopsis:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <TextArea fx:id="txtSinopsis" prefHeight="80.0" wrapText="true" styleClass="text-area" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="9" VBox.vgrow="ALWAYS" />
+                </GridPane>
+            </HBox>
+
+            <!-- Botones -->
+            <HBox alignment="CENTER_RIGHT" spacing="20.0">
+                <children>
+                    <Button fx:id="btnCancelar" onAction="#cerrarModal" style="-fx-background-color: #E2DAD6; -fx-text-fill: #5C504A; -fx-font-weight: bold;" text="Cancelar" />
+                    <Button fx:id="btnGuardar" onAction="#guardarLibro" style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" />
+                </children>
+            </HBox>
+        </children>
     </VBox>
 </AnchorPane>
