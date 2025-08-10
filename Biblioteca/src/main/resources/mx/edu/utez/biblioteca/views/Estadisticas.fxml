@@ -34,9 +34,18 @@
                     <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
                         <children>
 
+                            <Button  styleClass="sidebar-item-active" prefWidth="250.0">
+                                <graphic>
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                        <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
+                                        <Label styleClass="sidebar-label" text="Estadísticas"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+
                             <Button onAction="#irUsuarios" styleClass="sidebar-item" prefWidth="250.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon"/>
                                         <Label styleClass="sidebar-label" text="Usuarios"/>
                                     </HBox>
@@ -45,21 +54,13 @@
 
                             <Button onAction="#irPrestamos" styleClass="sidebar-item" prefWidth="250.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
                                         <Label styleClass="sidebar-label" text="Préstamos"/>
                                     </HBox>
                                 </graphic>
                             </Button>
 
-                            <Button  styleClass="sidebar-item-active" prefWidth="250.0">
-                                <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                        <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
-                                        <Label styleClass="sidebar-label" text="Estadísticas"/>
-                                    </HBox>
-                                </graphic>
-                            </Button>
                         </children>
                         <VBox.margin>
                             <Insets left="20.0" top="50.0" />
