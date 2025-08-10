@@ -25,6 +25,7 @@ public class LibroFormController {
     @FXML private TextField txtAnioPublicacion;
     @FXML private TextField txtUrlPortada;
     @FXML private Spinner<Integer> spinnerCantidadEjemplares;
+    @FXML private TextField txtUbicacion;
 
     @FXML private ImageView imageView;
     @FXML private Button btnCargarUrl;
@@ -238,7 +239,9 @@ public class LibroFormController {
                 cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
                 cmbCategoria.getSelectionModel().isEmpty() ||
-                txtAnioPublicacion.getText().trim().isEmpty()) {
+                txtAnioPublicacion.getText().trim().isEmpty() ||
+                txtUrlPortada.getText().trim().isEmpty() ||
+                txtUbicacion.getText().trim().isEmpty()){
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos obligatorios del formulario.");
             return;
@@ -264,6 +267,8 @@ public class LibroFormController {
             }
 
             Libro libro;
+            Ejemplar ejemplar;
+            ejemplar = new Ejemplar();
             if (libroEditado != null) {
                 libro = libroEditado;
             } else {
@@ -278,6 +283,8 @@ public class LibroFormController {
             libro.setCategoria(cmbCategoria.getValue());
             libro.setAnioPublicacion(anioPublicacion); // Usamos la variable ya parseada
             libro.setPortada(txtUrlPortada.getText().trim());
+            ejemplar.setUbicacion(txtUbicacion.getText().trim());
+
 
             // Manejar creación y actualización por separado
             if (libroEditado == null) {
