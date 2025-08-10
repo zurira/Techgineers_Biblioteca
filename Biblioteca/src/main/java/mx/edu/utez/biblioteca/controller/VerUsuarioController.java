@@ -34,43 +34,41 @@ public class VerUsuarioController {
 
         if (usuarioVer != null) {
             txtNombre.setText(usuarioVer.getNombre());
-            // Formatear la fecha para una mejor presentación
+
+            // Formatear la fecha
             if (usuario.getFechaNacimiento() != null) {
                 dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
             } else {
-                dpFechaNacimiento.setValue(null); // O un valor por defecto si no hay fecha
+                dpFechaNacimiento.setValue(null);
             }
+
             txtCorreo.setText(usuarioVer.getCorreo());
             txtTelefono.setText(usuarioVer.getTelefono());
             txtDireccion.setText(usuarioVer.getDireccion());
 
-            // Cargar y mostrar la fotografía (requiere modificar UsuarioBibliotecaDaoImpl.findById)
-            cargarFotografia(usuarioVer.getId()); // Cargar la foto por ID
+            // Llama al método directamente con los bytes de la foto que ya están en el objeto
+            cargarFotografia(usuarioVer.getFotografia());
         }
     }
 
-    // Nuevo método para cargar la fotografía desde la base de datos
-    private void cargarFotografia(int idUsuario) {
-        try {
-            UsuarioBibliotecaDaoImpl dao = new UsuarioBibliotecaDaoImpl();
-            byte[] fotoBytes = dao.getFotografiaById(idUsuario); // Necesitarás este método en tu DAO
-
-            if (fotoBytes != null && fotoBytes.length > 0) {
+    // Método para cargar la fotografía desde los bytes y manejar errores
+    private void cargarFotografia(byte[] fotoBytes) {
+        if (fotoBytes != null && fotoBytes.length > 0) {
+            try {
+                // Intenta crear la imagen desde los bytes
                 Image image = new Image(new ByteArrayInputStream(fotoBytes));
                 imgFoto.setImage(image);
-            } else {
-                imgFoto.setImage(null); // No hay foto, limpiar ImageView
-                // Puedes cargar una imagen de placeholder si lo deseas:
-                // imgFoto.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
+            } catch (Exception e) {
+                // Si hay un error, lo imprime y muestra una imagen por defecto
+                e.printStackTrace();
+                System.err.println("Error al cargar la fotografía del usuario: " + e.getMessage());
+                imgFoto.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Manejar error al cargar la foto, por ejemplo, mostrar una imagen de error
-            imgFoto.setImage(null);
-            System.err.println("Error al cargar la fotografía del usuario: " + e.getMessage());
+        } else {
+            // Si no hay foto, usa una imagen por defecto
+            imgFoto.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
         }
     }
-
 
     @FXML
     private void cerrarVentana() {
