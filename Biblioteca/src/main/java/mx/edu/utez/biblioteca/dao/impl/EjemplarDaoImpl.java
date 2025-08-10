@@ -5,7 +5,9 @@ import mx.edu.utez.biblioteca.model.Ejemplar;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -158,20 +160,24 @@ public class EjemplarDaoImpl {
         }
     }
 
-    public int obtenerStockDisponible(int idLibro) throws SQLException {
-        int stock = 0;
-        String sql = "SELECT COUNT(*) AS stock_disponible FROM EJEMPLAR WHERE ID_LIBRO = ? AND ESTADO = 'DISPONIBLE'";
+    public Map<Integer, Integer> obtenerStockPorLibro() throws SQLException {
+        Map<Integer, Integer> stockPorLibro = new HashMap<>();
+        String sql = "SELECT ID_LIBRO, COUNT(*) AS stock_disponible " +
+                "FROM EJEMPLAR " +
+                "WHERE ESTADO = 'DISPONIBLE' " +
+                "GROUP BY ID_LIBRO";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idLibro);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    stock = rs.getInt("stock_disponible");
-                }
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int idLibro = rs.getInt("ID_LIBRO");
+                int stock = rs.getInt("stock_disponible");
+                stockPorLibro.put(idLibro, stock);
             }
         }
-        return stock;
+        return stockPorLibro;
     }
 
     // Método para verificar si ya existe una reserva de ejemplar

@@ -3,6 +3,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,6 +27,7 @@ import mx.edu.utez.biblioteca.model.Libro;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,6 +74,9 @@ public class AdminDashboardController {
     // Se agrego la columna estado
     @FXML
     private TableColumn<Libro, String> colEstado;
+
+    @FXML
+    private TableColumn<Libro, Integer> colStock;
 
     @FXML
     private TableColumn<Libro, Void> colAcciones;
@@ -135,8 +140,6 @@ public class AdminDashboardController {
             return new SimpleStringProperty(editorial != null ? editorial.getNombre() : "N/A");
         });
 
-        colResumen.setCellValueFactory(new PropertyValueFactory<>("resumen"));
-
         colCategoria.setCellValueFactory(cellData -> {
             Categoria categoria = cellData.getValue().getCategoria();
             return new SimpleStringProperty(categoria != null ? categoria.getNombre() : "N/A");
@@ -177,6 +180,8 @@ public class AdminDashboardController {
                 }
             };
         });
+
+        colStock.setCellValueFactory(new PropertyValueFactory<>("stockDisponible"));
 
         // Columna de Acciones (Editar, ver y cambiar estado)
         colAcciones.setCellFactory(param -> new TableCell<Libro, Void>() {
@@ -241,38 +246,50 @@ public class AdminDashboardController {
     }
 
     private void cargarLibros() {
-        try {
-            EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
-            List<Libro> libros = libroDao.findAll();
+        Task<List<Libro>> cargaLibrosTask = new Task<>() {
+            @Override
+            protected List<Libro> call() throws Exception {
+                // Este código se ejecuta en un hilo de fondo, no congela la interfaz
+                EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
+                List<Libro> libros = libroDao.findAll();
 
-            for (Libro libro : libros) {
-                try {
-                    // Llama al método que puede lanzar SQLException
-                    int stock = ejemplarDao.obtenerStockDisponible(libro.getId());
+                // Alternativa 1: Consulta optimizada para cargar el stock de todos los libros a la vez
+                Map<Integer, Integer> stockPorLibro = ejemplarDao.obtenerStockPorLibro();
+
+                for (Libro libro : libros) {
+                    int idLibro = libro.getId();
+                    int stock = stockPorLibro.getOrDefault(idLibro, 0);
                     libro.setStockDisponible(stock);
-                } catch (SQLException e) {
-                    // Manejar el error específico de la base de datos para este libro
-                    System.err.println("Error al obtener stock para el libro con ID: " + libro.getId() + " - " + e.getMessage());
-                    // Puedes asignar un valor predeterminado, por ejemplo -1 para indicar un error
-                    libro.setStockDisponible(-1);
                 }
+                return libros;
             }
+        };
 
-            listaLibros = FXCollections.observableArrayList(libros);
-            tableViewLibros.setItems(listaLibros);
-            lblSinResultados.setVisible(listaLibros.isEmpty());
+        cargaLibrosTask.setOnSucceeded(event -> {
+            // Esta parte se ejecuta en el hilo principal de la UI
+            try {
+                List<Libro> librosCargados = cargaLibrosTask.getValue();
+                listaLibros = FXCollections.observableArrayList(librosCargados);
+                tableViewLibros.setItems(listaLibros);
+                lblSinResultados.setVisible(listaLibros.isEmpty());
+            } catch (Exception e) {
+                // Manejo de errores si algo falla después de la carga exitosa
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error de Visualización", "No se pudieron mostrar los datos.", "Hubo un error al procesar los resultados de la base de datos.");
+            }
+        });
 
-        } catch (SQLException e) {
-            // Este catch maneja el error de 'libroDao.findAll()'
+        cargaLibrosTask.setOnFailed(event -> {
+            // Manejo de errores si la tarea del hilo de fondo falla
+            Throwable e = cargaLibrosTask.getException();
             e.printStackTrace();
-            System.err.println("Error general al cargar la lista de libros: " + e.getMessage());
+            System.err.println("Error al cargar libros en el hilo de fondo: " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudieron cargar los libros",
-                    "Hubo un error al intentar obtener los datos de los libros. Por favor, revisa la conexión a la base de datos.");
-        } catch (Exception e) {
-            // Este catch maneja cualquier otra excepción no esperada
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error Desconocido", "Ocurrió un error inesperado.", e.getMessage());
-        }
+                    "Hubo un error al intentar obtener los datos de la base de datos. Por favor, revisa la conexión.");
+        });
+
+        // Inicia la tarea en un nuevo hilo
+        new Thread(cargaLibrosTask).start();
     }
 
     private void filtrarLibros(String filtro) {
