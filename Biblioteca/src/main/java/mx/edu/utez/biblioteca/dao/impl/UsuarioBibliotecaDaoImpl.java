@@ -143,6 +143,15 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
             ps.setString(6, usuario.getEstado());
             ps.setInt(7, usuario.getId());
             ps.executeUpdate();
+
+            if (usuario.getFotografia() != null) {
+                ps.setBytes(7, usuario.getFotografia());
+            } else {
+                ps.setNull(7, Types.BLOB);
+            }
+
+            ps.setInt(8, usuario.getId());
+            ps.executeUpdate();
         }
     }
 
