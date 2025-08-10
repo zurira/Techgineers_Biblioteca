@@ -337,3 +337,11 @@
 }
 
 
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.arrow-icon {
+    -fx-fill: white;
+}
