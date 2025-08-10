@@ -3,11 +3,14 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
+import javax.swing.*;
 import java.io.File;
 import java.time.LocalDate; // Importa LocalDate
 
@@ -21,9 +24,12 @@ public class EditarUsuarioController {
     @FXML private DatePicker dpFechaNacimiento;
     @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;
+    @FXML private ImageView imgFotoPerfil;
 
+    private File archivoFoto;
     private UsuarioBiblioteca usuarioEditando;
     private boolean guardado = false;
+    private FileChooser chooser;
 
     public void cargarUsuario(UsuarioBiblioteca usuario) {
         this.usuarioEditando = usuario;
@@ -50,6 +56,10 @@ public class EditarUsuarioController {
         if (!txtCorreo.getText().contains("@")) {
             mostrarAlerta("Correo inválido", "Introduce un correo válido.");
             return;
+        }
+        if (this.archivoFoto == null) {
+            System.out.println("Error: La foto es obligatoria.");
+            return; // Esto detiene la ejecución del método.
         }
 
         usuarioEditando.setNombre(txtNombre.getText().trim());
@@ -88,18 +98,25 @@ public class EditarUsuarioController {
     }
 
     @FXML
-    public void seleccionarFoto(ActionEvent e) {
+    public void seleccionarFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar foto de usuario");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File archivoSeleccionado = fileChooser.showOpenDialog(btnSeleccionarImagen.getScene().getWindow());
-        if (archivoSeleccionado != null) {
-            btnSeleccionarImagen.setText(archivoSeleccionado.getName());
-        } else {
-            btnSeleccionarImagen.setText("Sin archivo seleccionado");
+        File selected = fileChooser.showOpenDialog(btnCancelar.getScene().getWindow());
+        if (selected != null) {
+            archivoFoto = selected;
+            btnSeleccionarImagen.setText(selected.getName());
+
+            try {
+                Image image = new Image(selected.toURI().toString());
+
+                imgFotoPerfil.setImage(image);
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen: " + e.getMessage());
+            }
         }
     }
 
