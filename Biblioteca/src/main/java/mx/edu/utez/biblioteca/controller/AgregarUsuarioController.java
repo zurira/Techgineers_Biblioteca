@@ -62,11 +62,12 @@ public class AgregarUsuarioController {
                 this.fotografiaBytes = new byte[(int) selected.length()];
                 fis.read(this.fotografiaBytes);
                 fis.close();
-                Image image = new Image(selected.toURI().toString());
 
+                Image image = new Image(selected.toURI().toString());
                 imgFotoPerfil.setImage(image);
             } catch (Exception e) {
                 System.err.println("Error al cargar la imagen: " + e.getMessage());
+                this.fotografiaBytes = null; // En caso de error, resetea la variable
             }
         }
     }
