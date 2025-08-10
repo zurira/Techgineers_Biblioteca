@@ -158,4 +158,20 @@ public class EjemplarDaoImpl {
         }
     }
 
+    public int obtenerStockDisponible(int idLibro) throws SQLException {
+        int stock = 0;
+        String sql = "SELECT COUNT(*) AS stock_disponible FROM EJEMPLAR WHERE ID_LIBRO = ? AND ESTADO = 'DISPONIBLE'";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idLibro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    stock = rs.getInt("stock_disponible");
+                }
+            }
+        }
+        return stock;
+    }
+
 }
