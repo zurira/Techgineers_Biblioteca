@@ -22,6 +22,7 @@ public class EditAdminController {
     @FXML private Button btnTogglePassword;
     @FXML private ImageView imageView;
 
+
     private File imagenSeleccionada;
     private Usuario usuarioActual;
     private boolean mostrando = false;
