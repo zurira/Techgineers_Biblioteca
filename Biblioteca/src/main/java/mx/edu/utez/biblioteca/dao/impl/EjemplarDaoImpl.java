@@ -174,4 +174,19 @@ public class EjemplarDaoImpl {
         return stock;
     }
 
+    // Método para verificar si ya existe una reserva
+    private boolean existeEjemplarReserva(int idLibro) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM EJEMPLAR WHERE ID_LIBRO = ? AND ESTADO = 'RESERVA'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idLibro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
 }
