@@ -102,7 +102,7 @@
             </VBox>
             <VBox spacing="5.0" styleClass="table-container" VBox.vgrow="ALWAYS">
                 <Label styleClass="label-form" text="Ejemplares existentes" />
-                <TableView fx:id="tableEjemplares" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" editable="false" >
+                <TableView fx:id="tableEjemplares" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" >
                     <columns>
                         <TableColumn fx:id="colCodigoLocal" prefWidth="120.0" text="Código Local" />
                         <TableColumn fx:id="colUbicacion" prefWidth="150.0" text="Ubicación" />

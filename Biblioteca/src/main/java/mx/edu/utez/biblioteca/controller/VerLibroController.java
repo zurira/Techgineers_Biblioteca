@@ -43,6 +43,8 @@ public class VerLibroController implements Initializable{
         colCodigoLocal.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        tableEjemplares.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableEjemplares.setSelectionModel(null);
     }
 
     /**
