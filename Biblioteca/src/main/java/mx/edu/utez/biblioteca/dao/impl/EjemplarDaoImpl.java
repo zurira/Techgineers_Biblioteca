@@ -36,7 +36,7 @@ public class EjemplarDaoImpl {
         }
     }
 
-    public boolean insertarVariosEjemplares(int idLibro, int cantidad) {
+    public boolean insertarVariosEjemplares(int idLibro, int cantidad, Ejemplar ejemplar) {
         String sql = "INSERT INTO ejemplar (ID_LIBRO, CODIGO_LOCAL, ESTADO, UBICACION) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -55,7 +55,7 @@ public class EjemplarDaoImpl {
                 ps.setInt(1, idLibro);
                 ps.setString(2, codigoLocal);
                 ps.setString(3, "DISPONIBLE"); // Se asigna el valor por defecto directamente
-                ps.setString(4, "Biblioteca General");
+                ps.setString(4, ejemplar.getUbicacion());
                 ps.addBatch();
             }
 

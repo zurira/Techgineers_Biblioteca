@@ -296,7 +296,7 @@ public class LibroFormController {
                 // Insertar ejemplares si la cantidad es mayor a 0
                 if (cantidadEjemplares > 0) {
                     // Se asume que 'ejemplarDao' es una variable de instancia ya inicializada
-                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares);
+                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares, ejemplar);
                     if (insertExito) {
                         mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro y " + cantidadEjemplares + " ejemplares registrados correctamente.");
                     } else {

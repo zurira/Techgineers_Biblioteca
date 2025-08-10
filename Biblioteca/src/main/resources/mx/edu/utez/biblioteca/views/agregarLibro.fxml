@@ -89,7 +89,7 @@
                     <TextField fx:id="txtAnioPublicacion" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
                     <Label text="Ubicación:*" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                    <TextField fx:id="txtUbicación" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                    <TextField fx:id="txtUbicacion" promptText="Año de publicación" styleClass="text-field" maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="7" />
 
                     <!-- Cantidad de ejemplares -->
                     <Label text="Cantidad de ejemplares:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
