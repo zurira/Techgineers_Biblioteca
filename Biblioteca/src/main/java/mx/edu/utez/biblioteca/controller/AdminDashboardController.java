@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -24,6 +25,7 @@ import mx.edu.utez.biblioteca.model.Editorial;
 import mx.edu.utez.biblioteca.model.Libro;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -240,14 +242,36 @@ public class AdminDashboardController {
 
     private void cargarLibros() {
         try {
-            listaLibros = FXCollections.observableArrayList(libroDao.findAll());
+            EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
+            List<Libro> libros = libroDao.findAll();
+
+            for (Libro libro : libros) {
+                try {
+                    // Llama al método que puede lanzar SQLException
+                    int stock = ejemplarDao.obtenerStockDisponible(libro.getId());
+                    libro.setStockDisponible(stock);
+                } catch (SQLException e) {
+                    // Manejar el error específico de la base de datos para este libro
+                    System.err.println("Error al obtener stock para el libro con ID: " + libro.getId() + " - " + e.getMessage());
+                    // Puedes asignar un valor predeterminado, por ejemplo -1 para indicar un error
+                    libro.setStockDisponible(-1);
+                }
+            }
+
+            listaLibros = FXCollections.observableArrayList(libros);
             tableViewLibros.setItems(listaLibros);
             lblSinResultados.setVisible(listaLibros.isEmpty());
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
+            // Este catch maneja el error de 'libroDao.findAll()'
             e.printStackTrace();
-            System.err.println("Error al cargar libros: " + e.getMessage());
+            System.err.println("Error general al cargar la lista de libros: " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudieron cargar los libros",
                     "Hubo un error al intentar obtener los datos de los libros. Por favor, revisa la conexión a la base de datos.");
+        } catch (Exception e) {
+            // Este catch maneja cualquier otra excepción no esperada
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error Desconocido", "Ocurrió un error inesperado.", e.getMessage());
         }
     }
 

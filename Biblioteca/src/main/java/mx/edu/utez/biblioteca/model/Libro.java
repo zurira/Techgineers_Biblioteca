@@ -7,7 +7,8 @@ public class Libro {
     private String resumen;
     private int anioPublicacion;
     private String portada;
-    private String estado; // Restaurado
+    private String estado;
+    private int stockDisponible;
     private Editorial editorial;
     private Autor autor;
     private Categoria categoria;
@@ -83,6 +84,13 @@ public class Libro {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    public int getStockDisponible() {
+        return stockDisponible;
+    }
+
+    public void setStockDisponible(int stockDisponible) {
+        this.stockDisponible = stockDisponible;
     }
 
     public Editorial getEditorial() {
