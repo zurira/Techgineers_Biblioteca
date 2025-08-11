@@ -154,4 +154,3 @@ public class Prestamo {
         this.ejemplar = ejemplar;
     }
 }
-

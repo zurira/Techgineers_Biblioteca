@@ -95,26 +95,22 @@ public class PrestamoController {
         prestamoDao = new PrestamoDaoImpl();
         configurarColumnasTabla();
         tableViewPrestamos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // Carga inicial de datos
         cargarPrestamos();
 
+        // Filtro de búsqueda
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             aplicarFiltros();
         });
 
-        // Configuración del ChoiceBox para el filtro
+        // Configuración y filtro del ChoiceBox
         choiceBoxEstado.setItems(FXCollections.observableArrayList("Estado", "Activo", "Finalizado", "Retrasado"));
         choiceBoxEstado.getSelectionModel().selectFirst();
         choiceBoxEstado.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // En esta línea se valida si la opción seleccionada es "Estado" para no filtrar
             filtroEstadoActual = "Estado".equals(newValue) ? "Todos" : newValue;
             aplicarFiltros();
-        });
-
-        tableViewPrestamos.getItems().addListener((ListChangeListener<Prestamo>) c -> tableViewPrestamos.refresh());
-        tableViewPrestamos.sortPolicyProperty().set(tv -> {
-            boolean sorted = TableView.DEFAULT_SORT_POLICY.call(tv);
-            tv.refresh();
-            return sorted;
         });
 
         try {
@@ -145,6 +141,7 @@ public class PrestamoController {
         });
 
         colTituloLibro.setCellValueFactory(cellData -> {
+            // Se obtiene el objeto Libro directamente del Prestamo
             Libro libro = cellData.getValue().getLibro();
             return new SimpleStringProperty(libro != null ? libro.getTitulo() : "N/A");
         });

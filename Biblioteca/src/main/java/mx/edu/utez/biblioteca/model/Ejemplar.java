@@ -10,6 +10,7 @@ public class Ejemplar {
     private String titulo;
     private String estado;
     private String ubicacion;
+    private Libro libro;
     private final BooleanProperty seleccionado = new SimpleBooleanProperty(false);
 
     public Ejemplar() {
@@ -78,5 +79,13 @@ public class Ejemplar {
 
     public BooleanProperty seleccionadoProperty() {
         return seleccionado;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 }

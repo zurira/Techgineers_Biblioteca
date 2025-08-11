@@ -192,8 +192,6 @@ public class ModalPrestamoController implements Initializable {
 
                 prestamo.setIdEjemplar(ejemplarSeleccionado.getIdEjemplar());
 
-                System.out.println("ID del Ejemplar a registrar: " + ejemplarSeleccionado.getIdEjemplar());
-
                 // Insertamos el préstamo en la base de datos
                 boolean creado = prestamoDAO.create(prestamo);
 
