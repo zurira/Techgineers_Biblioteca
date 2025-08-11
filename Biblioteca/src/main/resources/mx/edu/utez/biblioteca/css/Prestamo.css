@@ -195,7 +195,7 @@
     -fx-font-weight: bold;
     -fx-text-fill: #443933;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 12px 10px;
+    -fx-padding: 5px 10px;
 }
 
 /* Celdas de la tabla */
@@ -338,4 +338,55 @@
 .status-finalizado {
     -fx-background-color: #eddea4;
     -fx-text-fill: #e36414;
+}
+
+.btnlogout {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+/* Estilo del botón (la parte visible del ChoiceBox) */
+.filtro-estado-choicebox{
+    -fx-background-color: transparent; /* Fondo transparente para el botón de flecha */
+    -fx-border-color: transparent; /* Borde transparente */
+    -fx-font-size: 12px; /* Tamaño de la fuente */
+    -fx-text-fill: #333; /* Color del texto */
+}
+
+/* Estilo del menú desplegable */
+.filtro-estado-choicebox .menu-item {
+    -fx-background-color: white; /* Color de fondo del menú */
+}
+
+/* Estilo del elemento seleccionado */
+.filtro-estado-choicebox:selected {
+    -fx-font-weight: bold;
+}
+
+/* Estilo del menú desplegable del ChoiceBox */
+.filtro-estado-choicebox .menu-item {
+    -fx-background-color: white;
+}
+
+/* Estilo al pasar el mouse sobre un item del menú */
+.filtro-estado-choicebox .menu-item:hover {
+    -fx-background-color: #e0e0e0; /* Cambia el color de fondo */
+    -fx-text-fill: black; /* Cambia el color del texto */
+}
+
+/* Estilo del elemento seleccionado en la lista desplegable */
+.filtro-estado-choicebox .menu-item:selected {
+    -fx-background-color: #c0c0c0; /* Fondo del elemento seleccionado */
+}
+
+/* Estilo del texto dentro del menú */
+.filtro-estado-choicebox .menu-item .label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+.filtro-estado-choicebox .arrow-button {
+    -fx-padding: 0 0 0 15px; /* Ajusta el padding para centrar o mover la flecha */
+    -fx-background-color: transparent;
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface ILibro {
     List<Libro> findAll() throws Exception;
     Libro findById(int id) throws Exception;
-    void create(Libro libro) throws Exception;
+    public void create(Libro libro) throws Exception;
     void update(Libro libro) throws Exception;
     void delete(int id) throws Exception;
     List<Libro> search(String searchTerm) throws Exception;

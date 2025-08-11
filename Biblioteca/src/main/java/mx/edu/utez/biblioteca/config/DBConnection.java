@@ -23,6 +23,7 @@ public class DBConnection {
     public static void main(String[] args) throws SQLException {
         try (Connection conn = getConnection()) {
             System.out.println("¡Conexión exitosa!");
+            System.out.println("Autocommit: " + conn.getAutoCommit());
         } catch (SQLException e) {
             e.printStackTrace();
         }

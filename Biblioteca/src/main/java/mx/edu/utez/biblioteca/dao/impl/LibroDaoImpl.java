@@ -140,8 +140,11 @@ public class LibroDaoImpl implements ILibro {
     public void create(Libro libro) throws Exception {
         String query = "INSERT INTO LIBRO (TITULO, ISBN, SINOPSIS, ANIO_PUBLICACION, PORTADA, ESTADO, ID_EDITORIAL, ID_AUTOR, ID_CATEGORIA) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String[] columnas = {"ID"}; // Nombre de la columna de clave primaria que quieres recuperar
+
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
+             PreparedStatement pstmt = con.prepareStatement(query, columnas)) {
+
             pstmt.setString(1, libro.getTitulo());
             pstmt.setString(2, libro.getIsbn());
             pstmt.setString(3, libro.getResumen());
@@ -152,16 +155,32 @@ public class LibroDaoImpl implements ILibro {
             } else {
                 pstmt.setNull(5, Types.VARCHAR);
             }
-            pstmt.setString(6, libro.getEstado()); // Restaurado
+            pstmt.setString(6, libro.getEstado());
             pstmt.setObject(7, libro.getEditorial() != null ? libro.getEditorial().getId() : null);
             pstmt.setObject(8, libro.getAutor() != null ? libro.getAutor().getId() : null);
             pstmt.setObject(9, libro.getCategoria() != null ? libro.getCategoria().getId() : null);
-            pstmt.executeUpdate();
+
+            int filasInsertadas = pstmt.executeUpdate();
+            if (filasInsertadas == 0) {
+                throw new SQLException("Crear libro falló, no se insertó ninguna fila.");
+            }
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idGenerado = generatedKeys.getInt(1);
+                    libro.setId(idGenerado);
+                    System.out.println("ID generado para libro: " + idGenerado);
+                } else {
+                    throw new SQLException("Crear libro falló, no se pudo obtener el ID generado.");
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error al crear libro: " + e.getMessage());
             throw e;
         }
     }
+
+
 
     @Override
     public void update(Libro libro) throws Exception {

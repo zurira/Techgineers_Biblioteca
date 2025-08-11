@@ -1,6 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -8,31 +7,34 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import mx.edu.utez.biblioteca.config.DBConnection;
 import mx.edu.utez.biblioteca.dao.impl.ConfiguracionDaoImpl;
-import org.kordamp.ikonli.javafx.FontIcon;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.Comparator;
 
 public class PrestamoController {
 
@@ -71,33 +73,44 @@ public class PrestamoController {
 
     @FXML
     private Label lblSinResultados;
-    @FXML private Button btnlogout;
+    @FXML
+    private Button btnlogout;
     @FXML
     private TableColumn<Prestamo, String> colMulta;
     @FXML
     private TextField txtTarifaMulta;
+
+    @FXML
+    private ChoiceBox<String> choiceBoxEstado;
 
     private PrestamoDaoImpl prestamoDao;
     private ObservableList<Prestamo> listaPrestamos;
     private ObservableList<Prestamo> listaPrestamosOriginal;
     private double tarifaMultaActual;
 
+    private String filtroEstadoActual = "Todos";
+
     @FXML
     public void initialize() {
         prestamoDao = new PrestamoDaoImpl();
         configurarColumnasTabla();
         tableViewPrestamos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // Carga inicial de datos
         cargarPrestamos();
 
+        // Filtro de búsqueda
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtrarPrestamos(newValue);
+            aplicarFiltros();
         });
 
-        tableViewPrestamos.getItems().addListener((ListChangeListener<Prestamo>) c -> tableViewPrestamos.refresh());
-        tableViewPrestamos.sortPolicyProperty().set(tv -> {
-            boolean sorted = TableView.DEFAULT_SORT_POLICY.call(tv);
-            tv.refresh();
-            return sorted;
+        // Configuración y filtro del ChoiceBox
+        choiceBoxEstado.setItems(FXCollections.observableArrayList("Estado", "Activo", "Finalizado", "Retrasado"));
+        choiceBoxEstado.getSelectionModel().selectFirst();
+        choiceBoxEstado.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // En esta línea se valida si la opción seleccionada es "Estado" para no filtrar
+            filtroEstadoActual = "Estado".equals(newValue) ? "Todos" : newValue;
+            aplicarFiltros();
         });
 
         try {
@@ -128,8 +141,12 @@ public class PrestamoController {
         });
 
         colTituloLibro.setCellValueFactory(cellData -> {
-            Libro libro = cellData.getValue().getLibro();
-            return new SimpleStringProperty(libro != null ? libro.getTitulo() : "N/A");
+            Prestamo prestamo = cellData.getValue();
+            if (prestamo != null && prestamo.getEjemplar() != null && prestamo.getEjemplar().getLibro() != null) {
+                return new SimpleStringProperty(prestamo.getEjemplar().getLibro().getTitulo());
+            } else {
+                return new SimpleStringProperty("N/A");
+            }
         });
 
         colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<>("fechaPrestamo"));
@@ -164,7 +181,7 @@ public class PrestamoController {
                         }
 
                         HBox container = new HBox(statusLabel);
-                        container.setAlignment(Pos.CENTER);
+                        container.setAlignment(Pos.CENTER_LEFT);
                         setGraphic(container);
                         setText(null);
                     }
@@ -217,7 +234,7 @@ public class PrestamoController {
                     setGraphic(null);
                 } else {
                     HBox buttons = new HBox(5, editButton, viewButton);
-                    buttons.setAlignment(Pos.CENTER);
+                    buttons.setAlignment(Pos.CENTER_LEFT);
                     setGraphic(buttons);
                 }
             }
@@ -227,6 +244,8 @@ public class PrestamoController {
     private void cargarPrestamos() {
         try {
             listaPrestamosOriginal = FXCollections.observableArrayList(prestamoDao.findAll());
+            listaPrestamosOriginal.sort(Comparator.comparing(Prestamo::getId).reversed());
+
             LocalDate hoy = LocalDate.now();
             for (Prestamo p : listaPrestamosOriginal) {
                 double tarifa = tarifaMultaActual;
@@ -247,30 +266,26 @@ public class PrestamoController {
         }
     }
 
-    private void filtrarPrestamos(String filtro) {
-        if (filtro == null || filtro.trim().isEmpty()) {
-            tableViewPrestamos.setItems(listaPrestamosOriginal);
-            lblSinResultados.setVisible(false);
-            tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
-            return;
-        }
+    private void aplicarFiltros() {
+        String filtroTexto = txtSearch.getText().toLowerCase();
 
-        String filtroLower = filtro.toLowerCase();
         ObservableList<Prestamo> prestamosFiltrados = FXCollections.observableArrayList();
 
         for (Prestamo p : listaPrestamosOriginal) {
             String nombreUsuario = p.getUsuario() != null ? p.getUsuario().getNombre().toLowerCase() : "";
             String tituloLibro = p.getLibro() != null ? p.getLibro().getTitulo().toLowerCase() : "";
-            String estado = p.getEstado() != null ? p.getEstado().toLowerCase() : "";
+            String estadoPrestamo = p.getEstado() != null ? p.getEstado() : "";
 
-            if (nombreUsuario.contains(filtroLower) || tituloLibro.contains(filtroLower) || estado.contains(filtroLower)) {
+            boolean coincideTexto = nombreUsuario.contains(filtroTexto) || tituloLibro.contains(filtroTexto);
+            boolean coincideEstado = "Todos".equals(filtroEstadoActual) || estadoPrestamo.equals(filtroEstadoActual);
+
+            if (coincideTexto && coincideEstado) {
                 prestamosFiltrados.add(p);
             }
         }
-
         tableViewPrestamos.setItems(prestamosFiltrados);
         lblSinResultados.setVisible(prestamosFiltrados.isEmpty());
-        tableViewPrestamos.refresh(); // <-- ¡LÍNEA AÑADIDA!
+        tableViewPrestamos.refresh();
     }
 
     @FXML
@@ -285,6 +300,7 @@ public class PrestamoController {
             modalStage.setScene(new Scene(root, 1000, 600));
             modalStage.showAndWait();
             cargarPrestamos();
+            aplicarFiltros();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -303,6 +319,7 @@ public class PrestamoController {
             modalStage.setScene(new Scene(root, 1000, 600));
             modalStage.showAndWait();
             cargarPrestamos();
+            aplicarFiltros();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -384,7 +401,6 @@ public class PrestamoController {
             modalStage.setScene(new Scene(modalRoot));
             modalStage.showAndWait();
 
-
             if (ModalCerrarSesionController.cerrarSesionConfirmado) {
                 Stage currentStage = (Stage) btnlogout.getScene().getWindow();
                 currentStage.close();
@@ -420,15 +436,14 @@ public class PrestamoController {
             tarifaMultaActual = nuevaTarifa;
 
             LocalDate hoy = LocalDate.now();
-            for (Prestamo p : listaPrestamos) {
+            for (Prestamo p : listaPrestamosOriginal) {
                 double multa = p.calcularMulta(tarifaMultaActual);
                 p.setMulta(multa);
                 String nuevoEstado = p.calcularEstado(hoy, tarifaMultaActual);
                 p.setEstado(nuevoEstado);
             }
-
             tableViewPrestamos.refresh();
-
+            aplicarFiltros();
             mostrarAlerta("Tarifa actualizada correctamente.", Alert.AlertType.INFORMATION);
 
         } catch (NumberFormatException e) {

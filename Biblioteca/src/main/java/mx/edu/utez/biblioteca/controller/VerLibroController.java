@@ -1,43 +1,51 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
+import mx.edu.utez.biblioteca.model.Ejemplar;
 import mx.edu.utez.biblioteca.model.Libro;
 
-public class VerLibroController {
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 
-    @FXML
-    private ImageView imgPortada;
+public class VerLibroController implements Initializable{
 
-    @FXML
-    private TextField txtIsbn;
+    @FXML private ImageView imgPortada;
+    @FXML private TextField txtIsbn;
+    @FXML private TextField txtTitulo;
+    @FXML private TextField txtAutor;
+    @FXML private TextField txtEditorial;
+    @FXML private TextField txtCategoria;
+    @FXML private TextField txtAnioPublicacion;
+    @FXML private TextArea txtSinopsis;
+    @FXML private Button btnCerrar;
+    @FXML private TableView<Ejemplar> tableEjemplares;
+    @FXML private TableColumn<Ejemplar, String> colCodigoLocal;
+    @FXML private TableColumn<Ejemplar, String> colUbicacion;
+    @FXML private TableColumn<Ejemplar, String> colEstado;
 
-    @FXML
-    private TextField txtTitulo;
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
-    @FXML
-    private TextField txtAutor;
-
-    @FXML
-    private TextField txtEditorial;
-
-    @FXML
-    private TextField txtCategoria;
-
-    @FXML
-    private TextField txtAnioPublicacion;
-
-    @FXML
-    private TextArea txtSinopsis;
-
-    @FXML
-    private Button btnCerrar;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Vincula las columnas de la tabla a los atributos del objeto Ejemplar
+        colCodigoLocal.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        tableEjemplares.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableEjemplares.setSelectionModel(null);
+    }
 
     /**
      * Este método recibe un objeto Libro y lo utiliza para popular todos los campos
@@ -60,6 +68,9 @@ public class VerLibroController {
             // Llenar la sinopsis con manejo de nulos
             txtSinopsis.setText(libro.getResumen() != null ? libro.getResumen() : "Sin sinopsis.");
 
+            //Se cargan los ejemplares del libro seleccionado
+            cargarEjemplares(libro.getId());
+
             // Cargar la imagen de la portada desde la URL con manejo de nulos
             String urlPortada = libro.getPortada();
             if (urlPortada != null && !urlPortada.isEmpty()) {
@@ -70,6 +81,18 @@ public class VerLibroController {
                     System.err.println("Error al cargar la imagen de la portada: " + e.getMessage());
                 }
             }
+        }
+    }
+
+    // Método para cargar los ejemplares en la tabla
+    private void cargarEjemplares(int idLibro) {
+        try {
+            List<Ejemplar> ejemplares = ejemplarDao.findByLibro(idLibro);
+            ObservableList<Ejemplar> data = FXCollections.observableArrayList(ejemplares);
+            tableEjemplares.setItems(data);
+        } catch (SQLException e) {
+            System.err.println("Error al cargar los ejemplares: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

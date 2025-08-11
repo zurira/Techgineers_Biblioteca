@@ -24,6 +24,8 @@ public class LibroFormController {
     @FXML private ComboBox<Categoria> cmbCategoria;
     @FXML private TextField txtAnioPublicacion;
     @FXML private TextField txtUrlPortada;
+    @FXML private Spinner<Integer> spinnerCantidadEjemplares;
+    @FXML private TextField txtUbicacion;
 
     @FXML private ImageView imageView;
     @FXML private Button btnCargarUrl;
@@ -38,6 +40,7 @@ public class LibroFormController {
     private AutorDaoImpl autorDao = new AutorDaoImpl();
     private EditorialDaoImpl editorialDao = new EditorialDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
     private Libro libroEditado;
     private boolean agregado = false;
@@ -236,7 +239,9 @@ public class LibroFormController {
                 cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
                 cmbCategoria.getSelectionModel().isEmpty() ||
-                txtAnioPublicacion.getText().trim().isEmpty()) {
+                txtAnioPublicacion.getText().trim().isEmpty() ||
+                txtUrlPortada.getText().trim().isEmpty() ||
+                txtUbicacion.getText().trim().isEmpty()){
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos obligatorios del formulario.");
             return;
@@ -262,6 +267,8 @@ public class LibroFormController {
             }
 
             Libro libro;
+            Ejemplar ejemplar;
+            ejemplar = new Ejemplar();
             if (libroEditado != null) {
                 libro = libroEditado;
             } else {
@@ -276,19 +283,35 @@ public class LibroFormController {
             libro.setCategoria(cmbCategoria.getValue());
             libro.setAnioPublicacion(anioPublicacion); // Usamos la variable ya parseada
             libro.setPortada(txtUrlPortada.getText().trim());
+            ejemplar.setUbicacion(txtUbicacion.getText().trim());
 
-            // Asignar el estado por defecto "ACTIVO" al crear un nuevo libro
+
+            // Manejar creación y actualización por separado
             if (libroEditado == null) {
+                // Es un libro nuevo:
                 libro.setEstado("ACTIVO");
-            }
+                libroDao.create(libro); // El ID se asigna al objeto 'libro' aquí
+                int cantidadEjemplares = spinnerCantidadEjemplares.getValue();
 
-            if (libroEditado != null) {
+// Insertar ejemplares si la cantidad es mayor a 0
+                if (cantidadEjemplares > 0) {
+                    // Obtenemos la ubicacion como un String directamente del campo de texto
+                    String ubicacion = txtUbicacion.getText().trim();
+
+                    // Llama al método del DAO pasando el id del libro, la cantidad y la ubicacion (String)
+                    boolean insertExito = ejemplarDao.insertarVariosEjemplares(libro.getId(), cantidadEjemplares, ubicacion);
+                    if (insertExito) {
+                        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro y " + cantidadEjemplares + " ejemplares registrados correctamente.");
+                    } else {
+                        mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Libro registrado, pero hubo un problema al guardar los ejemplares.");
+                    }
+                } else {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro registrado correctamente.");
+                }
+            } else {
+                // Es una edición:
                 libroDao.update(libro);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
-            } else {
-                libroDao.create(libro);
-                agregado = true;
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro registrado correctamente.");
             }
 
             cerrarModal();

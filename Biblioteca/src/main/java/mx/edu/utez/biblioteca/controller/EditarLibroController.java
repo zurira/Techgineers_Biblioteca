@@ -29,14 +29,18 @@ public class EditarLibroController implements Initializable {
     @FXML private Button btnCargarUrl;
     @FXML private Button btnGuardar;
     @FXML private Button btnCancelar;
+    @FXML private Spinner<Integer> spinnerCantidadEjemplares;
+    @FXML private TextField txtUbicacion;
 
     // Instancias de los DAOs
     private LibroDaoImpl libroDao = new LibroDaoImpl();
     private AutorDaoImpl autorDao = new AutorDaoImpl();
     private EditorialDaoImpl editorialDao = new EditorialDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private final EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
 
     private Libro libroActual;
+    private Ejemplar ejemplarActual;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -179,7 +183,9 @@ public class EditarLibroController implements Initializable {
                 cmbEditorial.getSelectionModel().isEmpty() ||
                 txtSinopsis.getText().trim().isEmpty() ||
                 cmbCategoria.getSelectionModel().isEmpty() ||
-                txtAnioPublicacion.getText().trim().isEmpty()) {
+                txtAnioPublicacion.getText().trim().isEmpty() ||
+                txtUrlPortada.getText().trim().isEmpty() ||
+                txtUbicacion.getText().trim().isEmpty()){
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos obligatorios del formulario.");
             return;
@@ -208,9 +214,27 @@ public class EditarLibroController implements Initializable {
 
             libroDao.update(libroActual);
 
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
-            cerrarModal();
+            // Se verifica si se deben insertar nuevos ejemplares
+            int cantidad = spinnerCantidadEjemplares.getValue();
+            String ubicacion = txtUbicacion.getText().trim();
 
+            if (cantidad > 0) {
+                if (ubicacion.isEmpty()) {
+                    mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "La ubicación no puede estar vacía si deseas agregar ejemplares.");
+                    return;
+                }
+
+                boolean exito = ejemplarDao.insertarVariosEjemplares(libroActual.getId(), cantidad, ubicacion);
+                if (exito) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado y se agregaron " + cantidad + " ejemplares.");
+                } else {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "Libro actualizado, pero hubo un problema al agregar los ejemplares.");
+                }
+            } else {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Libro actualizado correctamente.");
+            }
+
+            cerrarModal();
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Año de Publicación Inválido", "El año de publicación debe ser un número válido (ej. 2023).");
         } catch (SQLException e) {
@@ -221,6 +245,7 @@ public class EditarLibroController implements Initializable {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al actualizar el libro.", e.getMessage());
         }
     }
+
 
     @FXML
     private void onCancelar() {

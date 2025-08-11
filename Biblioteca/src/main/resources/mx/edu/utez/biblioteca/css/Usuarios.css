@@ -141,12 +141,6 @@
     -fx-background-color: #726262;
 }
 
-.btnlogout {
-    -fx-background-color: transparent;
-    -fx-padding: 5px;
-    -fx-cursor: hand;
-}
-
 .LabelTarifa{
     -fx-font-size: 14px;
     -fx-border-radius: 5px;
@@ -329,9 +323,22 @@
 .status-activo {
     -fx-background-color: #DCFCE7;
     -fx-text-fill: #4CAF50;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
 }
 
 .status-inactivo {
     -fx-background-color: #FEE2E2;
     -fx-text-fill: #B34F4F;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
+}
+.btnlogout {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
 }

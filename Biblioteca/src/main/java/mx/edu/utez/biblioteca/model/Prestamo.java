@@ -12,8 +12,10 @@ public class Prestamo {
     private LocalDate fechaReal;
     private String estado;
     private int idUsuario;
+    private int idEjemplar;
     private Libro libro;
     private UsuarioBiblioteca usuario;
+    private Ejemplar ejemplar;
 
     private double multa; // ← esta propiedad debe existir
 
@@ -41,14 +43,16 @@ public class Prestamo {
         this.libro = libro;
     }
 
-    public Prestamo(int id, String usuarioNombre, String correo, LocalDate fechaPrestamo, LocalDate fechaLimite, String estado, LocalDate fechaDevolucion) {
+    public Prestamo(int id, String usuarioNombre, String correo, LocalDate fechaPrestamo, String estado, LocalDate fechaReal, LocalDate fechaLimite, int idUsuario, int idEjemplar) {
         this.id = id;
         this.usuarioNombre = usuarioNombre;
         this.correo = correo;
         this.fechaPrestamo = fechaPrestamo;
-        this.fechaLimite = fechaLimite;
         this.estado = estado;
         this.fechaReal = fechaReal;
+        this.fechaLimite = fechaLimite;
+        this.idUsuario = idUsuario;
+        this.idEjemplar = idEjemplar;
     }
 
     public Prestamo() {
@@ -133,5 +137,20 @@ public class Prestamo {
     }
     public int getIdUsuario() { return idUsuario; }
     public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
-}
 
+    public int getIdEjemplar() {
+        return idEjemplar;
+    }
+
+    public void setIdEjemplar(int idEjemplar) {
+        this.idEjemplar = idEjemplar;
+    }
+
+    public Ejemplar getEjemplar() {
+        return ejemplar;
+    }
+
+    public void setEjemplar(Ejemplar ejemplar) {
+        this.ejemplar = ejemplar;
+    }
+}

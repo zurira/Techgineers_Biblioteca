@@ -1,20 +1,25 @@
-/* Estilo del contenedor principal */
+/* ===== Contenedor principal ===== */
 .anchor-pane {
     -fx-background-color: #F1EFEF;
 }
 
-/* Estilo para los títulos y etiquetas */
+/* ===== Tipografía general ===== */
 .label {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-text-fill: black;
+    -fx-text-fill: #333333;
 }
 
 .label.h1 {
-    -fx-font-size: 22px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-/* Estilo para los campos de texto y área de texto */
+.label.h2 {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ===== Campos de texto y área de texto ===== */
 .text-field, .text-area {
     -fx-background-color: white;
     -fx-border-color: #A38F85;
@@ -31,7 +36,7 @@
     -fx-wrap-text: true;
 }
 
-/* Estilo para los ComboBox */
+/* ===== ComboBox ===== */
 .combo-box {
     -fx-background-color: white;
     -fx-border-color: #A38F85;
@@ -42,7 +47,17 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-/* Estilo del botón de "Guardar" */
+/* ===== Spinner ===== */
+.spinner {
+    -fx-background-color: white;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== Botón Guardar ===== */
 #btnGuardar {
     -fx-background-color: #A38F85;
     -fx-text-fill: white;
@@ -57,7 +72,7 @@
     -fx-background-color: #8D7A70;
 }
 
-/* Estilo del botón de "Cancelar" */
+/* ===== Botón Cancelar ===== */
 #btnCancelar {
     -fx-background-color: #E2DAD6;
     -fx-text-fill: #5C504A;
@@ -72,7 +87,7 @@
     -fx-background-color: #CFC5BE;
 }
 
-/* Estilo para el botón de cargar URL (icon-button) */
+/* ===== Botón Cargar URL ===== */
 .icon-button {
     -fx-background-color: #E2DAD6;
     -fx-text-fill: #5C504A;
@@ -85,4 +100,52 @@
 
 .icon-button:hover {
     -fx-background-color: #CFC5BE;
+}
+
+/* ===== Botones con íconos (Agregar Autor, Editorial, Categoría) ===== */
+.icon-button-hover {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-padding: 0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.icon-button-hover:hover {
+    -fx-background-color: #8D7A70;
+}
+
+/* ===== Contenedor de secciones (opcional para HBox/VBox) ===== */
+.hbox, .vbox {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D3CFCF;
+    -fx-border-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.2, 0, 2);
+}
+
+/* ===== Validación visual (puedes aplicar esta clase desde el controlador) ===== */
+.invalid {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}
+
+.combo-box, .button.plus {
+    -fx-pref-height: 30px;
+}
+
+.hboxcom {
+    -fx-pref-width: 400px; /* Igual que el campo de título */
+}
+
+.spinner {
+    -fx-pref-height: 30px;
+    -fx-font-size: 14px;
 }

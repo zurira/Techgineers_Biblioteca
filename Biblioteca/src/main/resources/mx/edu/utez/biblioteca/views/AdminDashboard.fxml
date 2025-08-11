@@ -121,18 +121,18 @@
                             <Insets left="20.0" top="20.0" />
                         </VBox.margin>
                     </Label>
-                    <TableView fx:id="tableViewLibros" prefHeight="450.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tableViewLibros" prefHeight="450.0"  VBox.vgrow="ALWAYS" >
                         <columns>
-                            <TableColumn fx:id="colNo" prefWidth="50.0" text="No." />
-                            <TableColumn fx:id="colISBN" prefWidth="100.0" text="ISBN" />
-                            <TableColumn fx:id="colTituloLibro" prefWidth="180.0" text="Título del Libro" />
-                            <TableColumn fx:id="colAutor" prefWidth="120.0" text="Autor" />
-                            <TableColumn fx:id="colEditorial" prefWidth="100.0" text="Editorial" />
-                            <TableColumn fx:id="colResumen" prefWidth="150.0" text="Sinopsis" />
-                            <TableColumn fx:id="colCategoria" prefWidth="100.0" text="Categoría" />
+                            <TableColumn fx:id="colNo" prefWidth="60.0" text="No." />
+                            <TableColumn fx:id="colISBN" prefWidth="120.0" text="ISBN" />
+                            <TableColumn fx:id="colTituloLibro" prefWidth="220.0" text="Título del Libro" />
+                            <TableColumn fx:id="colAutor" prefWidth="180.0" text="Autor" />
+                            <TableColumn fx:id="colEditorial" prefWidth="120.0" text="Editorial" />
+                            <TableColumn fx:id="colCategoria" prefWidth="120.0" text="Categoría" />
                             <TableColumn fx:id="colAnioPublicacion" prefWidth="80.0" text="Año Pub." />
+                            <TableColumn fx:id="colStock" text="Stock" prefWidth="80.0" />
                             <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado"/>
-                            <TableColumn fx:id="colAcciones" prefWidth="90.0" text="Acciones" />
+                            <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" />
                         </columns>
                         <VBox.margin>
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

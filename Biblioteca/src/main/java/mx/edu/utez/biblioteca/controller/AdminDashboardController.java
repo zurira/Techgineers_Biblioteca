@@ -3,6 +3,7 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -24,6 +26,8 @@ import mx.edu.utez.biblioteca.model.Editorial;
 import mx.edu.utez.biblioteca.model.Libro;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,6 +76,9 @@ public class AdminDashboardController {
     private TableColumn<Libro, String> colEstado;
 
     @FXML
+    private TableColumn<Libro, Integer> colStock;
+
+    @FXML
     private TableColumn<Libro, Void> colAcciones;
 
     @FXML
@@ -89,6 +96,7 @@ public class AdminDashboardController {
     public void initialize() {
         libroDao = new LibroDaoImpl();
         configurarColumnasTabla();
+        lblSinResultados.setVisible(false);
         tableViewLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         cargarLibros();
 
@@ -133,8 +141,6 @@ public class AdminDashboardController {
             return new SimpleStringProperty(editorial != null ? editorial.getNombre() : "N/A");
         });
 
-        colResumen.setCellValueFactory(new PropertyValueFactory<>("resumen"));
-
         colCategoria.setCellValueFactory(cellData -> {
             Categoria categoria = cellData.getValue().getCategoria();
             return new SimpleStringProperty(categoria != null ? categoria.getNombre() : "N/A");
@@ -175,6 +181,8 @@ public class AdminDashboardController {
                 }
             };
         });
+
+        colStock.setCellValueFactory(new PropertyValueFactory<>("stockDisponible"));
 
         // Columna de Acciones (Editar, ver y cambiar estado)
         colAcciones.setCellFactory(param -> new TableCell<Libro, Void>() {
@@ -239,16 +247,50 @@ public class AdminDashboardController {
     }
 
     private void cargarLibros() {
-        try {
-            listaLibros = FXCollections.observableArrayList(libroDao.findAll());
-            tableViewLibros.setItems(listaLibros);
-            lblSinResultados.setVisible(listaLibros.isEmpty());
-        } catch (Exception e) {
+        Task<List<Libro>> cargaLibrosTask = new Task<>() {
+            @Override
+            protected List<Libro> call() throws Exception {
+                // Este código se ejecuta en un hilo de fondo, no congela la interfaz
+                EjemplarDaoImpl ejemplarDao = new EjemplarDaoImpl();
+                List<Libro> libros = libroDao.findAll();
+
+                // Alternativa 1: Consulta optimizada para cargar el stock de todos los libros a la vez
+                Map<Integer, Integer> stockPorLibro = ejemplarDao.obtenerStockPorLibro();
+
+                for (Libro libro : libros) {
+                    int idLibro = libro.getId();
+                    int stock = stockPorLibro.getOrDefault(idLibro, 0);
+                    libro.setStockDisponible(stock);
+                }
+                return libros;
+            }
+        };
+
+        cargaLibrosTask.setOnSucceeded(event -> {
+            // Esta parte se ejecuta en el hilo principal de la UI
+            try {
+                List<Libro> librosCargados = cargaLibrosTask.getValue();
+                listaLibros = FXCollections.observableArrayList(librosCargados);
+                tableViewLibros.setItems(listaLibros);
+                lblSinResultados.setVisible(listaLibros.isEmpty());
+            } catch (Exception e) {
+                // Manejo de errores si algo falla después de la carga exitosa
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error de Visualización", "No se pudieron mostrar los datos.", "Hubo un error al procesar los resultados de la base de datos.");
+            }
+        });
+
+        cargaLibrosTask.setOnFailed(event -> {
+            // Manejo de errores si la tarea del hilo de fondo falla
+            Throwable e = cargaLibrosTask.getException();
             e.printStackTrace();
-            System.err.println("Error al cargar libros: " + e.getMessage());
+            System.err.println("Error al cargar libros en el hilo de fondo: " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error de Carga", "No se pudieron cargar los libros",
-                    "Hubo un error al intentar obtener los datos de los libros. Por favor, revisa la conexión a la base de datos.");
-        }
+                    "Hubo un error al intentar obtener los datos de la base de datos. Por favor, revisa la conexión.");
+        });
+
+        // Inicia la tarea en un nuevo hilo
+        new Thread(cargaLibrosTask).start();
     }
 
     private void filtrarLibros(String filtro) {
