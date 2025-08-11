@@ -4,13 +4,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
@@ -447,6 +450,63 @@ public class AdminDashboardController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irEstadisticas(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irBibliotecarios(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Bibliotecario.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irLibros(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AdminDashboard.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

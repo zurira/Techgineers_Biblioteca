@@ -61,11 +61,11 @@ public class UsuarioController {
                         break;
                     case "ADMINISTRADOR":
                         System.out.println("Cargando vista de administrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/AdminDashboard.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/estadisticasAdmin.fxml"));
                         break;
                     case "BIBLIOTECARIO":
                         System.out.println("Cargando vista de bibliotecario");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
                         break;
                     default:
                         showAlert("Error", "Rol no reconocido.");

@@ -374,6 +374,25 @@ public class AdminBiblioController {
         }
     }
 
+    @FXML
+    private void irEstadisticas(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
+            Region root = (Region) loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            root.prefWidthProperty().bind(stage.widthProperty());
+            root.prefHeightProperty().bind(stage.heightProperty());
+            Scene scene = new Scene(root);
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
