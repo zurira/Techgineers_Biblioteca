@@ -12,6 +12,7 @@ import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl; // Necesitas el
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.time.format.DateTimeFormatter; // Para formatear la fecha
 
 
@@ -51,22 +52,33 @@ public class VerUsuarioController {
         }
     }
 
-    // Método para cargar la fotografía desde los bytes y manejar errores
+
     private void cargarFotografia(byte[] fotoBytes) {
+        Image defaultImage = null;
+        try {
+            // Intenta cargar la imagen por defecto una sola vez
+            InputStream defaultStream = getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png");
+            if (defaultStream != null) {
+                defaultImage = new Image(defaultStream);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar la imagen por defecto: " + e.getMessage());
+        }
+
         if (fotoBytes != null && fotoBytes.length > 0) {
             try {
-                // Intenta crear la imagen desde los bytes
-                Image image = new Image(new ByteArrayInputStream(fotoBytes));
-                imgFoto.setImage(image);
+                // Intenta crear la imagen desde los bytes del usuario
+                Image userImage = new Image(new ByteArrayInputStream(fotoBytes));
+                imgFoto.setImage(userImage);
             } catch (Exception e) {
-                // Si hay un error, lo imprime y muestra una imagen por defecto
+                // Si hay un error, lo imprime y muestra la imagen por defecto
                 e.printStackTrace();
-                System.err.println("Error al cargar la fotografía del usuario: " + e.getMessage());
-                imgFoto.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
+                System.err.println("Error al convertir la fotografía del usuario. Se usará una imagen por defecto.");
+                imgFoto.setImage(defaultImage);
             }
         } else {
-            // Si no hay foto, usa una imagen por defecto
-            imgFoto.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
+            // Si no hay foto, usa la imagen por defecto
+            imgFoto.setImage(defaultImage);
         }
     }
 
