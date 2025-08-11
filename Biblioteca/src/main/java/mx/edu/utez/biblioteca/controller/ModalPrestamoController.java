@@ -21,6 +21,7 @@ import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -137,13 +138,8 @@ public class ModalPrestamoController implements Initializable {
         LocalDate fechaDevolucion = dpFechaDevolucion.getValue();
 
         // Validaciones contra el día actual
-        if (fechaPrestamo.isBefore(hoy)) {
-            mostrarAlerta("La fecha de préstamo no puede ser anterior al día actual.");
-            return;
-        }
-
-        if (fechaPrestamo.isAfter(hoy)) {
-            mostrarAlerta("La fecha de préstamo no puede ser posterior al día actual.");
+        if (fechaPrestamo.isBefore(hoy) || fechaPrestamo.isAfter(hoy)) {
+            mostrarAlerta("La fecha de préstamo debe ser el día actual.");
             return;
         }
 
@@ -178,39 +174,51 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        Prestamo prestamo = new Prestamo();
-        prestamo.setUsuario(usuarioSeleccionado);
-        prestamo.setFechaPrestamo(fechaPrestamo);
-        prestamo.setFechaLimite(fechaLimite);
-        prestamo.setFechaReal(fechaDevolucion);
-        prestamo.setEstado(cbEstado.getValue());
+        // Se crea una lista para almacenar los IDs de los préstamos insertados
+        List<Integer> prestamoIds = new ArrayList<>();
 
         try {
-            boolean creado = prestamoDAO.create(prestamo);
-
-            if (!creado) {
-                mostrarAlerta("No se pudo crear el préstamo.");
-                return;
-            }
-
-            int idPrestamo = prestamo.getId();
             boolean exito = true;
 
-            for (Ejemplar ej : seleccionados) {
-                boolean detalleInsertado = detalleDAO.insertarEjemplar(idPrestamo, ej.getIdEjemplar());
-                boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ej.getIdEjemplar(), false);
+            // Iteramos sobre cada ejemplar seleccionado para crear un préstamo individual
+            for (Ejemplar ejemplarSeleccionado : seleccionados) {
+                Prestamo prestamo = new Prestamo();
+                prestamo.setUsuario(usuarioSeleccionado);
+                prestamo.setFechaPrestamo(fechaPrestamo);
+                prestamo.setFechaLimite(fechaLimite);
+                prestamo.setFechaReal(fechaDevolucion);
+                prestamo.setEstado(cbEstado.getValue());
+                prestamo.setEjemplar(ejemplarSeleccionado); // Asignar el objeto Ejemplar al préstamo
 
-                if (!detalleInsertado || !disponibilidadActualizada) {
+                // Insertamos el préstamo en la base de datos
+                boolean creado = prestamoDAO.create(prestamo);
+
+                if (creado) {
+                    // Si el préstamo se crea, guardamos su ID
+                    prestamoIds.add(prestamo.getId());
+
+                    // Actualizamos el estado del ejemplar a 'PRESTADO'
+                    boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ejemplarSeleccionado.getIdEjemplar(), false);
+
+                    if (!disponibilidadActualizada) {
+                        exito = false;
+                        System.err.println("Error al actualizar la disponibilidad del ejemplar: " + ejemplarSeleccionado.getIdEjemplar());
+                        break;
+                    }
+
+                } else {
                     exito = false;
+                    System.err.println("Error al crear el préstamo para el ejemplar: " + ejemplarSeleccionado.getIdEjemplar());
                     break;
                 }
             }
 
             if (exito) {
-                mostrarAlerta("Préstamo registrado exitosamente con todos los ejemplares.");
+                mostrarAlerta("Préstamo(s) registrado(s) exitosamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Ocurrió un error al registrar uno o más ejemplares.");
+                // Aquí puedes agregar lógica para hacer rollback si es necesario
+                mostrarAlerta("Ocurrió un error al registrar uno o más préstamos. Revise el log.");
             }
 
         } catch (Exception e) {
@@ -220,7 +228,6 @@ public class ModalPrestamoController implements Initializable {
 
         limpiarFormulario();
     }
-
 
     private void cerrarVentana() {
         Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();

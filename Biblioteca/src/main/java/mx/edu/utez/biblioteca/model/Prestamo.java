@@ -15,6 +15,7 @@ public class Prestamo {
     private int idEjemplar;
     private Libro libro;
     private UsuarioBiblioteca usuario;
+    private Ejemplar ejemplar;
 
     private double multa; // ← esta propiedad debe existir
 
@@ -143,6 +144,14 @@ public class Prestamo {
 
     public void setIdEjemplar(int idEjemplar) {
         this.idEjemplar = idEjemplar;
+    }
+
+    public Ejemplar getEjemplar() {
+        return ejemplar;
+    }
+
+    public void setEjemplar(Ejemplar ejemplar) {
+        this.ejemplar = ejemplar;
     }
 }
 
