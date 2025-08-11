@@ -43,7 +43,7 @@ public class EditarBibliotecarioController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
+       // comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
     }
 
     private void cargarDatos() {
@@ -53,7 +53,7 @@ public class EditarBibliotecarioController implements Initializable {
         txtUsuario.setText(bibliotecarioActual.getUsername());
         txtPassword.setText(bibliotecarioActual.getPassword());
         txtDireccion.setText(bibliotecarioActual.getDireccion());
-        comboEstado.setValue(bibliotecarioActual.getEstado());
+        //comboEstado.setValue(bibliotecarioActual.getEstado());
 
         if (bibliotecarioActual.getFoto() != null) {
             Image img = new Image(new java.io.ByteArrayInputStream(bibliotecarioActual.getFoto()));
