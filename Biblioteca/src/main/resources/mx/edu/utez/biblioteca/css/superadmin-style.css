@@ -180,3 +180,12 @@
     -fx-fill: white;
 }
 
+.action-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+
+

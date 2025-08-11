@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.paint.Color?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -54,7 +55,17 @@
             <Label text="USUARIO"/>
             <TextField fx:id="txtcorreo" promptText="Ingresa tu correo o usuario" styleClass="login-input"/>
             <Label text="CONTRASEÑA"/>
-            <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input"/>
+            <StackPane alignment="CENTER_RIGHT">
+                <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input" />
+                <TextField fx:id="txtPasswordVisible" promptText="Ingresa contraseña" styleClass="login-input"
+                           visible="false" managed="false" />
+                <Button fx:id="togglePasswordBtn" onAction="#togglePasswordVisibility"
+                        styleClass="icon-button" StackPane.alignment="CENTER_RIGHT">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-eye" />
+                    </graphic>
+                </Button>
+            </StackPane>
             <Button fx:id="loginButton" text="Iniciar sesión" onAction="#onLogin" styleClass="login-button "/>
 
         </VBox>
