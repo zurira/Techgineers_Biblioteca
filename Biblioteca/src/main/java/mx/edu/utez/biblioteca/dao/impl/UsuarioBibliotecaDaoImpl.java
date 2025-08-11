@@ -130,9 +130,56 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
     }
 
 
+    // Reemplaza el método update en tu UsuarioBibliotecaDaoImpl con este código
     @Override
     public void update(UsuarioBiblioteca usuario) throws Exception {
-        String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ? WHERE ID = ?";
+        String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ?, FOTOGRAFIA = ? WHERE ID = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            // 1. Asigna el nombre
+            ps.setString(1, usuario.getNombre());
+
+            // 2. Asigna la fecha. Asegúrate de que no es nula.
+            if (usuario.getFechaNacimiento() != null) {
+                ps.setDate(2, Date.valueOf(usuario.getFechaNacimiento()));
+            } else {
+                ps.setNull(2, Types.DATE); // Si es nula, asigna un valor NULL
+            }
+
+            // 3. Asigna el correo
+            ps.setString(3, usuario.getCorreo());
+
+            // 4. Asigna el teléfono
+            ps.setString(4, usuario.getTelefono());
+
+            // 5. Asigna la dirección
+            ps.setString(5, usuario.getDireccion());
+
+            // 6. Asigna el estado. Esto podría ser el causante del error.
+            if (usuario.getEstado() != null) {
+                ps.setString(6, usuario.getEstado());
+            } else {
+                ps.setNull(6, Types.VARCHAR); // Asigna NULL si el estado es nulo
+            }
+
+            // 7. Asigna la foto
+            if (usuario.getFotografia() != null) {
+                ps.setBytes(7, usuario.getFotografia());
+            } else {
+                ps.setNull(7, Types.BLOB);
+            }
+
+            // 8. Asigna el ID para el WHERE
+            ps.setInt(8, usuario.getId());
+
+            ps.executeUpdate();
+        }
+    }
+
+    public void update(UsuarioBiblioteca usuario, File fotoFile) throws Exception {
+        String query = "UPDATE USUARIO_BIBLIOTECA SET NOMBRE = ?, FECHA_NACIMIENTO = ?, CORREO = ?, TELEFONO = ?, DIRECCION = ?, ESTADO = ?, FOTOGRAFIA = ? WHERE ID = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, usuario.getNombre());
@@ -141,13 +188,13 @@ public class UsuarioBibliotecaDaoImpl implements IUsuarioBiblioteca {
             ps.setString(4, usuario.getTelefono());
             ps.setString(5, usuario.getDireccion());
             ps.setString(6, usuario.getEstado());
-            ps.setInt(7, usuario.getId());
-            ps.executeUpdate();
 
-            if (usuario.getFotografia() != null) {
-                ps.setBytes(7, usuario.getFotografia());
+            if (fotoFile != null) {
+                try (FileInputStream fis = new FileInputStream(fotoFile)) {
+                    ps.setBinaryStream(7, fis, (int) fotoFile.length());
+                }
             } else {
-                ps.setNull(7, Types.BLOB);
+                ps.setNull(7, Types.BLOB); // Si no se selecciona nueva foto, se pone NULL
             }
 
             ps.setInt(8, usuario.getId());
