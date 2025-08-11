@@ -9,35 +9,28 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/VerBibliotecario.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.VerBibliotecarioController">
+<VBox prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/VerBibliotecario.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.VerBibliotecarioController">
     <!-- Título principal en la parte superior -->
     <Label styleClass="label-form" text="Información del Bibliotecario" style="-fx-font-size: 22px; -fx-font-weight: bold;">
         <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
         </padding>
     </Label>
-    <HBox prefHeight="600.0" prefWidth="900.0">
+    <!-- Contenedor principal para la foto y los campos -->
+    <HBox prefHeight="600.0" prefWidth="900.0" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+
         <!-- Panel Izquierdo: Contenedor para la foto -->
-        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="360.0" styleClass="image-container" HBox.hgrow="NEVER">
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
+        <VBox alignment="TOP_CENTER" prefWidth="360.0" styleClass="image-container" HBox.hgrow="NEVER">
             <children>
-                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-                    <children>
-                        <ImageView fx:id="imgFoto" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
-                    </children>
-                </VBox>
+                <ImageView fx:id="imgFoto" fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
             </children>
         </VBox>
 
         <!-- Panel Derecho: Todos los campos del formulario -->
         <VBox spacing="20.0" styleClass="info-container" HBox.hgrow="ALWAYS">
-            <!-- He ajustado el margen superior del VBox para alinear los campos con la imagen -->
-            <!-- He quitado el padding extra de la tabla para alinear con el borde de la imagen -->
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="25.0" />
-            </padding>
             <children>
                 <VBox spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
@@ -83,7 +76,6 @@
                         <VBox spacing="5.0">
                             <children>
                                 <Label styleClass="label-form" text="Dirección" />
-                                <!-- He cambiado el valor de 'prefHeight' a 100.0 para que el campo de texto sea más alto -->
                                 <TextArea fx:id="txtDireccion" editable="false" prefHeight="100.0" wrapText="true" styleClass="text-field" />
                             </children>
                         </VBox>

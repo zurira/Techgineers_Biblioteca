@@ -42,6 +42,12 @@
     -fx-wrap-text: true;
 }
 
+/* Reglas adicionales para forzar el color de fondo en el contenido interno */
+.text-area .scroll-pane,
+.text-area .content {
+    -fx-background-color: #E2DAD6;
+}
+
 /* Estilo para el botón de "Cerrar" */
 .button {
     -fx-background-color: #A38F85;
