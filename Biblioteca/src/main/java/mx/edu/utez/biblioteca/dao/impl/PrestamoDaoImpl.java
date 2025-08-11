@@ -82,16 +82,18 @@ public class PrestamoDaoImpl implements IPrestamo {
 
     @Override
     public boolean create(Prestamo prestamo) throws Exception {
+        // La consulta se mantiene igual
         String query = "INSERT INTO PRESTAMO (ID_USUARIO, FECHA_PRESTAMO, FECHA_LIMITE, ESTADO, ID_EJEMPLAR) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query, new String[]{"ID"})) {
 
-            ps.setInt(1, prestamo.getIdEjemplar());
-            ps.setInt(2, prestamo.getUsuario().getId());
-            ps.setDate(3, Date.valueOf(prestamo.getFechaPrestamo()));
-            ps.setDate(4, Date.valueOf(prestamo.getFechaLimite()));
-            ps.setString(5, prestamo.getEstado());
+            // El orden de los parámetros debe coincidir con las columnas de la consulta
+            ps.setInt(1, prestamo.getUsuario().getId());
+            ps.setDate(2, Date.valueOf(prestamo.getFechaPrestamo()));
+            ps.setDate(3, Date.valueOf(prestamo.getFechaLimite()));
+            ps.setString(4, prestamo.getEstado());
+            ps.setInt(5, prestamo.getIdEjemplar()); // Ahora el ID del ejemplar se asigna en el lugar correcto
 
             int affectedRows = ps.executeUpdate();
 
@@ -109,7 +111,6 @@ public class PrestamoDaoImpl implements IPrestamo {
             return true;
         }
     }
-
 
 
     @Override
