@@ -7,84 +7,75 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.collections.FXCollections?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import java.lang.String?>
-
 <?import javafx.scene.layout.HBox?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.EditAdminController"
-            prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;">
 
-    <!-- Foto -->
-    <VBox layoutX="30" layoutY="70">
-        <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"/>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.biblioteca.controller.EditAdminController"
+            prefWidth="950" prefHeight="570"
+            style="-fx-background-color: #F1EFEF;">
+
+    <!-- Imagen y botón con altura fija -->
+    <VBox layoutX="30" layoutY="70" spacing="10">
+        <StackPane prefWidth="160" prefHeight="280"
+                   style="-fx-background-color: #F1EFEF; -fx-border-color: #A38F85; -fx-border-radius: 5;">
+            <ImageView fx:id="imageView" fitWidth="160" fitHeight="280" preserveRatio="true"
+                       style="-fx-effect: dropshadow(gaussian, #A38F85, 8, 0.3, 0, 2);"/>
+        </StackPane>
         <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
-                onAction="#onSeleccionarImagen" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+                onAction="#onSeleccionarImagen"
+                style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;"/>
     </VBox>
 
-    <!-- Título del modal -->
-    <Label layoutX="30" layoutY="20" text="Editar información del administrador"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <!-- Título -->
+    <Label layoutX="250" layoutY="20" text="Editar información del administrador"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5C4B4B;"/>
 
-    <!-- Campos de texto -->
+    <!-- Columna izquierda -->
     <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
-    <TextField fx:id="tfNombre" layoutX="250" layoutY="95" prefWidth="200"/>
+    <TextField fx:id="tfNombre" layoutX="250" layoutY="95" prefWidth="300" prefHeight="35"/>
 
-    <Label layoutX="470" layoutY="70" text="Correo:*"/>
-    <TextField fx:id="tfCorreo" layoutX="470" layoutY="95" prefWidth="200"/>
+    <Label layoutX="250" layoutY="140" text="Correo:*"/>
+    <TextField fx:id="tfCorreo" layoutX="250" layoutY="165" prefWidth="300" prefHeight="35"/>
 
-    <Label layoutX="690" layoutY="70" text="Teléfono:*"/>
-    <TextField fx:id="tfTelefono" layoutX="690" layoutY="95" prefWidth="200"/>
+    <Label layoutX="250" layoutY="210" text="Usuario:*"/>
+    <TextField fx:id="tfUsuario" layoutX="250" layoutY="235" prefWidth="300" prefHeight="35"/>
 
-    <Label layoutX="250" layoutY="135" text="Usuario:*"/>
-    <TextField fx:id="tfUsuario" layoutX="250" layoutY="160" prefWidth="200"/>
+    <!-- Columna derecha -->
+    <Label layoutX="580" layoutY="70" text="Teléfono:*"/>
+    <TextField fx:id="tfTelefono" layoutX="580" layoutY="95" prefWidth="300" prefHeight="35"/>
 
-    <Label layoutX="470" layoutY="135" text="Contraseña:*"/>
-    <StackPane layoutX="470" layoutY="160" prefWidth="160">
-        <!-- Campo oculto -->
+    <Label layoutX="580" layoutY="140" text="Contraseña:*"/>
+    <StackPane layoutX="580" layoutY="165" prefWidth="300" prefHeight="35">
         <PasswordField fx:id="pfContrasena" promptText="Contraseña"
-                       prefWidth="160" style="-fx-padding: 0 30 0 5;"/>
-
-        <!-- Campo visible -->
+                       prefWidth="300" prefHeight="35" style="-fx-padding: 0 30 0 5;"/>
         <TextField fx:id="tfContrasenaVisible" promptText="Contraseña"
-                   prefWidth="160" visible="false" managed="false"
+                   prefWidth="300" prefHeight="35" visible="false" managed="false"
                    style="-fx-padding: 0 30 0 5;"/>
-
-        <!-- Botón del ojo dentro del campo -->
         <Button fx:id="btnTogglePassword"
                 style="-fx-background-color: transparent; -fx-cursor: hand;"
-                maxHeight="20"
-                prefWidth="30"
-                StackPane.alignment="CENTER_RIGHT"
-                translateX="-5">
+                maxHeight="20" prefWidth="30"
+                StackPane.alignment="CENTER_RIGHT" translateX="-5">
             <graphic>
                 <FontIcon iconLiteral="fa-eye" iconSize="16"/>
             </graphic>
         </Button>
     </StackPane>
 
-    <Label layoutX="690" layoutY="135" text="Rol:*"/>
-    <TextField fx:id="tfRol" layoutX="690" layoutY="160" prefWidth="200" editable="false"/>
+    <Label layoutX="580" layoutY="210" text="Rol:*"/>
+    <TextField fx:id="tfRol" layoutX="580" layoutY="235" prefWidth="300" prefHeight="35" editable="false"/>
 
-    <Label layoutX="250" layoutY="200" text="Estado:*"/>
-    <ComboBox fx:id="cbEstado" layoutX="250" layoutY="225" prefWidth="200">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Activo"/>
-                <String fx:value="Inactivo"/>
-            </FXCollections>
-        </items>
-    </ComboBox>
-
-    <Label layoutX="30" layoutY="280" text="Dirección:"/>
-    <TextField fx:id="tfDireccion" layoutX="30" layoutY="305" prefWidth="860"/>
+    <!-- Dirección alineada con las dos columnas -->
+    <Label layoutX="250" layoutY="300" text="Dirección:"/>
+    <TextField fx:id="tfDireccion" layoutX="250" layoutY="325" prefWidth="630" prefHeight="65"/>
 
     <!-- Botones -->
     <HBox layoutX="670" layoutY="500" spacing="10">
-        <Button text="Cancelar" onAction="#onCancelar" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
-        <Button text="Guardar" onAction="#onGuardar" style="-fx-background-color: #A38F85; -fx-text-fill: white;"/>
+        <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelar"
+                style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85; -fx-font-weight: bold;"/>
+        <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar"
+                style="-fx-background-color: #A38F85; -fx-text-fill: white; -fx-font-weight: bold;"/>
     </HBox>
 
 </AnchorPane>
