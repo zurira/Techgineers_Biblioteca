@@ -15,6 +15,8 @@ import java.util.List;
 public class PrestamoDaoImpl implements IPrestamo {
 // PrestamoDaoImpl.java
 
+// PrestamoDaoImpl.java
+
     private Prestamo buildPrestamoFromResultSet(ResultSet rs) throws SQLException {
         Prestamo prestamo = new Prestamo();
         prestamo.setId(rs.getInt("ID_PRESTAMO"));
@@ -24,25 +26,25 @@ public class PrestamoDaoImpl implements IPrestamo {
         prestamo.setFechaReal(fechaDevolucion != null ? fechaDevolucion.toLocalDate() : null);
         prestamo.setEstado(rs.getString("ESTADO"));
 
-        // Usuario
+        // ✅ Se crea y asigna el objeto Usuario
         UsuarioBiblioteca usuario = new UsuarioBiblioteca();
         usuario.setId(rs.getInt("ID_USUARIO"));
         usuario.setNombre(rs.getString("NOMBRE_USUARIO"));
         prestamo.setUsuario(usuario);
 
-        // ✅ Construir el objeto Libro
+        // ✅ Se crea y asigna el objeto Libro
         Libro libro = new Libro();
         libro.setId(rs.getInt("ID_LIBRO"));
         libro.setTitulo(rs.getString("TITULO_LIBRO"));
 
-        // ✅ Construir el objeto Ejemplar y asignarle el Libro
+        // ✅ Se crea y asigna el objeto Ejemplar, y se le asigna el Libro
         Ejemplar ejemplar = new Ejemplar();
         ejemplar.setIdEjemplar(rs.getInt("ID_EJEMPLAR"));
         ejemplar.setCodigo(rs.getString("CODIGO_EJEMPLAR"));
         ejemplar.setUbicacion(rs.getString("UBICACION_EJEMPLAR"));
-        ejemplar.setLibro(libro);
+        ejemplar.setLibro(libro); // Se establece la relación entre Ejemplar y Libro
 
-        // ✅ Asignar el objeto Ejemplar al Prestamo
+        // ✅ Se asigna el Ejemplar al Prestamo
         prestamo.setEjemplar(ejemplar);
 
         return prestamo;
@@ -105,11 +107,12 @@ public class PrestamoDaoImpl implements IPrestamo {
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query, new String[]{"ID"})) {
 
-            ps.setInt(1, prestamo.getIdEjemplar());
-            ps.setInt(2, prestamo.getUsuario().getId());
-            ps.setDate(3, Date.valueOf(prestamo.getFechaPrestamo()));
-            ps.setDate(4, Date.valueOf(prestamo.getFechaLimite()));
-            ps.setString(5, prestamo.getEstado());
+            // ✅ Se corrigen los índices de los parámetros para que coincidan con la consulta SQL.
+            ps.setInt(1, prestamo.getUsuario().getId());
+            ps.setDate(2, Date.valueOf(prestamo.getFechaPrestamo()));
+            ps.setDate(3, Date.valueOf(prestamo.getFechaLimite()));
+            ps.setString(4, prestamo.getEstado());
+            ps.setInt(5, prestamo.getEjemplar().getIdEjemplar());
 
             int affectedRows = ps.executeUpdate();
 
@@ -127,7 +130,6 @@ public class PrestamoDaoImpl implements IPrestamo {
             return true;
         }
     }
-
 
 
     @Override

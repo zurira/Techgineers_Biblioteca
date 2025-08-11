@@ -136,8 +136,8 @@ public class UsuarioBibliotecaController {
         colAcciones.setCellFactory(param -> new TableCell<UsuarioBiblioteca, Void>() {
             private final HBox buttons = new HBox(5);
             private final Button editButton = new Button();
-            private final Button changeStatusButton = new Button();
             private final Button viewButton = new Button();
+            private final Button changeStatusButton = new Button();
             {
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
@@ -153,7 +153,7 @@ public class UsuarioBibliotecaController {
 
                 // Alinea los botones a la izquierda
                 buttons.setAlignment(Pos.CENTER_LEFT);
-                buttons.getChildren().addAll(editButton, changeStatusButton, viewButton);
+                buttons.getChildren().addAll(editButton, viewButton, changeStatusButton);
 
                 editButton.setOnAction(event -> onEditUsuario(getTableView().getItems().get(getIndex())));
                 viewButton.setOnAction(event -> onViewUsuario(getTableView().getItems().get(getIndex())));

@@ -141,9 +141,12 @@ public class PrestamoController {
         });
 
         colTituloLibro.setCellValueFactory(cellData -> {
-            // Se obtiene el objeto Libro directamente del Prestamo
-            Libro libro = cellData.getValue().getLibro();
-            return new SimpleStringProperty(libro != null ? libro.getTitulo() : "N/A");
+            Prestamo prestamo = cellData.getValue();
+            if (prestamo != null && prestamo.getEjemplar() != null && prestamo.getEjemplar().getLibro() != null) {
+                return new SimpleStringProperty(prestamo.getEjemplar().getLibro().getTitulo());
+            } else {
+                return new SimpleStringProperty("N/A");
+            }
         });
 
         colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<>("fechaPrestamo"));
