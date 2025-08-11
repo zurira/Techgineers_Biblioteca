@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
+// Importaciones necesarias para la validación de la contraseña
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModalAgregarBibliotecarioController {
 
@@ -107,15 +110,31 @@ public class ModalAgregarBibliotecarioController {
 
         // --- VALIDACIÓN DE CORREO ---
         if (!correo.endsWith("@bibliotecario.com")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Correo Inválido", "El correo electrónico debe terminar en '@bibliotecariocom'.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Correo Inválido", "El correo electrónico debe terminar en '@bibliotecario.com'.");
             return;
         }
         // --- FIN DE LA VALIDACIÓN ---
 
+        // --- INICIO DE VALIDACIÓN DE CONTRASEÑA ---
+        String contrasena = txtContrasena.getText();
+        // La expresión regular valida:
+        // 1. Al menos una minúscula (?=.*[a-z])
+        // 2. Al menos una mayúscula (?=.*[A-Z])
+        // 3. Al menos un carácter especial (?=.*[^a-zA-Z0-9])
+        // 4. Longitud máxima de 5 caracteres, y mínima de 1 (.{1,5})
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{1,5}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasena);
+
+        if (!matcher.matches()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error en Contraseña", "Contraseña Inválida", "La contraseña debe tener un máximo de 5 caracteres y contener al menos una mayúscula, una minúscula y un carácter especial.");
+            return;
+        }
+        // --- FIN DE VALIDACIÓN DE CONTRASEÑA ---
+
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
         String telefono = txtTelefono.getText().trim();
-        String contrasena = txtContrasena.getText();
         String direccion = txtDireccion.getText().trim();
 
         // El estado y el rol se asignan por defecto
