@@ -86,7 +86,6 @@ public class UsuarioBibliotecaController {
                 }
             }
         });
-        // Ajuste de anchura para cada columna
         colNo.setPrefWidth(70);
         colNombreCompleto.setPrefWidth(180);
         colFechaNacimiento.setPrefWidth(160);
@@ -151,9 +150,8 @@ public class UsuarioBibliotecaController {
                 viewButton.getStyleClass().add("action-button");
                 viewButton.setTooltip(new Tooltip("Ver detalles"));
 
-                // Alinea los botones a la izquierda
                 buttons.setAlignment(Pos.CENTER_LEFT);
-                buttons.getChildren().addAll(editButton, changeStatusButton, viewButton);
+                buttons.getChildren().addAll(editButton, viewButton, changeStatusButton);
 
                 editButton.setOnAction(event -> onEditUsuario(getTableView().getItems().get(getIndex())));
                 viewButton.setOnAction(event -> onViewUsuario(getTableView().getItems().get(getIndex())));
@@ -166,7 +164,6 @@ public class UsuarioBibliotecaController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    // Alinea la celda completa a la izquierda
                     this.setAlignment(Pos.CENTER_LEFT);
                     UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
                     FontIcon statusIcon;
@@ -312,7 +309,7 @@ public class UsuarioBibliotecaController {
             controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
-            stage.setTitle("Verr Usuario");
+            stage.setTitle("Ver Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -384,7 +381,7 @@ public class UsuarioBibliotecaController {
                 Stage newStage = new Stage();
                 newStage.setTitle("Inicio de sesión");
                 newStage.setScene(new Scene(loginRoot));
-                newStage.setMaximized(true); //
+                newStage.setMaximized(true);
                 newStage.show();
 
             }
