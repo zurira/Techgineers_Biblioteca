@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -10,6 +11,7 @@ import mx.edu.utez.biblioteca.dao.impl.RolDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
 import mx.edu.utez.biblioteca.model.Rol;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,8 +31,8 @@ public class ModalAgregarBibliotecarioController {
     @FXML private TextField txtTelefono;
     @FXML private PasswordField txtContrasena;
     @FXML private TextArea txtDireccion;
-    @FXML
-    private TextField txtPasswordVisible;
+    @FXML private TextField txtPasswordVisible;
+    @FXML Button togglePasswordBtn;
 
     // Se eliminaron las variables FXML para los campos de estado y rol
 
@@ -64,6 +66,7 @@ public class ModalAgregarBibliotecarioController {
     /**
      * Permite al usuario seleccionar un archivo de imagen del sistema,desde los archivos propios
      */
+    @FXML
     private void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
@@ -209,25 +212,35 @@ public class ModalAgregarBibliotecarioController {
         alert.showAndWait();
     }
 
+    @FXML
     private void cerrarModal() {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();
     }
     @FXML
-    private void togglePasswordVisibility() {
-        boolean visible = txtPasswordVisible.isVisible();
-        if (visible) {
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = txtPasswordVisible.isVisible();
+
+        if (isVisible) {
             txtContrasena.setText(txtPasswordVisible.getText());
             txtPasswordVisible.setVisible(false);
             txtPasswordVisible.setManaged(false);
             txtContrasena.setVisible(true);
             txtContrasena.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye");
+            }
         } else {
             txtPasswordVisible.setText(txtContrasena.getText());
             txtContrasena.setVisible(false);
             txtContrasena.setManaged(false);
             txtPasswordVisible.setVisible(true);
             txtPasswordVisible.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye-slash");
+            }
         }
     }
 }

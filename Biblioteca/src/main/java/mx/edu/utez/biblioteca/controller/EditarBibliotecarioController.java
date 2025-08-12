@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,20 +72,29 @@ public class EditarBibliotecarioController implements Initializable {
     }
 
     @FXML
-    private void togglePasswordVisibility() {
-        boolean visible = txtPasswordVisible.isVisible();
-        if (visible) {
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = txtPasswordVisible.isVisible();
+
+        if (isVisible) {
             txtPassword.setText(txtPasswordVisible.getText());
             txtPasswordVisible.setVisible(false);
             txtPasswordVisible.setManaged(false);
             txtPassword.setVisible(true);
             txtPassword.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye");
+            }
         } else {
             txtPasswordVisible.setText(txtPassword.getText());
             txtPassword.setVisible(false);
             txtPassword.setManaged(false);
             txtPasswordVisible.setVisible(true);
             txtPasswordVisible.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye-slash");
+            }
         }
     }
 
