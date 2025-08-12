@@ -1,12 +1,12 @@
 /* General styling */
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
 }
 
 /* Sidebar */
 .sidebar {
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -130,8 +130,7 @@
     -fx-border-color: #ddd;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 3);
-    -fx-pref-width: 170;
+    -fx-pref-width: 195;
 }
 
 .card-libro:hover {
@@ -145,12 +144,94 @@
     -fx-alignment: center;
 }
 
+
+/* Estilo para el ScrollPane */
+.scrollLibro {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-opacity: 0;
+}
+
+#scrollLibros {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-width: 0;
+}
+
+#scrollLibros > .viewport {
+    -fx-background-color: transparent;
+}
+#txtBuscar {
+    -fx-background-color: #f5f5f5; /* Un gris claro para el fondo */
+    -fx-border-color: #cccccc; /* Un color de borde sutil */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 8px 10px; /* Espaciado interno */
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Color de texto */
+}
+
+/* Pseudo-clase para el foco (cuando el usuario hace clic) */
+#txtBuscar:focused {
+    -fx-border-color: #007bff; /* Color azul para el borde al enfocar */
+    -fx-background-color: #ffffff; /* Fondo blanco */
+}
+
+/* Estilo para el "prompt text" (el texto gris que dice "Buscar libro...") */
+.text-field > .prompt-text > .text {
+    -fx-fill: #888888;
+}
 .comboBox-cat {
-    -fx-background-color: #A38F85;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5;
-    -fx-padding: 5 10 5 10;
-    -fx-pref-height: 20px;
+    -fx-background-color: #f5f5f5; /* Fondo del ComboBox */
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 3px;
+    -fx-font-size: 14px;
+}
+
+/* Estilo para el botón de flecha */
+.comboBox-cat .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* Estilo para el triángulo de la flecha */
+.comboBox-cat .arrow-button .arrow {
+    -fx-background-color: #555555; /* Color de la flecha */
+}
+
+/* Estilo para el color de fondo cuando el ComboBox está abierto */
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+/* Estilo para los elementos de la lista desplegable */
+.combo-box-popup .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-padding: 5px 10px;
+}
+
+/* Pseudo-clase para cuando pasas el mouse por encima de un elemento de la lista */
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Estilo del botón de búsqueda */
+.search-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px 15px;
 }
 

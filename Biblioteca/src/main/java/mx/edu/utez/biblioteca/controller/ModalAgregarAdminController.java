@@ -1,6 +1,5 @@
 package mx.edu.utez.biblioteca.controller;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -8,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import mx.edu.utez.biblioteca.config.DBConnection;
 import mx.edu.utez.biblioteca.dao.impl.AdministradorDao;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,37 +19,59 @@ import java.sql.SQLException;
 
 public class ModalAgregarAdminController {
 
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCorreo;
-    @FXML private TextField txtTelefono;
-    @FXML private TextField txtUsuario;
+    @FXML private TextField txtNombre, txtCorreo, txtTelefono, txtUsuario, txtRol;
     @FXML private PasswordField txtContrasena;
-    @FXML private TextField txtRol;
-    @FXML private TextField txtEstado;
-    //@FXML private TextField txtDireccion;
+    @FXML private TextField txtContrasenaVisible;
+    @FXML private Button btnTogglePassword;
+    @FXML private TextArea txtDireccion;
+    @FXML private Button btnGuardar, btnCancelar, btnSeleccionarImagen;
+    @FXML private ImageView imageView;
 
-    // Indica si se agregó un administrador exitosamente
+    private File imagenSeleccionada;
     private boolean agregado = false;
+    private boolean mostrando = false;
 
-    // Getter para que el controlador padre sepa si debe refrescar
     public boolean seAgregoUsuario() {
         return agregado;
     }
-
-    @FXML private Button btnGuardar;
-    @FXML private Button btnCancelar;
-    @FXML private Button btnSeleccionarImagen;
-    @FXML private ImageView imageView;
-    @FXML
-    private TextArea txtDireccion;
-
-    private File imagenSeleccionada;
 
     @FXML
     public void initialize() {
         btnSeleccionarImagen.setOnAction(event -> seleccionarImagen());
         btnGuardar.setOnAction(event -> guardarAdministrador());
         btnCancelar.setOnAction(event -> cerrarModal());
+
+        Tooltip tooltip = new Tooltip("La contraseña debe tener al menos:\n• 12 caracteres\n• Una mayúscula\n• Una minúscula\n• Un número\n• Un carácter especial");
+        Tooltip.install(txtContrasena, tooltip);
+        Tooltip.install(txtContrasenaVisible, tooltip);
+
+        txtContrasena.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!mostrando) txtContrasenaVisible.setText(newVal);
+            actualizarEstiloCampo(txtContrasena, newVal);
+        });
+
+        txtContrasenaVisible.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (mostrando) txtContrasena.setText(newVal);
+            actualizarEstiloCampo(txtContrasenaVisible, newVal);
+        });
+
+        btnTogglePassword.setOnAction(e -> togglePasswordVisibility());
+    }
+
+    private void actualizarEstiloCampo(TextField campo, String valor) {
+        campo.setStyle(esContrasenaSegura(valor) ? "-fx-border-color: green;" : "-fx-border-color: red;");
+    }
+
+    private void togglePasswordVisibility() {
+        mostrando = !mostrando;
+        txtContrasenaVisible.setVisible(mostrando);
+        txtContrasenaVisible.setManaged(mostrando);
+        txtContrasena.setVisible(!mostrando);
+        txtContrasena.setManaged(!mostrando);
+
+        FontIcon icon = new FontIcon(mostrando ? "fa-eye-slash" : "fa-eye");
+        icon.setIconSize(16);
+        btnTogglePassword.setGraphic(icon);
     }
 
     private void seleccionarImagen() {
@@ -61,21 +83,32 @@ public class ModalAgregarAdminController {
 
         imagenSeleccionada = fileChooser.showOpenDialog(null);
         if (imagenSeleccionada != null) {
-            Image imagen = new Image(imagenSeleccionada.toURI().toString());
-            imageView.setImage(imagen);
+            imageView.setImage(new Image(imagenSeleccionada.toURI().toString()));
         }
     }
 
-
     private void guardarAdministrador() {
+        if (!camposValidos()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, llena todos los campos y selecciona una imagen antes de continuar.");
+            return;
+        }
+
+        String correo = txtCorreo.getText().trim();
+
+        //  Validación de dominio
+        if (!correo.endsWith("@administrador.com")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "Solo se permiten correos que terminen con '@administrador.com'.");
+            return;
+        }
+
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
-        String correo = txtCorreo.getText().trim();
         String telefono = txtTelefono.getText().trim();
         String contrasena = txtContrasena.getText();
-        String estado = txtEstado.getText().trim().equalsIgnoreCase("activo") ? "S" : "N";
         String direccion = txtDireccion.getText().trim();
-        int idRol = obtenerIdRolAdministrador(); // método que buscará el ID del rol "Administrador"
+        int idRol = obtenerIdRolAdministrador();
+
+        String estado = "S"; // Estado fijo como "Activo"
 
         InputStream fotoStream = null;
         try {
@@ -91,41 +124,56 @@ public class ModalAgregarAdminController {
         );
 
         if (exito) {
-            agregado = true; //  Marcamos éxito de forma interna
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("¡Administrador registrado exitosamente!");
-            alert.showAndWait();
+            agregado = true;
+            mostrarAlerta(Alert.AlertType.INFORMATION, null, "¡Administrador registrado exitosamente!");
             cerrarModal();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error al registrar");
-            alert.setContentText("Ocurrió un problema al guardar el administrador.");
-            alert.showAndWait();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar", "Ocurrió un problema al guardar el administrador.");
         }
     }
 
+    private boolean camposValidos() {
+        return !txtNombre.getText().trim().isEmpty()
+                && !txtCorreo.getText().trim().isEmpty()
+                && !txtTelefono.getText().trim().isEmpty()
+                && !txtUsuario.getText().trim().isEmpty()
+                && !txtContrasena.getText().trim().isEmpty()
+                && !txtRol.getText().trim().isEmpty()
+                && !txtDireccion.getText().trim().isEmpty()
+                && imagenSeleccionada != null;
+    }
 
     private void cerrarModal() {
         btnCancelar.getScene().getWindow().hide();
     }
-
 
     private int obtenerIdRolAdministrador() {
         String sql = "SELECT ID FROM ROL WHERE NOMBRE = 'Administrador'";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("ID");
-            }
+            if (rs.next()) return rs.getInt("ID");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 1; // Valor por defecto en caso de no encontrar el rol
+        return 1;
     }
 
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
+        Alert alert = new Alert(tipo);
+        alert.setHeaderText(titulo);
+        alert.setContentText(contenido);
+        alert.showAndWait();
+    }
 
+    private boolean esContrasenaSegura(String contrasena) {
+        if (contrasena == null || contrasena.length() < 12) return false;
 
+        boolean tieneMayuscula = contrasena.matches(".*[A-Z].*");
+        boolean tieneMinuscula = contrasena.matches(".*[a-z].*");
+        boolean tieneNumero = contrasena.matches(".*\\d.*");
+        boolean tieneEspecial = contrasena.matches(".*[!@#$%^&*()_+\\-={}\\[\\]:;\"'<>,.?/\\\\|].*");
+
+        return tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial;
+    }
 }

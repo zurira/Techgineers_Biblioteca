@@ -88,9 +88,9 @@
                         <padding>
                             <Insets top="20.0" left="20.0" right="20.0" bottom="20.0"/>
                         </padding>
-                        <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true">
+                        <ScrollPane fx:id="scrollLibros" fitToHeight="true" fitToWidth="true" styleClass="scrollLibro">
                             <content>
-                                <FlowPane fx:id="contenedorLibros" hgap="20.0" vgap="20.0" prefWrapLength="600.0"/>
+                                <FlowPane fx:id="contenedorLibros" hgap="20.0" vgap="20.0" prefWrapLength="900.0" styleClass="Contenedor"/>
                             </content>
                         </ScrollPane>
                         <Label fx:id="lblSinLibros"

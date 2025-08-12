@@ -1,0 +1,103 @@
+/* Estilos generales para el fondo */
+.root {
+    -fx-background-color: #F1EFEF;
+}
+
+/* Estilo para los títulos de los formularios */
+.label-form {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4A4A4A; /* Color de texto más oscuro para los labels */
+}
+
+/* Contenedor de la imagen de perfil */
+.image-container {
+    -fx-padding: 20px;
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: transparent; /* Borde transparente */
+    -fx-border-width: 1;
+    -fx-spacing: 15px;
+}
+
+/* Imagen de perfil */
+.image-view {
+    -fx-border-color: #D3D3D3;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* Contenedor principal de la información */
+.info-container {
+    -fx-padding: 20px;
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: transparent; /* Borde transparente */
+    -fx-border-width: 1;
+}
+
+/* Campos de texto y áreas de texto */
+.text-field, .text-area {
+    -fx-pref-height: 35px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ccc;
+    -fx-padding: 5 10 5 10;
+}
+
+.text-area {
+    -fx-pref-height: 100px;
+}
+.text-area .scroll-pane,
+.text-area .content {
+    -fx-background-color: #ffffff;
+}
+
+/* Contenedor del campo de contraseña con el ícono del ojo */
+.password-container {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+/* Estilo para el PasswordField dentro del contenedor */
+.password-field {
+    -fx-pref-height: 35px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ccc;
+    -fx-padding: 5 10 5 10;
+}
+
+/* Estilo para el botón dentro del StackPane */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-translate-x: -30;
+}
+
+/* Estilo del ícono del ojo */
+.eye-icon {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+}
+
+/* Estilos para los botones principales (Guardar) */
+.button-primary {
+    -fx-background-color: #A38F85; /* Color del botón "Guardar" del formulario "Editar libro" */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8px 20px;
+}
+
+/* Estilos para los botones secundarios (Cancelar y Cargar) */
+.button-secondary {
+    -fx-background-color: #E2DAD6; /* Color del botón "Cargar" del formulario "Editar libro" */
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8px 20px;
+}

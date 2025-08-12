@@ -1,12 +1,12 @@
-/* El diseño general de la vista de Administrador*/
+/* General styling */
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #EDE9E3;
 }
 
-/* Barra lateral */
+/* Sidebar */
 .sidebar {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #EDE9E3;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -32,7 +32,7 @@
 }
 
 .sidebar-item-active {
-    -fx-background-color: #d1ccc1; /*Se torna más oscuro si el objeto esta seleccionado */
+    -fx-background-color: #d1ccc1; /* Darker beige for active item */
     -fx-padding: 10px 0 10px 20px;
     -fx-alignment: center-left;
     -fx-cursor: hand;
@@ -42,7 +42,7 @@
 .sidebar-icon {
     -fx-fill: #555555;
     -fx-font-size: 2em;
-    -fx-padding: 0 50px 0 0;
+    -fx-padding: 0 10px 0 0;
 }
 
 .sidebar-label {
@@ -51,8 +51,7 @@
     -fx-font-weight: bold;
 }
 
-
-/* Barra superior */
+/* Top Bar */
 .top-bar {
     -fx-background-color: #A38F85;
     -fx-border-color: #e0e0e0;
@@ -78,7 +77,11 @@
     -fx-font-weight: bold;
 }
 
-/* Diseño barra de busqueda */
+.arrow-icon {
+    -fx-fill: #555555;
+}
+
+/* Search Bar */
 .search-bar {
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;
@@ -105,9 +108,9 @@
     -fx-border-width: 0;
 }
 
-/* Diseño para el botón de agregar */
+/* Add Button */
 .add-button {
-    -fx-background-color: #A38F85;
+    -fx-background-color: #CCCCCC;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -118,14 +121,14 @@
 }
 
 .add-button:hover {
-    -fx-background-color: #726262;
+    -fx-background-color: #A38F85;
 }
 
 .add-icon {
     -fx-fill: white;
 }
 
-/* Diseño para la sección de titulo */
+/* Section Title */
 .section-title {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -150,12 +153,12 @@
 .table-view .column-header,
 .table-view .filler,
 .table-view .table-header-row {
-    -fx-background-color:#cdc2bd ;
+    -fx-background-color: transparent;
 }
-/*#EDE9E3*/
+
 .table-view .column-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #443933;
+    -fx-text-fill: #495057;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 12px 10px;
 }
@@ -167,7 +170,7 @@
     -fx-font-weight: 600; /* <-- Grosor */
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 15px 10px;
-    -fx-border-color: #cdc2bd;
+    -fx-border-color: #e9ecef;
     -fx-border-width: 0 0 1px 0;
 }
 
@@ -182,29 +185,13 @@
 
 /* Estado de la fila seleccionada y al pasar el ratón */
 .table-row-cell:hover {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: transparent;
     -fx-cursor: hand;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #e8f5ff;
-    -fx-text-fill: #212529;
-}
-
-/* Action buttons in table cellsDiseño de los botónes de accion de la tabla */
-.action-button {
     -fx-background-color: transparent;
-    -fx-padding: 0;
-    -fx-cursor: hand;
-}
-
-.action-icon {
-    -fx-fill: #555555;
-    -fx-font-size: 1.2em;
-}
-
-.action-icon:hover {
-    -fx-fill: #007bff; /* Azul on hover */
+    -fx-text-fill: #212529;
 }
 
 /* Scrollbar */
@@ -220,7 +207,7 @@
 }
 
 .table-view .scroll-bar .thumb {
-    -fx-background-color: #cccccc;
+    -fx-background-color: #ced4da;
     -fx-background-insets: 0;
     -fx-background-radius: 5;
 }
@@ -231,6 +218,25 @@
     -fx-background-radius: 5;
 }
 
+/* Botones de acción en las celdas de la tabla */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-effect: null;
+}
+
+.action-icon {
+    -fx-fill: #6c757d;
+    -fx-font-size: 1.2em;
+    -fx-opacity: 0.8;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff;
+    -fx-opacity: 1.0;
+}
+
 /* Estilo para el contenedor del recuadro de usuario */
 .user-info-box {
     -fx-background-color: #726262;
@@ -238,6 +244,18 @@
     -fx-padding: 8px 15px 5px 15px;
     -fx-alignment: center;
     -fx-spacing: 5px;
+}
+
+.user-info-box:hover {
+    -fx-background-color: #605050;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.btnlogout {
+    -fx-background-color: transparent;
 }
 
 .user-icon {
@@ -263,49 +281,21 @@
     -fx-fill: #FFFFFF;
     -fx-font-size: 26px;
     -fx-translate-y: 5px;
-    -fx-translate-x: 6px;
-}
-/*Cambios para que solo se vea el icono y funcione como botón*/
-.logout-icon-button {
-    -fx-background-color: transparent; /* Elimina el fondo del botón */
-    -fx-padding: 0; /* Elimina el padding del botón */
-    -fx-border-color: transparent; /* Elimina el borde del botón */
-    -fx-cursor: hand; /* Cambia el cursor para indicar que es clickeable */
-    /* Quitar el foco alrededor del botón cuando se selecciona */
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-}
-.logout-icon-button:hover .signout-icon {
-    -fx-fill: #CDC6C3; /* Cambia el color del icono al pasar el ratón */
-}
-
-/* Estilos para el label del estado de los Bibliotecarios */
-.status-label {
-    -fx-background-radius: 10px;
-    -fx-border-radius: 5px;
-    -fx-font-weight: bold;
-    -fx-font-size: 12px;
-    -fx-alignment: center;
-    -fx-padding: 3px 8px; /* Ajusta el padding para que se vea como un botón pequeño */
+    -fx-translate-x:6px;
 }
 
 .status-activo {
-    -fx-background-color: #DCFCE7; /* Verde(activo) */
-    -fx-text-fill: #4CAF50;
+    -fx-background-color: #4CAF50; /* Verde */
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
 }
 
 .status-inactivo {
-    -fx-background-color: #FEE2E2; /* Rojo(inactivo) */
-    -fx-text-fill: #B34F4F;
-}
-
-/* Elimina el padding de la celda y alinea el contenido a la izquierda */
-.table-view .table-cell > .hbox {
-    -fx-padding: 0;
-    -fx-alignment: center-left;
-}
-
-/* Alinea los elementos dentro del HBox a la izquierda */
-.table-view #colAcciones > .table-cell {
-    -fx-alignment: center-left;
+    -fx-background-color: #F44336; /* Rojo */
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
 }

@@ -4,16 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="&#10;se modificó archivo AgregarUsuarioController">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Biblioteca/src/main/resources/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Biblioteca/src/main/resources/mx/edu/utez/biblioteca/views/AgregarUsuario.fxml" afterDir="false" />
+=======
+    <list default="true" id="67dccc3e-3ecc-4aba-9c89-5dea0a408b06" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> TTS29
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -23,6 +30,8 @@
       </list>
     </option>
   </component>
+=======
+>>>>>>> TTS29
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -34,6 +43,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
+<<<<<<< HEAD
     &quot;assignee&quot;: &quot;lizzetee05&quot;
   }
 }</component>
@@ -43,18 +53,37 @@
     &quot;accountId&quot;: &quot;c39dee36-ef2e-403c-ae9e-e5e61f5a3578&quot;
   }
 }</component>
+=======
+    &quot;assignee&quot;: &quot;vivisahe&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/zurira/Techgineers_Biblioteca.git",
+    "accountId": "0fcfe3bc-15a6-48ab-aef6-b25cdbf82e57"
+  }
+}]]></component>
+<<<<<<< HEAD
+>>>>>>> TTS13
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2ztTdmEe01vMog2ubQ2PYMTwKMw" />
+=======
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="30lHYuBALnb7m6jM5yncGZXz0kN" />
+>>>>>>> TTS29
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.DBConnection.executor": "Run",
     "Application.HelloApplication.executor": "Run",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -76,20 +105,55 @@
     "last_opened_file_path": "C:/Users/britt/OneDrive/Escritorio/Proyecto Integrador/Techgineers_Biblioteca",
     "list.type.of.created.stylesheet": "CSS",
 >>>>>>> TTS21
+=======
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "TTS14",
+    "last_opened_file_path": "C:/Users/vivia/OneDrive/Escritorio/PI/Techgineers_Biblioteca",
+>>>>>>> TTS29
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
 >>>>>>> TTS21
+=======
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+>>>>>>> TTS29
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DBConnection.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;TTS12&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vivia/OneDrive/Escritorio/PI/Techgineers_Biblioteca&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> TTS13
   }
 }]]></component>
+<<<<<<< HEAD
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\owner\Desktop\Techgineers_Biblioteca\Biblioteca\src\main\resources" />
@@ -105,6 +169,12 @@
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="mx.edu.utez.biblioteca.HelloApplication" />
       <module name="Techgineers_Biblioteca" />
+=======
+  <component name="RunManager">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mx.edu.utez.biblioteca.HelloApplication" />
+      <module name="Biblioteca" />
+>>>>>>> TTS29
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="mx.edu.utez.biblioteca.*" />
@@ -125,24 +195,36 @@
     <attachedChunks>
       <set>
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
         <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
 =======
         <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
         <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
 >>>>>>> TTS21
+=======
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+>>>>>>> TTS13
+=======
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+>>>>>>> TTS29
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="91d02ead-39bb-4e9f-bba4-48b6bff3c7bb" name="Changes" comment="" />
-      <created>1752549459605</created>
+      <changelist id="67dccc3e-3ecc-4aba-9c89-5dea0a408b06" name="Changes" comment="" />
+      <created>1754195290491</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
       <updated>1752549459605</updated>
       <workItem from="1752549476346" duration="6637000" />
       <workItem from="1752578724475" duration="53000" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <workItem from="1753135932152" duration="169000" />
@@ -155,6 +237,17 @@
       <workItem from="1753485744169" duration="8320000" />
       <workItem from="1753537424938" duration="10702000" />
 >>>>>>> TTS21
+=======
+      <workItem from="1753718634877" duration="378000" />
+      <workItem from="1753941728292" duration="6000" />
+      <workItem from="1753941754365" duration="175000" />
+      <workItem from="1753975201073" duration="1028000" />
+      <workItem from="1754425873235" duration="48000" />
+>>>>>>> TTS13
+=======
+      <updated>1754195290491</updated>
+      <workItem from="1754195293250" duration="630000" />
+>>>>>>> TTS29
     </task>
     <task id="LOCAL-00007" summary="se corrigió un error en bibliotecario controller">
       <option name="closed" value="true" />

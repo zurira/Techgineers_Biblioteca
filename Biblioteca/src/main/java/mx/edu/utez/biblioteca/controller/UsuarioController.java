@@ -3,24 +3,18 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Usuario;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class UsuarioController {
     @FXML
@@ -34,46 +28,51 @@ public class UsuarioController {
     @FXML
     private Button togglePasswordBtn;
 
-    //Metodo funcionando, ya realiza la validación de cada rol
     @FXML
     private void onLogin(ActionEvent e){
         String input=txtcorreo.getText().trim();
         String pass = txtPassword.isVisible() ? txtPassword.getText().trim() : txtPasswordVisible.getText().trim();
 
         if (input.isEmpty() || pass.isEmpty()) {
-            showAlert("Advertencia", "Correo/Usuario y contraseña son requeridos.");
+            showAlert("Advertencia", "Los campos de correo/usuario y contraseña no pueden estar vacíos.");
             return;
+        }
+
+        // Validación de dominio de correo electrónico
+        if (input.contains("@")) {
+            String domain = input.substring(input.indexOf("@") + 1).toLowerCase();
+            if (!"superadministrador.com".equals(domain) && !"administrador.com".equals(domain) && !"bibliotecario.com".equals(domain)) {
+                showAlert("Acceso denegado", "Solo personal autorizado puede ingresar.");
+                return;
+            }
         }
 
         UsuarioDaoImpl dao=new UsuarioDaoImpl();
         try {
             Usuario usuario = dao.login(input,pass);
             if(usuario != null){
-                System.out.println("Se pudo logear con Exito como:" + usuario.getRol().getNombre());
+                System.out.println("Se pudo logear con Exito como: " + usuario.getRol().getNombre());
 
                 FXMLLoader loader;
                 switch (usuario.getRol().getNombre().trim().toUpperCase()) {
                     case "SUPERADMINISTRADOR":
                         System.out.println("Cargando vista de superadministrador");
                         loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/superadmin-view.fxml"));
-
                         break;
                     case "ADMINISTRADOR":
                         System.out.println("Cargando vista de administrador");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/admin.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/estadisticasAdmin.fxml"));
                         break;
                     case "BIBLIOTECARIO":
                         System.out.println("Cargando vista de bibliotecario");
-                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Usuarios.fxml"));
+                        loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
                         break;
                     default:
                         showAlert("Error", "Rol no reconocido.");
                         return;
                 }
 
-                //carga la vista y cierra la anterior
                 Region root = loader.load();
-
                 Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                 root.prefWidthProperty().bind(stage.widthProperty());
                 root.prefHeightProperty().bind(stage.heightProperty());
@@ -83,7 +82,7 @@ public class UsuarioController {
                 stage.show();
 
             }else{
-                showAlert("Error","Credenciales incorrectas");
+                showAlert("Error","Correo/Usuario y/o contraseña incorrectos.");
                 System.out.println("Credenciales incorrectas!");
             }
 
@@ -94,7 +93,6 @@ public class UsuarioController {
 
     }
 
-
     public void showAlert(String title, String msg){
         Alert alert=new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -103,7 +101,6 @@ public class UsuarioController {
         alert.showAndWait();
     }
 
-    //inicializa la vista del login con imagen de fondo
     @FXML
     public void initialize() {
         BackgroundImage bgImage = new BackgroundImage(
@@ -148,7 +145,6 @@ public class UsuarioController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
             Region root = loader.load();
-
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             root.prefWidthProperty().bind(stage.widthProperty());
             root.prefHeightProperty().bind(stage.heightProperty());
@@ -156,7 +152,6 @@ public class UsuarioController {
             stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

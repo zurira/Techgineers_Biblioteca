@@ -21,17 +21,32 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.List;
 
 public class SuperAdminController {
-    @FXML private TableView<Usuario> adminTable;
-    @FXML private TextField searchField;
-    @FXML private Button addButton;
-    @FXML private Button logoutButton;
-    @FXML private Label lblSinResultados;
+    @FXML
+    private TableView<Usuario> adminTable;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Label lblSinResultados;
 
     private ObservableList<Usuario> listaAdmin = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         configurarColumnas();
+
+        //  Distribución proporcional de columnas
+        adminTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        adminTable.getColumns().get(0).setMaxWidth(1f * Integer.MAX_VALUE * 5);   // No.
+        adminTable.getColumns().get(1).setMaxWidth(1f * Integer.MAX_VALUE * 20);  // Nombre completo
+        adminTable.getColumns().get(2).setMaxWidth(1f * Integer.MAX_VALUE * 15);  // Usuario
+        adminTable.getColumns().get(3).setMaxWidth(1f * Integer.MAX_VALUE * 25);  // Correo
+        adminTable.getColumns().get(4).setMaxWidth(1f * Integer.MAX_VALUE * 10);  // Estado
+        adminTable.getColumns().get(5).setMaxWidth(1f * Integer.MAX_VALUE * 25);  // Acciones
+
         cargarAdministradores();
 
         searchField.textProperty().addListener((obs, oldValue, newValue) -> filtrarAdmin(newValue));
@@ -81,6 +96,7 @@ public class SuperAdminController {
     }
 
     private void configurarColumnas() {
+        // Columna de índice
         TableColumn<Usuario, Void> colId = new TableColumn<>("No.");
         colId.setCellFactory(column -> new TableCell<Usuario, Void>() {
             @Override
@@ -94,7 +110,6 @@ public class SuperAdminController {
             }
         });
 
-
         TableColumn<Usuario, String> colNombre = new TableColumn<>("Nombre completo");
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
@@ -105,24 +120,51 @@ public class SuperAdminController {
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
         TableColumn<Usuario, String> colEstado = new TableColumn<>("Estado");
+
+// 1. Agregue esto convertir "S"/"N" a "Activo"/"Inactivo"
         colEstado.setCellValueFactory(cellData -> {
-            String estado = cellData.getValue().getEstado();
-            return new SimpleStringProperty(estado != null && estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo");
+            String estado = cellData.getValue().getEstado(); // ← Aquí obtienes "S" o "N"
+            String textoEstado = estado.equalsIgnoreCase("S") ? "Activo" : "Inactivo";
+            return new SimpleStringProperty(textoEstado);
         });
+
+// 2. Aplique estilos visuales
+        colEstado.setCellFactory(column -> new TableCell<Usuario, String>() {
+            private final Label estadoLabel = new Label();
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    estadoLabel.setText(item);
+                    estadoLabel.getStyleClass().setAll("status-label");
+
+                    if (item.equalsIgnoreCase("Activo")) {
+                        estadoLabel.getStyleClass().add("status-active");
+                    } else {
+                        estadoLabel.getStyleClass().add("status-inactive");
+                    }
+
+                    setGraphic(estadoLabel);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+
+
 
         TableColumn<Usuario, Void> colAcciones = new TableColumn<>("Acciones");
         colAcciones.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button();
+            private final Button viewButton = new Button();
+            private final Button switchButton = new Button();
 
             {
-                FontIcon editIcon = new FontIcon("fa-pencil");
-                editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
-
-                editButton.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    onEditAdmin(usuario);
-                });
+                viewButton.getStyleClass().add("action-button");
+                switchButton.getStyleClass().add("action-button");
             }
 
             @Override
@@ -131,7 +173,33 @@ public class SuperAdminController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttons = new HBox(5, editButton);
+                    Usuario usuario = getTableView().getItems().get(getIndex());
+
+                    FontIcon editIcon = new FontIcon("fa-pencil");
+                    editIcon.getStyleClass().add("action-icon");
+                    editButton.setGraphic(editIcon);
+
+                    FontIcon viewIcon = new FontIcon("fa-eye");
+                    viewIcon.getStyleClass().add("action-icon");
+                    viewButton.getStyleClass().setAll("action-button", "eye-button");
+                    viewButton.setGraphic(viewIcon);
+
+                    FontIcon switchIcon;
+                    if ("S".equalsIgnoreCase(usuario.getEstado())) {
+                        switchIcon = new FontIcon("fa-toggle-on");
+                        switchButton.setTooltip(new Tooltip("Desactivar"));
+                    } else {
+                        switchIcon = new FontIcon("fa-toggle-off");
+                        switchButton.setTooltip(new Tooltip("Activar"));
+                    }
+                    switchIcon.getStyleClass().add("action-icon");
+                    switchButton.setGraphic(switchIcon);
+
+                    editButton.setOnAction(event -> onEditAdmin(usuario));
+                    viewButton.setOnAction(event -> onViewAdmin(usuario));
+                    switchButton.setOnAction(event -> onToggleEstado(usuario));
+
+                    HBox buttons = new HBox(5, editButton, viewButton, switchButton);
                     buttons.setAlignment(Pos.CENTER);
                     setGraphic(buttons);
                 }
@@ -177,7 +245,6 @@ public class SuperAdminController {
         lblSinResultados.setVisible(adminsFiltrados.isEmpty());
     }
 
-    //MODIFIQUE ESO
     private void onEditAdmin(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/editAdmin.fxml"));
@@ -224,5 +291,44 @@ public class SuperAdminController {
 
     private void onDeleteAdmin(Usuario usuario) {
         // Eliminación desactivada por decisión de Tania
+    }
+
+    private void onViewAdmin(Usuario usuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/ModalVerAdmin.fxml"));
+            Parent root = loader.load();
+
+            ModalVerAdminController controller = loader.getController();
+            controller.setUsuario(usuario);
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Detalles del administrador");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //Modifique eso
+    private void onToggleEstado(Usuario usuario) {
+        try {
+            String nuevoEstado = "S".equalsIgnoreCase(usuario.getEstado()) ? "N" : "S";
+            usuario.setEstado(nuevoEstado);
+            new UsuarioDaoImpl().update(usuario);
+            cargarAdministradores();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cambiar el estado del administrador.");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import mx.edu.utez.biblioteca.dao.impl.DetallePrestamoDaoImpl;
-import mx.edu.utez.biblioteca.dao.impl.EjemplarDaoImpl;
-import mx.edu.utez.biblioteca.dao.impl.PrestamoDaoImpl;
-import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
+import mx.edu.utez.biblioteca.dao.impl.*;
 import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -23,7 +22,6 @@ public class EditarPrestamoController implements Initializable {
     @FXML private DatePicker dpFechaPrestamo;
     @FXML private DatePicker dpFechaLimite;
     @FXML private DatePicker dpFechaDevolucion;
-    @FXML private ComboBox<String> cbEstado;
     @FXML private ComboBox<UsuarioBiblioteca> comboBoxUsuarios;
 
     private Prestamo prestamoActual;
@@ -34,7 +32,6 @@ public class EditarPrestamoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Estados
-        cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
     }
 
     public void inicializar(Prestamo prestamo) {
@@ -72,17 +69,17 @@ public class EditarPrestamoController implements Initializable {
         dpFechaLimite.setValue(prestamo.getFechaLimite());
         dpFechaDevolucion.setValue(prestamo.getFechaReal());
 
-        cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
-        cbEstado.setValue(prestamo.getEstado());
+        //cbEstado.setItems(FXCollections.observableArrayList("Activo", "Finalizado", "Retrasado"));
+        //cbEstado.setValue(prestamo.getEstado());
     }
 
     @FXML
     private void guardarCambiosPrestamo(ActionEvent event) {
         UsuarioBiblioteca seleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
         prestamoActual.setUsuario(seleccionado);
-        if (dpFechaPrestamo.getValue() == null ||
-                dpFechaLimite.getValue() == null ||
-                cbEstado.getValue() == null) {
+
+        // Validaciones de fechas
+        if (dpFechaPrestamo.getValue() == null || dpFechaLimite.getValue() == null) {
             mostrarAlerta("Completa todos los campos obligatorios.");
             return;
         }
@@ -98,30 +95,44 @@ public class EditarPrestamoController implements Initializable {
             return;
         }
 
-
-        // Actualizar préstamo
+        // Asignar fechas al préstamo actual
         prestamoActual.setFechaPrestamo(dpFechaPrestamo.getValue());
         prestamoActual.setFechaLimite(dpFechaLimite.getValue());
         prestamoActual.setFechaReal(dpFechaDevolucion.getValue());
-        prestamoActual.setEstado(cbEstado.getValue());
 
-        boolean exito = true;
+        // 🔄 Calcular estado automáticamente
+        try {
+            double tarifaMulta = new ConfiguracionDaoImpl().obtenerTarifaMulta();
+            String estadoCalculado = prestamoActual.calcularEstado(LocalDate.now(), tarifaMulta);
+            prestamoActual.setEstado(estadoCalculado);
+        } catch (SQLException e) {
+            mostrarAlerta("Error al obtener la tarifa de multa.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+            return;
+        }
+
+        // Actualizar en base de datos
         try {
             boolean actualizado = prestamoDao.update(prestamoActual);
             if (!actualizado) {
                 mostrarAlerta("No se pudo actualizar el préstamo.");
                 return;
             }
+
+            mostrarAlerta("Cambios guardados correctamente.", Alert.AlertType.INFORMATION);
+            cerrarVentana();
         } catch (Exception e) {
-            e.printStackTrace(); // Puedes mostrar un error al usuario si prefieres
-            mostrarAlerta("Ocurrió un error al actualizar el préstamo.");
+            e.printStackTrace();
+            mostrarAlerta("Ocurrió un error al actualizar el préstamo.", Alert.AlertType.ERROR);
         }
 
-        if (exito) {
-            mostrarAlerta("Cambios guardados correctamente.");
-            cerrarVentana();
+        // Calcular estado según fechas
+        if (prestamoActual.getFechaReal() != null) {
+            prestamoActual.setEstado("Devuelto");
+        } else if (LocalDate.now().isAfter(prestamoActual.getFechaLimite())) {
+            prestamoActual.setEstado("Retrasado");
         } else {
-            mostrarAlerta("Error al guardar los ejemplares.");
+            prestamoActual.setEstado("Activo");
         }
     }
 
@@ -132,7 +143,6 @@ public class EditarPrestamoController implements Initializable {
         dpFechaPrestamo.setValue(prestamo.getFechaPrestamo());
         dpFechaLimite.setValue(prestamo.getFechaLimite());
         dpFechaDevolucion.setValue(prestamo.getFechaReal());
-        cbEstado.setValue(prestamo.getEstado());
 
         // Cargar lista de usuarios y seleccionar el correspondiente
         ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioBibliotecaDaoImpl().findAll());
@@ -154,12 +164,16 @@ public class EditarPrestamoController implements Initializable {
         cerrarVentana();
     }
 
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle("Información");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
     private void mostrarAlerta(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+        mostrarAlerta(mensaje, Alert.AlertType.INFORMATION);
     }
 
     private void cerrarVentana() {

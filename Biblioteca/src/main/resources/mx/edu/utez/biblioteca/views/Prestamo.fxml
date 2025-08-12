@@ -6,158 +6,166 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?> <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="mx.edu.utez.biblioteca.controller.PrestamoController"
             prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/Prestamo.css">
 
-    <HBox alignment="TOP_LEFT" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-            <VBox prefHeight="700.0" prefWidth="250.0" styleClass="sidebar">
-                <children>
-                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                        <children>
-                            <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                            <Label styleClass="logo-text" text="Logo" />
-                        </children>
-                        <VBox.margin>
-                            <Insets top="30.0" />
-                        </VBox.margin>
-                    </StackPane>
-                    <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0" >
-                        <children>
+    <left>
+        <VBox prefHeight="700.0" prefWidth="250.0" styleClass="sidebar">
+            <children>
+                <StackPane prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label styleClass="logo-text" text="Logo" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="30.0" />
+                    </VBox.margin>
+                </StackPane>
+                <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0" >
+                    <children>
+                        <Button onAction="#irEstadisticas" styleClass="sidebar-item" prefWidth="250.0">
+                            <graphic>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
+                                    <Label styleClass="sidebar-label" text="Estadísticas"/>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                        <Button onAction="#irUsuarios" styleClass="sidebar-item" prefWidth="250.0">
+                            <graphic>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon"/>
+                                    <Label styleClass="sidebar-label" text="Usuarios"/>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                        <Button styleClass="sidebar-item-active" prefWidth="250.0">
+                            <graphic>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
+                                    <Label styleClass="sidebar-label" text="Préstamos"/>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="20.0" top="50.0" />
+                    </VBox.margin>
+                </VBox>
+            </children>
+        </VBox>
+    </left>
 
-                            <Button onAction="#irUsuarios" styleClass="sidebar-item" prefWidth="250.0">
+    <center>
+        <VBox>
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
+                    <children>
+                        <Label styleClass="title-text" text="Préstamos de libros">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
+                            <children>
+                                <Button fx:id="btnlogout" onAction="#cerrarSesion" styleClass="btnlogout">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>
+                                            <Label styleClass="user-name" text="Bibliotecario"/>
+                                            <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon"/>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                                <Label styleClass="user-sub-label" text="Nombre usuario" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets right="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="20.0" top="20.0" />
+                    </VBox.margin>
+                    <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
+                            <children>
+                                <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
+                                <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+                        <Button fx:id="btnAddPrestamo" mnemonicParsing="false" onAction="#onAddPrestamo" prefHeight="40.0" styleClass="add-button" text="Agregar préstamo">
+                            <graphic>
+                                <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
+                            </graphic>
+                        </Button>
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" spacing="10" prefHeight="40.0">
+                            <Label text="Tarifa por día de multa:" styleClass="tarifa-label"/>
+                            <TextField fx:id="txtTarifaMulta" promptText="Ej: 5.0" prefHeight="40.0" prefWidth="80.0" styleClass="LabelTarifa"/>
+                            <Button fx:id="btnActualizarTarifa" onAction="#actualizarTarifaMulta" styleClass="icon-button" prefHeight="40.0" prefWidth="40.0">
                                 <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                        <FontIcon iconLiteral="fa-users" iconSize="32" styleClass="sidebar-icon"/>
-                                        <Label styleClass="sidebar-label" text="Usuarios"/>
-                                    </HBox>
+                                    <FontIcon iconLiteral="fa-refresh" iconSize="19" styleClass="update-icon" />
                                 </graphic>
+                                <tooltip>
+                                    <Tooltip text="Actualizar tarifa" />
+                                </tooltip>
                             </Button>
-
-                            <Button  styleClass="sidebar-item-active" prefWidth="250.0">
-                                <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                        <FontIcon iconLiteral="fa-book" iconSize="32" styleClass="sidebar-icon"/>
-                                        <Label styleClass="sidebar-label" text="Préstamos"/>
-                                    </HBox>
-                                </graphic>
-                            </Button>
-
-                            <Button onAction="#irEstadisticas" styleClass="sidebar-item" prefWidth="250.0">
-                                <graphic>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                        <FontIcon iconLiteral="fa-bar-chart" iconSize="32" styleClass="sidebar-icon"/>
-                                        <Label styleClass="sidebar-label" text="Estadísticas"/>
-                                    </HBox>
-                                </graphic>
-                            </Button>
-                        </children>
-                        <VBox.margin>
-                            <Insets left="20.0" top="50.0" />
-                        </VBox.margin>
-                    </VBox>
-                </children>
-            </VBox>
-            <VBox HBox.hgrow="ALWAYS">
-                <children>
-
-                    <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="top-bar">
-                        <children>
-                            <Label styleClass="title-text" text="Préstamos de libros">
-                                <HBox.margin>
-                                    <Insets left="20.0" />
-                                </HBox.margin>
-                                <font>
-                                    <Font size="24.0" />
-                                </font>
-                            </Label>
-                            <HBox HBox.hgrow="ALWAYS" />
-
-                            <VBox alignment="CENTER_RIGHT" styleClass="user-info-box">
-                                <children>
-                                    <Button fx:id="btnlogout" onAction="#cerrarSesion" styleClass="btnlogout">
-                                        <graphic>
-                                            <HBox alignment="CENTER" spacing="5.0">
-                                                <FontIcon iconLiteral="fa-user" iconSize="24" styleClass="user-icon"/>
-                                                <Label styleClass="user-name" text="Bibliotecario"/>
-                                                <FontIcon iconLiteral="fa-sign-out" iconSize="24" styleClass="signout-icon"/>
-                                            </HBox>
-                                        </graphic>
-                                    </Button>
-                                    <Label styleClass="user-sub-label" text="Nombre usuario" />
-                                </children>
-                            </VBox>
-
-                        </children>
-                        <VBox.margin>
-                            <Insets />
-                        </VBox.margin>
-                        <padding>
-                            <Insets right="20.0" />
-                        </padding>
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-                        <VBox.margin>
-                            <Insets left="20.0" right="20.0" top="20.0" />
-                        </VBox.margin>
-                        <children>
-                            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" styleClass="search-bar">
-                                <children>
-                                    <FontIcon iconLiteral="fa-search" iconSize="19" styleClass="search-icon" />
-                                    <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="350.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
-                                </children>
-                            </HBox>
-                            <Button fx:id="btnAddPrestamo" mnemonicParsing="false" onAction="#onAddPrestamo" prefHeight="40.0" styleClass="add-button" text="Agregar préstamo">
-                                <graphic>
-                                    <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
-                                </graphic>
-                                <HBox.margin>
-                                    <Insets left="20.0" />
-                                </HBox.margin>
-                            </Button>
-                        </children>
-                    </HBox>
-                    <Label styleClass="section-title" text="Información de préstamos">
-                        <VBox.margin>
-                            <Insets left="20.0" top="20.0" />
-                        </VBox.margin>
-                    </Label>
-                    <TableView fx:id="tableViewPrestamos" prefHeight="450.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-                        <columns>
-                            <TableColumn fx:id="colNo" prefWidth="75.0" text="No." />
-                            <TableColumn fx:id="colNombreUsuario" prefWidth="150.0" text="Nombre usuario" />
-                            <TableColumn fx:id="colTituloLibro" prefWidth="200.0" text="Título del libro" />
-                            <TableColumn fx:id="colFechaPrestamo" prefWidth="120.0" text="Fecha préstamo" />
-                            <TableColumn fx:id="colFechaLimite" prefWidth="120.0" text="Fecha límite" />
-                            <TableColumn fx:id="colFechaReal" prefWidth="120.0" text="Fecha real" />
-                            <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
-                            <TableColumn fx:id="colAcciones" prefWidth="100.0" text="Acciones" />
-                        </columns>
-                        <VBox.margin>
-                            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                        </VBox.margin>
-                    </TableView>
-                    <Label fx:id="lblSinResultados"
-                           text="No se encontraron resultados"
-                           visible="false"
-                           style="-fx-text-fill: brown; -fx-font-weight: bold; -fx-alignment: center;"
-                           alignment="CENTER" maxWidth="Infinity">
-                        <VBox.margin>
-                            <Insets left="20.0" top="0.0" bottom="10.0" />
-                        </VBox.margin>
-                    </Label>
-                </children>
-            </VBox>
-        </children>
-    </HBox>
-</AnchorPane>
+                        </HBox>
+                    </children>
+                </HBox>
+                <Label styleClass="section-title" text="Información de préstamos">
+                    <VBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <TableView fx:id="tableViewPrestamos" prefHeight="450.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colNo" prefWidth="70.0" text="No." />
+                        <TableColumn fx:id="colNombreUsuario" prefWidth="140.0" text="Nombre usuario" />
+                        <TableColumn fx:id="colTituloLibro" prefWidth="160.0" text="Título del libro" />
+                        <TableColumn fx:id="colFechaPrestamo" prefWidth="110.0" text="Fecha préstamo" />
+                        <TableColumn fx:id="colFechaLimite" prefWidth="100.0" text="Fecha límite" />
+                        <TableColumn fx:id="colFechaReal" prefWidth="100.0" text="Fecha real" />
+                        <TableColumn fx:id="colMulta" prefWidth="100.0" text="Multa actual" />
+                        <TableColumn fx:id="colEstado" prefWidth="100.0">
+                            <graphic>
+                                <ChoiceBox fx:id="choiceBoxEstado" prefWidth="100.0" styleClass="filtro-estado-choicebox" />
+                            </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="colAcciones" prefWidth="75.0" text="Acciones" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                    </VBox.margin>
+                </TableView>
+                <Label fx:id="lblSinResultados"
+                       text="No se encontraron resultados"
+                       visible="false"
+                       style="-fx-text-fill: brown; -fx-font-weight: bold; -fx-alignment: center;"
+                       alignment="CENTER" maxWidth="Infinity">
+                    <VBox.margin>
+                        <Insets left="20.0" top="0.0" bottom="10.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

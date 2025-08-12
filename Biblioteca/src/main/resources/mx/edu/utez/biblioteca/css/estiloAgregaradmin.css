@@ -3,12 +3,59 @@
     -fx-background-color: #F1EFEF;
 }
 
+/* Botones */
 .button {
     -fx-cursor: hand;
     -fx-background-radius: 6;
 }
 
+/* Botón seleccionar archivo */
+#btnSeleccionarImagen {
+    -fx-background-color: #E2DAD6;
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
+}
+
+/* Botón cancelar */
+#btnCancelar {
+    -fx-background-color: #E2DAD6;
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
+}
+
+/* Botón guardar */
+#btnGuardar {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Campos de texto */
 .text-field, .password-field {
     -fx-background-radius: 4;
     -fx-padding: 6;
+    -fx-border-color: #D0C8C4;
+    -fx-border-radius: 4;
+    -fx-background-color: white;
+}
+
+/* Área de texto */
+.text-area {
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+}
+
+/* Botón del ojo */
+#btnTogglePassword {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+/* Imagen */
+.image-view {
+    -fx-effect: dropshadow(gaussian, #A38F85, 8, 0.3, 0, 2);
+    -fx-background-radius: 8;
 }

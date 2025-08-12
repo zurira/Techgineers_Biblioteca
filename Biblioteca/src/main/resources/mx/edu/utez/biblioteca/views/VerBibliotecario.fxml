@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/VerBibliotecario.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.VerBibliotecarioController">
+    <!-- Título principal en la parte superior -->
+    <Label styleClass="label-form" text="Información del Bibliotecario" style="-fx-font-size: 22px; -fx-font-weight: bold;">
+        <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+    </Label>
+    <!-- Contenedor principal para la foto y los campos -->
+    <HBox prefHeight="600.0" prefWidth="900.0" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+
+        <!-- Panel Izquierdo: Contenedor para la foto -->
+        <VBox alignment="TOP_CENTER" prefWidth="360.0" styleClass="image-container" HBox.hgrow="NEVER">
+            <children>
+                <ImageView fx:id="imgFoto" fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
+            </children>
+        </VBox>
+
+        <!-- Panel Derecho: Todos los campos del formulario -->
+        <VBox spacing="20.0" styleClass="info-container" HBox.hgrow="ALWAYS">
+            <children>
+                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <!-- Primera fila de campos -->
+                        <HBox spacing="20.0">
+                            <children>
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="label-form" text="Nombre completo:" />
+                                    <TextField fx:id="txtNombre" editable="false" styleClass="text-field" />
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="label-form" text="Correo:" />
+                                    <TextField fx:id="txtCorreo" editable="false" styleClass="text-field" />
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Segunda fila de campos -->
+                        <HBox spacing="20.0">
+                            <children>
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="label-form" text="Teléfono:" />
+                                    <TextField fx:id="txtTelefono" editable="false" styleClass="text-field" />
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="label-form" text="Usuario:" />
+                                    <TextField fx:id="txtUsuario" editable="false" styleClass="text-field" />
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Tercera fila de campos -->
+                        <HBox spacing="20.0">
+                            <children>
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="label-form" text="Estado:" />
+                                    <TextField fx:id="txtEstado" editable="false" styleClass="text-field" />
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Área de Dirección ajustada -->
+                        <VBox spacing="5.0">
+                            <children>
+                                <Label styleClass="label-form" text="Dirección" />
+                                <TextArea fx:id="txtDireccion" editable="false" prefHeight="100.0" wrapText="true" styleClass="text-field" />
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+
+                <!-- Botón de cerrar -->
+                <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Button fx:id="btnCerrar" onAction="#onClose" styleClass="button" text="Cerrar" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </HBox>
+</VBox>

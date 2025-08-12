@@ -1,12 +1,12 @@
 /* General styling */
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
 }
 
 /* Sidebar */
 .sidebar {
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -130,8 +130,7 @@
     -fx-border-color: #ddd;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 3);
-    -fx-pref-width: 170;
+    -fx-pref-width: 195;
 }
 
 .card-libro:hover {
@@ -145,11 +144,24 @@
     -fx-alignment: center;
 }
 
-.scroll {
-    -fx-background-color: #A38F85;
+
+/* Estilo para el ScrollPane */
+.scrollLibro {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
 }
 
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
 
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-opacity: 0;
+}
+
+.Contenedor {
+    -fx-background-color: transparent;
+}
 
 
 

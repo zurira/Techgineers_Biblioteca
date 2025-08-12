@@ -20,6 +20,8 @@ import mx.edu.utez.biblioteca.model.Prestamo;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -121,7 +123,7 @@ public class ModalPrestamoController implements Initializable {
         UsuarioBiblioteca usuarioSeleccionado = comboBoxUsuarios.getSelectionModel().getSelectedItem();
 
         if (usuarioSeleccionado == null) {
-            mostrarAlerta("Por favor, selecciona un usuario");
+            mostrarAlerta("Por favor, selecciona un usuario.");
             return;
         }
 
@@ -130,15 +132,37 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        if (dpFechaLimite.getValue().isBefore(dpFechaPrestamo.getValue())) {
+        LocalDate hoy = LocalDate.now();
+        LocalDate fechaPrestamo = dpFechaPrestamo.getValue();
+        LocalDate fechaLimite = dpFechaLimite.getValue();
+        LocalDate fechaDevolucion = dpFechaDevolucion.getValue();
+
+        // Validaciones contra el día actual
+        if (fechaPrestamo.isBefore(hoy) || fechaPrestamo.isAfter(hoy)) {
+            mostrarAlerta("La fecha de préstamo debe ser el día actual.");
+            return;
+        }
+
+        if (fechaLimite.isBefore(hoy)) {
+            mostrarAlerta("La fecha límite no puede ser anterior al día actual.");
+            return;
+        }
+
+        if (fechaLimite.isBefore(fechaPrestamo)) {
             mostrarAlerta("La fecha límite no puede ser anterior a la fecha de préstamo.");
             return;
         }
 
-        if (dpFechaDevolucion.getValue() != null &&
-                dpFechaDevolucion.getValue().isBefore(dpFechaPrestamo.getValue())) {
-            mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
-            return;
+        if (fechaDevolucion != null) {
+            if (fechaDevolucion.isBefore(hoy)) {
+                mostrarAlerta("La fecha de devolución no puede ser anterior al día actual.");
+                return;
+            }
+
+            if (fechaDevolucion.isBefore(fechaPrestamo)) {
+                mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
+                return;
+            }
         }
 
         List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
@@ -150,47 +174,62 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        Prestamo prestamo = new Prestamo();
-        prestamo.setUsuario(usuarioSeleccionado);
-        prestamo.setFechaPrestamo(dpFechaPrestamo.getValue());
-        prestamo.setFechaLimite(dpFechaLimite.getValue());
-        prestamo.setFechaReal(dpFechaDevolucion.getValue());
-        prestamo.setEstado(cbEstado.getValue());
+        // Se crea una lista para almacenar los IDs de los préstamos insertados
+        List<Integer> prestamoIds = new ArrayList<>();
 
         try {
-            boolean creado = prestamoDAO.create(prestamo);
-
-            if (!creado) {
-                mostrarAlerta("No se pudo crear el préstamo.");
-                return;
-            }
-
-            int idPrestamo = prestamo.getId();
             boolean exito = true;
 
-            for (Ejemplar ej : seleccionados) {
-                boolean detalleInsertado = detalleDAO.insertarEjemplar(idPrestamo, ej.getIdEjemplar());
-                boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ej.getIdEjemplar(), false);
+            // Iteramos sobre cada ejemplar seleccionado para crear un préstamo individual
+            for (Ejemplar ejemplarSeleccionado : seleccionados) {
+                Prestamo prestamo = new Prestamo();
+                prestamo.setUsuario(usuarioSeleccionado);
+                prestamo.setFechaPrestamo(fechaPrestamo);
+                prestamo.setFechaLimite(fechaLimite);
+                prestamo.setFechaReal(fechaDevolucion);
+                prestamo.setEstado(cbEstado.getValue());
+                prestamo.setEjemplar(ejemplarSeleccionado); // Asignar el objeto Ejemplar al préstamo
 
-                if (!detalleInsertado || !disponibilidadActualizada) {
+                prestamo.setIdEjemplar(ejemplarSeleccionado.getIdEjemplar());
+
+                // Insertamos el préstamo en la base de datos
+                boolean creado = prestamoDAO.create(prestamo);
+
+                if (creado) {
+                    // Si el préstamo se crea, guardamos su ID
+                    prestamoIds.add(prestamo.getId());
+
+                    // Actualizamos el estado del ejemplar a 'PRESTADO'
+                    boolean disponibilidadActualizada = ejemplarDAO.actualizarDisponibilidad(ejemplarSeleccionado.getIdEjemplar(), false);
+
+                    if (!disponibilidadActualizada) {
+                        exito = false;
+                        System.err.println("Error al actualizar la disponibilidad del ejemplar: " + ejemplarSeleccionado.getIdEjemplar());
+                        break;
+                    }
+
+                } else {
                     exito = false;
+                    System.err.println("Error al crear el préstamo para el ejemplar: " + ejemplarSeleccionado.getIdEjemplar());
                     break;
                 }
             }
 
             if (exito) {
-                mostrarAlerta("Préstamo registrado exitosamente con todos los ejemplares.");
+                mostrarAlerta("Préstamo(s) registrado(s) exitosamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Ocurrió un error al registrar uno o más ejemplares.");
+                // Aquí puedes agregar lógica para hacer rollback si es necesario
+                mostrarAlerta("Ocurrió un error al registrar uno o más préstamos. Revise el log.");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Ocurrió un error inesperado al registrar el préstamo.");
         }
-    }
 
+        limpiarFormulario();
+    }
 
     private void cerrarVentana() {
         Stage stage = (Stage) comboBoxUsuarios.getScene().getWindow();

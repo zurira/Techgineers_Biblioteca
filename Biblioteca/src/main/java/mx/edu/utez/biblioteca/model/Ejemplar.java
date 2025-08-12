@@ -5,20 +5,23 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Ejemplar {
     private int idEjemplar;
+    private int idLibro;
     private String codigo;
     private String titulo;
+    private String estado;
     private String ubicacion;
+    private Libro libro;
     private final BooleanProperty seleccionado = new SimpleBooleanProperty(false);
 
     public Ejemplar() {
-
     }
 
-    public Ejemplar(String codigo, String titulo, String ubicacion, int idEjemplar) {
+    public Ejemplar(int idEjemplar, String codigo, String titulo, String estado, String ubicacion) {
+        this.idEjemplar = idEjemplar;
         this.codigo = codigo;
         this.titulo = titulo;
+        this.estado = estado;
         this.ubicacion = ubicacion;
-        this.idEjemplar = idEjemplar;
     }
 
     public int getIdEjemplar() {
@@ -27,6 +30,14 @@ public class Ejemplar {
 
     public void setIdEjemplar(int idEjemplar) {
         this.idEjemplar = idEjemplar;
+    }
+
+    public int getIdLibro() {
+        return idLibro;
+    }
+
+    public void setIdLibro(int idLibro) {
+        this.idLibro = idLibro;
     }
 
     public String getCodigo() {
@@ -45,6 +56,15 @@ public class Ejemplar {
         this.titulo = titulo;
     }
 
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getUbicacion() {
         return ubicacion;
     }
@@ -61,7 +81,11 @@ public class Ejemplar {
         return seleccionado;
     }
 
-    public void setSeleccionado(boolean seleccionado) {
-        this.seleccionado.set(seleccionado);
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 }

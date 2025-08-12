@@ -1,5 +1,6 @@
 package mx.edu.utez.biblioteca.controller;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mx.edu.utez.biblioteca.dao.impl.CategoriaDaoImpl;
 import mx.edu.utez.biblioteca.dao.impl.LibroDaoImpl;
 import mx.edu.utez.biblioteca.model.Libro;
@@ -34,68 +37,119 @@ public class BusquedaController {
     @FXML private TextField txtBuscar;
     @FXML private ComboBox<String> cmbCategoria;
     @FXML private FlowPane contenedorResultados;
+    @FXML private ScrollPane scrollLibros;
+    @FXML private Label lblSinLibros;
 
-
-    LibroDaoImpl libroDao = new LibroDaoImpl();
-    CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private LibroDaoImpl libroDao = new LibroDaoImpl();
+    private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+    private PauseTransition debounceTimer;
+    private final Map<String, Image> cacheImagenes = new HashMap<>();
 
     @FXML
     public void initialize() {
+        // Inicializa el temporizador de debounce
+        debounceTimer = new PauseTransition(Duration.millis(300));
+        debounceTimer.setOnFinished(event -> filtrarLibros());
 
-
-        // Carga las categorías y los libros
+        // Carga las categorías y los libros inicialmente
         cargarCategorias();
         cargarLibros(null, null);
 
-        // cuando se escribe texto, se filtra
+        // Cuando se escribe texto, se inicia el temporizador de debounce
         txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtrarLibros();
+            debounceTimer.playFromStart();
         });
 
-        //cuando se selecciona una categoría, se filtra
+        // Cuando se selecciona una categoría, se filtra inmediatamente
         cmbCategoria.setOnAction(event -> {
             filtrarLibros();
-
         });
     }
-
 
     private void cargarCategorias() {
         List<String> categorias = categoriaDao.obtenerNombresCategorias();
         ObservableList<String> lista = FXCollections.observableArrayList();
-        lista.add(""); // opción vacía (sin filtro)
+        lista.add(""); // Opción vacía (sin filtro)
         lista.addAll(categorias);
         cmbCategoria.setItems(lista);
     }
 
-
     private void filtrarLibros() {
-        String texto = txtBuscar.getText().trim();
-        String categoria = cmbCategoria.getValue();
+        final String texto = txtBuscar.getText().trim();
+        String categoriaSeleccionada = cmbCategoria.getValue();
+        final String categoria = (categoriaSeleccionada != null && categoriaSeleccionada.isEmpty()) ? null : categoriaSeleccionada;
 
-        if (categoria != null && categoria.isEmpty()) {
-            categoria = null;
-        }
+        // Crear una tarea en segundo plano para la búsqueda de libros
+        Task<List<Libro>> tareaFiltro = new Task<List<Libro>>() {
+            @Override
+            protected List<Libro> call() throws Exception {
+                // Lógica de búsqueda en la base de datos (se ejecuta en hilo de fondo)
+                return libroDao.obtenerLibrosPorFiltro(
+                        texto == null ? "" : texto,
+                        categoria
+                );
+            }
+        };
 
-        cargarLibros(texto, categoria);
+        // Cuando la tarea se completa, actualizar la interfaz de usuario
+        tareaFiltro.setOnSucceeded(event -> {
+            List<Libro> libros = tareaFiltro.getValue();
+            contenedorResultados.getChildren().clear();
+
+            if (libros.isEmpty()) {
+                lblSinLibros.setVisible(true);
+            } else {
+                lblSinLibros.setVisible(false);
+                for (Libro libro : libros) {
+                    VBox card = crearCardLibro(libro);
+                    contenedorResultados.getChildren().add(card);
+                }
+            }
+        });
+
+        // Manejar posibles errores
+        tareaFiltro.setOnFailed(event -> {
+            lblSinLibros.setText("Ocurrió un error al cargar los libros.");
+            lblSinLibros.setVisible(true);
+        });
+
+        // Iniciar la tarea en un nuevo hilo
+        new Thread(tareaFiltro).start();
     }
 
     private void cargarLibros(String filtro, String categoria) {
-        contenedorResultados.getChildren().clear();
+        // Este método ahora crea un Task para manejar la carga inicial
+        // y se puede llamar en initialize()
+        final String filtroFinal = filtro == null ? "" : filtro;
+        final String categoriaFinal = categoria;
 
-        List<Libro> libros = libroDao.obtenerLibrosPorFiltro(
-                filtro == null ? "" : filtro,
-                categoria
-        );
+        Task<List<Libro>> tareaCargaInicial = new Task<List<Libro>>() {
+            @Override
+            protected List<Libro> call() throws Exception {
+                return libroDao.obtenerLibrosPorFiltro(
+                        filtroFinal,
+                        categoriaFinal
+                );
+            }
+        };
 
-        for (Libro libro : libros) {
-            VBox card = crearCardLibro(libro);
-            contenedorResultados.getChildren().add(card);
-        }
+        tareaCargaInicial.setOnSucceeded(event -> {
+            List<Libro> libros = tareaCargaInicial.getValue();
+            contenedorResultados.getChildren().clear();
+
+            if (libros.isEmpty()) {
+                lblSinLibros.setVisible(true);
+            } else {
+                lblSinLibros.setVisible(false);
+                for (Libro libro : libros) {
+                    VBox card = crearCardLibro(libro);
+                    contenedorResultados.getChildren().add(card);
+                }
+            }
+        });
+
+        new Thread(tareaCargaInicial).start();
     }
-
-
-    private final Map<String, Image> cacheImagenes = new HashMap<>();
 
     private VBox crearCardLibro(Libro libro) {
         VBox card = new VBox(10);
@@ -110,9 +164,9 @@ public class BusquedaController {
         portada.setSmooth(true);
         portada.setCache(true);
 
-        portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Cargando...")); // Imagen temporal
+        portada.setImage(new Image("https://via.placeholder.com/120x180.png?text=Cargando..."));
 
-        String url = libro.getPortada();
+        final String url = libro.getPortada();
 
         if (cacheImagenes.containsKey(url)) {
             portada.setImage(cacheImagenes.get(url));
@@ -121,7 +175,7 @@ public class BusquedaController {
                 @Override
                 protected Image call() {
                     try {
-                        return new Image(url, true); // true = carga en background
+                        return new Image(url, true);
                     } catch (Exception e) {
                         System.out.println("Error al cargar imagen: " + e.getMessage());
                         return new Image("https://via.placeholder.com/120x180.png?text=Sin+imagen");
@@ -171,7 +225,6 @@ public class BusquedaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/bienvenida.fxml"));
             Region root = (Region) loader.load();
-
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             root.prefWidthProperty().bind(stage.widthProperty());
             root.prefHeightProperty().bind(stage.heightProperty());
@@ -179,8 +232,6 @@ public class BusquedaController {
             stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -191,7 +242,6 @@ public class BusquedaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
             Region root = (Region) loader.load();
-
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             root.prefWidthProperty().bind(stage.widthProperty());
             root.prefHeightProperty().bind(stage.heightProperty());
@@ -199,8 +249,6 @@ public class BusquedaController {
             stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
