@@ -11,9 +11,6 @@ import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.io.File;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class EditarUsuarioController {
@@ -27,65 +24,37 @@ public class EditarUsuarioController {
     @FXML private Button btnCancelar;
     @FXML private ImageView imgFotoPerfil;
 
-    private byte[] fotografiaBytes; // Variable para guardar los bytes de la foto
+    private File archivoFoto; // <-- Usamos File, no byte[]
     private UsuarioBiblioteca usuarioEditando;
     private boolean guardado = false;
 
-    // Método para cargar los datos del usuario, incluyendo la foto
+    // Ya no necesitas un método cargarFotografia que use byte[]
     public void cargarUsuario(UsuarioBiblioteca usuario) {
         this.usuarioEditando = usuario;
         txtNombre.setText(usuario.getNombre());
         txtCorreo.setText(usuario.getCorreo());
         txtTelefono.setText(usuario.getTelefono());
         txtDireccion.setText(usuario.getDireccion());
-
         if (usuario.getFechaNacimiento() != null) {
             dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
         } else {
             dpFechaNacimiento.setValue(null);
         }
 
-        // Cargar la foto del usuario existente
-        cargarFotografia(usuario.getFotografia());
-    }
-
-    // Método para cargar la fotografía desde los bytes y manejar errores
-    private void cargarFotografia(byte[] fotoBytes) {
-        Image imageToLoad = null; // Variable temporal para la imagen
-
-        if (fotoBytes != null && fotoBytes.length > 0) {
+        // Si el usuario tiene una foto guardada, hay que mostrarla
+        if (usuario.getFotografia() != null) {
             try {
-                // Intenta crear la imagen desde los bytes del usuario
-                imageToLoad = new Image(new ByteArrayInputStream(fotoBytes));
-                // Opcional: imprimir para depuración
-                System.out.println("Fotografía de usuario cargada correctamente.");
+                // Aquí, creamos la imagen desde los bytes que el DAO aún devuelve
+                Image image = new Image(new java.io.ByteArrayInputStream(usuario.getFotografia()));
+                imgFotoPerfil.setImage(image);
             } catch (Exception e) {
-                // Si hay un error, lo imprime y la variable imageToLoad se queda en null
                 e.printStackTrace();
-                System.err.println("Error al convertir la fotografía del usuario. Se usará una imagen por defecto.");
+                imgFotoPerfil.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
             }
-        }
-
-        // Si imageToLoad es null (porque no había foto o hubo un error), carga el placeholder.
-        if (imageToLoad != null) {
-            imgFotoPerfil.setImage(imageToLoad);
-            this.fotografiaBytes = fotoBytes;
         } else {
-            try {
-                // Intenta cargar la imagen por defecto
-                Image defaultImage = new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png"));
-                imgFotoPerfil.setImage(defaultImage);
-                this.fotografiaBytes = null; // Reinicia el campo de bytes
-                System.out.println("Imagen por defecto cargada.");
-            } catch (Exception e) {
-                // Si la imagen por defecto también falla, lo imprime y no pone ninguna imagen
-                System.err.println("Error fatal: No se pudo cargar la imagen por defecto. " + e.getMessage());
-                imgFotoPerfil.setImage(null);
-                this.fotografiaBytes = null;
-            }
+            imgFotoPerfil.setImage(new Image(getClass().getResourceAsStream("/mx/edu/utez/biblioteca/img/placeholder.png")));
         }
     }
-
 
     @FXML
     private void onGuardar() {
@@ -105,12 +74,10 @@ public class EditarUsuarioController {
         usuarioEditando.setDireccion(txtDireccion.getText().trim());
         usuarioEditando.setFechaNacimiento(dpFechaNacimiento.getValue());
 
-        // Asignar la foto al usuario
-        usuarioEditando.setFotografia(this.fotografiaBytes);
-
         try {
             UsuarioBibliotecaDaoImpl dao = new UsuarioBibliotecaDaoImpl();
-            dao.update(usuarioEditando); // Llamar a un método update que maneje la foto
+            // Llama al método update que recibe un File
+            dao.update(usuarioEditando, archivoFoto);
             guardado = true;
             mostrarAlerta("Usuario actualizado", "Los datos se guardaron correctamente.");
             cerrarVentana();
@@ -127,27 +94,20 @@ public class EditarUsuarioController {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
         );
-
         File selected = fileChooser.showOpenDialog(btnCancelar.getScene().getWindow());
         if (selected != null) {
+            this.archivoFoto = selected; //Guardamos el File seleccionado
+            btnSeleccionarImagen.setText(selected.getName());
             try {
-                // Leer el archivo y guardar los bytes en la variable de la clase
-                FileInputStream fis = new FileInputStream(selected);
-                this.fotografiaBytes = new byte[(int) selected.length()];
-                fis.read(this.fotografiaBytes);
-                fis.close();
-
-                // Mostrar la imagen seleccionada en la vista
-                Image image = new Image(new ByteArrayInputStream(this.fotografiaBytes));
+                Image image = new Image(selected.toURI().toString());
                 imgFotoPerfil.setImage(image);
-
-                btnSeleccionarImagen.setText(selected.getName());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.err.println("Error al cargar la imagen: " + e.getMessage());
             }
         }
     }
 
+    // ... (El resto de tus métodos auxiliares) ...
     public boolean isGuardado() { return guardado; }
     private void cerrarVentana() {
         Stage stage = (Stage) btnGuardar.getScene().getWindow();
