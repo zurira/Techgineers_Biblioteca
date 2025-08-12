@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
+// Importaciones necesarias para la validación de la contraseña
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModalAgregarBibliotecarioController {
 
@@ -26,7 +29,10 @@ public class ModalAgregarBibliotecarioController {
     @FXML private TextField txtTelefono;
     @FXML private PasswordField txtContrasena;
     @FXML private TextArea txtDireccion;
-    @FXML private TextField txtEstado;
+    @FXML
+    private TextField txtPasswordVisible;
+
+    // Se eliminaron las variables FXML para los campos de estado y rol
 
     // Variable para almacenar el archivo de la imagen seleccionada
     private File imagenSeleccionada;
@@ -88,28 +94,53 @@ public class ModalAgregarBibliotecarioController {
 
     @FXML
     private void guardarBibliotecario() {
-        // Validación de campos
+        String correo = txtCorreo.getText().trim();
+
+        // Validación de campos incompletos
+        // Se eliminó la validación para txtEstado.
         if (txtNombre.getText().trim().isEmpty() ||
                 txtUsuario.getText().trim().isEmpty() ||
-                txtCorreo.getText().trim().isEmpty() ||
+                correo.isEmpty() ||
                 txtTelefono.getText().trim().isEmpty() ||
                 txtContrasena.getText().trim().isEmpty() ||
                 txtDireccion.getText().trim().isEmpty() ||
-                txtEstado.getText().trim().isEmpty() ||
                 imagenSeleccionada == null) {
 
             mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, llena todos los campos del formulario, incluyendo la selección de una foto.");
-            return; // En caso de que no se llenen todos los campos detiene la ejecución si hay campos vacíos
+            return;
         }
+
+        // --- VALIDACIÓN DE CORREO ---
+        if (!correo.endsWith("@bibliotecario.com")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Correo Inválido", "El correo electrónico debe terminar en '@bibliotecario.com'.");
+            return;
+        }
+        // --- FIN DE LA VALIDACIÓN ---
+
+        // --- INICIO DE VALIDACIÓN DE CONTRASEÑA ---
+        String contrasena = txtContrasena.getText();
+        // La expresión regular valida:
+        // 1. Al menos una minúscula (?=.*[a-z])
+        // 2. Al menos una mayúscula (?=.*[A-Z])
+        // 3. Al menos un carácter especial (?=.*[^a-zA-Z0-9])
+        // 4. Longitud máxima de 5 caracteres, y mínima de 1 (.{1,5})
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{12,100}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasena);
+
+        if (!matcher.matches()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error en Contraseña", "Contraseña Inválida", "La contraseña debe tener un minimo de 12 caracteres y contener al menos una mayúscula, una minúscula,un número y un carácter especial.");
+            return;
+        }
+        // --- FIN DE VALIDACIÓN DE CONTRASEÑA ---
 
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
-        String correo = txtCorreo.getText().trim();
         String telefono = txtTelefono.getText().trim();
-        String contrasena = txtContrasena.getText();
-        String estado = txtEstado.getText().trim().equalsIgnoreCase("activo") ? "S" : "N";
         String direccion = txtDireccion.getText().trim();
 
+        // El estado y el rol se asignan por defecto
+        String estado = "S"; // El estado por defecto es "activo"
         int idRol = obtenerIdRolBibliotecario();
 
         if (idRol == -1) {
@@ -123,9 +154,8 @@ public class ModalAgregarBibliotecarioController {
                 fotoBytes = Files.readAllBytes(imagenSeleccionada.toPath());
         } catch (IOException e) {
             e.printStackTrace();
-            // Mostrar una alerta si hay un error al leer el archivo
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al procesar la imagen", "Ocurrió un error al intentar leer el archivo de la imagen.");
-            return; // Detener el guardado si hay un problema con la imagen
+            return;
         }
 
         Usuario nuevo = new Usuario();
@@ -134,13 +164,13 @@ public class ModalAgregarBibliotecarioController {
         nuevo.setCorreo(correo);
         nuevo.setTelefono(telefono);
         nuevo.setPassword(contrasena);
-        nuevo.setEstado(estado);
+        nuevo.setEstado(estado); // Se asigna el estado por defecto
         nuevo.setDireccion(direccion);
         nuevo.setFoto(fotoBytes);
 
         Rol rol = new Rol();
         rol.setId(idRol);
-        nuevo.setRol(rol);
+        nuevo.setRol(rol); // Se asigna el rol por defecto
 
         try {
             new UsuarioDaoImpl().create(nuevo);
@@ -182,5 +212,22 @@ public class ModalAgregarBibliotecarioController {
     private void cerrarModal() {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();
+    }
+    @FXML
+    private void togglePasswordVisibility() {
+        boolean visible = txtPasswordVisible.isVisible();
+        if (visible) {
+            txtContrasena.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtContrasena.setVisible(true);
+            txtContrasena.setManaged(true);
+        } else {
+            txtPasswordVisible.setText(txtContrasena.getText());
+            txtContrasena.setVisible(false);
+            txtContrasena.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+        }
     }
 }
