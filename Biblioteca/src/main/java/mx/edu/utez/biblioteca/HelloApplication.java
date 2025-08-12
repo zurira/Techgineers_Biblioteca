@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-
-
         Parent root = FXMLLoader.load(getClass().getResource("/mx/edu/utez/biblioteca/views/login.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Usuarios");

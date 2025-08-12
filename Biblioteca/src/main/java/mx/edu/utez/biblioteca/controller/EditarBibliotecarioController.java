@@ -1,6 +1,7 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,12 +10,16 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import mx.edu.utez.biblioteca.dao.impl.BibliotecarioDaoImpl;
 import mx.edu.utez.biblioteca.model.Bibliotecario;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+// Importaciones necesarias para la validación de la contraseña
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditarBibliotecarioController implements Initializable {
 
@@ -43,7 +48,7 @@ public class EditarBibliotecarioController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
+        // comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
     }
 
     private void cargarDatos() {
@@ -53,7 +58,7 @@ public class EditarBibliotecarioController implements Initializable {
         txtUsuario.setText(bibliotecarioActual.getUsername());
         txtPassword.setText(bibliotecarioActual.getPassword());
         txtDireccion.setText(bibliotecarioActual.getDireccion());
-        comboEstado.setValue(bibliotecarioActual.getEstado());
+        //comboEstado.setValue(bibliotecarioActual.getEstado());
 
         if (bibliotecarioActual.getFoto() != null) {
             Image img = new Image(new java.io.ByteArrayInputStream(bibliotecarioActual.getFoto()));
@@ -67,20 +72,29 @@ public class EditarBibliotecarioController implements Initializable {
     }
 
     @FXML
-    private void togglePasswordVisibility() {
-        boolean visible = txtPasswordVisible.isVisible();
-        if (visible) {
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = txtPasswordVisible.isVisible();
+
+        if (isVisible) {
             txtPassword.setText(txtPasswordVisible.getText());
             txtPasswordVisible.setVisible(false);
             txtPasswordVisible.setManaged(false);
             txtPassword.setVisible(true);
             txtPassword.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye");
+            }
         } else {
             txtPasswordVisible.setText(txtPassword.getText());
             txtPassword.setVisible(false);
             txtPassword.setManaged(false);
             txtPasswordVisible.setVisible(true);
             txtPasswordVisible.setManaged(true);
+
+            if (togglePasswordBtn.getGraphic() instanceof FontIcon icon) {
+                icon.setIconLiteral("fa-eye-slash");
+            }
         }
     }
 
@@ -112,15 +126,36 @@ public class EditarBibliotecarioController implements Initializable {
 
     @FXML
     private void onGuardar() {
+        String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
+
+        // --- INICIO DE VALIDACIÓN DE CONTRASEÑA ---
+        // Se valida solo si el usuario ha ingresado una nueva contraseña.
+        if (!nuevaPass.isEmpty()) {
+            // La expresión regular valida:
+            // 1. Al menos una minúscula (?=.*[a-z])
+            // 2. Al menos una mayúscula (?=.*[A-Z])
+            // 3. Al menos un número (?=.*[0-9])
+            // 4. Al menos un carácter especial (?=.*[^a-zA-Z0-9])
+            // 5. Longitud máxima de 5 caracteres, y mínima de 1 (.{1,5})
+            String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{12,100}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(nuevaPass);
+
+            if (!matcher.matches()) {
+                mostrarAlerta("Error en Contraseña", "La contraseña debe tener un minimo de 12 caracteres y contener al menos una mayúscula, una minúscula, un número y un carácter especial.");
+                return; // Detiene el proceso si la contraseña es inválida
+            }
+        }
+        // --- FIN DE VALIDACIÓN DE CONTRASEÑA ---
+
         try {
             bibliotecarioActual.setNombre(txtNombre.getText());
             bibliotecarioActual.setCorreo(txtCorreo.getText());
             bibliotecarioActual.setTelefono(txtTelefono.getText());
             bibliotecarioActual.setUsername(txtUsuario.getText());
             bibliotecarioActual.setDireccion(txtDireccion.getText());
-            bibliotecarioActual.setEstado(comboEstado.getValue());
+            //bibliotecarioActual.setEstado(comboEstado.getValue());
 
-            String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
             if (!nuevaPass.isEmpty()) {
                 bibliotecarioActual.setPassword(nuevaPass); // Hashea si es necesario
             }
@@ -149,5 +184,4 @@ public class EditarBibliotecarioController implements Initializable {
         // Cierra la ventana actual
         btnCancelar.getScene().getWindow().hide();
     }
-
 }
