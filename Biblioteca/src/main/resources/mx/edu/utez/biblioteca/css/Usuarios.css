@@ -1,12 +1,12 @@
-/* General styling */
+/* General*/
 .root {
     -fx-font-family: "Arial", sans-serif;
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
 }
 
-/* Sidebar */
+/* Barra lateral */
 .sidebar {
-    -fx-background-color: #EDE9E3;
+    -fx-background-color: #ffffff;
     -fx-padding: 0;
     -fx-alignment: top-center;
     -fx-border-color: #A38F85;
@@ -32,7 +32,7 @@
 }
 
 .sidebar-item-active {
-    -fx-background-color: #d1ccc1; /* Darker beige for active item */
+    -fx-background-color: #d1ccc1; /*Se torna más oscuro si el objeto esta seleccionado */
     -fx-padding: 10px 0 10px 20px;
     -fx-alignment: center-left;
     -fx-cursor: hand;
@@ -42,7 +42,7 @@
 .sidebar-icon {
     -fx-fill: #555555;
     -fx-font-size: 2em;
-    -fx-padding: 0 10px 0 0;
+    -fx-padding: 0 50px 0 0;
 }
 
 .sidebar-label {
@@ -51,7 +51,8 @@
     -fx-font-weight: bold;
 }
 
-/* Top Bar */
+
+/* Barra superior */
 .top-bar {
     -fx-background-color: #A38F85;
     -fx-border-color: #e0e0e0;
@@ -77,11 +78,7 @@
     -fx-font-weight: bold;
 }
 
-.arrow-icon {
-    -fx-fill: #555555;
-}
-
-/* Search Bar */
+/* Diseño barra de busqueda */
 .search-bar {
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;
@@ -108,9 +105,9 @@
     -fx-border-width: 0;
 }
 
-/* Add Button */
+/* Diseño para el botón de agregar */
 .add-button {
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: #A38F85;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -121,14 +118,46 @@
 }
 
 .add-button:hover {
+    -fx-background-color: #726262;
+}
+
+/* Estilos para el ícono de actualización */
+.update-icon {
+    -fx-fill: #ffffff; /* El ícono será blanco */
+    -fx-font-size: 22px;
+}
+
+/* Estilos para el botón que contiene el ícono */
+.icon-button {
     -fx-background-color: #A38F85;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+/* Estilo al pasar el mouse por encima del botón */
+.icon-button:hover {
+    -fx-background-color: #726262;
+}
+
+.LabelTarifa{
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #A38F85;
+}
+
+.tarifa-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #5C504A;
+    -fx-font-weight: bold;
 }
 
 .add-icon {
     -fx-fill: white;
 }
 
-/* Section Title */
+/* Diseño para la sección de titulo */
 .section-title {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -153,12 +182,12 @@
 .table-view .column-header,
 .table-view .filler,
 .table-view .table-header-row {
-    -fx-background-color: transparent;
+    -fx-background-color:#cdc2bd ;
 }
-
+/*#EDE9E3*/
 .table-view .column-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #495057;
+    -fx-text-fill: #443933;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 12px 10px;
 }
@@ -170,7 +199,7 @@
     -fx-font-weight: 600; /* <-- Grosor */
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 15px 10px;
-    -fx-border-color: #e9ecef;
+    -fx-border-color: #cdc2bd;
     -fx-border-width: 0 0 1px 0;
 }
 
@@ -185,13 +214,29 @@
 
 /* Estado de la fila seleccionada y al pasar el ratón */
 .table-row-cell:hover {
-    -fx-background-color: transparent;
+    -fx-background-color: #f8f9fa;
     -fx-cursor: hand;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: transparent;
+    -fx-background-color: #e8f5ff;
     -fx-text-fill: #212529;
+}
+
+/* Action buttons in table cellsDiseño de los botónes de accion de la tabla */
+.action-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.action-icon {
+    -fx-fill: #555555;
+    -fx-font-size: 1.2em;
+}
+
+.action-icon:hover {
+    -fx-fill: #007bff;
 }
 
 /* Scrollbar */
@@ -207,7 +252,7 @@
 }
 
 .table-view .scroll-bar .thumb {
-    -fx-background-color: #ced4da;
+    -fx-background-color: #cccccc;
     -fx-background-insets: 0;
     -fx-background-radius: 5;
 }
@@ -218,25 +263,6 @@
     -fx-background-radius: 5;
 }
 
-/* Botones de acción en las celdas de la tabla */
-.action-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-    -fx-cursor: hand;
-    -fx-effect: null;
-}
-
-.action-icon {
-    -fx-fill: #6c757d;
-    -fx-font-size: 1.2em;
-    -fx-opacity: 0.8;
-}
-
-.action-icon:hover {
-    -fx-fill: #007bff;
-    -fx-opacity: 1.0;
-}
-
 /* Estilo para el contenedor del recuadro de usuario */
 .user-info-box {
     -fx-background-color: #726262;
@@ -244,18 +270,6 @@
     -fx-padding: 8px 15px 5px 15px;
     -fx-alignment: center;
     -fx-spacing: 5px;
-}
-
-.user-info-box:hover {
-    -fx-background-color: #605050;
-    -fx-background-radius: 20px;
-    -fx-padding: 8px 15px 5px 15px;
-    -fx-alignment: center;
-    -fx-spacing: 5px;
-}
-
-.btnlogout {
-    -fx-background-color: transparent;
 }
 
 .user-icon {
@@ -281,21 +295,50 @@
     -fx-fill: #FFFFFF;
     -fx-font-size: 26px;
     -fx-translate-y: 5px;
-    -fx-translate-x:6px;
+    -fx-translate-x: 6px;
+}
+/*Cambios para que solo se vea el icono y funcione como botón*/
+.logout-icon-button {
+    -fx-background-color: transparent; /* Elimina el fondo del botón */
+    -fx-padding: 0; /* Elimina el padding del botón */
+    -fx-border-color: transparent; /* Elimina el borde del botón */
+    -fx-cursor: hand; /* Cambia el cursor para indicar que es clickeable */
+    /* Quitar el foco alrededor del botón cuando se selecciona */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.logout-icon-button:hover .signout-icon {
+    -fx-fill: #CDC6C3; /* Cambia el color del icono al pasar el ratón */
+}
+
+.status-label {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-alignment: center;
+    -fx-padding: 3px 8px; /* Ajusta el padding para que se vea como un botón pequeño */
 }
 
 .status-activo {
-    -fx-background-color: #4CAF50; /* Verde */
-    -fx-text-fill: white;
+    -fx-background-color: #DCFCE7;
+    -fx-text-fill: #4CAF50;
+    -fx-font-weight: bold;
     -fx-padding: 5px 10px;
     -fx-background-radius: 20px;
     -fx-alignment: center;
 }
 
 .status-inactivo {
-    -fx-background-color: #F44336; /* Rojo */
-    -fx-text-fill: white;
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #B34F4F;
+    -fx-font-weight: bold;
     -fx-padding: 5px 10px;
     -fx-background-radius: 20px;
     -fx-alignment: center;
+}
+.btnlogout {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
 }
