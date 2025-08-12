@@ -50,7 +50,7 @@ public class AdminBiblioController {
     @FXML
     private Label lblSinResultados;
     @FXML
-    private ProgressIndicator progressIndicator; // Nuevo fx:id para el indicador de carga
+    private ProgressIndicator progressIndicator;
 
     private BibliotecarioDaoImpl bibliotecarioDao;
     private ObservableList<Bibliotecario> listaBibliotecarios;
@@ -136,20 +136,30 @@ public class AdminBiblioController {
             private final Button viewButton = new Button();
 
             {
+                // Botón de Ver (fa-eye)
                 FontIcon viewIcon = new FontIcon("fa-eye");
                 viewIcon.getStyleClass().add("action-icon");
                 viewButton.setGraphic(viewIcon);
                 viewButton.getStyleClass().add("action-button");
                 viewButton.setTooltip(new Tooltip("Ver detalles"));
 
+                // Botón de Editar (fa-pencil)
                 FontIcon editIcon = new FontIcon("fa-pencil");
                 editIcon.getStyleClass().add("action-icon");
                 editButton.setGraphic(editIcon);
                 editButton.getStyleClass().add("action-button");
                 editButton.setTooltip(new Tooltip("Editar bibliotecario"));
 
-                buttons.setAlignment(Pos.CENTER_LEFT);
-                buttons.getChildren().addAll(viewButton, editButton, changeStatusButton);
+                // Botón de Switch/Cambiar estado (fa-toggle-on/off)
+                FontIcon statusIcon = new FontIcon("fa-toggle-on");
+                statusIcon.getStyleClass().add("action-icon");
+                changeStatusButton.setGraphic(statusIcon);
+                changeStatusButton.getStyleClass().add("action-button");
+                changeStatusButton.setTooltip(new Tooltip("Activar/Desactivar"));
+
+                // CAMBIO AQUI: Se agregan los botones en el orden solicitado: Editar, Ver, Switch
+                buttons.setAlignment(Pos.CENTER); // Centra los botones en la celda
+                buttons.getChildren().addAll(editButton, viewButton, changeStatusButton);
             }
 
             @Override
@@ -160,6 +170,7 @@ public class AdminBiblioController {
                 } else {
                     Bibliotecario bibliotecario = getTableView().getItems().get(getIndex());
 
+                    // Actualiza el icono del botón de estado según el estado del bibliotecario
                     FontIcon statusIcon;
                     if ("S".equals(bibliotecario.getEstado())) {
                         statusIcon = new FontIcon("fa-toggle-on");
@@ -170,7 +181,6 @@ public class AdminBiblioController {
                     }
                     statusIcon.getStyleClass().add("action-icon");
                     changeStatusButton.setGraphic(statusIcon);
-                    changeStatusButton.getStyleClass().add("action-button");
 
                     viewButton.setOnAction(event -> onViewBibliotecario(bibliotecario));
                     editButton.setOnAction(event -> onEditBibliotecario(bibliotecario));
@@ -267,20 +277,17 @@ public class AdminBiblioController {
     }
 
     private void onViewBibliotecario(Bibliotecario bibliotecarioSeleccionado) {
-        // Muestra el indicador de carga y deshabilita la tabla para evitar interacción
         progressIndicator.setVisible(true);
         tableViewBibliotecarios.setDisable(true);
 
         Task<Bibliotecario> loadBibliotecarioTask = new Task<Bibliotecario>() {
             @Override
             protected Bibliotecario call() throws Exception {
-                // Tarea que se ejecuta en segundo plano para cargar los datos completos
                 return bibliotecarioDao.findById(bibliotecarioSeleccionado.getId());
             }
         };
 
         loadBibliotecarioTask.setOnSucceeded(event -> {
-            // Se ejecuta en el hilo principal de la UI cuando la tarea termina con éxito
             progressIndicator.setVisible(false);
             tableViewBibliotecarios.setDisable(false);
 
@@ -309,7 +316,6 @@ public class AdminBiblioController {
         });
 
         loadBibliotecarioTask.setOnFailed(event -> {
-            // Se ejecuta en el hilo principal de la UI si la tarea falla
             progressIndicator.setVisible(false);
             tableViewBibliotecarios.setDisable(false);
             Throwable e = loadBibliotecarioTask.getException();
@@ -317,7 +323,6 @@ public class AdminBiblioController {
             showAlert(Alert.AlertType.ERROR, "Error de Datos", "No se pudo obtener el bibliotecario", "Hubo un error al intentar cargar los datos del bibliotecario: " + e.getMessage());
         });
 
-        // Iniciar la tarea en un nuevo hilo
         new Thread(loadBibliotecarioTask).start();
     }
 

@@ -29,6 +29,8 @@ public class ModalAgregarBibliotecarioController {
     @FXML private TextField txtTelefono;
     @FXML private PasswordField txtContrasena;
     @FXML private TextArea txtDireccion;
+    @FXML
+    private TextField txtPasswordVisible;
 
     // Se eliminaron las variables FXML para los campos de estado y rol
 
@@ -122,12 +124,12 @@ public class ModalAgregarBibliotecarioController {
         // 2. Al menos una mayúscula (?=.*[A-Z])
         // 3. Al menos un carácter especial (?=.*[^a-zA-Z0-9])
         // 4. Longitud máxima de 5 caracteres, y mínima de 1 (.{1,5})
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{1,5}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{12,100}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contrasena);
 
         if (!matcher.matches()) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error en Contraseña", "Contraseña Inválida", "La contraseña debe tener un máximo de 5 caracteres y contener al menos una mayúscula, una minúscula y un carácter especial.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error en Contraseña", "Contraseña Inválida", "La contraseña debe tener un minimo de 12 caracteres y contener al menos una mayúscula, una minúscula,un número y un carácter especial.");
             return;
         }
         // --- FIN DE VALIDACIÓN DE CONTRASEÑA ---
@@ -210,5 +212,22 @@ public class ModalAgregarBibliotecarioController {
     private void cerrarModal() {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();
+    }
+    @FXML
+    private void togglePasswordVisibility() {
+        boolean visible = txtPasswordVisible.isVisible();
+        if (visible) {
+            txtContrasena.setText(txtPasswordVisible.getText());
+            txtPasswordVisible.setVisible(false);
+            txtPasswordVisible.setManaged(false);
+            txtContrasena.setVisible(true);
+            txtContrasena.setManaged(true);
+        } else {
+            txtPasswordVisible.setText(txtContrasena.getText());
+            txtContrasena.setVisible(false);
+            txtContrasena.setManaged(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setManaged(true);
+        }
     }
 }

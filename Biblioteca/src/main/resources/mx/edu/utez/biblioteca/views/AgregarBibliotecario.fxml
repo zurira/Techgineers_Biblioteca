@@ -5,12 +5,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TextArea?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="mx.edu.utez.biblioteca.controller.ModalAgregarBibliotecarioController"
             prefWidth="920" prefHeight="520"
             style="-fx-background-color: #F1EFEF;">
-
 
     <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="860">
         <Label text="Agregar bibliotecario" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
@@ -48,11 +48,23 @@
                 <Label text="Usuario:*" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                 <TextField fx:id="txtUsuario" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
-                <Label text="Contraseña:*" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <PasswordField fx:id="txtContrasena" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <!-- Contraseña con funcionalidad de alternar visibilidad -->
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
+                    <Label text="Contraseña:*" />
+                    <StackPane alignment="CENTER_RIGHT">
+                        <!-- El PasswordField original para la contraseña oculta -->
+                        <PasswordField fx:id="txtContrasena" promptText="Contraseña" style="-fx-border-color: #A38F85;" />
+                        <!-- El TextField para la contraseña visible (inicialmente oculto) -->
+                        <TextField fx:id="txtContrasenaVisible" managed="false" promptText="Contraseña" visible="false" />
+                        <!-- El botón con el ícono para alternar -->
+                        <Button fx:id="btnTogglePasswordVisibility" styleClass="icon-button" onAction="#togglePasswordVisibility">
+                            <graphic>
+                                <FontIcon iconLiteral="fa-eye-slash" />
+                            </graphic>
+                        </Button>
+                    </StackPane>
+                </VBox>
 
-                <!-- Se eliminó el campo de Rol -->
-                <!-- Se eliminó el campo de Estado -->
             </GridPane>
         </HBox>
 

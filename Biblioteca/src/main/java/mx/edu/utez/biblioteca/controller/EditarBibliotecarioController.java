@@ -15,6 +15,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+// Importaciones necesarias para la validación de la contraseña
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditarBibliotecarioController implements Initializable {
 
@@ -43,7 +46,7 @@ public class EditarBibliotecarioController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       // comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
+        // comboEstado.setItems(FXCollections.observableArrayList("S", "N"));
     }
 
     private void cargarDatos() {
@@ -112,15 +115,36 @@ public class EditarBibliotecarioController implements Initializable {
 
     @FXML
     private void onGuardar() {
+        String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
+
+        // --- INICIO DE VALIDACIÓN DE CONTRASEÑA ---
+        // Se valida solo si el usuario ha ingresado una nueva contraseña.
+        if (!nuevaPass.isEmpty()) {
+            // La expresión regular valida:
+            // 1. Al menos una minúscula (?=.*[a-z])
+            // 2. Al menos una mayúscula (?=.*[A-Z])
+            // 3. Al menos un número (?=.*[0-9])
+            // 4. Al menos un carácter especial (?=.*[^a-zA-Z0-9])
+            // 5. Longitud máxima de 5 caracteres, y mínima de 1 (.{1,5})
+            String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{12,100}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(nuevaPass);
+
+            if (!matcher.matches()) {
+                mostrarAlerta("Error en Contraseña", "La contraseña debe tener un minimo de 12 caracteres y contener al menos una mayúscula, una minúscula, un número y un carácter especial.");
+                return; // Detiene el proceso si la contraseña es inválida
+            }
+        }
+        // --- FIN DE VALIDACIÓN DE CONTRASEÑA ---
+
         try {
             bibliotecarioActual.setNombre(txtNombre.getText());
             bibliotecarioActual.setCorreo(txtCorreo.getText());
             bibliotecarioActual.setTelefono(txtTelefono.getText());
             bibliotecarioActual.setUsername(txtUsuario.getText());
             bibliotecarioActual.setDireccion(txtDireccion.getText());
-            bibliotecarioActual.setEstado(comboEstado.getValue());
+            //bibliotecarioActual.setEstado(comboEstado.getValue());
 
-            String nuevaPass = txtPassword.isVisible() ? txtPassword.getText() : txtPasswordVisible.getText();
             if (!nuevaPass.isEmpty()) {
                 bibliotecarioActual.setPassword(nuevaPass); // Hashea si es necesario
             }
@@ -149,5 +173,4 @@ public class EditarBibliotecarioController implements Initializable {
         // Cierra la ventana actual
         btnCancelar.getScene().getWindow().hide();
     }
-
 }
