@@ -30,7 +30,7 @@ public class VerPrestamoController {
     public void setPrestamo(Prestamo prestamo) {
         if (prestamo != null) {
             txtNombreUsuario.setText(prestamo.getUsuario() != null ? prestamo.getUsuario().getNombre() : "N/A");
-            txtTituloLibro.setText(prestamo.getLibro() != null ? prestamo.getLibro().getTitulo() : "N/A");
+            txtTituloLibro.setText(prestamo.getEjemplar().getLibro() != null ? prestamo.getEjemplar().getLibro().getTitulo() : "N/A");
             txtFechaPrestamo.setText(prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "");
             txtFechaLimite.setText(prestamo.getFechaLimite() != null ? prestamo.getFechaLimite().toString() : "");
             txtFechaReal.setText(prestamo.getFechaReal() != null ? prestamo.getFechaReal().toString() : "");
