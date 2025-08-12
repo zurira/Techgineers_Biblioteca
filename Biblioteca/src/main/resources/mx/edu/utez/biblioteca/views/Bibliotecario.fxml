@@ -115,11 +115,13 @@
                                     <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="400.0" promptText="Buscar" styleClass="search-field" HBox.hgrow="ALWAYS" />
                                 </children>
                             </HBox>
-                            <Region HBox.hgrow="ALWAYS" />
                             <Button fx:id="btnAddBibliotecario" mnemonicParsing="false" onAction="#onAddBibliotecario" prefHeight="40.0" styleClass="add-button" text="Agregar bibliotecario">
                                 <graphic>
                                     <FontIcon iconLiteral="fa-plus" iconSize="19" styleClass="add-icon" />
                                 </graphic>
+                                <HBox.margin>
+                                    <Insets left="20.0" />
+                                </HBox.margin>
                             </Button>
                         </children>
                     </HBox>
