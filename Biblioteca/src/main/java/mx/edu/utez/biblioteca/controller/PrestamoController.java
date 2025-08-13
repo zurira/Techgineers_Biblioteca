@@ -297,7 +297,7 @@ public class PrestamoController {
             modalStage.setTitle("Nuevo Préstamo");
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setResizable(false);
-            modalStage.setScene(new Scene(root, 1000, 600));
+            modalStage.setScene(new Scene(root, 780, 600));
             modalStage.showAndWait();
             cargarPrestamos();
             aplicarFiltros();
@@ -316,7 +316,7 @@ public class PrestamoController {
             modalStage.setTitle("Editar Préstamo");
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setResizable(false);
-            modalStage.setScene(new Scene(root, 1000, 600));
+            modalStage.setScene(new Scene(root, 780, 400));
             modalStage.showAndWait();
             cargarPrestamos();
             aplicarFiltros();
@@ -334,7 +334,7 @@ public class PrestamoController {
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.setResizable(false);
-            dialogStage.setScene(new Scene(root));
+            dialogStage.setScene(new Scene(root, 780, 400));
 
             controller.setDialogStage(dialogStage);
             controller.setPrestamo(prestamo);

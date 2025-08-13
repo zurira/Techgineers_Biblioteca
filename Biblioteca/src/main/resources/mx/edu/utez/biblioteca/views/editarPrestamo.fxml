@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="mx.edu.utez.biblioteca.controller.EditarPrestamoController"
-            stylesheets="@../css/agregarPrestamo.css">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="mx.edu.utez.biblioteca.controller.EditarPrestamoController"
+      stylesheets="@../css/agregarPrestamo.css"
+      spacing="20"
+      alignment="CENTER_LEFT"
+      styleClass="root-layout">
 
-    <top>
-        <VBox spacing="10">
-            <padding>
-                <Insets bottom="20" left="10" right="10" top="20"/>
-            </padding>
-            <Label text="Editar Préstamo" style="-fx-font-size: 20px;" styleClass="titulo"/>
-            <GridPane hgap="10" vgap="10">
-                <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <ComboBox fx:id="comboBoxUsuarios" editable="false" prefWidth="250.0"
-                          GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-                <Label text="Fecha Préstamo:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <DatePicker fx:id="dpFechaPrestamo" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="date-picker"/>
+    <Label text="Editar Préstamo" styleClass="titulo"/>
+    <Label text="Modifica la información del préstamo" styleClass="subtitulo"/>
 
-                <Label text="Fecha Límite:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <DatePicker fx:id="dpFechaLimite" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="date-picker"/>
+    <VBox spacing="15" alignment="CENTER_LEFT" maxWidth="750">
+        <GridPane hgap="20" vgap="15">
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
+                <Label text="Usuario:" styleClass="label-form"/>
+                <ComboBox fx:id="comboBoxUsuarios" editable="false" styleClass="combo-box"/>
+            </VBox>
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
+                <Label text="Fecha Préstamo:" styleClass="label-form"/>
+                <DatePicker fx:id="dpFechaPrestamo" styleClass="date-picker"/>
+            </VBox>
 
-                <Label text="Fecha Devolución:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <DatePicker fx:id="dpFechaDevolucion" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="date-picker"/>
-            </GridPane>
-        </VBox>
-    </top>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5">
+                <Label text="Fecha Límite:" styleClass="label-form"/>
+                <DatePicker fx:id="dpFechaLimite" styleClass="date-picker"/>
+            </VBox>
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5">
+                <Label text="Fecha Devolución:" styleClass="label-form"/>
+                <DatePicker fx:id="dpFechaDevolucion" styleClass="date-picker"/>
+            </VBox>
+        </GridPane>
+    </VBox>
 
-    <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="20">
-            <padding>
-                <Insets bottom="20" left="10" right="10" top="20"/>
-            </padding>
-            <Button text="Cancelar" onAction="#cancelarAccion" styleClass="button-cancelar"/>
-            <Button text="Guardar" onAction="#guardarCambiosPrestamo" styleClass="button-guardar"/>
-        </HBox>
-    </bottom>
-</BorderPane>
+    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+        <Button onAction="#cancelarAccion" styleClass="button-secondary" text="Cancelar"/>
+        <Button onAction="#guardarCambiosPrestamo" styleClass="button-primary" text="Guardar"/>
+    </HBox>
+
+</VBox>
