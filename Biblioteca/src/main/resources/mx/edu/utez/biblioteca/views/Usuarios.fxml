@@ -30,7 +30,7 @@
                             <children>
                                 <ImageView fitHeight="121" fitWidth="121" preserveRatio="true" translateY="-2">
                                     <image>
-                                        <Image url="@../img/logo.png"/>
+                                        <Image url="@../img/img.png"/>
                                     </image>
                                     <clip>
                                         <Circle radius="60" centerX="60" centerY="60"/>
