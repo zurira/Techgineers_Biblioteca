@@ -15,6 +15,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="mx.edu.utez.biblioteca.controller.PrestamoController"
@@ -23,10 +25,16 @@
     <left>
         <VBox prefHeight="700.0" prefWidth="250.0" styleClass="sidebar">
             <children>
-                <StackPane prefHeight="150.0" prefWidth="200.0">
+                <StackPane prefHeight="150.0" prefWidth="200.0" alignment="CENTER">
                     <children>
-                        <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label styleClass="logo-text" text="Logo" />
+                        <ImageView fitHeight="121" fitWidth="121" preserveRatio="true" translateY="-2">
+                            <image>
+                                <Image url="@../img/img.png"/>
+                            </image>
+                            <clip>
+                                <Circle radius="60" centerX="60" centerY="60"/>
+                            </clip>
+                        </ImageView>
                     </children>
                     <VBox.margin>
                         <Insets top="30.0" />
@@ -92,7 +100,6 @@
                                         </HBox>
                                     </graphic>
                                 </Button>
-                                <Label styleClass="user-sub-label" text="Nombre usuario" />
                             </children>
                         </VBox>
                     </children>

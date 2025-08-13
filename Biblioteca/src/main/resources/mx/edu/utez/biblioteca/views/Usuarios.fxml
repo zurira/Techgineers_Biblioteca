@@ -91,7 +91,6 @@
                                         </HBox>
                                     </graphic>
                                 </Button>
-                                <Label styleClass="user-sub-label" text="Nombre usuario" />
                             </children>
                         </VBox>
                     </children>

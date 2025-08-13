@@ -264,19 +264,43 @@
 }
 
 /* Estilo para el contenedor del recuadro de usuario */
+/* Se ajusta para que el VBox y su contenido se alineen bien */
 .user-info-box {
     -fx-background-color: #726262;
     -fx-background-radius: 20px;
     -fx-padding: 8px 15px 5px 15px;
-    -fx-alignment: center;
+    -fx-alignment: CENTER; /* Alinear el VBox al centro */
     -fx-spacing: 5px;
 }
 
+.user-info-box:hover {
+    -fx-background-color: #605050;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px 5px 15px;
+    -fx-alignment: CENTER;
+    -fx-spacing: 5px;
+}
+
+/* Estilo para el Button dentro del VBox */
+/* Se elimina el estilo btnlogout innecesario */
+.btnlogout {
+    -fx-background-color: transparent;
+}
+
+/* Estilo para el HBox que está dentro del Button */
+/* Se asegura que este HBox también esté centrado para alinear los elementos */
+.btnlogout .HBox {
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+}
+
+/* Estilo para los iconos */
 .user-icon {
     -fx-fill: #FFFFFF;
     -fx-font-size: 24px;
-    -fx-translate-y: 5px;
-    -fx-translate-x: -2px;
+    /* Eliminar la traslación que causaba la desalineación */
+    -fx-translate-y: 0;
+    -fx-translate-x: 0;
 }
 
 .user-name {
@@ -285,17 +309,12 @@
     -fx-font-weight: bold;
 }
 
-.user-sub-label {
-    -fx-font-size: 12px;
-    -fx-text-fill: #F0F0F0;
-    -fx-translate-y: -8px;
-}
-
 .signout-icon {
     -fx-fill: #FFFFFF;
-    -fx-font-size: 26px;
-    -fx-translate-y: 5px;
-    -fx-translate-x: 6px;
+    -fx-font-size: 24px;
+    /* Eliminar la traslación que causaba la desalineación */
+    -fx-translate-y: 0;
+    -fx-translate-x: 0;
 }
 /*Cambios para que solo se vea el icono y funcione como botón*/
 .logout-icon-button {

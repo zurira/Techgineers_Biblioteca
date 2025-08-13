@@ -30,8 +30,7 @@
 }
 
 .text-area {
-    -fx-background-color: #f9f5f0;
-    -fx-border-color: #A38F85;
+    -fx-background-color: transparent;
     -fx-border-radius: 5;
     -fx-padding: 8;
     -fx-font-size: 13px;
