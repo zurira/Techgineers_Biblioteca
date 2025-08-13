@@ -93,23 +93,39 @@ public class ModalAgregarAdminController {
             return;
         }
 
-        // Agrego esto nuevo para hacer la validacion del campo de telefono, no se aceptan letras
-        if (!txtTelefono.getText().trim().matches("\\d+")) {
+        // Validación solo acepta  números y espacios no tiene mínimo de digitos
+
+        String telefonoSinEspacios = txtTelefono.getText().trim().replaceAll("\\s+", "");
+
+        if (!telefonoSinEspacios.matches("\\d+")) {
             txtTelefono.setStyle("-fx-border-color: red;");
-            mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El campo teléfono solo debe contener números.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "Solo se permiten números y espacios. No se aceptan letras ni símbolos.");
             return;
         } else {
             txtTelefono.setStyle("-fx-border-color: green;");
         }
 
 
+
+
         String correo = txtCorreo.getText().trim();
+        //String usuario = txtUsuario.getText().trim();
+        String usuarioDuplicado = txtUsuario.getText().trim();
 
         //  Validación de dominio
         if (!correo.endsWith("@administrador.com")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido", "Solo se permiten correos que terminen con '@administrador.com'.");
             return;
         }
+
+        //Agrego esto nuevo para evitar datos duplicados
+        if (AdministradorDao.existeAdministrador(correo, usuarioDuplicado)) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Administrador duplicado", "Ya existe un administrador con ese correo o usuario.");
+            return;
+        }
+
+
+
 
         String nombre = txtNombre.getText().trim();
         String usuario = txtUsuario.getText().trim();
@@ -186,4 +202,10 @@ public class ModalAgregarAdminController {
 
         return tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial;
     }
+
+
+
+
+
+
 }
