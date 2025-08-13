@@ -74,6 +74,7 @@ public class ModalAgregarAdminController {
         btnTogglePassword.setGraphic(icon);
     }
 
+    @FXML
     private void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
@@ -87,6 +88,7 @@ public class ModalAgregarAdminController {
         }
     }
 
+    @FXML
     private void guardarAdministrador() {
         if (!camposValidos()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", "Por favor, llena todos los campos y selecciona una imagen antes de continuar.");
@@ -169,6 +171,7 @@ public class ModalAgregarAdminController {
                 && imagenSeleccionada != null;
     }
 
+    @FXML
     private void cerrarModal() {
         btnCancelar.getScene().getWindow().hide();
     }
