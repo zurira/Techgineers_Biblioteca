@@ -1,54 +1,62 @@
+/*
+ * Hoja de estilos para la vista "Editar Usuario".
+ * Sigue el estilo general de la aplicación.
+ */
+
 .root {
-    -fx-background-color: #f9f5f0;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #F1EFEF;
 }
 
 .titulo {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #5e4631;
+    -fx-text-fill: #333333; /* Color de texto principal */
 }
 
 .subtitulo {
     -fx-font-size: 14px;
-    -fx-text-fill: #7b6c5d;
-    -fx-font-style: italic;
+    -fx-text-fill: #666666; /* Color de texto secundario */
 }
 
-.label {
-    -fx-font-size: 13px;
-    -fx-text-fill: #5e4631;
+.field-label {
+    -fx-font-weight: bold; /* Estilo para las etiquetas de los campos */
+    -fx-text-fill: #333333;
 }
 
-.text-field, .text-area, .date-picker {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cbb9a5;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
-    -fx-padding: 5 10;
-    -fx-font-size: 13px;
+.text-field {
+    -fx-pref-width: 250;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
+}
+
+.date-picker {
+    -fx-pref-width: 250;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
 }
 
 .text-area {
-    -fx-pref-row-count: 2;
-    -fx-wrap-text: true;
+    -fx-pref-width: 530;
+    -fx-pref-height: 80;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
 }
 
-.button {
+.button-cancelar {
+    -fx-background-color: #E2DAD6;
+    -fx-text-fill: #5C504A;
     -fx-font-weight: bold;
-    -fx-background-radius: 5;
-    -fx-cursor: hand;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
-.boton-guardar {
-    -fx-background-color: #a18976;
+.button-guardar {
+    -fx-background-color: #A38F85;
     -fx-text-fill: white;
-    -fx-padding: 6 20;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
-
-.boton-cancelar {
-    -fx-background-color: #d9d0c4;
-    -fx-text-fill: #896b51;
-    -fx-padding: 6 20;
-}
-

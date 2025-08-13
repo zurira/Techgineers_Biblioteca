@@ -86,7 +86,6 @@ public class UsuarioBibliotecaController {
                 }
             }
         });
-        // Ajuste de anchura para cada columna
         colNo.setPrefWidth(70);
         colNombreCompleto.setPrefWidth(180);
         colFechaNacimiento.setPrefWidth(160);
@@ -151,7 +150,6 @@ public class UsuarioBibliotecaController {
                 viewButton.getStyleClass().add("action-button");
                 viewButton.setTooltip(new Tooltip("Ver detalles"));
 
-                // Alinea los botones a la izquierda
                 buttons.setAlignment(Pos.CENTER_LEFT);
                 buttons.getChildren().addAll(editButton, viewButton, changeStatusButton);
 
@@ -166,7 +164,6 @@ public class UsuarioBibliotecaController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    // Alinea la celda completa a la izquierda
                     this.setAlignment(Pos.CENTER_LEFT);
                     UsuarioBiblioteca usuario = getTableView().getItems().get(getIndex());
                     FontIcon statusIcon;
@@ -384,7 +381,7 @@ public class UsuarioBibliotecaController {
                 Stage newStage = new Stage();
                 newStage.setTitle("Inicio de sesión");
                 newStage.setScene(new Scene(loginRoot));
-                newStage.setMaximized(true); //
+                newStage.setMaximized(true);
                 newStage.show();
 
             }

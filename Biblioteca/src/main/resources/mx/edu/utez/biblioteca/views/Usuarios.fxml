@@ -14,6 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="mx.edu.utez.biblioteca.controller.UsuarioBibliotecaController"
@@ -24,8 +26,22 @@
             <children>
                 <StackPane prefHeight="150.0" prefWidth="200.0">
                     <children>
-                        <Circle fill="#d1ccc1" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label styleClass="logo-text" text="Logo" />
+                        <StackPane prefHeight="150.0" prefWidth="200.0" alignment="CENTER">
+                            <children>
+                                <ImageView fitHeight="121" fitWidth="121" preserveRatio="true" translateY="-2">
+                                    <image>
+                                        <Image url="@../img/logo.png"/>
+                                    </image>
+                                    <clip>
+                                        <Circle radius="60" centerX="60" centerY="60"/>
+                                    </clip>
+                                </ImageView>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="30.0" />
+                            </VBox.margin>
+                        </StackPane>
+
                     </children>
                     <VBox.margin>
                         <Insets top="30.0" />

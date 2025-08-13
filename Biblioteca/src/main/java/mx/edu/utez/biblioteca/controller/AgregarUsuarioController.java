@@ -3,12 +3,19 @@ package mx.edu.utez.biblioteca.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.dao.impl.UsuarioBibliotecaDaoImpl;
 import mx.edu.utez.biblioteca.model.UsuarioBiblioteca;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Optional;
 
 public class AgregarUsuarioController {
 
@@ -19,9 +26,9 @@ public class AgregarUsuarioController {
     @FXML private DatePicker dpFechaNacimiento;
     @FXML private Button btnGuardar, btnSeleccionarImagen;
     @FXML private Button btnCancelar;
+    @FXML private ImageView imgFotoPerfil;
 
     private File archivoFoto;
-    private UsuarioBiblioteca usuarioExistente;
     private boolean guardado = false;
     private final UsuarioBibliotecaDaoImpl dao = new UsuarioBibliotecaDaoImpl();
 
@@ -29,67 +36,94 @@ public class AgregarUsuarioController {
         return guardado;
     }
 
-    public void cargarDatosParaEdicion(UsuarioBiblioteca usuario) {
-        this.usuarioExistente = usuario;
-        txtNombre.setText(usuario.getNombre());
-        dpFechaNacimiento.setValue(usuario.getFechaNacimiento());
-        txtCorreo.setText(usuario.getCorreo());
-        txtTelefono.setText(usuario.getTelefono());
-        txtDireccion.setText(usuario.getDireccion());
-        btnSeleccionarImagen.setText("(foto actual)");
-    }
-
     @FXML
     private void seleccionarFoto() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Seleccionar Fotografía");
-        chooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg", "*.png")
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Imagen");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg")
         );
-        File selected = chooser.showOpenDialog(btnCancelar.getScene().getWindow());
-        if (selected != null) {
-            archivoFoto = selected;
-            btnSeleccionarImagen.setText(selected.getName());
+        Stage stage = (Stage) btnSeleccionarImagen.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            try {
+                this.archivoFoto = selectedFile;
+                Image image = new Image(new FileInputStream(this.archivoFoto));
+                this.imgFotoPerfil.setImage(image);
+                System.out.println("Imagen seleccionada: " + selectedFile.getName());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo cargar la imagen", "El archivo de imagen no se encontró.");
+            }
         }
     }
 
     @FXML
-    private void guardar() {
-        if (txtNombre.getText().isEmpty() || dpFechaNacimiento.getValue() == null ||
-                txtCorreo.getText().isEmpty() || txtTelefono.getText().isEmpty() ||
-            txtDireccion.getText().isEmpty())
-        {
-            mostrarAlerta("Campos requeridos", "Completa todos los campos marcados con *");
+    public void guardar(ActionEvent actionEvent) {
+        if (!validarCampos()) {
+            return; // Detiene la ejecución si la validación falla
+        }
+
+        byte[] fotoBytes = null;
+        try {
+            if (this.archivoFoto != null) {
+                fotoBytes = Files.readAllBytes(this.archivoFoto.toPath());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al procesar la imagen", "Ocurrió un error al intentar leer el archivo de la imagen.");
             return;
         }
 
         try {
-            UsuarioBiblioteca usuario = new UsuarioBiblioteca();
-            usuario.setNombre(txtNombre.getText());
-            usuario.setFechaNacimiento(dpFechaNacimiento.getValue());
-            usuario.setCorreo(txtCorreo.getText());
-            usuario.setTelefono(txtTelefono.getText());
-            usuario.setDireccion(txtDireccion.getText());
-            usuario.setEstado("Activo");
-
-            if (usuarioExistente == null) {
-                // Nuevo usuario
-                dao.create(usuario, archivoFoto);
-                mostrarAlerta("Éxito", "Usuario agregado correctamente.");
-            } else {
-                // Actualización
-                usuario.setId(usuarioExistente.getId());
-                dao.update(usuario, archivoFoto);
-                mostrarAlerta("Éxito", "Usuario actualizado correctamente.");
+            // Validar que la foto no sea nula
+            if (fotoBytes == null) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campo obligatorio", "Debe seleccionar una fotografía para el usuario.");
+                return;
             }
 
-            guardado = true;
-            cerrarVentana();
+            // Validar que el nombre de usuario no esté repetido
+            if (dao.existeNombre(txtNombre.getText().trim())) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Nombre repetido", "El nombre de usuario '" + txtNombre.getText().trim() + "' ya existe. Por favor, ingrese uno diferente.");
+                return;
+            }
+
+            UsuarioBiblioteca usuario = new UsuarioBiblioteca();
+            usuario.setNombre(txtNombre.getText().trim());
+            usuario.setFechaNacimiento(dpFechaNacimiento.getValue());
+            usuario.setCorreo(txtCorreo.getText().trim());
+            usuario.setTelefono(txtTelefono.getText().trim());
+            usuario.setDireccion(txtDireccion.getText().trim());
+            usuario.setEstado("Activo");
+            usuario.setFotografia(fotoBytes);
+
+            boolean resultado = dao.create(usuario);
+
+            if (resultado) {
+                guardado = true;
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Operación exitosa", "El usuario se ha creado correctamente.");
+                cerrarVentana();
+            } else {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "Operación fallida", "No se pudo guardar el usuario en la base de datos.");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo guardar el usuario: " + e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de base de datos", "Ocurrió un error al interactuar con la base de datos", e.getMessage());
         }
+    }
+
+    private boolean validarCampos() {
+        if (txtNombre.getText().trim().isEmpty() ||
+                txtCorreo.getText().trim().isEmpty() ||
+                txtTelefono.getText().trim().isEmpty() ||
+                txtDireccion.getText().trim().isEmpty() ||
+                dpFechaNacimiento.getValue() == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Advertencia", "Campos incompletos", "Por favor, complete todos los campos obligatorios.");
+            return false;
+        }
+        return true;
     }
 
     @FXML
@@ -102,11 +136,11 @@ public class AgregarUsuarioController {
         if (stage != null) stage.close();
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
+    private void mostrarAlerta(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

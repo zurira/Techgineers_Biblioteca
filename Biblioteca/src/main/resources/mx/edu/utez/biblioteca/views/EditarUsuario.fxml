@@ -1,54 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.collections.FXCollections?>
-
-<?import java.lang.String?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TextArea?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="mx.edu.utez.biblioteca.controller.EditarUsuarioController"
-            prefWidth="950" prefHeight="570" style="-fx-background-color: #F1EFEF;"
-            stylesheets="@../css/agregarPrestamo.css">
+            prefWidth="890" prefHeight="500" style="-fx-background-color: #F1EFEF;"
+            stylesheets="@../css/EditarUsuario.css">
 
-    <!-- Foto -->
-    <VBox layoutX="30" layoutY="70">
-        <ImageView fx:id="imageView" fitWidth="160" fitHeight="160" preserveRatio="true"/>
-        <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
-                onAction="#seleccionarFoto" style="-fx-background-color: #EDE7E3; -fx-text-fill: #A38F85;"/>
+    <VBox spacing="10" layoutX="30" layoutY="20" prefWidth="860">
+        <!-- Títulos principales -->
+        <Label text="Editar información del usuario" styleClass="titulo"/>
+        <Label text="Ingresa la información correctamente" styleClass="subtitulo"/>
+
+        <HBox spacing="20">
+            <!-- Sección de la foto -->
+            <VBox spacing="10" alignment="TOP_CENTER">
+                <Label text="Foto:" styleClass="field-label"/>
+                <ImageView fx:id="imgFotoPerfil" fitWidth="250" fitHeight="250" preserveRatio="true"/>
+                <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
+                        onAction="#seleccionarFoto" styleClass="button-cancelar" prefWidth="150"/>
+            </VBox>
+
+            <!-- Sección de los campos del formulario -->
+            <GridPane hgap="20" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <!-- Fila 1 -->
+                <Label text="Nombre completo:*" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="field-label"/>
+                <TextField fx:id="txtNombre" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-field"/>
+
+                <Label text="Correo:*" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="field-label"/>
+                <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-field"/>
+
+                <!-- Fila 2 -->
+                <Label text="Teléfono:*" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="field-label"/>
+                <TextField fx:id="txtTelefono" GridPane.columnIndex="0" GridPane.rowIndex="3"  styleClass="text-field"/>
+
+                <Label text="Fecha Nacimiento:" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="field-label"/>
+                <DatePicker fx:id="dpFechaNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="date-picker"/>
+
+                <!-- Fila 3 - Dirección -->
+                <Label text="Dirección:" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="field-label"/>
+                <TextArea fx:id="txtDireccion" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" styleClass="text-area"/>
+            </GridPane>
+        </HBox>
+
+        <!-- Botones -->
+        <HBox spacing="10" alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+            <VBox.margin>
+                <Insets right="20.0" bottom="20.0"/>
+            </VBox.margin>
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" styleClass="button-cancelar"/>
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="button-guardar"/>
+        </HBox>
     </VBox>
-
-    <!-- Título del modal -->
-    <Label layoutX="30" layoutY="20" text="Editar información del usuario"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;" styleClass="titulo"/>
-
-    <!-- Campos de texto -->
-    <Label layoutX="250" layoutY="70" text="Nombre completo:*"/>
-    <TextField fx:id="txtNombre" layoutX="250" layoutY="95" styleClass="text-field"/>
-
-    <Label layoutX="520" layoutY="70" text="Correo:*"/>
-    <TextField fx:id="txtCorreo" layoutX="520" layoutY="95" styleClass="text-field"/>
-
-    <Label layoutX="790" layoutY="70" text="Teléfono:*"/>
-    <TextField fx:id="txtTelefono" layoutX="790" layoutY="95"  styleClass="text-field"/>
-
-    <Label text="Fecha Nacimiento:" layoutX="250" layoutY="135"/>
-    <DatePicker fx:id="dpFechaNacimiento" layoutX="250" layoutY="160" styleClass="date-picker"/>
-
-    <Label layoutX="30" layoutY="280" text="Dirección:"/>
-    <TextArea fx:id="txtDireccion" layoutX="30" layoutY="305" styleClass="text-area"/>
-
-    <!-- Botones -->
-    <HBox layoutX="840" layoutY="500" spacing="10">
-        <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" styleClass="button-cancelar"/>
-        <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="button-guardar"/>
-    </HBox>
-
 </AnchorPane>

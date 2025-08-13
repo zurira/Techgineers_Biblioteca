@@ -12,29 +12,21 @@ public class UsuarioBiblioteca {
     private String estado;
     private byte[] fotografia;
 
-    public UsuarioBiblioteca(){
-
-    }
-
     public UsuarioBiblioteca(int id, String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.telefono = telefono;
-        this.estado = estado;
         this.direccion = direccion;
+        this.estado = estado;
+        this.fotografia = fotografia;
     }
 
-    public UsuarioBiblioteca(String nombre, LocalDate fechaNacimiento, String correo, String telefono, String direccion, String estado) {
-        this.nombre = nombre;
-        this.fechaNacimiento = fechaNacimiento;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.estado = estado;
-        this.direccion = direccion;
+    public UsuarioBiblioteca() {
     }
 
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -75,20 +67,20 @@ public class UsuarioBiblioteca {
         this.telefono = telefono;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public byte[] getFotografia() {

@@ -144,17 +144,28 @@ public class EditarPrestamoController implements Initializable {
         dpFechaLimite.setValue(prestamo.getFechaLimite());
         dpFechaDevolucion.setValue(prestamo.getFechaReal());
 
-        // Cargar lista de usuarios y seleccionar el correspondiente
-        ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioBibliotecaDaoImpl().findAll());
-        comboBoxUsuarios.setItems(usuarios);
+        try {
+            // Cargar lista de usuarios y seleccionar el correspondiente
+            ObservableList<UsuarioBiblioteca> usuarios = FXCollections.observableArrayList(new UsuarioBibliotecaDaoImpl().findAll());
+            comboBoxUsuarios.setItems(usuarios);
 
-        if (prestamo.getUsuario() != null) {
-            for (UsuarioBiblioteca usuario : usuarios) {
-                if (usuario.getId() == prestamo.getUsuario().getId()) {
-                    comboBoxUsuarios.getSelectionModel().select(usuario);
-                    break;
+            if (prestamo.getUsuario() != null) {
+                for (UsuarioBiblioteca usuario : usuarios) {
+                    if (usuario.getId() == prestamo.getUsuario().getId()) {
+                        comboBoxUsuarios.getSelectionModel().select(usuario);
+                        break;
+                    }
                 }
             }
+        } catch (Exception e) {
+            // Manejo de la excepción
+            e.printStackTrace();
+            // Opcional: mostrar una alerta al usuario
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al cargar los usuarios");
+            alert.setContentText("No se pudo conectar con la base de datos para obtener la lista de usuarios.");
+            alert.showAndWait();
         }
     }
 
