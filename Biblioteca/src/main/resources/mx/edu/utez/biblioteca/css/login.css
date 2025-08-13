@@ -37,6 +37,9 @@
     -fx-text-fill: white;
     -fx-padding: 10 20;
 }
+.login-button:hover{
+    -fx-background-color: #ea8d89;
+}
 .circle-color {
     -fx-fill: #E7D7C9;
 }
