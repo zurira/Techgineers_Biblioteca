@@ -200,7 +200,7 @@ public class SuperAdminController {
                     switchButton.setOnAction(event -> onToggleEstado(usuario));
 
                     HBox buttons = new HBox(5, editButton, viewButton, switchButton);
-                    buttons.setAlignment(Pos.CENTER);
+                    buttons.setAlignment(Pos.CENTER_LEFT);
                     setGraphic(buttons);
                 }
             }
