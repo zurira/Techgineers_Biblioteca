@@ -23,9 +23,8 @@
         <!-- Columna izquierda: Imagen -->
         <VBox spacing="10" prefWidth="160">
             <StackPane prefWidth="160" prefHeight="340"
-                       style="-fx-background-color: #F1EFEF; -fx-border-color: #A38F85; -fx-border-radius: 5;">
-                <ImageView fx:id="imgFoto" fitWidth="160" fitHeight="340" preserveRatio="true"
-                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);"/>
+                       style="-fx-background-color: #F1EFEF;">
+                <ImageView fx:id="imgFoto" fitWidth="160" fitHeight="340" preserveRatio="true"/>
             </StackPane>
         </VBox>
 
@@ -100,10 +99,6 @@
     <Label fx:id="lblDireccion" layoutX="240" layoutY="365" prefWidth="670" wrapText="true"
            style="-fx-background-color: #E2DAD6; -fx-border-color: #A38F85; -fx-border-radius: 5;
           -fx-padding: 8px 10px; -fx-font-size: 14px; -fx-text-fill: #5C504A;"/>
-
-
-
-
 
     <!-- Botón cerrar -->
     <HBox layoutX="800" layoutY="500" spacing="10">
