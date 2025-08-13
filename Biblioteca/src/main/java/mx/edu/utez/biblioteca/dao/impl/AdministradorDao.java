@@ -74,4 +74,24 @@ public class AdministradorDao {
         }
     }
 
+    //Agrego este nuevo para validar duplicidad de datos
+    public static boolean existeAdministrador(String correo, String usuario) {
+        String sql = "SELECT COUNT(*) FROM USUARIO_SISTEMA WHERE CORREO = ? OR USERNAME = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, correo);
+            stmt.setString(2, usuario);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }
