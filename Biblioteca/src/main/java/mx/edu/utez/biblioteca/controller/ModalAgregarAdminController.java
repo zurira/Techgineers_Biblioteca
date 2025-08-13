@@ -93,6 +93,16 @@ public class ModalAgregarAdminController {
             return;
         }
 
+        // Agrego esto nuevo para hacer la validacion del campo de telefono, no se aceptan letras
+        if (!txtTelefono.getText().trim().matches("\\d+")) {
+            txtTelefono.setStyle("-fx-border-color: red;");
+            mostrarAlerta(Alert.AlertType.WARNING, "Teléfono inválido", "El campo teléfono solo debe contener números.");
+            return;
+        } else {
+            txtTelefono.setStyle("-fx-border-color: green;");
+        }
+
+
         String correo = txtCorreo.getText().trim();
 
         //  Validación de dominio
