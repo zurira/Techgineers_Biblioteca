@@ -1,94 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/VerBibliotecario.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.biblioteca.controller.VerBibliotecarioController">
-    <!-- Título principal en la parte superior -->
-    <Label styleClass="label-form" text="Información del Bibliotecario" style="-fx-font-size: 22px; -fx-font-weight: bold;">
-        <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-        </padding>
-    </Label>
-    <!-- Contenedor principal para la foto y los campos -->
-    <HBox prefHeight="600.0" prefWidth="900.0" spacing="20.0">
-        <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-        </padding>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="mx.edu.utez.biblioteca.controller.VerPrestamoController"
+      stylesheets="@../css/verModal.css"
+      spacing="20"
+      alignment="TOP_CENTER"
+      styleClass="root-layout">
 
-        <!-- Panel Izquierdo: Contenedor para la foto -->
-        <VBox alignment="TOP_CENTER" prefWidth="360.0" styleClass="image-container" HBox.hgrow="NEVER">
-            <children>
-                <ImageView fx:id="imgFoto" fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
-            </children>
-        </VBox>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-        <!-- Panel Derecho: Todos los campos del formulario -->
-        <VBox spacing="20.0" styleClass="info-container" HBox.hgrow="ALWAYS">
-            <children>
-                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
-                    <children>
-                        <!-- Primera fila de campos -->
-                        <HBox spacing="20.0">
-                            <children>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <Label styleClass="label-form" text="Nombre completo:" />
-                                    <TextField fx:id="txtNombre" editable="false" styleClass="text-field" />
-                                </VBox>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <Label styleClass="label-form" text="Correo:" />
-                                    <TextField fx:id="txtCorreo" editable="false" styleClass="text-field" />
-                                </VBox>
-                            </children>
-                        </HBox>
+    <Label text="Detalles del Préstamo" styleClass="titulo-modal"/>
+    <Label text="Información completa del préstamo seleccionado" styleClass="subtitulo-modal"/>
 
-                        <!-- Segunda fila de campos -->
-                        <HBox spacing="20.0">
-                            <children>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <Label styleClass="label-form" text="Teléfono:" />
-                                    <TextField fx:id="txtTelefono" editable="false" styleClass="text-field" />
-                                </VBox>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <Label styleClass="label-form" text="Usuario:" />
-                                    <TextField fx:id="txtUsuario" editable="false" styleClass="text-field" />
-                                </VBox>
-                            </children>
-                        </HBox>
+    <VBox spacing="15" alignment="TOP_LEFT" maxWidth="600">
+        <GridPane hgap="20" vgap="15">
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
+                <Label text="Nombre usuario:" styleClass="label-detalle"/>
+                <TextField fx:id="txtNombreUsuario" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
+                <Label text="Título del libro:" styleClass="label-detalle"/>
+                <TextField fx:id="txtTituloLibro" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
 
-                        <!-- Tercera fila de campos -->
-                        <HBox spacing="20.0">
-                            <children>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <Label styleClass="label-form" text="Estado:" />
-                                    <TextField fx:id="txtEstado" editable="false" styleClass="text-field" />
-                                </VBox>
-                            </children>
-                        </HBox>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5">
+                <Label text="Fecha préstamo:" styleClass="label-detalle"/>
+                <TextField fx:id="txtFechaPrestamo" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5">
+                <Label text="Fecha límite:" styleClass="label-detalle"/>
+                <TextField fx:id="txtFechaLimite" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
 
-                        <!-- Área de Dirección ajustada -->
-                        <VBox spacing="5.0">
-                            <children>
-                                <Label styleClass="label-form" text="Dirección" />
-                                <TextArea fx:id="txtDireccion" editable="false" prefHeight="100.0" wrapText="true" styleClass="text-field" />
-                            </children>
-                        </VBox>
-                    </children>
-                </VBox>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="5">
+                <Label text="Fecha de devolución:" styleClass="label-detalle"/>
+                <TextField fx:id="txtFechaReal" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" spacing="5">
+                <Label text="Estado:" styleClass="label-detalle"/>
+                <TextField fx:id="txtEstado" editable="false" styleClass="text-field-detalle"/>
+            </VBox>
+        </GridPane>
+    </VBox>
 
-                <!-- Botón de cerrar -->
-                <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
-                    <children>
-                        <Button fx:id="btnCerrar" onAction="#onClose" styleClass="button" text="Cerrar" />
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
+    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+        <Button onAction="#handleCancelar" text="Cerrar" styleClass="button-cerrar"/>
     </HBox>
+
 </VBox>

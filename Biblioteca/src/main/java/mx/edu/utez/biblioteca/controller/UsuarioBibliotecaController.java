@@ -312,7 +312,7 @@ public class UsuarioBibliotecaController {
             controller.cargarUsuario(usuario);
 
             Stage stage = new Stage();
-            stage.setTitle("Verr Usuario");
+            stage.setTitle("Ver Usuario");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();

@@ -42,6 +42,7 @@ public class ModalPrestamoController implements Initializable {
     private final DetallePrestamoDaoImpl detalleDAO = new DetallePrestamoDaoImpl();
 
     private ObservableList<UsuarioBiblioteca> listaUsuarios;
+    private FilteredList<UsuarioBiblioteca> filteredListaUsuarios;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,7 +60,10 @@ public class ModalPrestamoController implements Initializable {
         tablaEjemplares.setItems(new FilteredList<>(ejemplaresTotales, e -> true));
 
         listaUsuarios = FXCollections.observableArrayList(prestamoDAO.obtenerUsuarios());
-        comboBoxUsuarios.setItems(listaUsuarios);
+
+        // Se crea el FilteredList y se le asigna al ComboBox
+        filteredListaUsuarios = new FilteredList<>(listaUsuarios, p -> true);
+        comboBoxUsuarios.setItems(filteredListaUsuarios);
 
         comboBoxUsuarios.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -77,12 +81,16 @@ public class ModalPrestamoController implements Initializable {
             }
         });
 
-        // Filtro interactivo
+        // Filtro interactivo corregido
         comboBoxUsuarios.setEditable(true);
         comboBoxUsuarios.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
-            FilteredList<UsuarioBiblioteca> filtrados = listaUsuarios.filtered(usuario ->
-                    usuario.getNombre().toLowerCase().contains(newVal.toLowerCase()));
-            comboBoxUsuarios.setItems(filtrados);
+            final String finalNewVal = (newVal == null) ? "" : newVal.toLowerCase();
+            filteredListaUsuarios.setPredicate(usuario -> {
+                if (finalNewVal.isEmpty()) {
+                    return true; // Muestra toda la lista si el campo está vacío
+                }
+                return usuario.getNombre().toLowerCase().contains(finalNewVal);
+            });
             comboBoxUsuarios.show();
         });
 
@@ -135,7 +143,6 @@ public class ModalPrestamoController implements Initializable {
         LocalDate hoy = LocalDate.now();
         LocalDate fechaPrestamo = dpFechaPrestamo.getValue();
         LocalDate fechaLimite = dpFechaLimite.getValue();
-        LocalDate fechaDevolucion = dpFechaDevolucion.getValue();
 
         // Validaciones contra el día actual
         if (fechaPrestamo.isBefore(hoy) || fechaPrestamo.isAfter(hoy)) {
@@ -153,17 +160,6 @@ public class ModalPrestamoController implements Initializable {
             return;
         }
 
-        if (fechaDevolucion != null) {
-            if (fechaDevolucion.isBefore(hoy)) {
-                mostrarAlerta("La fecha de devolución no puede ser anterior al día actual.");
-                return;
-            }
-
-            if (fechaDevolucion.isBefore(fechaPrestamo)) {
-                mostrarAlerta("La fecha de devolución no puede ser anterior a la fecha de préstamo.");
-                return;
-            }
-        }
 
         List<Ejemplar> seleccionados = tablaEjemplares.getItems().stream()
                 .filter(Ejemplar::isSeleccionado)
@@ -186,7 +182,6 @@ public class ModalPrestamoController implements Initializable {
                 prestamo.setUsuario(usuarioSeleccionado);
                 prestamo.setFechaPrestamo(fechaPrestamo);
                 prestamo.setFechaLimite(fechaLimite);
-                prestamo.setFechaReal(fechaDevolucion);
                 prestamo.setEstado(cbEstado.getValue());
                 prestamo.setEjemplar(ejemplarSeleccionado); // Asignar el objeto Ejemplar al préstamo
 
@@ -243,6 +238,8 @@ public class ModalPrestamoController implements Initializable {
         dpFechaPrestamo.setValue(null);
         dpFechaLimite.setValue(null);
         cbEstado.getSelectionModel().selectFirst();
+
+        // Se asigna la lista original para restaurar los elementos
         comboBoxUsuarios.setItems(listaUsuarios);
     }
 
