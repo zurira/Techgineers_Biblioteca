@@ -19,9 +19,8 @@
     <!-- Imagen y botón con altura fija -->
     <VBox layoutX="30" layoutY="70" spacing="10">
         <StackPane prefWidth="160" prefHeight="280"
-                   style="-fx-background-color: #F1EFEF; -fx-border-color: #A38F85; -fx-border-radius: 5;">
-            <ImageView fx:id="imageView" fitWidth="160" fitHeight="280" preserveRatio="true"
-                       style="-fx-effect: dropshadow(gaussian, #A38F85, 8, 0.3, 0, 2);"/>
+                   style="-fx-background-color: #F1EFEF;">
+            <ImageView fx:id="imageView" fitWidth="160" fitHeight="280" preserveRatio="true"/>
         </StackPane>
         <Button fx:id="btnSeleccionarImagen" text="Seleccionar archivo"
                 onAction="#onSeleccionarImagen"
