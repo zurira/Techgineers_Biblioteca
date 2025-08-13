@@ -1,20 +1,57 @@
+/*
+ * Hoja de estilos para la vista "Ver Usuario".
+ * Sigue el estilo general de la aplicación.
+ */
 
-.button-guardar, .button-buscar {
-    -fx-background-color: #A38F85;
-    -fx-text-fill: #FFFFFF;
+.root {
+    -fx-background-color: #F1EFEF;
 }
 
+.titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
 
-.button-guardar:hover,
-.button-buscar:hover {
-    -fx-background-color: #8E7A6E;
-    -fx-cursor: hand;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.text-field, .date-picker > .text-field {
+    -fx-background-color: #E6E0DA;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-font-weight: normal;
+    -fx-pref-width: 250;
+    -fx-text-fill: #5C504A;
+
+}
+
+.date-picker {
+    -fx-background-color: #E6E0DA;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
 }
 
 .text-area {
-    -fx-min-width: 1020;
-    -fx-max-width: 1020;
-    -fx-background-color: #C7C7C7;
+    -fx-background-color: #E6E0DA;
+    -fx-border-color: #A38F85;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 530;
+    -fx-pref-height: 80;
+}
+
+.button-guardar {
+    -fx-background-color: #A38F85;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
