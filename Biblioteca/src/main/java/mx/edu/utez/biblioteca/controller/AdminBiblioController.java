@@ -409,7 +409,7 @@ public class AdminBiblioController {
     @FXML
     private void irEstadisticas(ActionEvent e) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/Estadisticas.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/biblioteca/views/estadisticasAdmin.fxml"));
             Region root = (Region) loader.load();
 
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
