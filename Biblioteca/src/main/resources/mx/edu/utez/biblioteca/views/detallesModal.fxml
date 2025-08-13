@@ -16,6 +16,8 @@
         <Label fx:id="lblAutor" styleClass="label"/>
         <Label fx:id="lblEditorial" styleClass="label"/>
         <Label fx:id="lblAnio" styleClass="label"/>
+
+        <Label text="Resumen:" styleClass="label-bold" />
         <TextArea fx:id="txtResumen" wrapText="true" editable="false" prefHeight="100" styleClass="text-area"/>
     </VBox>
 </AnchorPane>

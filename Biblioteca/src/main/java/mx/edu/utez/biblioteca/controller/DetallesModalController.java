@@ -1,14 +1,12 @@
 package mx.edu.utez.biblioteca.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import mx.edu.utez.biblioteca.model.Libro;
-import mx.edu.utez.biblioteca.model.Autor;
+import mx.edu.utez.biblioteca.model.Ejemplar;
 
 public class DetallesModalController {
 
