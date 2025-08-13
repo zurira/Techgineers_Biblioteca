@@ -4,11 +4,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.paint.Color?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="mx.edu.utez.biblioteca.controller.UsuarioController"
@@ -31,31 +30,30 @@
             </graphic>
         </Button>
 
-        <VBox alignment="CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
+        <VBox alignment="TOP_CENTER" spacing="15.0" maxWidth="300.0" fx:id="loginBox" styleClass="login-box">
             <padding>
                 <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
-            <!-- Logo -->
-            <StackPane alignment="CENTER">
+            <StackPane alignment="CENTER" VBox.vgrow="ALWAYS">
                 <children>
-                    <Circle radius="40" styleClass="circle-color">
-
-                    </Circle>
-                    <Label text="LOGO">
-                        <textFill>
-                            <Color fx:constant="GRAY"/>
-                        </textFill>
-                    </Label>
+                    <ImageView fitHeight="91" fitWidth="91" preserveRatio="true" >
+                        <image>
+                            <Image url="@../img/img.png"/>
+                        </image>
+                        <clip>
+                            <Circle radius="45" centerX="45" centerY="45"/>
+                        </clip>
+                    </ImageView>
                 </children>
             </StackPane>
 
-            <Label text="INICIO DE SESIÓN" styleClass="login-title"/>
+            <Label text="INICIO DE SESIÓN" styleClass="login-title" alignment="CENTER" maxWidth="Infinity" />
 
-            <Label text="USUARIO"/>
+            <Label text="Correo y/o usuario:" alignment="TOP_LEFT" maxWidth="Infinity"/>
             <TextField fx:id="txtcorreo" promptText="Ingresa tu correo o usuario" styleClass="login-input"/>
-            <Label text="CONTRASEÑA"/>
-            <StackPane alignment="CENTER_RIGHT">
+            <Label text="Contraseña:" alignment="TOP_LEFT" maxWidth="Infinity"/>
+            <StackPane alignment="CENTER_LEFT" >
                 <PasswordField fx:id="txtPassword" promptText="Ingresa contraseña" styleClass="login-input" />
                 <TextField fx:id="txtPasswordVisible" promptText="Ingresa contraseña" styleClass="login-input"
                            visible="false" managed="false" />
@@ -71,5 +69,3 @@
         </VBox>
     </children>
 </StackPane>
-
-
